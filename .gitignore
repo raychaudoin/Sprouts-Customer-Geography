@@ -1,0 +1,61 @@
+# Secrets and local environment configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+secrets.*
+credentials.*
+local.settings.json
+
+# Confidential and raw local data
+data/raw/
+data/cache/
+data/confidential/
+data/local/
+data/external/
+**/confidential-local/
+**/*.confidential.*
+
+# Generated outputs and large local artifacts
+outputs/
+artifacts/
+exports/
+*.parquet
+*.duckdb
+*.db
+*.sqlite
+*.sqlite3
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Tool and operating-system caches
+.cache/
+.tmp/
+tmp/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Power BI local and temporary state; do not ignore source-controlled PBIP definitions
+powerbi/.temp/
+powerbi/.cache/
+*.pbix.autosave
+*.pbi.local.json
+
+# Machine-specific editor settings
+.idea/
+.vscode/
+*.user
+*.suo
