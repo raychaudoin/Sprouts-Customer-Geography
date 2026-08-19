@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:geo02:validation-context-spatial-spec:v1",
+  "title": "GEO-02 repository-safe validation context spatial authority",
+  "type": "object",
+  "required": ["artifact_id", "version", "owning_capability", "canonical_geography", "projected_context_space", "validation_anchor_lineage_requirement", "context_family_semantics", "quality_and_lineage", "protected_content_boundary", "supersedes", "supersession_policy", "content_sha256"],
+  "properties": {
+    "artifact_id": {"const": "GEO02_VALIDATION_CONTEXT_SPATIAL_SPEC_V1"},
+    "version": {"const": "1.0.0"},
+    "owning_capability": {"const": "GEO-02"},
+    "projected_context_space": {"const": "EPSG:5070"},
+    "canonical_geography": {"type": "object", "required": ["tract_vintage", "geometry_representation", "inventory_derivation", "market_inventories"]},
+    "context_family_semantics": {"type": "object", "required": ["footprint", "radius_parameter_owner", "tract_intersection", "zero_area_tangency", "market_clipping_and_support", "edge_distance_and_margin", "geometric_truncation", "geometric_completeness", "geometric_jaccard", "spatial_components"]},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

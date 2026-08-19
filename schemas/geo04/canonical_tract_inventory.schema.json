@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:geo04:canonical-tract-inventory:v1",
+  "title": "GEO-04 frozen market canonical tract inventory",
+  "type": "object",
+  "required": ["artifact_id", "version", "derivation_specification", "market_configuration", "data_authority", "ordered_geoids", "inventory_sha256", "tract_count", "qa_expected_count", "qa_count_matches", "selection_and_order_semantics", "invariant_checks", "failure_behavior", "supersedes", "supersession_policy", "content_sha256"],
+  "properties": {
+    "artifact_id": {"type": "string"},
+    "version": {"const": "1.0.0"},
+    "market_configuration": {"type": "object", "required": ["market_id", "version", "ordered_county_allow_list"]},
+    "ordered_geoids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[0-9]{11}$"}},
+    "inventory_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "tract_count": {"type": "integer", "minimum": 1},
+    "qa_count_matches": {"const": true},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

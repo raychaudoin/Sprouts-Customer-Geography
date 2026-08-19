@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:geo04:canonical-tract-inventory-derivation:v1",
+  "title": "GEO-04 canonical tract inventory derivation authority",
+  "type": "object",
+  "required": ["artifact_id", "version", "owning_capability", "data_authority", "source_and_selection_semantics", "invariant_checks", "failure_behavior", "supersedes", "supersession_policy", "content_sha256"],
+  "properties": {
+    "artifact_id": {"const": "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1"},
+    "version": {"const": "1.0.0"},
+    "owning_capability": {"const": "GEO-04"},
+    "data_authority": {"type": "object", "required": ["data_contract_id", "data_contract_version", "data_contract_content_sha256", "tiger_manifest_id", "tiger_source_sha256"]},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

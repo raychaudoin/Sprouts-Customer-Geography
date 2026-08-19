@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:geo03:internal-point-membership-spatial-spec:v1",
+  "title": "GEO-03 transformation and internal-point membership authority",
+  "type": "object",
+  "required": ["artifact_id", "version", "owning_capability", "source_coordinate_authority", "data_authority", "transformation", "validation_membership_distance", "boundary_and_radius_binding", "anchor_override", "deduplication", "geo02_lineage", "failure_behavior", "supersedes", "supersession_policy", "content_sha256"],
+  "properties": {
+    "artifact_id": {"const": "GEO03_INTERNAL_POINT_MEMBERSHIP_SPATIAL_SPEC_V1"},
+    "version": {"const": "1.0.0"},
+    "owning_capability": {"const": "GEO-03"},
+    "source_coordinate_authority": {"type": "object", "required": ["source", "source_crs", "logical_input_axis_order", "raw_value_provenance"]},
+    "transformation": {"type": "object", "required": ["operation", "operation_fingerprint_sha256"]},
+    "validation_membership_distance": {"type": "object", "required": ["artifact_id", "semantics", "unit", "membership_value", "separate_from", "noncomputability"]},
+    "boundary_and_radius_binding": {"type": "object", "required": ["comparison", "epsilon_or_snap_or_rounding_permitted", "owner", "model_reference", "radii_m", "nesting_invariant"]},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
