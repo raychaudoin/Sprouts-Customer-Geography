@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": ["source_id", "source_name", "accepted_vintage", "source_reference", "byte_sha256", "acquisition_state", "schema_version", "lineage"],
   "properties": {
+    "$schema": {"type": "string", "minLength": 1},
     "source_id": {"type": "string", "minLength": 1},
     "source_name": {"type": "string", "minLength": 1},
     "accepted_vintage": {"type": "string", "minLength": 1},
@@ -13,6 +14,27 @@
     "byte_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "acquisition_state": {"enum": ["not_acquired", "acquired", "checksum_rejected"]},
     "schema_version": {"type": "string", "minLength": 1},
-    "lineage": {"type": "object"}
+    "lineage": {"type": "object"},
+    "manifest_id": {"type": "string", "minLength": 1},
+    "manifest_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "publisher": {"type": "string", "minLength": 1},
+    "official_product_identity": {"type": "string", "minLength": 1},
+    "source_filename": {"type": "string", "minLength": 1},
+    "source_geography_and_type": {"type": "string", "minLength": 1},
+    "retrieval": {"type": "object"},
+    "checksum_algorithm": {"const": "SHA-256"},
+    "checksum_semantics": {"type": "string", "minLength": 1},
+    "expected_file_properties": {"type": "object"},
+    "reproduction": {"type": "string", "minLength": 1},
+    "failure_behavior": {"type": "string", "minLength": 1},
+    "attribution": {"type": "string", "minLength": 1},
+    "supersedes": {"type": ["string", "null"]},
+    "supersession_policy": {"type": "string", "minLength": 1},
+    "manifest_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "request_identity": {"type": "object"},
+    "request_hash_algorithm": {"const": "SHA-256"},
+    "request_hash_semantics": {"type": "string", "minLength": 1},
+    "request_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "annotation_and_special_value_contract": {"type": "object"}
   }
 }

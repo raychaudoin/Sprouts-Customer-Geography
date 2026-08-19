@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:data:authoritative_data_config:v1",
+  "title": "authoritative_data_config",
+  "type": "object",
+  "required": ["artifact_id", "version", "controlling_decision", "accepted_sources", "hash_algorithm", "content_hash_semantics", "content_sha256", "supersedes", "failure_behavior"],
+  "properties": {
+    "artifact_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "accepted_sources": {"type": "array", "minItems": 2},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "supersedes": {"type": ["string", "null"]}
+  }
+}

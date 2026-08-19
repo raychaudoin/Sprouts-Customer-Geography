@@ -4,7 +4,7 @@
 
 PIPE-01 implements a repository-safe target-blind freeze package and synthetic conformance harness. It does not evaluate forecasts. Real seed/anchor evidence, memberships, distances, household totals, predictions, quarantine details, nonces, and complete freeze manifests remain outside Git.
 
-The repository did not contain the accepted DATA-01, GEO-02/GEO-03, MODEL-04/MODEL-05 artifacts or the pinned TIGER/ACS source manifests when implementation began. Therefore the real protected freeze is **blocked** and must not be described as frozen or ready. The implementation deliberately requires those exact identities and hashes instead of inferring them.
+The repository did not contain the accepted DATA-01, GEO-02/GEO-03, MODEL-04/MODEL-05 artifacts or the pinned TIGER/ACS source manifests when implementation began. DATA-02 subsequently materialized the public DATA configuration and pinned source manifests at `config/data/data01_validation_source_contract.json` and `data/manifests/`; GEO and MODEL dependencies remain absent. Therefore the real protected freeze is **blocked** and must not be described as frozen or ready. The implementation deliberately requires those exact identities and hashes instead of inferring them.
 
 ## Stable contracts
 
@@ -91,4 +91,4 @@ Tests use fictional identifiers and a synthetic coordinate transform. They prove
 
 ## Blocked real-run facts
 
-No source bytes were downloaded. No accepted TIGER or ACS checksum was available to validate. The QA expectations of 452 Milwaukee tracts, 152 Madison tracts, and 604 total were not independently reproduced and remain unverified. No protected MODEL-04 input package or MODEL-05 preregistration artifact was available. No real protected run was started, no commitment exists, and no target-opening authorization is supported.
+At PIPE-01 implementation time, no source bytes were downloaded and no accepted TIGER or ACS checksum was available. DATA-02 now pins public-source byte checksums without tracking raw downloads; the QA expectations of 452 Milwaukee tracts, 152 Madison tracts, and 604 total were not independently reproduced and remain unverified. No protected MODEL-04 input package or MODEL-05 preregistration artifact was available. No real protected run was started, no commitment exists, and no target-opening authorization is supported.

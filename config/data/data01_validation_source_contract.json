@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schemas/data/authoritative_data_config.schema.json",
+  "artifact_id": "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "active",
+  "controlling_decision": "DATA-01: Accepted Public Data Source Decisions",
+  "purpose": "Accepted public validation-source contract consumable by PIPE without source, vintage, or release inference.",
+  "accepted_sources": [
+    {
+      "family": "American Community Survey",
+      "product": "2020-2024 ACS 5-Year Detailed Tables",
+      "vintage": "2024",
+      "household_opportunity_table": "B11001",
+      "household_estimate_variable": "B11001_001E",
+      "household_moe_variable": "B11001_001M",
+      "source_manifest_id": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b11001_wisconsin_tract.source_manifest.json"
+    },
+    {
+      "family": "TIGER/Line",
+      "product": "2024 TIGER/Line Census Tracts",
+      "vintage": "2024",
+      "geography": "Wisconsin Census Tracts",
+      "source_manifest_id": "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/tiger_2024_wisconsin_tract.source_manifest.json"
+    }
+  ],
+  "deferred_or_out_of_scope_sources": [
+    "2026 Planning Database (deferred)",
+    "LODES (optional enrichment; outside DATA-02)",
+    "Overture (experimental; outside DATA-02)"
+  ],
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, no NaN.",
+  "supersedes": null,
+  "supersession_policy": "Do not overwrite an accepted artifact. A correction creates a versioned successor with this artifact_id in supersedes and a newly calculated content_sha256.",
+  "failure_behavior": "Fail closed if this artifact ID/version/hash is absent or differs, if a source is latest/current/moving, or if the source family, product, vintage, or required B11001 estimate/MOE identity differs. No source or vintage substitution is permitted.",
+  "content_sha256": "31f224e87bb20c9444a061b7d8a513e45b37928158744f562d2fe8a45fe8d6e3"
+}

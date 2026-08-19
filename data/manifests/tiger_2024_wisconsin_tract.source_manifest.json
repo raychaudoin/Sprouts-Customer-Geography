@@ -1,0 +1,49 @@
+{
+  "$schema": "../../schemas/pipe01/source_manifest.schema.json",
+  "manifest_id": "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1",
+  "manifest_version": "1.0.0",
+  "source_id": "census-tiger2024-wisconsin-tract",
+  "source_name": "2024 TIGER/Line Wisconsin Census Tracts",
+  "publisher": "U.S. Census Bureau",
+  "accepted_vintage": "2024",
+  "source_reference": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_55_tract.zip",
+  "official_product_identity": "2024 TIGER/Line Shapefile, Census Tracts, Wisconsin (state FIPS 55)",
+  "source_filename": "tl_2024_55_tract.zip",
+  "source_geography_and_type": "Wisconsin statewide Census Tracts TIGER/Line ZIP archive; required as GEO's upstream public source evidence only.",
+  "retrieval": {
+    "method": "HTTPS GET of the exact source_reference URL; do not use a Current service, TIGERweb output, another release, or a transformed derivative.",
+    "retrieval_date": "2026-08-19",
+    "expected_byte_length": 7642880
+  },
+  "checksum_algorithm": "SHA-256",
+  "byte_sha256": "313c378d7fa173bf653381d644d8ded7b4f6241b2065d2b890e1fccccaab5de5",
+  "checksum_semantics": "SHA-256 over the exact downloaded tl_2024_55_tract.zip bytes before extraction or interpretation.",
+  "acquisition_state": "acquired",
+  "schema_version": "data-authoritative-source-manifest-v1",
+  "expected_file_properties": {
+    "container": "ZIP",
+    "required_entries": [
+      "tl_2024_55_tract.cpg",
+      "tl_2024_55_tract.dbf",
+      "tl_2024_55_tract.prj",
+      "tl_2024_55_tract.shp",
+      "tl_2024_55_tract.shp.ea.iso.xml",
+      "tl_2024_55_tract.shp.iso.xml",
+      "tl_2024_55_tract.shx"
+    ],
+    "required_source_fields": ["GEOID", "INTPTLAT", "INTPTLON"],
+    "expected_crs_reference": "NAD83 geographic coordinates as described by the supplied TIGER/Line projection metadata; this manifest does not establish GEO transformation-operation authority."
+  },
+  "reproduction": "Download exactly source_reference as bytes, require the exact filename, byte length, ZIP entries, and SHA-256 above. A different result is a checksum-rejected retrieval and must not be substituted or normalized.",
+  "failure_behavior": "Fail closed on an unavailable URL, filename/product/vintage mismatch, byte-length mismatch, missing required ZIP entry, missing required source field, or SHA-256 mismatch. Record checksum_rejected; do not continue with a later TIGER release, TIGERweb, Current service, or derivative.",
+  "attribution": "U.S. Census Bureau, 2024 TIGER/Line Shapefiles.",
+  "lineage": {
+    "controlling_decision": "DATA-01: Accepted Public Data Source Decisions",
+    "data_contract_id": "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+    "data_contract_version": "1.0.0",
+    "geo_boundary": "This is source evidence only. GEO owns the canonical tract-inventory derivation specification."
+  },
+  "supersedes": null,
+  "supersession_policy": "A correction or new accepted release requires a new manifest ID/version and explicit supersedes lineage; never overwrite this accepted manifest.",
+  "manifest_content_sha256": "52b2fdbf7cd19068475be8b7c27ae431669905b3a829910aaf7453dd72f5c9e7"
+}

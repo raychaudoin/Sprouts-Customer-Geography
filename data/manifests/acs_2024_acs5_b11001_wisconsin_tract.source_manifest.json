@@ -1,0 +1,64 @@
+{
+  "$schema": "../../schemas/pipe01/source_manifest.schema.json",
+  "manifest_id": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+  "manifest_version": "1.0.0",
+  "source_id": "census-acs-2024-acs5-detailed-b11001",
+  "source_name": "2020-2024 ACS 5-Year Detailed Tables B11001",
+  "publisher": "U.S. Census Bureau",
+  "accepted_vintage": "2024",
+  "source_reference": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b11001.dat",
+  "official_product_identity": "2020-2024 ACS 5-Year Detailed Tables, official table-based Summary File, B11001",
+  "source_filename": "acsdt5y2024-b11001.dat",
+  "source_geography_and_type": "National table-based Detailed Tables file, deterministically filtered to Census tract GEO_ID values beginning 1400000US55 for Wisconsin tract household evidence.",
+  "retrieval": {
+    "method": "HTTPS GET of the exact source_reference URL; select the exact pipe-delimited B11001 source file rather than an API latest/current alias.",
+    "retrieval_date": "2026-08-19",
+    "expected_byte_length": 45827971,
+    "access_surface_reason": "The official ACS API required an API key when DATA-02 was materialized. This exact official Detailed Tables distribution is the smallest compatible non-authenticated source file and is not a source/vintage substitution."
+  },
+  "request_identity": {
+    "access_surface": "official ACS table-based Summary File HTTPS distribution",
+    "source_file": "acsdt5y2024-b11001.dat",
+    "record_delimiter": "LF",
+    "field_delimiter": "|",
+    "header_required": ["GEO_ID", "B11001_E001", "B11001_M001"],
+    "geography_selection": "Rows whose GEO_ID begins exactly 1400000US55; no inferred market or target filtering.",
+    "source_to_contract_mapping": {
+      "B11001_E001": "B11001_001E",
+      "B11001_M001": "B11001_001M"
+    }
+  },
+  "request_hash_algorithm": "SHA-256",
+  "request_hash_semantics": "SHA-256 of canonical UTF-8 JSON for request_identity: recursively sorted object keys, compact separators, Unicode preserved, no NaN.",
+  "request_sha256": "8bc987f9214ee3b65e70ad7741bfe13d58bb0249e787ba389785bcf2ab5ab3c3",
+  "checksum_algorithm": "SHA-256",
+  "byte_sha256": "77200c3d9c0d99773bc7f78208bc96f25170e5d4d175a5de320620b478ceaff5",
+  "checksum_semantics": "Controlling checksum is SHA-256 over exact raw acsdt5y2024-b11001.dat bytes before row filtering, parsing, normalization, or conversion. It is distinct from request_sha256 and manifest_content_sha256.",
+  "acquisition_state": "acquired",
+  "schema_version": "data-authoritative-source-manifest-v1",
+  "expected_file_properties": {
+    "container": "UTF-8-compatible pipe-delimited text with one header row",
+    "required_source_fields": ["GEO_ID", "B11001_E001", "B11001_M001"],
+    "required_contract_estimate_fields": ["B11001_001E"],
+    "required_contract_moe_fields": ["B11001_001M"],
+    "expected_wisconsin_tract_row_count_at_retrieval": 1542
+  },
+  "annotation_and_special_value_contract": {
+    "official_reference": "https://api.census.gov/data/2024/acs/acs5/groups/B11001.json",
+    "api_annotation_variables": ["B11001_001EA", "B11001_001MA"],
+    "source_file_annotation_state": "The selected official table-based file has no annotation columns. Its raw estimate and MOE tokens must be preserved losslessly; absence of an annotation column must produce annotation=null, never an implied valid/zero value.",
+    "required_parser_behavior": "Keep raw estimate and MOE tokens separate from parsed values and status. Missing, non-numeric, suppressed, inapplicable, or other invalid evidence must remain distinguishable, must retain the source token/provenance, and must not become zero. A downstream use requiring API annotations must retrieve and pin those annotation fields separately; this DATA-02 manifest does not invent them."
+  },
+  "reproduction": "Download exactly source_reference as bytes, require exact filename, byte length, header fields, and source-byte SHA-256. Parse as specified in request_identity, require source field presence, then select only the exact GEO_ID prefix. Recalculate request_sha256 from request_identity and manifest_content_sha256 using the stated canonical JSON semantics.",
+  "failure_behavior": "Fail closed on unavailable source, product/vintage/filename mismatch, byte-length or source-byte checksum mismatch, header/schema mismatch, missing B11001 estimate or MOE field, unexpected geography identity, malformed records, or invalid/missing required metadata. Do not use latest/current, a different ACS vintage, a different product, a substituted API response, or a zero default.",
+  "attribution": "U.S. Census Bureau, American Community Survey 2020-2024 5-Year Detailed Tables, table B11001.",
+  "lineage": {
+    "controlling_decision": "DATA-01: Accepted Public Data Source Decisions",
+    "data_contract_id": "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+    "data_contract_version": "1.0.0",
+    "model_boundary": "B11001 is source household evidence only; DATA-02 does not define MODEL transformations, thresholds, weights, aggregation, or scoring."
+  },
+  "supersedes": null,
+  "supersession_policy": "A correction or a newly accepted release requires a new manifest ID/version and explicit supersedes lineage; never overwrite this accepted manifest.",
+  "manifest_content_sha256": "3beb2f39ef4f0ba02953322da4fef0bc7136947d228dbf4d1353c0b5a94424ce"
+}
