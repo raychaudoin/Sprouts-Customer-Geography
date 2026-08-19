@@ -62,7 +62,7 @@ def project_internal_point(point: InternalPoint, transformer: CoordinateTransfor
     # Explicit longitude, latitude call order is part of the frozen contract.
     try:
         projected = transformer.transform(point.longitude, point.latitude)  # type: ignore[arg-type]
-    except (ArithmeticError, ValueError):
+    except (ArithmeticError, RuntimeError, ValueError):
         return None
     if not isinstance(projected, (tuple, list)) or len(projected) != 2 or not all(isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) for value in projected):
         return None

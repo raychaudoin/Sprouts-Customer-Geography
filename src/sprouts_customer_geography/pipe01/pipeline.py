@@ -108,6 +108,8 @@ class PretargetPipeline:
             source = by_geoid[geoid]
             require(source.get("market_id") == market_id, "STRUCTURAL_MARKET_MISMATCH", f"market mismatch for tract {geoid}")
             point = parse_internal_point(source.get("INTPTLAT"), source.get("INTPTLON"))
+            if "coordinate_state" in source:
+                require(source.get("coordinate_state") == point.coordinate_state, "TIGER_COORDINATE_STATE_MISMATCH", f"adapter parse state differs for tract {geoid}")
             projected = project_internal_point(point, self.transformer)
             evidence_rows.append(
                 {
@@ -122,6 +124,7 @@ class PretargetPipeline:
                     "target_crs": TARGET_CRS,
                     "transformation_state": "transformed" if projected is not None else "noncomputable",
                     "transformation_fingerprint": self.accepted_transform_fingerprint,
+                    "transformation_provenance": dict(getattr(self.transformer, "runtime_provenance", {"operation_fingerprint_sha256": self.accepted_transform_fingerprint})),
                     "projected_x_m": None if projected is None else projected[0],
                     "projected_y_m": None if projected is None else projected[1],
                     "source_lineage": source.get("source_lineage"),
@@ -247,8 +250,11 @@ class PretargetPipeline:
                     "moe_variable": HOUSEHOLD_MOE_VARIABLE,
                     "total_household_estimate": estimate,
                     "total_household_moe": moe,
+                    "raw_estimate": source.get("raw_estimate"),
+                    "raw_moe": source.get("raw_moe"),
                     "annotation": source.get("annotation"),
                     "status": status,
+                    "status_detail": source.get("status_detail"),
                     "estimate_valid": estimate_valid,
                     "moe_valid": moe_valid,
                     "evidence_valid": estimate_valid and moe_valid,

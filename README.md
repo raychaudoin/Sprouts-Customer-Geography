@@ -4,7 +4,9 @@ Sprouts Customer Geography is intended to help GBT understand the distribution, 
 
 ## Current status
 
-This repository contains the governance foundation plus a bounded, repository-safe PIPE-01 target-blind freeze implementation. PIPE-01 adds upstream schemas, deterministic spatial/household logic, disclosure safeguards, and synthetic conformance tests. It does not contain accepted DATA/GEO/MODEL dependency packages, protected inputs, public source bytes, real freeze outputs, a scoring model, validation results, or a functioning Power BI report.
+This repository contains the governance foundation plus the bounded PIPE-01/PIPE-01B target-blind freeze implementation. Accepted repository-safe DATA, GEO, and MODEL authorities are materialized. PIPE-01B adds checksum-pinned Census adapters, the verified GEO-03 EPSG:5070 runtime, accepted GEO-02 footprint/edge/overlap/component execution, and protected-freeze orchestration around the existing schemas, calculations, safeguards, and finalization controls.
+
+Raw Census source bytes and MODEL-04 protected inputs remain local-only and outside Git. No real protected freeze, real seed-level output, sealed forecast target, scoring model, validation result, deployment, or functioning Power BI report is contained here.
 
 The intended design keeps reproducible public-data and spatial processing upstream and uses Power BI as a replaceable MVP presentation layer driven by stable outputs.
 
@@ -21,3 +23,4 @@ The intended design keeps reproducible public-data and spatial processing upstre
 - [Market configuration boundary](config/markets/README.md)
 - [Power BI boundary](powerbi/README.md)
 - [PIPE-01 target-blind freeze runbook](docs/PIPE01_PRETARGET_FREEZE.md)
+- [PIPE-01B implementation record](docs/work_orders/PIPE_01B_PRODUCTION_FREEZE_ADAPTERS_AND_ORCHESTRATION.md)

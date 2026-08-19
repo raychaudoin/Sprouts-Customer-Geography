@@ -2,9 +2,9 @@
 
 ## Scope and current state
 
-PIPE-01 implements a repository-safe target-blind freeze package and synthetic conformance harness. It does not evaluate forecasts. Real seed/anchor evidence, memberships, distances, household totals, predictions, quarantine details, nonces, and complete freeze manifests remain outside Git.
+PIPE-01 implements a repository-safe target-blind freeze package and conformance harness. PIPE-01B adds production-form public-source, spatial, protected-input, and orchestration adapters. It does not evaluate forecasts. Real seed/anchor evidence, memberships, distances, household totals, predictions, quarantine details, nonces, and complete freeze manifests remain outside Git.
 
-The repository did not contain the accepted DATA-01, GEO-02/GEO-03, MODEL-04/MODEL-05 artifacts or the pinned TIGER/ACS source manifests when implementation began. DATA-02 subsequently materialized the public DATA configuration and pinned source manifests at `config/data/data01_validation_source_contract.json` and `data/manifests/`; GEO and MODEL dependencies remain absent. Therefore the real protected freeze is **blocked** and must not be described as frozen or ready. The implementation deliberately requires those exact identities and hashes instead of inferring them.
+The accepted repository-safe DATA-01/DATA-02, GEO-02/GEO-03/GEO-04, and MODEL-05 authorities are now committed. MODEL-04 remains protected-local by design, with only disclosure-safe commitment evidence in Git. The production path requires the exact accepted dependency preflight, checksum-pinned raw Census files, the protected MODEL-04 package and nonce, and an outside-repository protected output root. PIPE-01B implementation does not authorize or perform the real protected freeze.
 
 ## Stable contracts
 
@@ -83,12 +83,35 @@ python scripts\check_pipe01_repository.py
 Remove-Item Env:\PYTHONPATH
 ```
 
-Tests use fictional identifiers and a synthetic coordinate transform. They prove calculation/control behavior, not the absent accepted GEO-03 operation or real market results.
+The normal suite uses fictional identifiers and synthetic geometry where source bytes are unnecessary. Supplying `PIPE01B_PINNED_TIGER_ZIP` and `PIPE01B_PINNED_ACS_B11001` also executes exact-source conformance and one completely fictional protected end-to-end run through the production orchestration path. The fictional anchor is a public TIGER tract internal point, not a real or perturbed Sprouts seed. The temporary run is removed after testing and no source bytes or protected artifacts are committed.
+
+## Production-form execution boundary
+
+`sprouts_customer_geography.pipe01.production` verifies and consumes the exact pinned Census source files. `sprouts_customer_geography.pipe01.orchestration` cross-validates every repository authority, verifies the protected MODEL-04 salted commitment, binds the accepted dependency preflight, instantiates contexts, executes GEO-03 and GEO-02, reuses existing PIPE calculations, stages protected artifacts, and finalizes immutably.
+
+The CLI entry point is intentionally explicit and prints only disclosure-safe conformance evidence:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m sprouts_customer_geography.pipe01 run-production `
+  --repository C:\path\to\repository `
+  --protected-root C:\authorized\outside-repository-root `
+  --tiger-source-zip C:\local-public-source\tl_2024_55_tract.zip `
+  --acs-source-file C:\local-public-source\acsdt5y2024-b11001.dat `
+  --model04-package C:\protected\model04_identity_role_anchor_package.json `
+  --model04-nonce C:\protected\commitment_nonce.bin `
+  --model04-commitment-evidence C:\protected\model04_commitment.json `
+  --accepted-dependency-preflight C:\protected\accepted_dependencies.json `
+  --code-identity <exact-commit-or-immutable-code-identity>
+Remove-Item Env:\PYTHONPATH
+```
+
+Do not run this command with real protected inputs without a separate explicit authorization. It has no target-input parameter and refuses target-derived fields at protected write/finalization boundaries.
 
 ## Confidentiality safeguards
 
 `.gitignore` excludes common protected-run paths and artifacts. The independent tracked-path guard rejects designated protected artifact classes even if Git ignore rules are bypassed. Disclosure-safe reporting permits only aggregated states/counts and a salted commitment; it excludes coordinates, identities tied to locations, membership lists, distances, household totals, prediction values, targets, ranks, residuals, correlations, and target-based statistics.
 
-## Blocked real-run facts
+## Real protected execution gate
 
-At PIPE-01 implementation time, no source bytes were downloaded and no accepted TIGER or ACS checksum was available. DATA-02 now pins public-source byte checksums without tracking raw downloads; the QA expectations of 452 Milwaukee tracts, 152 Madison tracts, and 604 total were not independently reproduced and remain unverified. No protected MODEL-04 input package or MODEL-05 preregistration artifact was available. No real protected run was started, no commitment exists, and no target-opening authorization is supported.
+PIPE-01B conformance reproduced the accepted 452 Milwaukee and 152 Madison tract inventories from the exact pinned TIGER file and bound the exact ACS B11001 source. This establishes adapter readiness, not permission to execute the real package. The remaining gate is PIPE acceptance of PIPE-01B followed by separate Master Control Room authorization for the real target-blind freeze. No real protected run was started, no real freeze commitment exists, and no target-opening authorization is supported.
