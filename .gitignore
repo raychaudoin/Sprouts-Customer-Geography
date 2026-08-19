@@ -22,6 +22,8 @@ data/external/
 **/.pipe01-local/
 **/*.pipe01-protected.json
 **/freeze_nonce.bin
+**/commitment_nonce.bin
+**/model04_identity_role_anchor_package.json
 
 # Generated outputs and large local artifacts
 outputs/

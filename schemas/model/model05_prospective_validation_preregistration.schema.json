@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model05:prospective-validation-preregistration:v1",
+  "title": "MODEL-05 prospective-validation preregistration",
+  "type": "object",
+  "required": ["artifact_id", "version", "canonical_schema_version", "spatial_contexts", "aggregation", "household_opportunity", "prospective_candidate_state", "ranking_and_level", "prospective_outcomes", "geometric_completeness", "dependence", "validation", "target_governance", "freeze_prerequisites", "dependencies", "content_hash_semantics", "content_sha256", "supersedes", "supersession_policy", "failure_behavior"],
+  "properties": {
+    "artifact_id": {"const": "MODEL05_PROSPECTIVE_VALIDATION_PREREGISTRATION_V1"},
+    "version": {"const": "1.0.0"},
+    "canonical_schema_version": {"const": "model05-prospective-validation-preregistration-v1"},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "supersedes": {"type": ["string", "null"]},
+    "dependencies": {"type": "object", "required": ["data", "geo"]}
+  },
+  "additionalProperties": true
+}

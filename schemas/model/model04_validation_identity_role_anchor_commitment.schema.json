@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model04:validation-identity-role-anchor-commitment:v1",
+  "title": "MODEL-04 disclosure-safe protected-package commitment",
+  "type": "object",
+  "required": ["artifact_id", "version", "protected_package_id", "protected_package_version", "domain", "commitment_sha256", "commitment_semantics", "protected_package_digest_disclosed", "nonce_disclosed", "supersedes", "supersession_policy"],
+  "properties": {
+    "artifact_id": {"const": "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_COMMITMENT_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_package_id": {"const": "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_PACKAGE_V1"},
+    "protected_package_version": {"const": "1.0.0"},
+    "domain": {"const": "sprouts-customer-geography/pipe01/freeze-commitment/v1"},
+    "commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protected_package_digest_disclosed": {"const": false},
+    "nonce_disclosed": {"const": false},
+    "supersedes": {"type": ["string", "null"]}
+  }
+}

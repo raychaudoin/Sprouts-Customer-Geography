@@ -14,6 +14,8 @@ PROTECTED_ARTIFACT_FILENAMES = {
     "household_opportunity.json",
     "freeze_manifest.json",
     "freeze_nonce.bin",
+    "model04_identity_role_anchor_package.json",
+    "commitment_nonce.bin",
 }
 PROTECTED_DIRECTORY_NAMES = {"protected", "protected-local", "confidential-local", "live-freeze"}
 

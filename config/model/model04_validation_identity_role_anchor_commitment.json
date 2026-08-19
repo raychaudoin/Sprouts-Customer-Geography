@@ -1,0 +1,14 @@
+{
+  "$schema": "../../schemas/model/model04_validation_identity_role_anchor_commitment.schema.json",
+  "artifact_id": "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_COMMITMENT_V1",
+  "version": "1.0.0",
+  "protected_package_id": "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_PACKAGE_V1",
+  "protected_package_version": "1.0.0",
+  "domain": "sprouts-customer-geography/pipe01/freeze-commitment/v1",
+  "commitment_sha256": "b5db257f31a790d3ca72ed784d42d7db2e878c8fa6723b869f6c14234153bdfb",
+  "commitment_semantics": "SHA-256(domain_separator || NUL || protected 256-bit nonce || NUL || bytes.fromhex(SHA-256(canonical protected package file bytes))).",
+  "protected_package_digest_disclosed": false,
+  "nonce_disclosed": false,
+  "supersedes": null,
+  "supersession_policy": "A correction creates a successor protected package and new commitment event with explicit supersedes lineage; neither package nor commitment is overwritten."
+}

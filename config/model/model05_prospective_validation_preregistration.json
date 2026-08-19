@@ -1,0 +1,170 @@
+{
+  "$schema": "../../schemas/model/model05_prospective_validation_preregistration.schema.json",
+  "artifact_id": "MODEL05_PROSPECTIVE_VALIDATION_PREREGISTRATION_V1",
+  "version": "1.0.0",
+  "canonical_schema_version": "model05-prospective-validation-preregistration-v1",
+  "status": "materialized_pending_model06_acceptance",
+  "purpose": "Repository-safe authoritative MODEL-05 prospective-validation preregistration for later PIPE target-blind freeze consumption; this artifact is not a prediction package or target-opening authorization.",
+  "spatial_contexts": {
+    "semantics": "validation_and_calibration_contexts_not_trade_areas_or_drive_times",
+    "primary": {"statute_miles": 5, "metres": 8046.72},
+    "sensitivity": [
+      {"statute_miles": 3, "metres": 4828.032},
+      {"statute_miles": 7, "metres": 11265.408}
+    ]
+  },
+  "aggregation": {
+    "primary": "WHOLE_TRACT_BY_OFFICIAL_2024_TIGER_INTERNAL_POINT_WITH_FORCED_VALIDATED_ANCHOR_TRACT",
+    "membership_comparison": "distance_m <= radius_m",
+    "deduplicate_by": "canonical tract GEOID",
+    "contribution": "each selected tract contributes its entire accepted tract estimate exactly once",
+    "anchor_tract_forced_inclusion": true,
+    "area_apportionment_permitted": false
+  },
+  "household_opportunity": {
+    "source": "ACS 2020-2024 five-year Detailed Table B11001",
+    "estimate": "B11001_001E",
+    "moe": "B11001_001M",
+    "universe": "households",
+    "primary_quantity": "H_i(r) = sum of B11001_001E across selected whole tracts",
+    "required_selected_tract_missing_behavior": "CONTEXT_NONCOMPUTABLE",
+    "missing_evidence_is_zero": false,
+    "is_customer_fit": false
+  },
+  "prospective_candidate_state": {
+    "eligible_candidates": ["BASELINE_HOUSEHOLD"],
+    "prediction_semantics": "raw_5_mile_whole_tract_household_opportunity",
+    "champion_state": "NO_CUSTOMER_FIT_CHAMPION_CANDIDATE",
+    "income_state": "INCONCLUSIVE",
+    "education_state": "NOT_TESTABLE",
+    "challenger_families_eligible": [],
+    "numerical_fit_preregistered": false,
+    "numerical_customer_mass_preregistered": false,
+    "numerical_model_parameters": []
+  },
+  "ranking_and_level": {
+    "ranking_status": "CONFIRMATORY",
+    "primary_ordering": "raw five-mile household opportunity",
+    "primary_metric": "Kendall tau-b",
+    "higher_is_better": true,
+    "exact_ties": "RETAIN_AS_TIES_NO_JITTER_NO_DELETION",
+    "directional_materiality_threshold": 0.20,
+    "materiality_interpretation": "practical directional margin, not a conventional significance threshold",
+    "level_status": "DESCRIPTIVE_ONLY",
+    "descriptive_mapping": "predicted weekly sales = kappa × household opportunity",
+    "kappa_derivation": "development-derived from the accepted consumed development cohort under the frozen MODEL-05 rule",
+    "kappa_is_not": ["fit", "fit coefficient", "customer probability", "customer mass"]
+  },
+  "prospective_outcomes": {
+    "success_requires": {
+      "eligible_n_minimum": 6,
+      "primary_5_mile_tau_b_minimum": 0.20,
+      "three_mile_sensitivity_minimum": 0.0,
+      "seven_mile_sensitivity_minimum": 0.0,
+      "positive_area_aggregation_sensitivity_minimum": 0.0,
+      "leave_one_location_minimum": 0.0,
+      "every_computable_dependence_component_deletion_minimum": 0.0
+    },
+    "failure": "valid primary tau-b <= 0",
+    "inconclusive": ["0 < primary tau-b < 0.20", "primary materiality met but a frozen robustness check reverses sign"],
+    "significance_test": false
+  },
+  "geometric_completeness": {
+    "measure": "C",
+    "primary_minimum": 0.90,
+    "secondary_minimum": 0.75,
+    "primary_rule": "C >= 0.90 is eligible for primary statistics",
+    "secondary_rule": "0.75 <= C < 0.90 is excluded from primary and retained as labeled secondary truncated-stratum evidence",
+    "qa_only_rule": "C < 0.75 is QA only and excluded from quantitative validation",
+    "outside_market_geography": "UNKNOWN_NOT_ZERO",
+    "is_demographic_completeness": false
+  },
+  "dependence": {
+    "primary_continuous_measure": "in-market geometric Jaccard",
+    "stress_grouping_jaccard_threshold": 0.25,
+    "use": "dependence grouping and sensitivity only",
+    "is_effective_sample_size": false,
+    "grouping": "undirected threshold graph with transitive connected components",
+    "diagnostics_only": ["tract-set Jaccard", "anchor distance"],
+    "random_row_level_validation_or_folding": "PROHIBITED"
+  },
+  "validation": {
+    "stage_order": [
+      "MILWAUKEE_TEMPORAL_VALIDATION",
+      "MILWAUKEE_PROSPECTIVE_NEW_LOCATION_VALIDATION",
+      "MADISON_HISTORICAL_REPEATED_LOCATION_EXTERNAL_VALIDATION",
+      "MADISON_2026_GENUINELY_NEW_LOCATION_EXTERNAL_VALIDATION"
+    ],
+    "stage_progression": "Each later stage remains sealed until explicit MODEL disposition of the prior stage; success never automatically authorizes the next stage.",
+    "milwaukee_temporal_gate": {
+      "purpose": "target/revision stability at repeated physical locations, not independent new-location prediction",
+      "minimum_eligible_paired_groups": 5,
+      "primary_metric": "Kendall tau-b between most recent prior-vintage Isolated Sales and 2026 Isolated Sales",
+      "pass": {"tau_b_minimum": 0.50, "every_computable_leave_one_location_minimum": 0.0},
+      "fail": ["tau-b <= 0", "target-definition mismatch", "material target-lineage defect"],
+      "otherwise": "INCONCLUSIVE",
+      "pass_required_before_milwaukee_prospective_target_opening": true
+    },
+    "milwaukee_prospective": {
+      "role": "PROSPECTIVE_MILWAUKEE_HOLDOUT",
+      "minimum_eligible_physical_locations": 6,
+      "minimum_distinct_household_predictions": 4,
+      "rules": "global prospective ranking, materiality, and robustness rules",
+      "ambiguous_or_readiness_conflicts": "QUARANTINED"
+    },
+    "madison_historical_external_gate": {
+      "purpose": "external temporal stability and directional transport screening",
+      "unit": "one resolved physical location paired by vintage",
+      "minimum_paired_groups": 5,
+      "primary_metric": "Kendall tau-b between 2024 and 2025 Isolated Sales ranks",
+      "pass": {"target_target_tau_b_minimum": 0.50, "five_mile_household_tau_positive_in_both_vintages": true, "every_frozen_spatial_sensitivity_minimum": 0.0},
+      "fail": ["target-target tau-b <= 0", "target semantic mismatch", "household tau is nonpositive in both vintages"],
+      "otherwise": "INCONCLUSIVE"
+    },
+    "madison_2026_external_new_location": {
+      "role": "EXTERNAL_MADISON_HOLDOUT",
+      "identity_requirement": "genuinely new under accepted MODEL-04 package",
+      "minimum_eligible_locations": 6,
+      "primary": "within-cohort Kendall tau-b under global prospective success/failure/inconclusive rule",
+      "milwaukee_kappa": "DESCRIPTIVE_TRANSPORT_EVIDENCE_ONLY",
+      "level_calibration_transport_assumed": false,
+      "milwaukee_and_madison_targets_pooled": false
+    }
+  },
+  "target_governance": {
+    "state_progression": ["SEALED", "EVALUATION_AUTHORIZED", "EVALUATED_FROZEN", "DIAGNOSTICS_CONSUMED", "DEVELOPMENT_CONSUMED"],
+    "consumption_rule": "A cohort whose target influences any later feature, transformation, coefficient, model, radius, aggregation, metric, threshold, exception, or business rule becomes consumed for that revised version and cannot silently regain untouched status.",
+    "unauthorized_or_unknown_access": "FAIL_CLOSED_TARGET_SEAL_VIOLATION",
+    "no_rescue_rule": ["radius", "subgroup", "metric", "exclusion", "aggregation", "calibration", "model"]
+  },
+  "freeze_prerequisites": {
+    "target_opening_permitted_by_this_artifact": false,
+    "required_target_blind_freeze_bindings": [
+      "identity package/version", "anchor version", "evidence role", "market configuration", "accepted DATA/GEO dependencies",
+      "frozen context memberships", "edge/completeness", "overlap/dependence outputs", "ACS/MOE context totals",
+      "eligibility/quarantine", "candidate list", "frozen predictions", "validation metrics/rules",
+      "model/prediction artifact identifiers/hashes", "preregistration version/hash", "authorization record"
+    ],
+    "prediction_and_freeze_owner": "PIPE",
+    "prediction_artifact_created_by_model06": false
+  },
+  "dependencies": {
+    "data": [
+      {"artifact_id": "DATA01_VALIDATION_SOURCE_CONTRACT_V1", "version": "1.0.0", "content_sha256": "31f224e87bb20c9444a061b7d8a513e45b37928158744f562d2fe8a45fe8d6e3"}
+    ],
+    "geo": [
+      {"artifact_id": "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1", "version": "1.0.0", "content_sha256": "ffa19d8b34d73fef8f940318b1a6abc5646b72d7972f0ada22889589de561bab"},
+      {"artifact_id": "GEO04_CANONICAL_TRACT_INVENTORY_MILWAUKEE_V1", "version": "1.0.0", "content_sha256": "3b291203094003006e5b00515e2bdd8c409fd4d322713b75a0e201c2dc1953c2"},
+      {"artifact_id": "GEO04_CANONICAL_TRACT_INVENTORY_MADISON_V1", "version": "1.0.0", "content_sha256": "b7557ced6623347a4e6f970e950ba0346a4bcaf22d91dc12092ea8be550dded4"},
+      {"artifact_id": "GEO02_VALIDATION_CONTEXT_SPATIAL_SPEC_V1", "version": "1.0.0", "content_sha256": "7cead55e371ef298f9ea7f55dc554702fa21a3592a373cf8b459464a3ae37a6c"},
+      {"artifact_id": "GEO03_INTERNAL_POINT_MEMBERSHIP_SPATIAL_SPEC_V1", "version": "1.0.0", "content_sha256": "756af48a51ebf8130383f81a9eee971db1cd5543e72aa92dc6243d11e5b4b105", "operation_fingerprint_sha256": "3c7421053e63df6e120d8aefd142399c9c53e6a1594ed23c37c644609a21bf14"}
+    ]
+  },
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, no NaN. Materialization timestamps are excluded from semantic content.",
+  "materialization_provenance": {"capability": "MODEL-06", "implementation": "sprouts_customer_geography.model06", "timestamp_in_semantic_content": false},
+  "supersedes": null,
+  "supersession_policy": "Never overwrite this immutable preregistration. A correction creates a versioned successor with explicit supersedes lineage and a newly calculated content_sha256.",
+  "failure_behavior": "Fail closed on identity, version, content hash, dependency, frozen-parameter, stage, target-state, or no-rescue mismatch. Local configuration cannot override accepted values.",
+  "content_sha256": "a73b1c165e4ef26b3d0ee984af7cf8ca3ae917aeda003cb62dbb6e2ef4d28620"
+}

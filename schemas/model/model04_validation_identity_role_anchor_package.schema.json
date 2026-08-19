@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model04:validation-identity-role-anchor-package:v1",
+  "title": "MODEL-04 validation identity/role/anchor package (protected-local)",
+  "type": "object",
+  "required": ["package_id", "package_version", "identity_version", "canonical_anchor_version", "target_blind_projection", "source_projection_identities", "identity_rules", "evidence_role_semantics", "records", "supersedes", "supersession_policy", "protected_content_sha256", "protected_content_hash_semantics"],
+  "properties": {
+    "package_id": {"const": "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_PACKAGE_V1"},
+    "package_version": {"const": "1.0.0"},
+    "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/record"}},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "supersedes": {"type": ["string", "null"]}
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "required": ["package_id", "package_version", "identity_version", "physical_location_id", "source_workbook_identity", "source_sheet", "source_row", "source_seed_point_id", "vintage", "market", "identity_state", "identity_rule_reason_code", "linked_prior_physical_location_id", "quarantined", "evidence_role", "evidence_subrole", "observed_coordinate", "canonical_anchor", "canonical_anchor_state", "target_view_state"],
+      "properties": {
+        "identity_state": {"enum": ["SAME_UNDERLYING_LOCATION", "PROBABLE_SAME_LOCATION", "AMBIGUOUS_IDENTITY", "GENUINELY_NEW_LOCATION"]},
+        "evidence_role": {"enum": ["DEVELOPMENT_REFERENCE", "TEMPORAL_VALIDATION", "PROSPECTIVE_MILWAUKEE_HOLDOUT", "EXTERNAL_MADISON_HOLDOUT", "AMBIGUOUS_QUARANTINE"]},
+        "quarantined": {"type": "boolean"},
+        "target_view_state": {"enum": ["SEALED", "DEVELOPMENT_CONSUMED"]}
+      }
+    }
+  }
+}
