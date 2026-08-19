@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:conformance_report:v1",
+  "title": "conformance_report (disclosure-safe)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["report_id", "schema_version", "run_state", "mandatory_passed", "check_counts", "dependency_states", "source_checksum_states", "inventory_counts", "eligibility_summary", "target_blind_statement", "disclosure_safe_commitment"],
+  "properties": {"report_id": {"type": "string"}, "schema_version": {"type": "string"}, "run_state": {"enum": ["blocked", "incomplete", "frozen", "failed"]}, "mandatory_passed": {"type": "boolean"}, "check_counts": {"type": "object"}, "dependency_states": {"type": "object"}, "source_checksum_states": {"type": "object"}, "inventory_counts": {"type": "object"}, "eligibility_summary": {"type": "object"}, "target_blind_statement": {"type": "string"}, "disclosure_safe_commitment": {"type": ["string", "null"]}}
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:freeze_manifest:v1",
+  "title": "freeze_manifest (protected-local)",
+  "type": "object",
+  "required": ["run_id", "state", "finalization_state", "supersedes", "code_identity", "configuration_identities", "dependencies", "protected_artifact_sha256", "run_manifest_sha256", "conformance_results", "target_blind_statement"],
+  "properties": {"run_id": {"type": "string"}, "state": {"const": "frozen"}, "finalization_state": {"const": "complete"}, "supersedes": {"type": ["string", "null"]}, "code_identity": {"type": "string"}, "configuration_identities": {"type": "object"}, "dependencies": {"type": "object"}, "protected_artifact_sha256": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}, "run_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}, "conformance_results": {"type": "object"}, "target_blind_statement": {"type": "string"}}
+}

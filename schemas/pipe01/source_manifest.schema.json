@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:source_manifest:v1",
+  "title": "source_manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_id", "source_name", "accepted_vintage", "source_reference", "byte_sha256", "acquisition_state", "schema_version", "lineage"],
+  "properties": {
+    "source_id": {"type": "string", "minLength": 1},
+    "source_name": {"type": "string", "minLength": 1},
+    "accepted_vintage": {"type": "string", "minLength": 1},
+    "source_reference": {"type": "string", "minLength": 1},
+    "byte_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "acquisition_state": {"enum": ["not_acquired", "acquired", "checksum_rejected"]},
+    "schema_version": {"type": "string", "minLength": 1},
+    "lineage": {"type": "object"}
+  }
+}

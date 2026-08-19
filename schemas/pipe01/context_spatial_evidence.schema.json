@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:context_spatial_evidence:v1",
+  "title": "context_spatial_evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["context_spec_id", "context_instance_id", "market_edge_state", "geometric_completeness", "geometric_jaccard", "spatial_components", "geo02_lineage"],
+  "properties": {"context_spec_id": {"type": "string"}, "context_instance_id": {"type": "string"}, "market_edge_state": {"type": "string"}, "geometric_completeness": {"type": "number", "minimum": 0, "maximum": 1}, "geometric_jaccard": {"type": "number", "minimum": 0, "maximum": 1}, "spatial_components": {"type": "object"}, "geo02_lineage": {"type": "object"}}
+}

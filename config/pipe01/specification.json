@@ -1,0 +1,20 @@
+{
+  "schema_version": "pipe01-specification-v1",
+  "membership_spec_id": "GEO03_EPSG5070_PLANAR_ANCHOR_TO_TRACT_INTPT_M_V1",
+  "source_crs": "EPSG:4269",
+  "target_crs": "EPSG:5070",
+  "input_axis_order": ["longitude", "latitude"],
+  "distance_semantics": "planar_euclidean_metres",
+  "membership_comparison": "distance_m <= radius_m",
+  "epsilon_or_rounding_permitted": false,
+  "radii_m": [4828.032, 8046.72, 11265.408],
+  "household_aggregation": "whole_tract_final_membership_once",
+  "household_estimate_variable": "B11001_001E",
+  "household_moe_variable": "B11001_001M",
+  "primary_radius_m": 8046.72,
+  "primary_completeness_minimum": 0.9,
+  "secondary_completeness_minimum": 0.75,
+  "geometric_jaccard_stress_minimum": 0.25,
+  "directional_materiality_tau_b_minimum_for_later_evaluation": 0.2,
+  "sealed_target_inputs_permitted": false
+}

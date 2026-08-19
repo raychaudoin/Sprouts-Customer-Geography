@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:tract_internal_point_evidence:v1",
+  "title": "tract_internal_point_evidence",
+  "type": "object",
+  "required": ["artifact_id", "market_id", "rows"],
+  "properties": {
+    "artifact_id": {"type": "string"}, "market_id": {"type": "string"},
+    "rows": {"type": "array", "items": {"type": "object", "required": ["market_id", "tract_geoid", "raw_INTPTLAT", "raw_INTPTLON", "parsed_latitude", "parsed_longitude", "coordinate_state", "source_crs", "target_crs", "transformation_state", "transformation_fingerprint", "projected_x_m", "projected_y_m", "source_lineage"], "properties": {"market_id": {"type": "string"}, "tract_geoid": {"type": "string"}, "raw_INTPTLAT": {"type": ["string", "null"]}, "raw_INTPTLON": {"type": ["string", "null"]}, "parsed_latitude": {"type": ["number", "null"]}, "parsed_longitude": {"type": ["number", "null"]}, "coordinate_state": {"enum": ["valid", "missing", "invalid_parse", "invalid_nonfinite", "invalid_range"]}, "source_crs": {"const": "EPSG:4269"}, "target_crs": {"const": "EPSG:5070"}, "transformation_state": {"enum": ["transformed", "noncomputable"]}, "transformation_fingerprint": {"type": "string"}, "projected_x_m": {"type": ["number", "null"]}, "projected_y_m": {"type": ["number", "null"]}, "source_lineage": {"type": ["object", "null"]}}}}
+  }
+}

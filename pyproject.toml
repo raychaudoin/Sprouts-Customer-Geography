@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sprouts-customer-geography"
+version = "0.1.0"
+description = "Repository-safe public-data geography preparation for Sprouts Customer Geography"
+requires-python = ">=3.11"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+pipe01-freeze = "sprouts_customer_geography.pipe01.cli:main"

@@ -18,6 +18,10 @@ data/local/
 data/external/
 **/confidential-local/
 **/*.confidential.*
+**/protected-runs/
+**/.pipe01-local/
+**/*.pipe01-protected.json
+**/freeze_nonce.bin
 
 # Generated outputs and large local artifacts
 outputs/

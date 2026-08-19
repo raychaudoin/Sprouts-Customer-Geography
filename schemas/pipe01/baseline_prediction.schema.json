@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:baseline_prediction:v1",
+  "title": "baseline_prediction (protected-local for real runs)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_id", "context_instance_id", "radius_m", "role", "prediction_candidate", "prediction_semantics", "model_spec_id", "model_spec_version", "preregistration_id", "preregistration_version", "household_artifact_id"],
+  "properties": {"artifact_id": {"type": "string"}, "context_instance_id": {"type": "string"}, "radius_m": {"const": 8046.72}, "role": {"const": "primary"}, "prediction_candidate": {"type": "integer", "minimum": 0}, "prediction_semantics": {"const": "raw_5_mile_whole_tract_household_opportunity"}, "model_spec_id": {"type": "string"}, "model_spec_version": {"type": "string"}, "preregistration_id": {"type": "string"}, "preregistration_version": {"type": "string"}, "household_artifact_id": {"type": "string"}}
+}

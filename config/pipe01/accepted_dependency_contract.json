@@ -1,0 +1,28 @@
+{
+  "schema_version": "pipe01-accepted-dependency-contract-v1",
+  "purpose": "Field contract only; this file does not assert or invent accepted dependency values.",
+  "protected_local_package_required": true,
+  "required_fields": [
+    "data01_config_id",
+    "data01_config_version",
+    "data01_artifact_sha256",
+    "geo02_context_spec_id",
+    "geo02_context_artifact_sha256",
+    "geo03_transform_fingerprint",
+    "geo03_artifact_sha256",
+    "model04_package_id",
+    "model04_package_version",
+    "model04_package_sha256",
+    "model05_model_spec_id",
+    "model05_model_spec_version",
+    "model05_artifact_sha256",
+    "model05_preregistration_id",
+    "model05_preregistration_version",
+    "tiger_source_manifest_id",
+    "tiger_source_sha256",
+    "canonical_inventory_derivation_spec_id",
+    "acs_source_identity",
+    "acs_retrieval_provenance_id",
+    "acs_retrieval_manifest_sha256"
+  ]
+}

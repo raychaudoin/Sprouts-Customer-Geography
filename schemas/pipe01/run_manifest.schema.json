@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:run_manifest:v1",
+  "title": "run_manifest",
+  "type": "object",
+  "required": ["run_id", "pipe_schema_version", "dependency_ids", "source_checksums", "code_identity", "configuration_identities", "protected_input_package_identity", "artifact_ids", "conformance_results", "run_state", "finalization_state", "supersedes"],
+  "properties": {"run_id": {"type": "string"}, "pipe_schema_version": {"type": "string"}, "dependency_ids": {"type": "object"}, "source_checksums": {"type": "object"}, "code_identity": {"type": "string"}, "configuration_identities": {"type": "object"}, "protected_input_package_identity": {"type": "string"}, "artifact_ids": {"type": "object"}, "conformance_results": {"type": "object"}, "run_state": {"enum": ["incomplete", "frozen", "failed"]}, "finalization_state": {"enum": ["not_started", "complete", "failed"]}, "supersedes": {"type": ["string", "null"]}}
+}

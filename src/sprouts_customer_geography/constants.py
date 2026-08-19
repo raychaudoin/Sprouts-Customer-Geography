@@ -1,0 +1,25 @@
+"""Accepted non-sensitive PIPE-01 constants.
+
+Dependency identifiers and source checksums are deliberately not declared here:
+the repository did not contain their accepted artifacts when PIPE-01 began.
+"""
+
+PIPE_SCHEMA_VERSION = "pipe01-artifacts-v1"
+MEMBERSHIP_SPEC_ID = "GEO03_EPSG5070_PLANAR_ANCHOR_TO_TRACT_INTPT_M_V1"
+SOURCE_CRS = "EPSG:4269"
+TARGET_CRS = "EPSG:5070"
+
+RADIUS_3_M = 4_828.032
+RADIUS_5_M = 8_046.72
+RADIUS_7_M = 11_265.408
+RADII_M = (RADIUS_3_M, RADIUS_5_M, RADIUS_7_M)
+
+PRIMARY_COMPLETENESS = 0.90
+SECONDARY_COMPLETENESS = 0.75
+JACCARD_STRESS_THRESHOLD = 0.25
+DIRECTIONAL_MATERIALITY_TAU_B = 0.20
+
+HOUSEHOLD_VARIABLE = "B11001_001E"
+HOUSEHOLD_MOE_VARIABLE = "B11001_001M"
+ACS_VINTAGE = "2020-2024 ACS 5-year Detailed Tables"
+TIGER_RELEASE = "2024 TIGER/Line"

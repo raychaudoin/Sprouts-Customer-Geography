@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe01:tract_inventory:v1",
+  "title": "tract_inventory",
+  "type": "object",
+  "required": ["artifact_id", "market_id", "inventory_digest", "actual_count", "qa_expected_count", "qa_count_matches", "readiness_basis", "rows"],
+  "properties": {
+    "artifact_id": {"type": "string"}, "market_id": {"type": "string"}, "inventory_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "actual_count": {"type": "integer", "minimum": 0}, "qa_expected_count": {"type": ["integer", "null"]}, "qa_count_matches": {"type": ["boolean", "null"]},
+    "readiness_basis": {"const": "ordered_inventory_digest_and_row_validation"},
+    "rows": {"type": "array", "items": {"type": "object", "required": ["market_id", "tract_geoid", "ordinal_position", "inventory_digest", "source_lineage"], "properties": {"market_id": {"type": "string"}, "tract_geoid": {"type": "string", "pattern": "^[0-9]{11}$"}, "ordinal_position": {"type": "integer", "minimum": 1}, "inventory_digest": {"type": "string"}, "source_lineage": {"type": "object"}}}}
+  }
+}
