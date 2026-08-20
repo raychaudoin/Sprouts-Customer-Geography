@@ -1,15 +1,45 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:sprouts-customer-geography:pipe02:protected-handle-registry:v1",
+  "$id": "urn:sprouts-customer-geography:pipe02:protected-handle-registry:v1.1",
   "title": "PIPE02 protected handle registry (protected-local contract only)",
   "type": "object",
-  "required": ["registry_id", "version", "protected_roots", "resources", "binding_request", "target_source_authority"],
+  "required": ["registry_id", "version", "protected_roots", "resources", "binding_request", "target_source_authorities"],
+  "additionalProperties": false,
   "properties": {
     "registry_id": {"const": "PIPE02_PROTECTED_HANDLE_REGISTRY_V1"},
-    "version": {"const": "1.0.0"},
+    "version": {"const": "1.1.0"},
     "protected_roots": {"type": "object", "minProperties": 1},
     "resources": {"type": "object", "minProperties": 1},
-    "binding_request": {"type": "object"},
-    "target_source_authority": {"type": "object"}
+    "binding_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model04_package_handle",
+        "model04_verification_material_handle",
+        "pipe01_run_directory_handle",
+        "prior_vintage_target_workbook_handle",
+        "current_2026_target_workbook_handle",
+        "binding_output_root_handle"
+      ]
+    },
+    "target_source_authorities": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["source_role", "authority_id", "provenance_class", "workbook_handle", "byte_hash_permitted", "projection"],
+        "properties": {
+          "source_role": {"enum": ["PRIOR_VINTAGE_TEMPORAL_SOURCE", "2026_TEMPORAL_SOURCE"]},
+          "workbook_handle": {"type": "string", "pattern": "^phandle-"},
+          "byte_hash_permitted": {"const": false},
+          "projection": {"type": "object"}
+        }
+      },
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"source_role": {"const": "PRIOR_VINTAGE_TEMPORAL_SOURCE"}}, "required": ["source_role"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"source_role": {"const": "2026_TEMPORAL_SOURCE"}}, "required": ["source_role"]}, "minContains": 1, "maxContains": 1}
+      ]
+    }
   }
 }

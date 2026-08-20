@@ -11,6 +11,11 @@ from xml.parsers import expat
 from xml.etree import ElementTree
 
 from sprouts_customer_geography.pipe01.errors import ConformanceError, require
+from sprouts_customer_geography.pipe02.resolver import (
+    CURRENT_2026_TEMPORAL_SOURCE,
+    PRIOR_VINTAGE_TEMPORAL_SOURCE,
+    REQUIRED_TARGET_SOURCE_ROLES,
+)
 
 
 CELL_REFERENCE = re.compile(r"^([A-Z]{1,3})([1-9][0-9]*)$")
@@ -265,12 +270,21 @@ class MinimumTargetProjectionPolicy:
     VERSION = "1.0.0"
     ALLOWED_FIELDS = frozenset({"lineage_key", "forecast_vintage", "isolated_sales_address"})
 
-    def __init__(self, authority: Mapping[str, Any], workbook_handle: str):
+    def __init__(self, authority: Mapping[str, Any], workbook_handle: str, source_role: str):
+        require(source_role in REQUIRED_TARGET_SOURCE_ROLES, "TARGET_SOURCE_ROLE_UNKNOWN", "target projection has an unknown source role")
+        require(authority.get("source_role") == source_role, "TARGET_SOURCE_ROLE_MISMATCH", "target projection authority is bound to another source role")
         require(authority.get("projection_id") == self.PROJECTION_ID and authority.get("version") == self.VERSION, "TARGET_PROJECTION_IDENTITY_MISMATCH", "minimum target projection identity/version mismatch")
         require(authority.get("workbook_handle") == workbook_handle, "TARGET_SOURCE_HANDLE_MISMATCH", "projection references another target-source handle")
         require(authority.get("default_deny") is True, "TARGET_PROJECTION_NOT_DEFAULT_DENY", "target projection must be default-deny")
         require(authority.get("allowed_market") == "milwaukee" and authority.get("allowed_role") == "TEMPORAL_VALIDATION", "TARGET_COHORT_POLICY_MISMATCH", "projection cohort must be Milwaukee TEMPORAL_VALIDATION only")
-        require(authority.get("target_year") == 2026, "TARGET_YEAR_POLICY_MISMATCH", "projection target year must be 2026")
+        if source_role == PRIOR_VINTAGE_TEMPORAL_SOURCE:
+            require(authority.get("permitted_pair_role") == "most_recent_eligible_prior", "TARGET_PAIR_ROLE_POLICY_MISMATCH", "prior-vintage source must permit only the frozen prior pair role")
+            require(authority.get("vintage_rule") == "MOST_RECENT_ELIGIBLE_PRIOR_TO_2026", "TARGET_VINTAGE_POLICY_MISMATCH", "prior-vintage source must use the accepted prior-vintage rule")
+            require("target_year" not in authority, "TARGET_YEAR_POLICY_MISMATCH", "prior-vintage source cannot claim the 2026 target-year authority")
+        else:
+            require(authority.get("permitted_pair_role") == "corresponding_2026", "TARGET_PAIR_ROLE_POLICY_MISMATCH", "2026 source must permit only the corresponding-2026 pair role")
+            require(authority.get("target_year") == 2026, "TARGET_YEAR_POLICY_MISMATCH", "2026 source projection target year must be 2026")
+            require("vintage_rule" not in authority, "TARGET_VINTAGE_POLICY_MISMATCH", "2026 source cannot claim the prior-vintage rule")
         sheet_name = authority.get("sheet_name")
         require(isinstance(sheet_name, str) and bool(sheet_name), "TARGET_SHEET_AUTHORITY_UNRESOLVED", "exact target sheet authority is missing")
         header_row = authority.get("header_row")
@@ -280,6 +294,8 @@ class MinimumTargetProjectionPolicy:
         require(isinstance(columns, Mapping) and set(columns) == {"lineage_key", "forecast_vintage", "isolated_sales"}, "TARGET_COLUMN_AUTHORITY_INVALID", "exact minimum projection columns are required")
         require(isinstance(headers, Mapping) and set(headers) == set(columns), "TARGET_HEADER_AUTHORITY_INVALID", "exact minimum projection headers are required")
         self.workbook_handle = workbook_handle
+        self.source_role = source_role
+        self.permitted_pair_role = str(authority["permitted_pair_role"])
         self.sheet_name = sheet_name
         self.header_row = header_row
         self.columns = {key: _normalized_column(str(value)) for key, value in columns.items()}
@@ -287,7 +303,7 @@ class MinimumTargetProjectionPolicy:
         self.headers = {key: str(value) for key, value in headers.items()}
         require(all(bool(value) for value in self.headers.values()), "TARGET_HEADER_AUTHORITY_INVALID", "minimum projection header values must be nonempty")
         require(authority.get("model04_lineage_field") == "source_seed_point_id", "TARGET_LINEAGE_POLICY_MISMATCH", "target join must use the frozen MODEL-04 source seed-point lineage")
-        self.target_year = 2026
+        self.target_year = 2026 if source_role == CURRENT_2026_TEMPORAL_SOURCE else None
 
     def authorize(self, *, field: str, market: str, role: str, quarantined: bool, row_allowed: bool) -> None:
         require(field in self.ALLOWED_FIELDS, "TARGET_FIELD_DENIED", "requested field is not in the minimum projection allowlist")
@@ -308,7 +324,13 @@ def project_target_addresses(
     audit = TargetAccessAudit()
     requested: dict[tuple[str, int], Mapping[str, Any]] = {}
     for item in requested_pairs:
+        require(item.get("source_role") == policy.source_role, "TARGET_SOURCE_ROLE_MISMATCH", "requested target pair is routed to another source role")
+        require(item.get("pair_role") == policy.permitted_pair_role, "TARGET_PAIR_ROLE_POLICY_MISMATCH", "requested target pair role is not permitted by this source")
         key = (str(item["lineage_key"]), int(item["vintage_year"]))
+        if policy.source_role == PRIOR_VINTAGE_TEMPORAL_SOURCE:
+            require(key[1] < 2026, "TARGET_VINTAGE_POLICY_MISMATCH", "prior-vintage target evidence must precede 2026")
+        else:
+            require(key[1] == 2026, "TARGET_YEAR_POLICY_MISMATCH", "2026 target evidence must use vintage year 2026")
         require(key not in requested, "TARGET_LINEAGE_PAIR_DUPLICATE", "frozen MODEL-04 target join pair is duplicate")
         requested[key] = item
     require(bool(requested), "TEMPORAL_COHORT_EMPTY", "no permitted temporal target rows were supplied")
@@ -395,6 +417,7 @@ def project_target_addresses(
     require(audit.target_payload_decode_calls == 0, "TARGET_VALUE_ACCESS_DETECTED", "target payload decoding occurred during PIPE-02")
     output = [
         {
+            "source_role": policy.source_role,
             "pair_role": str(item["pair_role"]),
             "physical_location_id": str(item["physical_location_id"]),
             "lineage_key": str(item["lineage_key"]),

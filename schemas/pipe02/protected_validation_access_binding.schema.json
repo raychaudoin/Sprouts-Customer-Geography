@@ -1,9 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:sprouts-customer-geography:pipe02:protected-validation-access-binding:v1",
+  "$id": "urn:sprouts-customer-geography:pipe02:protected-validation-access-binding:v1.1",
   "title": "PIPE02 protected validation access binding (protected-local)",
   "type": "object",
   "required": [
+    "$schema",
     "package_id",
     "version",
     "binding_run_id",
@@ -11,7 +12,7 @@
     "model_authority",
     "model05_authority",
     "pipe01_authority",
-    "target_source_authority",
+    "target_source_authorities",
     "temporal_eligibility_mapping",
     "minimum_target_projection",
     "protected_handle_registry_identity",
@@ -23,19 +24,56 @@
     "protected_content_hash_semantics"
   ],
   "properties": {
+    "$schema": {"const": "pipe02-protected-validation-access-binding-v1.1"},
     "package_id": {"const": "PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING_V1"},
     "version": {"const": "1.0.0"},
     "state": {"const": "ready"},
     "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "stable_binding_identity": {"type": "string", "pattern": "^pipe02-binding:sha256:[0-9a-f]{64}$"},
     "supersedes": {"type": ["string", "null"]},
+    "target_source_authorities": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["source_role", "authority_id", "provenance_class", "workbook_handle", "whole_workbook_hash_computed", "sheet_name"],
+        "properties": {
+          "source_role": {"enum": ["PRIOR_VINTAGE_TEMPORAL_SOURCE", "2026_TEMPORAL_SOURCE"]},
+          "whole_workbook_hash_computed": {"const": false}
+        }
+      },
+      "allOf": [
+        {"contains": {"type": "object", "properties": {"source_role": {"const": "PRIOR_VINTAGE_TEMPORAL_SOURCE"}}, "required": ["source_role"]}, "minContains": 1, "maxContains": 1},
+        {"contains": {"type": "object", "properties": {"source_role": {"const": "2026_TEMPORAL_SOURCE"}}, "required": ["source_role"]}, "minContains": 1, "maxContains": 1}
+      ]
+    },
     "minimum_target_projection": {
       "type": "object",
-      "required": ["projection_id", "version", "default_deny", "allowed_scope", "denied_scope", "target_cells", "target_access_audit"],
+      "required": ["projection_id", "version", "default_deny", "source_projections", "allowed_scope", "denied_scope", "target_cells", "target_access_audits"],
       "properties": {
         "projection_id": {"const": "MODEL07_MINIMUM_TEMPORAL_TARGET_PROJECTION_V1"},
         "version": {"const": "1.0.0"},
-        "default_deny": {"const": true}
+        "default_deny": {"const": true},
+        "source_projections": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["source_role", "workbook_handle", "projection_id", "version", "permitted_pair_role", "sheet_name", "allowed_fields", "denied_scope"],
+            "properties": {
+              "source_role": {"enum": ["PRIOR_VINTAGE_TEMPORAL_SOURCE", "2026_TEMPORAL_SOURCE"]},
+              "allowed_fields": {"type": "array", "minItems": 3, "maxItems": 3, "uniqueItems": true},
+              "denied_scope": {"type": "array", "minItems": 1}
+            }
+          }
+        },
+        "target_access_audits": {
+          "type": "object",
+          "required": ["PRIOR_VINTAGE_TEMPORAL_SOURCE", "2026_TEMPORAL_SOURCE"],
+          "additionalProperties": false
+        }
       }
     }
   }

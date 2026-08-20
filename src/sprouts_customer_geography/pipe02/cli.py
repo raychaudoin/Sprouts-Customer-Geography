@@ -46,14 +46,16 @@ def main() -> int:
             "PROTECTED_ROOTS_UNRESOLVED",
             "PROTECTED_RESOURCES_UNRESOLVED",
             "TARGET_SOURCE_AUTHORITY_UNRESOLVED",
+            "TARGET_SOURCE_AUTHORITIES_UNRESOLVED",
+            "TARGET_SOURCE_ROLES_INCOMPLETE",
             "TARGET_PROJECTION_AUTHORITY_UNRESOLVED",
             "PROTECTED_DIRECTORY_UNRESOLVED",
             "PROTECTED_FILE_UNRESOLVED",
         }
         state = (
-            "Binding blocked: authoritative access dependency unresolved"
+            "Dual-source correction blocked"
             if exc.code in dependency_blockers
-            else "Binding implementation/conformance failed"
+            else "Dual-source implementation/conformance failed"
         )
         print(
             json.dumps(

@@ -24,13 +24,19 @@ from sprouts_customer_geography.pipe01.commitment import DOMAIN_SEPARATOR, freez
 from sprouts_customer_geography.pipe01.errors import ConformanceError, require
 from sprouts_customer_geography.pipe01.orchestration import Model04Binding, load_model04_binding, load_repository_authorities
 
-from .resolver import ProtectedHandleResolver, _is_within
+from .resolver import (
+    CURRENT_2026_TEMPORAL_SOURCE,
+    PRIOR_VINTAGE_TEMPORAL_SOURCE,
+    REQUIRED_TARGET_SOURCE_ROLES,
+    ProtectedHandleResolver,
+    _is_within,
+)
 from .xlsx_projection import MinimumTargetProjectionPolicy, TargetAccessAudit, project_target_addresses
 
 
 BINDING_PACKAGE_ID = "PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING_V1"
 BINDING_PACKAGE_VERSION = "1.0.0"
-BINDING_SCHEMA_VERSION = "pipe02-protected-validation-access-binding-v1"
+BINDING_SCHEMA_VERSION = "pipe02-protected-validation-access-binding-v1.1"
 EXPECTED_MODEL04_COMMITMENT = "b5db257f31a790d3ca72ed784d42d7db2e878c8fa6723b869f6c14234153bdfb"
 EXPECTED_MODEL05_SHA256 = "a73b1c165e4ef26b3d0ee984af7cf8ca3ae917aeda003cb62dbb6e2ef4d28620"
 EXPECTED_PIPE_RUN_ID = "prun-4b9d09f3-d485-4fb8-87a2-44118ad34e3f"
@@ -81,7 +87,7 @@ def _context_ordinals(package: Mapping[str, Any]) -> dict[int, int]:
     return ordinals
 
 
-def derive_temporal_mapping(model04: Model04Binding) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+def derive_temporal_mapping(model04: Model04Binding) -> tuple[list[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
     """Derive the cohort and row join pairs exclusively from frozen MODEL-04."""
     package = model04.package
     records = package["records"]
@@ -89,7 +95,10 @@ def derive_temporal_mapping(model04: Model04Binding) -> tuple[list[dict[str, Any
     require(bool(temporal_indices), "TEMPORAL_COHORT_EMPTY", "MODEL-04 has no accepted temporal-validation records")
     ordinals = _context_ordinals(package)
     locations: list[dict[str, Any]] = []
-    requested_pairs: list[dict[str, Any]] = []
+    requested_pairs: dict[str, list[dict[str, Any]]] = {
+        PRIOR_VINTAGE_TEMPORAL_SOURCE: [],
+        CURRENT_2026_TEMPORAL_SOURCE: [],
+    }
     seen_locations: set[str] = set()
     for index in temporal_indices:
         current = records[index]
@@ -145,16 +154,24 @@ def derive_temporal_mapping(model04: Model04Binding) -> tuple[list[dict[str, Any
             },
         }
         locations.append(mapping)
-        for pair_role, record in (("most_recent_eligible_prior", prior), ("corresponding_2026", current)):
-            requested_pairs.append(
+        for source_role, pair_role, record in (
+            (PRIOR_VINTAGE_TEMPORAL_SOURCE, "most_recent_eligible_prior", prior),
+            (CURRENT_2026_TEMPORAL_SOURCE, "corresponding_2026", current),
+        ):
+            requested_pairs[source_role].append(
                 {
+                    "source_role": source_role,
                     "pair_role": pair_role,
                     "physical_location_id": location_id,
                     "lineage_key": str(record["source_seed_point_id"]),
                     "vintage_year": int(record["vintage_year"]),
                 }
             )
-    pair_keys = [(item["lineage_key"], item["vintage_year"]) for item in requested_pairs]
+    pair_keys = [
+        (item["lineage_key"], item["vintage_year"])
+        for role_pairs in requested_pairs.values()
+        for item in role_pairs
+    ]
     require(len(pair_keys) == len(set(pair_keys)), "TEMPORAL_TARGET_JOIN_DUPLICATE", "MODEL-04 minimum target join pairs are not unique")
     return locations, requested_pairs
 
@@ -263,7 +280,7 @@ def _validate_semantic_package(package: Mapping[str, Any]) -> None:
         "model_authority",
         "model05_authority",
         "pipe01_authority",
-        "target_source_authority",
+        "target_source_authorities",
         "temporal_eligibility_mapping",
         "minimum_target_projection",
         "protected_handle_registry_identity",
@@ -282,16 +299,54 @@ def _validate_semantic_package(package: Mapping[str, Any]) -> None:
     pipe = package.get("pipe01_authority")
     require(isinstance(pipe, Mapping) and pipe.get("run_id") == EXPECTED_PIPE_RUN_ID and pipe.get("freeze_commitment") == EXPECTED_PIPE_FREEZE_COMMITMENT, "PIPE_BINDING_IDENTITY_MISMATCH", "binding does not reference the exact accepted PIPE-01 freeze")
     require(pipe.get("upstream_frozen_artifacts_regenerated") is False, "PIPE_FROZEN_ARTIFACT_REGENERATION_REJECTED", "binding must not regenerate upstream PIPE artifacts")
-    target_source = package.get("target_source_authority")
-    require(isinstance(target_source, Mapping) and target_source.get("whole_workbook_hash_computed") is False, "TARGET_SOURCE_HASH_POLICY_INVALID", "binding must not compute a new whole-workbook target digest")
+    target_sources = package.get("target_source_authorities")
+    require(isinstance(target_sources, list) and len(target_sources) == 2, "TARGET_SOURCE_AUTHORITIES_UNRESOLVED", "binding must represent exactly two target-source authorities")
+    source_roles: set[str] = set()
+    source_handles: set[str] = set()
+    for target_source in target_sources:
+        require(isinstance(target_source, Mapping), "TARGET_SOURCE_AUTHORITY_INVALID", "each binding target-source authority must be an object")
+        source_role = str(target_source.get("source_role"))
+        require(source_role in REQUIRED_TARGET_SOURCE_ROLES and source_role not in source_roles, "TARGET_SOURCE_ROLE_INVALID", "binding target-source roles must be exact and unique")
+        source_roles.add(source_role)
+        workbook_handle = target_source.get("workbook_handle")
+        require(isinstance(workbook_handle, str) and workbook_handle not in source_handles, "TARGET_SOURCE_HANDLE_REUSED", "binding target-source handles must be distinct")
+        source_handles.add(workbook_handle)
+        require(bool(target_source.get("authority_id")) and bool(target_source.get("provenance_class")), "TARGET_SOURCE_AUTHORITY_UNRESOLVED", "binding target-source identity/provenance is incomplete")
+        require(target_source.get("whole_workbook_hash_computed") is False, "TARGET_SOURCE_HASH_POLICY_INVALID", "binding must not compute a new whole-workbook target digest")
+    require(source_roles == REQUIRED_TARGET_SOURCE_ROLES, "TARGET_SOURCE_ROLES_INCOMPLETE", "binding target-source roles are incomplete")
     locations = package.get("temporal_eligibility_mapping")
     require(isinstance(locations, list) and bool(locations), "TEMPORAL_COHORT_EMPTY", "binding must contain a frozen MODEL-04 temporal cohort")
     projection = package.get("minimum_target_projection")
     require(isinstance(projection, Mapping) and projection.get("projection_id") == MinimumTargetProjectionPolicy.PROJECTION_ID and projection.get("version") == MinimumTargetProjectionPolicy.VERSION and projection.get("default_deny") is True, "TARGET_PROJECTION_IDENTITY_MISMATCH", "binding minimum projection identity/default-deny state differs")
     target_cells = projection.get("target_cells")
     require(isinstance(target_cells, list) and len(target_cells) == len(locations), "TARGET_PAIR_COMPLETENESS_FAILED", "binding target-address pairs do not cover the temporal cohort exactly")
-    audit = projection.get("target_access_audit")
-    require(isinstance(audit, Mapping) and audit.get("target_payload_decode_calls") == 0 and audit.get("target_values_materialized") is False, "TARGET_VALUE_ACCESS_DETECTED", "binding finalization detected target payload access")
+    source_projections = projection.get("source_projections")
+    require(isinstance(source_projections, list) and len(source_projections) == 2, "TARGET_SOURCE_PROJECTION_INCOMPLETE", "binding must retain one projection identity per target-source role")
+    projection_roles = {str(item.get("source_role")) for item in source_projections if isinstance(item, Mapping)}
+    require(projection_roles == REQUIRED_TARGET_SOURCE_ROLES, "TARGET_SOURCE_PROJECTION_INCOMPLETE", "binding source projections must cover both target-source roles")
+    source_by_role = {str(item["source_role"]): item for item in target_sources}
+    for source_projection in source_projections:
+        require(isinstance(source_projection, Mapping), "TARGET_SOURCE_PROJECTION_INCOMPLETE", "each binding source projection must be an object")
+        role = str(source_projection.get("source_role"))
+        require(source_projection.get("workbook_handle") == source_by_role[role].get("workbook_handle"), "TARGET_SOURCE_HANDLE_MISMATCH", "binding source projection references another role's handle")
+        require(set(source_projection.get("allowed_fields", [])) == MinimumTargetProjectionPolicy.ALLOWED_FIELDS, "TARGET_FIELD_ALLOWLIST_MISMATCH", "binding source projection does not retain the exact minimum field allowlist")
+        require(isinstance(source_projection.get("denied_scope"), list) and bool(source_projection.get("denied_scope")), "TARGET_DENY_SCOPE_INCOMPLETE", "binding source projection does not retain its default-deny evidence")
+    audits = projection.get("target_access_audits")
+    require(isinstance(audits, Mapping) and set(audits) == REQUIRED_TARGET_SOURCE_ROLES, "TARGET_ACCESS_AUDITS_INCOMPLETE", "binding must retain one access audit per target-source role")
+    for audit in audits.values():
+        require(isinstance(audit, Mapping) and audit.get("target_payload_decode_calls") == 0 and audit.get("target_values_materialized") is False, "TARGET_VALUE_ACCESS_DETECTED", "binding finalization detected target payload access")
+    seen_locations: set[str] = set()
+    for row in target_cells:
+        require(isinstance(row, Mapping), "TARGET_PAIR_COMPLETENESS_FAILED", "binding target-address pair must be an object")
+        location_id = str(row.get("physical_location_id"))
+        require(location_id not in seen_locations, "TARGET_PAIR_DUPLICATE_LOCATION", "binding target-address pairs duplicate a physical location")
+        seen_locations.add(location_id)
+        prior = row.get("prior")
+        current = row.get("current_2026")
+        require(isinstance(prior, Mapping) and prior.get("source_role") == PRIOR_VINTAGE_TEMPORAL_SOURCE, "TARGET_PRIOR_SOURCE_ROLE_MISMATCH", "prior target evidence is not bound to the prior-vintage source role")
+        require(isinstance(current, Mapping) and current.get("source_role") == CURRENT_2026_TEMPORAL_SOURCE, "TARGET_CURRENT_SOURCE_ROLE_MISMATCH", "2026 target evidence is not bound to the 2026 source role")
+    mapping_locations = {str(location.get("physical_location_id")) for location in locations if isinstance(location, Mapping)}
+    require(seen_locations == mapping_locations, "TARGET_PAIR_LOCATION_MISMATCH", "binding target-address pairs differ from the frozen MODEL-04 cohort")
     finalization = package.get("finalization")
     require(isinstance(finalization, Mapping) and finalization.get("mandatory_reconciliations_passed") is True and finalization.get("target_values_accessed") is False and finalization.get("ready_marker_written_last") is True, "BINDING_FINALIZATION_CONFORMANCE_FAILED", "binding finalization assertions are incomplete")
     _assert_no_value_payloads(package)
@@ -417,7 +472,7 @@ class BindingResult:
     run_dir: Path
     temporal_location_count: int
     target_address_count: int
-    target_access_audit: TargetAccessAudit
+    target_access_audits: Mapping[str, TargetAccessAudit]
 
 
 def execute_protected_binding(
@@ -435,7 +490,8 @@ def execute_protected_binding(
         "model04_package_handle",
         "model04_verification_material_handle",
         "pipe01_run_directory_handle",
-        "target_workbook_handle",
+        "prior_vintage_target_workbook_handle",
+        "current_2026_target_workbook_handle",
         "binding_output_root_handle",
     }
     missing = sorted(required_request_fields - set(request))
@@ -451,7 +507,7 @@ def execute_protected_binding(
     require(commitment.get("artifact_id") == COMMITMENT_ID and commitment.get("version") == COMMITMENT_VERSION, "MODEL04_COMMITMENT_IDENTITY_MISMATCH", "MODEL-04 repository-safe commitment identity differs")
     require(commitment.get("commitment_sha256") == EXPECTED_MODEL04_COMMITMENT, "MODEL04_COMMITMENT_AUTHORITY_MISMATCH", "MODEL-04 accepted commitment differs")
     model04 = load_model04_binding(model04_package.path, model04_verification.path, commitment_path)
-    temporal_mapping, requested_pairs = derive_temporal_mapping(model04)
+    temporal_mapping, requested_pairs_by_role = derive_temporal_mapping(model04)
 
     authorities = load_repository_authorities(root)
     require(
@@ -465,16 +521,43 @@ def execute_protected_binding(
     pipe_run = resolver.resolve(str(request["pipe01_run_directory_handle"]), "pipe01_run_directory")
     pipe_binding = reconcile_pipe_freeze(pipe_run.path, pipe_run.handle, temporal_mapping)
 
-    target_workbook = resolver.resolve(str(request["target_workbook_handle"]), "validation_target_workbook")
-    target_authority = resolver.target_source_authority
-    require(target_authority.get("authority_id") and target_authority.get("provenance_class"), "TARGET_SOURCE_AUTHORITY_UNRESOLVED", "target-source identity/provenance is incomplete")
-    require(target_authority.get("workbook_handle") == target_workbook.handle, "TARGET_SOURCE_HANDLE_MISMATCH", "target-source authority references another handle")
-    require(target_authority.get("byte_hash_permitted") is False, "TARGET_SOURCE_HASH_POLICY_INVALID", "PIPE-02 target source must prohibit new whole-workbook hashing")
-    projection_document = target_authority.get("projection")
-    require(isinstance(projection_document, Mapping), "TARGET_PROJECTION_AUTHORITY_UNRESOLVED", "minimum target projection authority is absent")
-    policy = MinimumTargetProjectionPolicy(projection_document, target_workbook.handle)
-    target_addresses, audit = project_target_addresses(target_workbook.path, policy, requested_pairs)
-    require(audit.target_payload_decode_calls == 0, "TARGET_VALUE_ACCESS_DETECTED", "target payload decoder was invoked")
+    request_field_by_role = {
+        PRIOR_VINTAGE_TEMPORAL_SOURCE: "prior_vintage_target_workbook_handle",
+        CURRENT_2026_TEMPORAL_SOURCE: "current_2026_target_workbook_handle",
+    }
+    resource_kind_by_role = {
+        PRIOR_VINTAGE_TEMPORAL_SOURCE: "prior_vintage_temporal_workbook",
+        CURRENT_2026_TEMPORAL_SOURCE: "current_2026_temporal_workbook",
+    }
+    target_workbooks = {
+        role: resolver.resolve(str(request[field]), resource_kind_by_role[role])
+        for role, field in request_field_by_role.items()
+    }
+    require(len({workbook.handle for workbook in target_workbooks.values()}) == 2, "TARGET_SOURCE_HANDLE_REUSED", "one workbook handle cannot implicitly satisfy both target-source roles")
+    target_authorities = resolver.target_source_authorities
+    policies: dict[str, MinimumTargetProjectionPolicy] = {}
+    target_addresses_by_role: dict[str, list[dict[str, Any]]] = {}
+    audits: dict[str, TargetAccessAudit] = {}
+    for role in (PRIOR_VINTAGE_TEMPORAL_SOURCE, CURRENT_2026_TEMPORAL_SOURCE):
+        target_workbook = target_workbooks[role]
+        target_authority = target_authorities[role]
+        require(target_authority.get("authority_id") and target_authority.get("provenance_class"), "TARGET_SOURCE_AUTHORITY_UNRESOLVED", "target-source identity/provenance is incomplete")
+        require(target_authority.get("workbook_handle") == target_workbook.handle, "TARGET_SOURCE_HANDLE_MISMATCH", "target-source authority references another role or handle")
+        require(target_authority.get("byte_hash_permitted") is False, "TARGET_SOURCE_HASH_POLICY_INVALID", "PIPE-02 target source must prohibit new whole-workbook hashing")
+        projection_document = target_authority.get("projection")
+        require(isinstance(projection_document, Mapping), "TARGET_PROJECTION_AUTHORITY_UNRESOLVED", "minimum target projection authority is absent")
+        policy = MinimumTargetProjectionPolicy(projection_document, target_workbook.handle, role)
+        target_addresses, audit = project_target_addresses(target_workbook.path, policy, requested_pairs_by_role[role])
+        require(audit.target_payload_decode_calls == 0, "TARGET_VALUE_ACCESS_DETECTED", "target payload decoder was invoked")
+        policies[role] = policy
+        target_addresses_by_role[role] = target_addresses
+        audits[role] = audit
+
+    target_addresses = [
+        item
+        for role in (PRIOR_VINTAGE_TEMPORAL_SOURCE, CURRENT_2026_TEMPORAL_SOURCE)
+        for item in target_addresses_by_role[role]
+    ]
 
     addresses_by_location: dict[str, list[Mapping[str, Any]]] = {}
     for item in target_addresses:
@@ -483,24 +566,40 @@ def execute_protected_binding(
     for location in temporal_mapping:
         location_id = str(location["physical_location_id"])
         pairs = addresses_by_location.get(location_id, [])
-        by_role = {str(pair["pair_role"]): pair for pair in pairs}
-        require(set(by_role) == {"most_recent_eligible_prior", "corresponding_2026"}, "TARGET_PAIR_COMPLETENESS_FAILED", "each temporal location must resolve exactly one prior and one 2026 target address")
+        require(len(pairs) == 2, "TARGET_PAIR_COMPLETENESS_FAILED", "each temporal location must resolve exactly two independently sourced target addresses")
+        by_role = {str(pair["source_role"]): pair for pair in pairs}
+        require(len(by_role) == 2, "TARGET_PAIR_SOURCE_DUPLICATE", "each temporal location must resolve one address from each target-source role")
+        require(set(by_role) == REQUIRED_TARGET_SOURCE_ROLES, "TARGET_PAIR_COMPLETENESS_FAILED", "each temporal location must resolve exactly one prior and one 2026 target address")
         projection_rows.append(
             {
                 "physical_location_id": location_id,
                 "prior": {
-                    "lineage_key": by_role["most_recent_eligible_prior"]["lineage_key"],
-                    "forecast_vintage": by_role["most_recent_eligible_prior"]["vintage_year"],
-                    "isolated_sales_cell_address": by_role["most_recent_eligible_prior"]["isolated_sales_cell_address"],
+                    "source_role": PRIOR_VINTAGE_TEMPORAL_SOURCE,
+                    "lineage_key": by_role[PRIOR_VINTAGE_TEMPORAL_SOURCE]["lineage_key"],
+                    "forecast_vintage": by_role[PRIOR_VINTAGE_TEMPORAL_SOURCE]["vintage_year"],
+                    "isolated_sales_cell_address": by_role[PRIOR_VINTAGE_TEMPORAL_SOURCE]["isolated_sales_cell_address"],
                 },
                 "current_2026": {
-                    "lineage_key": by_role["corresponding_2026"]["lineage_key"],
+                    "source_role": CURRENT_2026_TEMPORAL_SOURCE,
+                    "lineage_key": by_role[CURRENT_2026_TEMPORAL_SOURCE]["lineage_key"],
                     "forecast_vintage": 2026,
-                    "isolated_sales_cell_address": by_role["corresponding_2026"]["isolated_sales_cell_address"],
+                    "isolated_sales_cell_address": by_role[CURRENT_2026_TEMPORAL_SOURCE]["isolated_sales_cell_address"],
                 },
             }
         )
+    require(set(addresses_by_location) == {str(location["physical_location_id"]) for location in temporal_mapping}, "TARGET_PAIR_LOCATION_MISMATCH", "target-source location evidence differs from the frozen MODEL-04 cohort")
 
+    denied_scope = [
+        "Impacted Sales",
+        "PROSPECTIVE_MILWAUKEE_HOLDOUT",
+        "Madison",
+        "AMBIGUOUS_QUARANTINE",
+        "unrelated rows",
+        "unrelated columns",
+        "unknown fields",
+        "non-preregistered target measures",
+        "target values",
+    ]
     semantic_package = {
         "$schema": BINDING_SCHEMA_VERSION,
         "package_id": BINDING_PACKAGE_ID,
@@ -527,18 +626,35 @@ def execute_protected_binding(
             "artifacts_by_temporal_location": dict(pipe_binding.artifact_bindings),
             "upstream_frozen_artifacts_regenerated": False,
         },
-        "target_source_authority": {
-            "authority_id": target_authority["authority_id"],
-            "provenance_class": target_authority["provenance_class"],
-            "workbook_handle": target_workbook.handle,
-            "whole_workbook_hash_computed": False,
-            "sheet_name": policy.sheet_name,
-        },
+        "target_source_authorities": [
+            {
+                "source_role": role,
+                "authority_id": target_authorities[role]["authority_id"],
+                "provenance_class": target_authorities[role]["provenance_class"],
+                "workbook_handle": target_workbooks[role].handle,
+                "whole_workbook_hash_computed": False,
+                "sheet_name": policies[role].sheet_name,
+            }
+            for role in (PRIOR_VINTAGE_TEMPORAL_SOURCE, CURRENT_2026_TEMPORAL_SOURCE)
+        ],
         "temporal_eligibility_mapping": temporal_mapping,
         "minimum_target_projection": {
-            "projection_id": policy.PROJECTION_ID,
-            "version": policy.VERSION,
+            "projection_id": MinimumTargetProjectionPolicy.PROJECTION_ID,
+            "version": MinimumTargetProjectionPolicy.VERSION,
             "default_deny": True,
+            "source_projections": [
+                {
+                    "source_role": role,
+                    "workbook_handle": target_workbooks[role].handle,
+                    "projection_id": policies[role].PROJECTION_ID,
+                    "version": policies[role].VERSION,
+                    "permitted_pair_role": policies[role].permitted_pair_role,
+                    "sheet_name": policies[role].sheet_name,
+                    "allowed_fields": sorted(policies[role].ALLOWED_FIELDS),
+                    "denied_scope": denied_scope,
+                }
+                for role in (PRIOR_VINTAGE_TEMPORAL_SOURCE, CURRENT_2026_TEMPORAL_SOURCE)
+            ],
             "allowed_scope": {
                 "market": "milwaukee",
                 "role": "TEMPORAL_VALIDATION",
@@ -546,18 +662,9 @@ def execute_protected_binding(
                 "fields": ["minimum_lineage_join_key", "forecast_vintage", "isolated_sales_cell_address"],
                 "vintage_pair": ["most_recent_eligible_prior", 2026],
             },
-            "denied_scope": [
-                "Impacted Sales",
-                "PROSPECTIVE_MILWAUKEE_HOLDOUT",
-                "Madison",
-                "AMBIGUOUS_QUARANTINE",
-                "unrelated rows",
-                "unrelated columns",
-                "unknown fields",
-                "target values",
-            ],
+            "denied_scope": denied_scope,
             "target_cells": projection_rows,
-            "target_access_audit": audit.disclosure_safe(),
+            "target_access_audits": {role: audits[role].disclosure_safe() for role in sorted(audits)},
         },
         "protected_handle_registry_identity": resolver.registry_identity,
         "finalization": {
@@ -577,13 +684,13 @@ def execute_protected_binding(
         finalized["run_dir"],
         len(temporal_mapping),
         len(target_addresses),
-        audit,
+        audits,
     )
 
 
 def build_disclosure_safe_result(result: BindingResult) -> dict[str, Any]:
     report = {
-        "completion_state": "Binding complete and ready for PIPE acceptance review",
+        "completion_state": "Dual-source correction complete and ready for PIPE acceptance review",
         "acceptance_recommendation": "Support PIPE-02 acceptance review; recommendation is evidence only and does not self-accept or resume MODEL-07.",
         "package_id": BINDING_PACKAGE_ID,
         "version": BINDING_PACKAGE_VERSION,
@@ -592,7 +699,7 @@ def build_disclosure_safe_result(result: BindingResult) -> dict[str, Any]:
         "pipe_run_id": EXPECTED_PIPE_RUN_ID,
         "model04_commitment_reconciled": True,
         "pipe01_freeze_reconciled": True,
-        "target_source_authority_resolved": True,
+        "target_source_authorities_resolved": 2,
         "temporal_location_count": result.temporal_location_count,
         "target_address_count": result.target_address_count,
         "target_values_accessed": False,

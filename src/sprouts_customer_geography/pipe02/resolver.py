@@ -12,7 +12,25 @@ from sprouts_customer_geography.pipe01.errors import ConformanceError, require
 
 
 REGISTRY_ID = "PIPE02_PROTECTED_HANDLE_REGISTRY_V1"
-REGISTRY_VERSION = "1.0.0"
+REGISTRY_VERSION = "1.1.0"
+PRIOR_VINTAGE_TEMPORAL_SOURCE = "PRIOR_VINTAGE_TEMPORAL_SOURCE"
+CURRENT_2026_TEMPORAL_SOURCE = "2026_TEMPORAL_SOURCE"
+REQUIRED_TARGET_SOURCE_ROLES = frozenset(
+    {PRIOR_VINTAGE_TEMPORAL_SOURCE, CURRENT_2026_TEMPORAL_SOURCE}
+)
+TARGET_REQUEST_FIELD_BY_ROLE = {
+    PRIOR_VINTAGE_TEMPORAL_SOURCE: "prior_vintage_target_workbook_handle",
+    CURRENT_2026_TEMPORAL_SOURCE: "current_2026_target_workbook_handle",
+}
+REQUIRED_BINDING_REQUEST_FIELDS = frozenset(
+    {
+        "model04_package_handle",
+        "model04_verification_material_handle",
+        "pipe01_run_directory_handle",
+        *TARGET_REQUEST_FIELD_BY_ROLE.values(),
+        "binding_output_root_handle",
+    }
+)
 
 
 def _is_within(candidate: Path, parent: Path) -> bool:
@@ -45,11 +63,68 @@ class ProtectedHandleResolver:
         roots = registry.get("protected_roots")
         resources = registry.get("resources")
         request = registry.get("binding_request")
-        target_source = registry.get("target_source_authority")
+        target_sources = registry.get("target_source_authorities")
         require(isinstance(roots, Mapping) and roots, "PROTECTED_ROOTS_UNRESOLVED", "no authorized protected roots were supplied")
         require(isinstance(resources, Mapping) and resources, "PROTECTED_RESOURCES_UNRESOLVED", "no authorized protected handles were supplied")
         require(isinstance(request, Mapping), "BINDING_REQUEST_UNRESOLVED", "the exact binding request was not supplied")
-        require(isinstance(target_source, Mapping), "TARGET_SOURCE_AUTHORITY_UNRESOLVED", "target-source authority was not supplied")
+        require(
+            "target_source_authority" not in registry,
+            "SINGLE_TARGET_SOURCE_CONTRACT_REJECTED",
+            "the superseded single-target-source contract is prohibited",
+        )
+        require(
+            isinstance(target_sources, list),
+            "TARGET_SOURCE_AUTHORITIES_UNRESOLVED",
+            "the two target-source authorities were not supplied",
+        )
+        role_authorities: dict[str, dict[str, Any]] = {}
+        workbook_handles: set[str] = set()
+        for target_source in target_sources:
+            require(
+                isinstance(target_source, Mapping),
+                "TARGET_SOURCE_AUTHORITY_INVALID",
+                "each target-source authority must be an object",
+            )
+            source_role = target_source.get("source_role")
+            require(
+                source_role in REQUIRED_TARGET_SOURCE_ROLES,
+                "TARGET_SOURCE_ROLE_UNKNOWN",
+                "target-source authority has an unknown role",
+            )
+            require(
+                str(source_role) not in role_authorities,
+                "TARGET_SOURCE_ROLE_DUPLICATE",
+                "target-source roles must be unique",
+            )
+            workbook_handle = target_source.get("workbook_handle")
+            require(
+                isinstance(workbook_handle, str) and workbook_handle.startswith("phandle-"),
+                "TARGET_SOURCE_HANDLE_INVALID",
+                "target-source authority must identify one opaque workbook handle",
+            )
+            require(
+                workbook_handle not in workbook_handles,
+                "TARGET_SOURCE_HANDLE_REUSED",
+                "the two independently governed target roles must use distinct workbook handles",
+            )
+            workbook_handles.add(workbook_handle)
+            role_authorities[str(source_role)] = dict(target_source)
+        require(
+            set(role_authorities) == REQUIRED_TARGET_SOURCE_ROLES,
+            "TARGET_SOURCE_ROLES_INCOMPLETE",
+            "exactly the prior-vintage and 2026 target-source roles are required",
+        )
+        require(
+            set(request) == REQUIRED_BINDING_REQUEST_FIELDS,
+            "BINDING_REQUEST_INVALID",
+            "binding request must contain exactly the required protected handles",
+        )
+        for source_role, request_field in TARGET_REQUEST_FIELD_BY_ROLE.items():
+            require(
+                request.get(request_field) == role_authorities[source_role]["workbook_handle"],
+                "TARGET_SOURCE_HANDLE_MISMATCH",
+                "binding request target handle is misbound to its source role",
+            )
         self._roots: dict[str, Path] = {}
         for handle, raw_path in roots.items():
             require(isinstance(handle, str) and handle.startswith("proot-"), "PROTECTED_ROOT_HANDLE_INVALID", "protected-root handles must be opaque proot-* identifiers")
@@ -61,14 +136,17 @@ class ProtectedHandleResolver:
             self._roots[handle] = resolved
         self._resources = dict(resources)
         self.binding_request = dict(request)
-        self.target_source_authority = dict(target_source)
+        self.target_source_authorities = role_authorities
         semantic_registry = {
             "registry_id": registry["registry_id"],
             "version": registry["version"],
             "root_handles": sorted(self._roots),
             "resources": self._resources,
             "binding_request": self.binding_request,
-            "target_source_authority": self.target_source_authority,
+            "target_source_authorities": [
+                self.target_source_authorities[role]
+                for role in sorted(self.target_source_authorities)
+            ],
         }
         self.registry_identity = f"protected-handle-registry:sha256:{content_digest(semantic_registry)}"
 
