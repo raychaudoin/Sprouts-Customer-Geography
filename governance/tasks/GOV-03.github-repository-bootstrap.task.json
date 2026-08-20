@@ -1,0 +1,29 @@
+{
+  "task_id": "GOV-03",
+  "title": "GitHub Repository Bootstrap",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-03 contract",
+  "state": "BLOCKED_FAIL_CLOSED",
+  "scope": [
+    "Create and verify one empty private GitHub repository",
+    "Connect the verified repository as the local origin remote",
+    "Preserve a separate authorization checkpoint before first publication"
+  ],
+  "exclusions": [
+    "No push, publication, default-branch decision, issue, pull request, merge, Actions, deployment, or visibility change",
+    "No protected evidence or protected-local resolution",
+    "No analytical, scoring, spatial, data, pipeline, Power BI, Site Scanner, or deployment work"
+  ],
+  "accepted_input_artifacts": [
+    "GOV02_GITHUB_WORKFLOW_EXECUTION_GOVERNANCE_V1"
+  ],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-03-github-repository-bootstrap",
+  "completion_state": {
+    "execution": "BLOCKED",
+    "implementation_evidence": [],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}
