@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe02:protected-handle-registry:v1",
+  "title": "PIPE02 protected handle registry (protected-local contract only)",
+  "type": "object",
+  "required": ["registry_id", "version", "protected_roots", "resources", "binding_request", "target_source_authority"],
+  "properties": {
+    "registry_id": {"const": "PIPE02_PROTECTED_HANDLE_REGISTRY_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_roots": {"type": "object", "minProperties": 1},
+    "resources": {"type": "object", "minProperties": 1},
+    "binding_request": {"type": "object"},
+    "target_source_authority": {"type": "object"}
+  }
+}

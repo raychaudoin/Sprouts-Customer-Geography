@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe02:protected-validation-access-binding:v1",
+  "title": "PIPE02 protected validation access binding (protected-local)",
+  "type": "object",
+  "required": [
+    "package_id",
+    "version",
+    "binding_run_id",
+    "state",
+    "model_authority",
+    "model05_authority",
+    "pipe01_authority",
+    "target_source_authority",
+    "temporal_eligibility_mapping",
+    "minimum_target_projection",
+    "protected_handle_registry_identity",
+    "finalization",
+    "supersedes",
+    "supersession_policy",
+    "protected_content_sha256",
+    "stable_binding_identity",
+    "protected_content_hash_semantics"
+  ],
+  "properties": {
+    "package_id": {"const": "PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING_V1"},
+    "version": {"const": "1.0.0"},
+    "state": {"const": "ready"},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stable_binding_identity": {"type": "string", "pattern": "^pipe02-binding:sha256:[0-9a-f]{64}$"},
+    "supersedes": {"type": ["string", "null"]},
+    "minimum_target_projection": {
+      "type": "object",
+      "required": ["projection_id", "version", "default_deny", "allowed_scope", "denied_scope", "target_cells", "target_access_audit"],
+      "properties": {
+        "projection_id": {"const": "MODEL07_MINIMUM_TEMPORAL_TARGET_PROJECTION_V1"},
+        "version": {"const": "1.0.0"},
+        "default_deny": {"const": true}
+      }
+    }
+  }
+}

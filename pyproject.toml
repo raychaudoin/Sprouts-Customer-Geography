@@ -20,3 +20,4 @@ where = ["src"]
 
 [project.scripts]
 pipe01-freeze = "sprouts_customer_geography.pipe01.cli:main"
+pipe02-bind = "sprouts_customer_geography.pipe02.cli:main"

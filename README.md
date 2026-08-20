@@ -4,9 +4,9 @@ Sprouts Customer Geography is intended to help GBT understand the distribution, 
 
 ## Current status
 
-This repository contains the governance foundation plus the bounded PIPE-01/PIPE-01B target-blind freeze implementation. Accepted repository-safe DATA, GEO, and MODEL authorities are materialized. PIPE-01B adds checksum-pinned Census adapters, the verified GEO-03 EPSG:5070 runtime, accepted GEO-02 footprint/edge/overlap/component execution, and protected-freeze orchestration around the existing schemas, calculations, safeguards, and finalization controls.
+This repository contains the governance foundation, the bounded PIPE-01/PIPE-01B target-blind freeze implementation, and the repository-safe PIPE-02 protected validation-access binding mechanism. Accepted repository-safe DATA, GEO, and MODEL authorities are materialized. PIPE-02 adds handle-only protected authority resolution, accepted freeze reconciliation, default-deny temporal target addressing, and sealed-value XLSX projection without validation analysis.
 
-Raw Census source bytes and MODEL-04 protected inputs remain local-only and outside Git. No real protected freeze, real seed-level output, sealed forecast target, scoring model, validation result, deployment, or functioning Power BI report is contained here.
+Raw Census source bytes, MODEL-04 protected inputs, the accepted real PIPE-01 freeze, validation-target workbooks, and any PIPE-02 binding remain local-only and outside Git. No real seed-level output, sealed forecast target value, scoring model, validation result, deployment, or functioning Power BI report is contained here.
 
 The intended design keeps reproducible public-data and spatial processing upstream and uses Power BI as a replaceable MVP presentation layer driven by stable outputs.
 
@@ -24,3 +24,5 @@ The intended design keeps reproducible public-data and spatial processing upstre
 - [Power BI boundary](powerbi/README.md)
 - [PIPE-01 target-blind freeze runbook](docs/PIPE01_PRETARGET_FREEZE.md)
 - [PIPE-01B implementation record](docs/work_orders/PIPE_01B_PRODUCTION_FREEZE_ADAPTERS_AND_ORCHESTRATION.md)
+- [PIPE-02 protected binding runbook](docs/PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING.md)
+- [PIPE-02 implementation record](docs/work_orders/PIPE_02_PROTECTED_VALIDATION_ACCESS_BINDING.md)
