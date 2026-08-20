@@ -17,6 +17,7 @@
   "accepted_input_artifacts": ["GOV01_REPOSITORY_FOUNDATION_V1"],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-02-github-workflow-execution-governance",
+  "implementation_commit": "79ca07850beff628006e20bbfbfe6697931c2014",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT"],
