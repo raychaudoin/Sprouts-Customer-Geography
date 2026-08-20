@@ -25,6 +25,25 @@ from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tra
 
 SCHEMA = ROOT / "schemas" / "governance" / "task_manifest.schema.json"
 MANIFEST = ROOT / "governance" / "tasks" / "GOV-02.github-workflow-execution-governance.task.json"
+UNACCEPTED_TASK_FIXTURE = {
+    "task_id": "GOV-99",
+    "title": "Synthetic acceptance validation",
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "authority_source": "Synthetic repository-safe fixture",
+    "state": "COMPLETED_AWAITING_ACCEPTANCE",
+    "scope": ["Synthetic governance validation"],
+    "exclusions": ["No protected evidence"],
+    "accepted_input_artifacts": ["GOV01_REPOSITORY_FOUNDATION_V1"],
+    "protected_dependency_logical_ids": [],
+    "implementation_branch": "task/gov-99-synthetic-acceptance-validation",
+    "completion_state": {
+        "execution": "COMPLETED",
+        "implementation_evidence": [],
+        "capability_acceptance": "NOT_REVIEWED",
+    },
+    "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+    "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance",
+}
 
 
 class GovernanceTests(unittest.TestCase):
@@ -85,7 +104,7 @@ class GovernanceTests(unittest.TestCase):
     def test_07_evidence_alone_cannot_close_a_capability(self):
         for evidence in ("LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT", "FUTURE_PULL_REQUEST", "FUTURE_MERGE"):
             with self.subTest(evidence=evidence):
-                candidate = copy.deepcopy(self.manifest)
+                candidate = copy.deepcopy(UNACCEPTED_TASK_FIXTURE)
                 candidate["state"] = "ACCEPTED_CLOSED"
                 candidate["completion_state"]["implementation_evidence"] = [evidence]
                 with self.assertRaisesRegex(ConformanceError, "TASK_ACCEPTANCE_METADATA_REQUIRED"):
@@ -122,8 +141,9 @@ class GovernanceTests(unittest.TestCase):
             with self.assertRaisesRegex(ConformanceError, "TASK_MANIFEST_FIELD_INVALID"):
                 validate_task_manifest(candidate)
 
-    def test_11_synthetic_fixture_and_tracked_path_safeguard_are_safe(self):
-        self.assertNotIn("Sprouts", json.dumps(self.manifest))
+    def test_11_project_name_and_tracked_path_safeguard_are_safe(self):
+        self.assertEqual(self.manifest["exact_next_destination"], "MASTER CONTROL ROOM: Sprouts Customer Geography")
+        self.assertNotIn("Sprouts", json.dumps(UNACCEPTED_TASK_FIXTURE))
         stageable = subprocess.run(
             ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
             cwd=ROOT,

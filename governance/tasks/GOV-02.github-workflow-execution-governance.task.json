@@ -3,7 +3,7 @@
   "title": "GitHub Workflow & Execution Governance",
   "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
   "authority_source": "Master Control Room accepted GOV-02 contract",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Repository-safe local Git workflow governance only",
     "Task naming, state, manifest, validation, and future GitHub templates",
@@ -17,12 +17,18 @@
   "accepted_input_artifacts": ["GOV01_REPOSITORY_FOUNDATION_V1"],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-02-github-workflow-execution-governance",
-  "implementation_commit": "79ca07850beff628006e20bbfbfe6697931c2014",
+  "implementation_commit": "f69ccc2c333e064d8c0cda59e0c61d1a8745443d",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT"],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
-  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_by": "GOV capability acceptance record",
+    "recorded_on": "2026-08-20"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
