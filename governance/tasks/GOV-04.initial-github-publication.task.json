@@ -1,0 +1,34 @@
+{
+  "task_id": "GOV-04",
+  "title": "Initial GitHub Publication",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-04 contract",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Verify one accepted canonical head from local Git topology",
+    "Publish exactly the canonical local main branch to the verified private origin",
+    "Verify main as the GitHub project default branch"
+  ],
+  "exclusions": [
+    "No protected evidence or protected-local resolution",
+    "No task-branch or tag publication",
+    "No issue, pull request, merge, ruleset, protection, Actions, deployment, release, collaborator, or visibility change",
+    "No analytical, scoring, spatial, data, pipeline, Power BI, Site Scanner, or deployment work"
+  ],
+  "accepted_input_artifacts": [
+    "GOV03_GITHUB_REPOSITORY_BOOTSTRAP_V1"
+  ],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-04-initial-github-publication",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}
