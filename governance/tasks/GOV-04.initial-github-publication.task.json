@@ -3,7 +3,7 @@
   "title": "Initial GitHub Publication",
   "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
   "authority_source": "Master Control Room authorized GOV-04 contract",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Verify one accepted canonical head from local Git topology",
     "Publish exactly the canonical local main branch to the verified private origin",
@@ -20,6 +20,7 @@
   ],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-04-initial-github-publication",
+  "implementation_commit": "8d160f52ea4f6f96470b20c65f54782227a9c597",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -27,8 +28,14 @@
       "TEST_PASS",
       "COMPLETION_REPORT"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_by": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_on": "2026-08-20"
   },
   "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
-  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
