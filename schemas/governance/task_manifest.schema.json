@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/governance/task_manifest.schema.json",
+  "title": "Repository-safe governed task manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "title",
+    "capability_owner",
+    "authority_source",
+    "state",
+    "scope",
+    "exclusions",
+    "accepted_input_artifacts",
+    "protected_dependency_logical_ids",
+    "implementation_branch",
+    "completion_state",
+    "acceptance_destination",
+    "exact_next_destination"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^(?:GOV|DATA|MODEL|GEO|BI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE)-[0-9]{2}[A-Z]?$"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "capability_owner": { "type": "string", "minLength": 1 },
+    "authority_source": { "type": "string", "minLength": 1 },
+    "state": {
+      "type": "string",
+      "enum": [
+        "AUTHORIZED",
+        "IN_PROGRESS",
+        "BLOCKED_FAIL_CLOSED",
+        "COMPLETED_AWAITING_ACCEPTANCE",
+        "ACCEPTED_CLOSED",
+        "REJECTED_OR_REWORK_REQUIRED"
+      ]
+    },
+    "scope": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "exclusions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "accepted_input_artifacts": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Z]+[0-9]{2}[A-Z]?_[A-Z0-9_]+_V[1-9][0-9]*$" }
+    },
+    "protected_dependency_logical_ids": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^PROTECTED_[A-Z0-9_]+(?:_V[1-9][0-9]*)?$" }
+    },
+    "implementation_branch": {
+      "type": "string",
+      "pattern": "^task/[a-z]+-[0-9]{2}[a-z]?(?:-[a-z0-9]+)+$"
+    },
+    "implementation_commit": { "type": "string", "pattern": "^[0-9a-f]{7,64}$" },
+    "completion_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["execution", "implementation_evidence", "capability_acceptance"],
+      "properties": {
+        "execution": { "type": "string", "enum": ["NOT_STARTED", "IN_PROGRESS", "BLOCKED", "COMPLETED"] },
+        "implementation_evidence": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT", "FUTURE_PULL_REQUEST", "FUTURE_MERGE"] }
+        },
+        "capability_acceptance": { "type": "string", "enum": ["NOT_REVIEWED", "ACCEPTED", "REJECTED_OR_REWORK_REQUIRED"] }
+      }
+    },
+    "acceptance_destination": { "type": "string", "minLength": 1 },
+    "acceptance_disposition": { "type": "string", "enum": ["ACCEPTED", "REJECTED_OR_REWORK_REQUIRED"] },
+    "acceptance_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability_owner", "recorded_by", "recorded_on"],
+      "properties": {
+        "capability_owner": { "type": "string", "minLength": 1 },
+        "recorded_by": { "type": "string", "minLength": 1 },
+        "recorded_on": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+      }
+    },
+    "exact_next_destination": { "type": "string", "minLength": 1 }
+  }
+}

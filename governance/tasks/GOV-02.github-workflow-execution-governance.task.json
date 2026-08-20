@@ -1,0 +1,27 @@
+{
+  "task_id": "GOV-02",
+  "title": "GitHub Workflow & Execution Governance",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room accepted GOV-02 contract",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Repository-safe local Git workflow governance only",
+    "Task naming, state, manifest, validation, and future GitHub templates",
+    "No remote GitHub operation"
+  ],
+  "exclusions": [
+    "No protected evidence or protected-local resolution",
+    "No analytical, scoring, spatial, data, pipeline, Power BI, Site Scanner, or deployment work",
+    "No GitHub repository, remote, issue, pull request, merge, push, or Actions workflow"
+  ],
+  "accepted_input_artifacts": ["GOV01_REPOSITORY_FOUNDATION_V1"],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-02-github-workflow-execution-governance",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}

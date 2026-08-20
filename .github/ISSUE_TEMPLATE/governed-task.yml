@@ -1,0 +1,49 @@
+name: Governed task authorization
+description: Future GitHub issue template for an already-authorized repository task.
+title: "<TASK-ID>: <Short Action>"
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use only after a separately authorized GitHub setup. An issue records implementation coordination; it is not capability acceptance.
+        Do not include protected paths, values, coordinates, nonces, digests, registries, workbook data, or full chat transcripts.
+  - type: input
+    id: task_id
+    attributes:
+      label: Immutable task ID
+      placeholder: GOV-02
+    validations:
+      required: true
+  - type: input
+    id: capability_owner
+    attributes:
+      label: Capability acceptance destination
+      placeholder: "GOV: Repository Workflow Decisions & Acceptance"
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Authorized scope and exclusions
+      description: Repository-safe summary only.
+    validations:
+      required: true
+  - type: textarea
+    id: artifact_ids
+    attributes:
+      label: Accepted input artifact logical IDs and opaque protected dependency logical IDs
+      description: Logical IDs only; no paths or protected evidence.
+  - type: input
+    id: manifest
+    attributes:
+      label: Repository task-manifest path
+      placeholder: governance/tasks/GOV-02.example.task.json
+    validations:
+      required: true
+  - type: input
+    id: next_destination
+    attributes:
+      label: Exact next destination
+    validations:
+      required: true

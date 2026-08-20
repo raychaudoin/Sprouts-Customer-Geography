@@ -77,6 +77,7 @@ Use meaningful tests appropriate to the authorized task. As relevant, cover sour
 ## Git safety
 
 - Work on a task-specific branch or isolated worktree; do not edit the default branch unless explicitly authorized.
+- For governed execution, maintain the repository-safe task manifest and apply the task, branch, commit, state, protected-boundary, and separate-acceptance rules in [docs/GITHUB_WORKFLOW_GOVERNANCE.md](docs/GITHUB_WORKFLOW_GOVERNANCE.md). Do not infer `ACCEPTED_CLOSED` from implementation evidence.
 - Do not force-push, destructively reset, delete user work, rebase, squash, merge, cherry-pick, or promote without explicit authorization.
 - Use concise task-specific commits. Before completion, review repository status and the complete diff; check for accidental large data, secrets, confidential inputs, and unrelated changes.
 - Report the actual branch/worktree, commit, push result, and promotion readiness.
