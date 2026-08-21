@@ -1,0 +1,27 @@
+{
+  "task_id": "GOV-10",
+  "title": "Durable Project State & Control Room Succession",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-10 contract",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Reconcile disclosure-safe current controlling state into existing repository orientation and governance surfaces",
+    "Add one concise MODEL-07 durable gate record",
+    "Preserve public/protected boundaries and derivative GitHub evidence role"
+  ],
+  "exclusions": [
+    "No analytical methodology, scoring, model validation, target access, or protected evidence work",
+    "No CI, ruleset, branch-protection, Issue, automation, service, or deployment change",
+    "No historical transcript reconstruction or exhaustive task-manifest backfill"
+  ],
+  "accepted_input_artifacts": ["GOV06_MAIN_BRANCH_PROTECTION_V1"],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-10-durable-project-state-control-room-succession",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST", "FUTURE_MERGE", "COMPLETION_REPORT"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}

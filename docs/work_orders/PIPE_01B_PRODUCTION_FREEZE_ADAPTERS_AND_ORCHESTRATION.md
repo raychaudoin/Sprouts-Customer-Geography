@@ -1,5 +1,7 @@
 # PIPE-01B production freeze adapters and orchestration
 
+> **Historical status:** This work order records the pre-real-execution implementation stage. The real target-blind protected freeze later completed and was accepted; detailed protected execution remains outside Git.
+
 ## Scope
 
 PIPE-01B implements the smallest production-form execution layer around accepted PIPE-01 calculation, schema, staging, conformance, commitment, and finalization controls. It does not run the real protected freeze, open a sealed forecast target, or change accepted DATA/GEO/MODEL analytical authority.
