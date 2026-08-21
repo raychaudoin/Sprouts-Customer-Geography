@@ -55,6 +55,13 @@ class GovernanceTests(unittest.TestCase):
         document = load_and_validate_task_manifest(MANIFEST, SCHEMA)
         self.assertEqual(document["task_id"], "GOV-02")
 
+    def test_01a_all_repository_task_manifests_validate_against_stable_schema(self):
+        manifests = sorted((ROOT / "governance" / "tasks").glob("*.task.json"))
+        self.assertTrue(manifests)
+        for manifest in manifests:
+            with self.subTest(manifest=manifest.name):
+                load_and_validate_task_manifest(manifest, SCHEMA)
+
     def test_02_task_id_rules_allow_existing_prefixes_and_reject_bad_ids(self):
         self.assertTrue(task_id_is_valid("GOV-02"))
         self.assertTrue(task_id_is_valid("PIPE-01B"))
