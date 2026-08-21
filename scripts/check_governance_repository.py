@@ -15,8 +15,10 @@ def main() -> int:
     from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tracked_paths
 
     schema = repository / "schemas" / "governance" / "task_manifest.schema.json"
-    manifest = repository / "governance" / "tasks" / "GOV-02.github-workflow-execution-governance.task.json"
-    document = load_and_validate_task_manifest(manifest, schema)
+    manifests = sorted((repository / "governance" / "tasks").glob("*.task.json"))
+    if not manifests:
+        raise SystemExit("no governance task manifests found")
+    documents = [load_and_validate_task_manifest(manifest, schema) for manifest in manifests]
     stageable = subprocess.run(
         ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
         cwd=repository,
@@ -25,7 +27,7 @@ def main() -> int:
         text=True,
     ).stdout.splitlines()
     assert_no_protected_tracked_paths(stageable)
-    print(json.dumps({"state": "passed", "task_id": document["task_id"], "tracked_path_safeguard": "passed"}, sort_keys=True))
+    print(json.dumps({"state": "passed", "task_ids": [document["task_id"] for document in documents], "tracked_path_safeguard": "passed"}, sort_keys=True))
     return 0
 
 

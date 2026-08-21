@@ -1,0 +1,29 @@
+{
+  "task_id": "GOV-09",
+  "title": "GitHub CI & Required Status Check",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-09 contract",
+  "state": "IN_PROGRESS",
+  "scope": [
+    "Add one read-only pull-request Repository Validation workflow for main",
+    "Validate every repository-safe governance task manifest against the accepted GOV-02 schema",
+    "Record repository-safe implementation evidence for separate capability acceptance"
+  ],
+  "exclusions": [
+    "No protected evidence, seeds, candidates, targets, forecasts, credentials, or secrets",
+    "No analytical, scoring, spatial, data, pipeline, Power BI, Site Scanner, deployment, release, or package work",
+    "No additional ruleset, required status check, reviewer requirement, merge queue, or repository administration change"
+  ],
+  "accepted_input_artifacts": [
+    "GOV06_MAIN_BRANCH_PROTECTION_V1"
+  ],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-09-github-ci-required-status-check",
+  "completion_state": {
+    "execution": "IN_PROGRESS",
+    "implementation_evidence": [],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}
