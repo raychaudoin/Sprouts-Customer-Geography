@@ -17,6 +17,12 @@ The product is not a final site-selection engine, a substitute for human judgmen
 - Stay within the execution prompt. Embed any inaccessible context needed for execution in that prompt.
 - Ask only questions that materially change safe execution; otherwise make and label reasonable assumptions.
 
+## Successor recovery and durable state
+
+Use this reading order to recover current controlling state: (1) README current orientation; (2) this AGENTS authority and boundary contract; (3) exactly matching task manifest(s); (4) detailed work order where needed; (5) accepted `config/` and `schemas/` authority; and (6) relevant GitHub PR, commit, CI, and ruleset evidence. Repository authority remains controlling over derivative GitHub coordination evidence. Material conflict, missing authority, stale detail, inaccessible evidence, or ambiguous retrieval must fail closed. Because this repository is PUBLIC, treat all tracked repository material as public disclosure.
+
+Every future material repository/GitHub execution or other acceptance-bearing durable implementation must use exactly one governed task manifest. Pure read-only exploratory Work does not require a manifest merely because it occurred. If a read-only result becomes accepted controlling state, reconcile it into an existing durable authority artifact or a justified work-order/current-state record; do not create a second registry.
+
 ## Scope control
 
 Favor the smallest useful increment. Distinguish prerequisites from housekeeping. Avoid broad cleanup, unnecessary rewrites, speculative frameworks, and market-specific forks. Record unrelated discoveries as bounded backlog recommendations. Never promise background or future completion, and never begin a recommended follow-on task without authorization.
@@ -65,6 +71,8 @@ Every handoff artifact has two distinct parts:
 2. **Recipient-only prompt**, for the already-open chat or thread, begins with the exact title, directs work in the current chat/thread, states whether new-thread creation or delegation is prohibited, and includes complete authorization and self-contained context.
 
 The recipient-only prompt must not contain `SEND TO`, `PASTE/DO THIS`, `WHEN COMPLETE, RETURN TO`, `THEN`, instructions for Ray to open another thread, or instructions for the recipient to delegate to another thread. No automatic handoff occurs unless Ray explicitly requests one.
+
+Where durable detailed authority already exists, a continuation/resumption may use a short launcher containing only task ID, exact thread title, tool/surface, model, reasoning, and exact current step identity. The repository-connected receiver must resolve this contract, exactly one matching manifest, exactly one required detailed work order, referenced accepted config/schema authority, and relevant GitHub PR evidence. Fail closed for no or multiple controlling task records, non-executable manifest state, missing/stale/superseded required work order, conflicting authority, inaccessible evidence, or ambiguous retrieval. Do not use a short launcher for first execution of a new task without durable detailed execution authority; a full self-contained Master Control Room prompt remains the default and fallback.
 
 ## Systematic problem-solving
 

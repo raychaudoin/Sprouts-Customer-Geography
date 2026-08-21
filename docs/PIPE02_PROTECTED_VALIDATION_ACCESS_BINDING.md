@@ -1,5 +1,9 @@
 # PIPE-02 protected validation access binding
 
+## Current accepted status
+
+The real protected binding later completed and was accepted. Protected binding, registry, and package details remain outside Git. It supported only the bounded MODEL-07 Milwaukee temporal-validation access contract and did not authorize broader target access.
+
 ## Boundary
 
 PIPE-02 creates one deterministic protected-local authority package for later MODEL-07 access. It binds the accepted MODEL-04 identity/role authority, the accepted MODEL-05 preregistration, the exact frozen PIPE-01 run, two independently governed validation-target workbook handles, the frozen Milwaukee temporal cohort, and the minimum target-cell projection. The exact target roles are `PRIOR_VINTAGE_TEMPORAL_SOURCE` and `2026_TEMPORAL_SOURCE`. It does not open a forecast value, perform validation analysis, authorize MODEL-07 resumption, or change an upstream frozen artifact.

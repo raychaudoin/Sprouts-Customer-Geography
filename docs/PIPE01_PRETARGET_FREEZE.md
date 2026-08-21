@@ -112,6 +112,6 @@ Do not run this command with real protected inputs without a separate explicit a
 
 `.gitignore` excludes common protected-run paths and artifacts. The independent tracked-path guard rejects designated protected artifact classes even if Git ignore rules are bypassed. Disclosure-safe reporting permits only aggregated states/counts and a salted commitment; it excludes coordinates, identities tied to locations, membership lists, distances, household totals, prediction values, targets, ranks, residuals, correlations, and target-based statistics.
 
-## Real protected execution gate
+## Real protected execution status
 
-PIPE-01B conformance reproduced the accepted 452 Milwaukee and 152 Madison tract inventories from the exact pinned TIGER file and bound the exact ACS B11001 source. This establishes adapter readiness, not permission to execute the real package. The remaining gate is PIPE acceptance of PIPE-01B followed by separate Master Control Room authorization for the real target-blind freeze. No real protected run was started, no real freeze commitment exists, and no target-opening authorization is supported.
+PIPE-01B conformance reproduced the accepted 452 Milwaukee and 152 Madison tract inventories from the exact pinned TIGER file and bound the exact ACS B11001 source. The real target-blind protected freeze later completed and was accepted. Its protected run, commitment, inputs, and execution evidence remain outside Git; target values did not become public or repository-visible. Later validation access remained separately governed, and this status does not imply target-opening authorization.

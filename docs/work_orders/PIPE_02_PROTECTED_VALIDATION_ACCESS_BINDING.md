@@ -1,5 +1,7 @@
 # PIPE-02: Protected Validation Access Binding
 
+> **Historical status:** This work order records the implementation stage. The real protected binding later completed and was accepted; protected binding details remain outside Git.
+
 ## Authorized increment
 
 Implement the smallest repository-safe mechanism that can materialize one deterministic protected-local MODEL-07 access binding without decoding any `Isolated Sales` target value. Reuse the accepted PIPE protected-run controls and keep real paths, identities, addresses, nonces, targets, predictions, and the binding package outside Git.
