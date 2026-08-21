@@ -11,8 +11,6 @@ permissions:
 jobs:
   repository-validation:
     runs-on: ubuntu-latest
-    env:
-      PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -25,3 +23,5 @@ jobs:
       - run: python scripts/check_pipe01_repository.py
       - run: python scripts/check_pipe02_repository.py
       - run: python -m unittest discover -s tests -v
+        env:
+          PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}
