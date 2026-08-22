@@ -3,7 +3,7 @@
   "title": "GitHub CI & Required Status Check",
   "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
   "authority_source": "Master Control Room authorized GOV-09 contract",
-  "state": "IN_PROGRESS",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Add one read-only pull-request Repository Validation workflow for main",
     "Validate every repository-safe governance task manifest against the accepted GOV-02 schema",
@@ -19,11 +19,18 @@
   ],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-09-github-ci-required-status-check",
+  "implementation_commit": "26f820e62c8dc9474f35e30ee1f3a4489bb2c32d",
   "completion_state": {
-    "execution": "IN_PROGRESS",
-    "implementation_evidence": [],
-    "capability_acceptance": "NOT_REVIEWED"
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST", "FUTURE_MERGE", "COMPLETION_REPORT"],
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
-  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_by": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_on": "2026-08-21"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
