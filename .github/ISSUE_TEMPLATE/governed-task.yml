@@ -1,12 +1,14 @@
-name: Governed task authorization
-description: Future GitHub issue template for an already-authorized repository task.
+name: Governed task coordination
+description: Deferred GitHub issue template for an already-authorized task; use only after a concrete separate authorization.
 title: "<TASK-ID>: <Short Action>"
 labels: []
 body:
   - type: markdown
     attributes:
       value: |
-        Use only after a separately authorized GitHub setup. An issue records implementation coordination; it is not capability acceptance.
+        GitHub Issues are currently deferred. Use this template only after a concrete separately authorized need.
+        Issues are not task authority: an Issue is derivative coordination evidence only and does not authorize work or create capability acceptance.
+        No Issue synchronization or mirrored task system is authorized.
         Do not include protected paths, values, coordinates, nonces, digests, registries, workbook data, or full chat transcripts.
   - type: input
     id: task_id

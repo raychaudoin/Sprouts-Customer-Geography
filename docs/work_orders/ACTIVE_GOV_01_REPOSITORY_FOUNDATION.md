@@ -1,5 +1,7 @@
 # GOV-01: Repository Foundation & Agent Contract
 
+> **Historical status:** This is the original GOV-01 repository-foundation record. Its `ACTIVE` filename and statements about the absence of a GitHub remote describe the repository at that historical stage and are not current project status. Use [README.md](../../README.md) and [GitHub workflow governance](../GITHUB_WORKFLOW_GOVERNANCE.md) for current orientation.
+
 ## Task purpose
 
 Establish a safe, minimal repository foundation and canonical agent contract for Sprouts Customer Geography so future authorized Work and Codex tasks do not need to reconstruct business, architecture, confidentiality, provenance, Git, prompt-formatting, testing, and completion-report boundaries.

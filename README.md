@@ -8,7 +8,7 @@ The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B
 
 MODEL-07 ended `TEMPORAL_VALIDATION_INCONCLUSIVE`: two eligible repeated physical-location groups were evaluated against a minimum of five. Ordering was favorable, but insufficient to validate operational model behavior; this is not evidence of instability. The prospective Milwaukee holdout and Madison stages remain sealed. See the [MODEL-07 temporal validation gate](docs/work_orders/MODEL_07_MILWAUKEE_TEMPORAL_VALIDATION_GATE.md).
 
-The real target-blind PIPE-01 freeze and bounded PIPE-02 validation-access binding later completed and were accepted. Their protected packages, registries, targets, and identities remain outside Git; completion did not make sealed targets repository-visible or authorize broader access. No functioning Power BI operator product or deployed operator application exists. Additional independent Wisconsin evidence is the principal analytical bottleneck; the next worthwhile direction is a separately authorized evidence-acquisition or validation stage.
+The real target-blind PIPE-01 freeze and bounded PIPE-02 validation-access binding later completed and were accepted. Their protected packages, registries, targets, and identities remain outside Git; completion did not make sealed targets repository-visible or authorize broader access. No functioning Power BI operator product or deployed operator application exists. Additional independent Wisconsin evidence is the principal analytical bottleneck. The accepted [MODEL-08 Wisconsin-first evidence-expansion strategy](docs/work_orders/MODEL_08_WISCONSIN_EVIDENCE_EXPANSION_STRATEGY.md) governs future evidence-generation intake, but does not itself authorize acquisition, validation execution, or target access.
 
 Repository execution uses an authorized task branch, pull request, `repository-validation`, protected-main merge, and separate capability acceptance. GitHub evidence is derivative; repository authority remains controlling. Because this is a public repository, treat all tracked material as public disclosure.
 
@@ -23,6 +23,7 @@ Start with this orientation, then read the [agent contract](AGENTS.md), matching
 - [GitHub workflow governance](docs/GITHUB_WORKFLOW_GOVERNANCE.md)
 - [Data source contract](config/data/data01_validation_source_contract.json)
 - [MODEL-05 validation preregistration](config/model/model05_prospective_validation_preregistration.json)
+- [MODEL-08 Wisconsin evidence expansion strategy](docs/work_orders/MODEL_08_WISCONSIN_EVIDENCE_EXPANSION_STRATEGY.md)
 - [PIPE-01 target-blind freeze runbook](docs/PIPE01_PRETARGET_FREEZE.md)
 - [PIPE-02 protected binding runbook](docs/PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING.md)
 - [Data governance](docs/DATA_GOVERNANCE.md)

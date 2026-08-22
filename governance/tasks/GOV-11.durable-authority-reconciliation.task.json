@@ -1,0 +1,30 @@
+{
+  "task_id": "GOV-11",
+  "title": "Durable Authority Reconciliation",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-11 contract",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Reconcile eight repository-safe durable-authority records and current-orientation surfaces",
+    "Record the disclosure-safe accepted MODEL-08 Wisconsin evidence-expansion strategy",
+    "Disambiguate historical status and deferred derivative GitHub Issue coordination"
+  ],
+  "exclusions": [
+    "No protected evidence or protected-data access",
+    "No analytical changes or new business or methodology decision",
+    "No broad historical backfill or schema changes",
+    "No CI, ruleset, branch-protection, or repository administration changes",
+    "No Issue creation or Issue synchronization",
+    "No publication of old acceptance-only commits"
+  ],
+  "accepted_input_artifacts": ["GOV06_MAIN_BRANCH_PROTECTION_V1"],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-11-durable-authority-reconciliation",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST", "FUTURE_MERGE", "COMPLETION_REPORT"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}

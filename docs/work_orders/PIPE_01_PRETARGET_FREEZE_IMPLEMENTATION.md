@@ -1,5 +1,7 @@
 # PIPE-01 Pretarget Validation Freeze Package Implementation & Conformance
 
+> **Historical status:** This implementation record predates the later real protected target-blind freeze. That freeze subsequently completed and was accepted; protected execution evidence remains outside Git. Use [PIPE-01 target-blind freeze runbook](../PIPE01_PRETARGET_FREEZE.md) and [README.md](../../README.md) for current status.
+
 ## Authorization boundary
 
 This work order records the bounded repository implementation authorized by the PIPE-01 execution prompt. It does not accept PIPE-01, promote code, authorize target access, or alter accepted DATA, GEO, or MODEL decisions.

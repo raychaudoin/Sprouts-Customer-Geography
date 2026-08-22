@@ -3,7 +3,7 @@
   "title": "Durable Project State & Control Room Succession",
   "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
   "authority_source": "Master Control Room authorized GOV-10 contract",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Reconcile disclosure-safe current controlling state into existing repository orientation and governance surfaces",
     "Add one concise MODEL-07 durable gate record",
@@ -20,8 +20,14 @@
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST", "FUTURE_MERGE", "COMPLETION_REPORT"],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
-  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_by": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_on": "2026-08-21"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
