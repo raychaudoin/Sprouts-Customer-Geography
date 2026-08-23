@@ -3,7 +3,7 @@
   "title": "Wisconsin Successor Cohort Identity & Lineage Authority",
   "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
   "authority_source": "Master Control Room authorized MODEL-10 Wisconsin Successor Cohort Identity & Lineage Authority",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Create a target-blind successor source-observation and physical-location identity authority for the complete currently available Wisconsin 2024 2025 and 2026 cohort",
     "Preserve accepted MODEL-04 physical-location and evidence-role lineage where genuinely supported without forcing incompatible source-observation lineage",
@@ -31,6 +31,7 @@
     "PROTECTED_MODEL10_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/model-10-wisconsin-successor-cohort-identity-lineage-authority",
+  "implementation_commit": "f199624d16eb42e3e6c6b4d8eb73b8dcd3109dc8",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -39,8 +40,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
-  "exact_next_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_by": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
