@@ -1,0 +1,52 @@
+{
+  "task_id": "PIPE-03",
+  "title": "Wisconsin Development Target Access Binding",
+  "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized PIPE-03 Wisconsin Development Target Access Binding",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Implement one exact-source default-deny Wisconsin development binding for MODEL-09",
+    "Establish the complete eligible Wisconsin cohort from accepted target-blind identity authority before target projection",
+    "Permit only Isolated Sales with the minimum required join and forecast-vintage lineage",
+    "Reuse accepted PIPE protected-local resolution finalization and disclosure controls",
+    "Provide repository-safe schemas documentation code and fictional conformance tests"
+  ],
+  "exclusions": [
+    "No MODEL-09 analytical development",
+    "No Impacted Sales access",
+    "No Michigan Detroit or other non-Wisconsin target access",
+    "No modification of MODEL-05 or MODEL-07",
+    "No broad protected-source discovery",
+    "No protected instances or execution artifacts in Git or GitHub",
+    "No acceptance record merge deployment Power BI or Site Scanner work"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_COMMITMENT_V1",
+    "MODEL05_PROSPECTIVE_VALIDATION_PREREGISTRATION_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL04_IDENTITY_ROLE_AUTHORITY_V1",
+    "PROTECTED_WISCONSIN_DEVELOPMENT_TARGET_SOURCE_V1",
+    "PROTECTED_PIPE03_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/pipe-03-wisconsin-development-target-access-binding",
+  "implementation_commit": "cfa3f420c0ebf7aea351638f24c01db77cd4ec21",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "PIPE: Analytical Pipeline Decisions & Acceptance",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_by": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

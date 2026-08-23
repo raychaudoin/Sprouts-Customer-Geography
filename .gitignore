@@ -28,6 +28,9 @@ data/external/
 **/binding_nonce.bin
 **/.pipe02-local/
 **/protected-bindings/
+**/pipe03_wisconsin_development_target_access_binding.json
+**/.pipe03-local/
+**/pipe03-bindings/
 
 # Generated outputs and large local artifacts
 outputs/
