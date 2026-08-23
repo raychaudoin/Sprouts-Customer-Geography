@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model10:wisconsin-cohort-identity-lineage-contract:v1",
+  "title": "MODEL-10 repository-safe Wisconsin successor identity and lineage contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_id", "version", "purpose", "cohort", "identity_separation", "model04_rule_reuse", "historical_model04_linkage", "successor_market_lineage_rule", "eligibility", "protected_boundary", "successor_package_id", "successor_commitment_id", "supersedes", "supersession_policy", "failure_behavior"],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "artifact_id": {"const": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "purpose": {"type": "string", "minLength": 1},
+    "cohort": {"type": "object"},
+    "identity_separation": {"type": "object"},
+    "model04_rule_reuse": {"type": "object"},
+    "historical_model04_linkage": {"type": "object"},
+    "successor_market_lineage_rule": {"type": "object"},
+    "eligibility": {"type": "object"},
+    "protected_boundary": {"type": "object"},
+    "successor_package_id": {"const": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1"},
+    "successor_commitment_id": {"const": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_COMMITMENT_V1"},
+    "supersedes": {"type": ["string", "null"]},
+    "supersession_policy": {"type": "string", "minLength": 1},
+    "failure_behavior": {"type": "string", "minLength": 1}
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/model10/wisconsin_cohort_identity_lineage_commitment.schema.json",
+  "artifact_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_COMMITMENT_V1",
+  "version": "1.0.0",
+  "protected_package_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1",
+  "protected_package_version": "1.0.0",
+  "domain": "sprouts-customer-geography/pipe01/freeze-commitment/v1",
+  "commitment_sha256": "b0376662f8f01252f91cd7e0e259180a3cd87c542cdc4f18719cac626a440be6",
+  "commitment_semantics": "SHA-256(domain separator NUL protected nonce NUL bytes of protected package file SHA-256).",
+  "protected_package_digest_disclosed": false,
+  "nonce_disclosed": false,
+  "observation_content_disclosed": false,
+  "supersedes": null,
+  "supersession_policy": "A correction creates a new patch package run nonce and commitment with explicit supersession."
+}

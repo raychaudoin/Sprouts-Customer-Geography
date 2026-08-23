@@ -1,0 +1,53 @@
+{
+  "task_id": "MODEL-10",
+  "title": "Wisconsin Successor Cohort Identity & Lineage Authority",
+  "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized MODEL-10 Wisconsin Successor Cohort Identity & Lineage Authority",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Create a target-blind successor source-observation and physical-location identity authority for the complete currently available Wisconsin 2024 2025 and 2026 cohort",
+    "Preserve accepted MODEL-04 physical-location and evidence-role lineage where genuinely supported without forcing incompatible source-observation lineage",
+    "Retain Wisconsin market and forecast-vintage lineage and quarantine unresolved or conflicting identity",
+    "Provide MODEL-09 development eligibility only for nonquarantined successor observations",
+    "Materialize a distinct protected-local successor package and repository-safe commitment metadata",
+    "Provide repository-safe schemas configuration documentation code and fictional conformance tests"
+  ],
+  "exclusions": [
+    "No MODEL-09 analytical development or target consumption",
+    "No Isolated Sales or Impacted Sales access",
+    "No Michigan Detroit or other non-Wisconsin evidence access",
+    "No modification of MODEL-04 MODEL-05 MODEL-07 or PIPE-03",
+    "No broad protected-source discovery",
+    "No observation-level protected content protected paths packages hashes nonces workbook details or reconstructable lineage in Git or GitHub",
+    "No acceptance record merge deployment Power BI or Site Scanner work"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL04_VALIDATION_IDENTITY_ROLE_ANCHOR_COMMITMENT_V1",
+    "MODEL05_PROSPECTIVE_VALIDATION_PREREGISTRATION_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL04_IDENTITY_ROLE_AUTHORITY_V1",
+    "PROTECTED_WISCONSIN_SUCCESSOR_COHORT_SOURCE_V1",
+    "PROTECTED_MODEL10_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/model-10-wisconsin-successor-cohort-identity-lineage-authority",
+  "implementation_commit": "f199624d16eb42e3e6c6b4d8eb73b8dcd3109dc8",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_by": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

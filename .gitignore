@@ -31,6 +31,11 @@ data/external/
 **/pipe03_wisconsin_development_target_access_binding.json
 **/.pipe03-local/
 **/pipe03-bindings/
+**/model10_wisconsin_cohort_identity_lineage_package.json
+**/model10_commitment_nonce.bin
+**/model10_commitment_evidence.json
+**/.model10-local/
+**/model10-materializations/
 
 # Generated outputs and large local artifacts
 outputs/

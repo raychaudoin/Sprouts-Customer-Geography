@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schemas/model/model10_wisconsin_cohort_identity_lineage_contract.schema.json",
+  "artifact_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+  "version": "1.0.0",
+  "purpose": "Repository-safe target-blind contract for successor Wisconsin source-observation identity physical-location identity historical MODEL-04 linkage quarantine and MODEL-09 development eligibility.",
+  "cohort": {
+    "state": "wisconsin",
+    "market_scope": "every market lineage value present in the exact authorized statewide Wisconsin source",
+    "forecast_vintages": [2024, 2025, 2026],
+    "complete_exact_source_projection_required": true
+  },
+  "identity_separation": {
+    "source_observation_identity": "Exact successor source generation workbook sheet row Seed Point ID and forecast-vintage observation.",
+    "physical_location_identity": "Target-blind analytical identity for the underlying real-world seed location across successor vintages.",
+    "historical_linkage": "A separately recorded supported link to immutable MODEL-04 physical-location identity; successor source-observation lineage never replaces MODEL-04 source-observation lineage."
+  },
+  "model04_rule_reuse": {
+    "identity_version": "MODEL04_TARGET_BLIND_PHYSICAL_LOCATION_IDENTITY_V1",
+    "exact_observed_coordinate": "SAME_UNDERLYING_LOCATION",
+    "coherent_stable_non_target_lineage_max_m": 500.0,
+    "probable_same_max_m": 10.0,
+    "probable_same_requirements": [
+      "coarser precision equality",
+      "address or city and ZIP corroboration",
+      "unique mutual nearest prior-vintage group",
+      "no lineage conflict"
+    ],
+    "ambiguity_band_m": {"exclusive_minimum": 10.0, "inclusive_maximum": 500.0},
+    "genuinely_new_minimum_m_exclusive": 500.0,
+    "seed_id_novelty_alone_is_novelty": false,
+    "target_evidence_permitted": false,
+    "new_threshold_or_tolerance_introduced": false
+  },
+  "historical_model04_linkage": {
+    "preserve_exact_physical_location_id": true,
+    "supported_evidence": [
+      "exact observed coordinate within the Wisconsin-state physical matching partition",
+      "coherent stable Seed Point lineage within the accepted 500 metre rule and without conflict"
+    ],
+    "multiple_supported_historical_physical_locations": "QUARANTINE",
+    "historical_10_to_500_metre_unresolved_proximity": "QUARANTINE",
+    "incompatible_successor_source_lineage_forced": false
+  },
+  "successor_market_lineage_rule": {
+    "reason_required": "The complete statewide successor source contains market labels beyond the historical MODEL-04 Milwaukee and Madison partition and labels may change across generations.",
+    "source_market_retained_exactly_as_lineage": true,
+    "physical_location_matching_partition": "wisconsin_state",
+    "source_market_label_is_physical_identity_partition": false,
+    "source_market_label_change_alone_creates_new_location": false,
+    "target_evidence_permitted": false
+  },
+  "eligibility": {
+    "model09_development_eligible_when": "Wisconsin observation is complete and nonquarantined after successor and historical reconciliation.",
+    "quarantined_is_eligible": false,
+    "model10_accesses_targets": false,
+    "model10_marks_development_consumed": false
+  },
+  "protected_boundary": {
+    "projection": "MODEL-04 accepted Sheet1 A:I target-blind identity projection only",
+    "target_body_values_materialized": false,
+    "impacted_sales_materialized": false,
+    "non_wisconsin_materialized": false,
+    "explicit_opaque_handles_only": true,
+    "broad_filesystem_discovery": false,
+    "protected_output_outside_repository": true
+  },
+  "successor_package_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1",
+  "successor_commitment_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_COMMITMENT_V1",
+  "supersedes": null,
+  "supersession_policy": "Never overwrite an accepted protected successor package. A correction uses a new patch version opaque run identity new commitment evidence and explicit supersedes lineage.",
+  "failure_behavior": "Fail closed on source authority completeness target-blind projection enforcement invalid or non-Wisconsin scope missing market lineage duplicate source observations incompatible MODEL-04 commitment unresolved identity conflict protected-path containment interruption overwrite or supersession mismatch."
+}
