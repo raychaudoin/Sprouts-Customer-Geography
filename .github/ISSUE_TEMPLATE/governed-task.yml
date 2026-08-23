@@ -53,6 +53,6 @@ body:
     id: posture_decision_transition
     attributes:
       label: Current posture, decision needed, and next manual transition
-      description: Keep this current and disclosure-safe; link PR/CI evidence when available.
+      description: Keep this current and disclosure-safe; link PR/CI evidence when available. When blocked, record the blocker class (Recoverable execution, Access, or Authority), the exact blocked condition, and the exact user action or owner decision needed. State that no user action is needed for a recoverable execution blocker.
     validations:
       required: true

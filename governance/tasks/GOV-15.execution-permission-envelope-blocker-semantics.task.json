@@ -1,0 +1,36 @@
+{
+  "task_id": "GOV-15",
+  "title": "Execution Permission Envelope & Blocker Semantics",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-15 Execution Permission Envelope & Blocker Semantics",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Codify the default non-destructive same-task execution permission envelope",
+    "Codify recoverable, access, and authority blocker semantics",
+    "Codify repository-first proactive recovery before Ray requests",
+    "Codify the single A/merge continuation permission envelope",
+    "Clarify Issue blocked-posture recording"
+  ],
+  "exclusions": [
+    "No task-manifest schema change",
+    "No README change",
+    "No CI, workflow, ruleset, or branch-protection change",
+    "No auto-merge",
+    "No new integration, plugin, bot, webhook, Project, dispatch, or synchronization",
+    "No historical backfill",
+    "No analytical, data, model, GEO, PIPE, BI, or product change",
+    "No protected evidence access",
+    "No deployment",
+    "No follow-on task"
+  ],
+  "accepted_input_artifacts": [],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-15-execution-permission-envelope-blocker-semantics",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}
