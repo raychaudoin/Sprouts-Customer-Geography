@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model09:wisconsin-experimental-model-contract:v1",
+  "title": "MODEL-09 repository-safe Wisconsin experimental model contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "analysis_unit", "target", "identity", "public_sources", "feature_construction", "candidates", "development_diagnostics", "selection", "output_semantics", "consumption", "protected_execution", "failure_behavior"],
+  "properties": {
+    "$schema": {"const": "../../schemas/model09/wisconsin_experimental_model_contract.schema.json"},
+    "artifact_id": {"const": "MODEL09_WISCONSIN_EXPERIMENTAL_MODEL_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "analysis_unit": {"type": "string", "minLength": 1},
+    "target": {"type": "object"},
+    "identity": {"type": "object"},
+    "public_sources": {"type": "object"},
+    "feature_construction": {"type": "object"},
+    "candidates": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidate_id", "complexity_rank", "ridge_penalty", "terms"],
+        "properties": {
+          "candidate_id": {"type": "string", "minLength": 1},
+          "complexity_rank": {"type": "integer", "minimum": 0},
+          "ridge_penalty": {"type": "number", "minimum": 0},
+          "terms": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+        }
+      }
+    },
+    "development_diagnostics": {"type": "object"},
+    "selection": {"type": "object"},
+    "output_semantics": {"type": "object"},
+    "consumption": {"type": "object"},
+    "protected_execution": {"type": "object"},
+    "failure_behavior": {"type": "string", "minLength": 1}
+  }
+}

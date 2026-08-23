@@ -4,7 +4,7 @@ Sprouts Customer Geography is public-data decision support for understanding lik
 
 ## Current orientation
 
-The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B11001 household estimates/MOEs and 2024 TIGER tract geography. Household opportunity is accepted and distinct from customer fit. No customer-fit feature, numerical fit factor, customer mass, or operational Demand Heat model is accepted.
+The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B11001 household estimates/MOEs and 2024 TIGER tract geography. Household opportunity is accepted and distinct from customer fit. MODEL-09's preferred experimental formulation, `challenger_spatial_concentration`, is accepted as a Wisconsin development-only customer-fit proxy. Independent validation and market transport are not established; it is not production ready, grants no operational Demand Heat authority, and makes no proprietary-model-equivalence claim.
 
 MODEL-07 ended `TEMPORAL_VALIDATION_INCONCLUSIVE`: two eligible repeated physical-location groups were evaluated against a minimum of five. Ordering was favorable, but insufficient to validate operational model behavior; this is not evidence of instability. The prospective Milwaukee holdout and Madison stages remain sealed. See the [MODEL-07 temporal validation gate](docs/work_orders/MODEL_07_MILWAUKEE_TEMPORAL_VALIDATION_GATE.md).
 
@@ -24,6 +24,7 @@ Start with this orientation, then read the [agent contract](AGENTS.md), matching
 - [Data source contract](config/data/data01_validation_source_contract.json)
 - [MODEL-05 validation preregistration](config/model/model05_prospective_validation_preregistration.json)
 - [MODEL-08 Wisconsin evidence expansion strategy](docs/work_orders/MODEL_08_WISCONSIN_EVIDENCE_EXPANSION_STRATEGY.md)
+- [MODEL-09 Wisconsin experimental development](docs/work_orders/MODEL_09_WISCONSIN_FULL_COHORT_EXPERIMENTAL_MODEL_DEVELOPMENT.md)
 - [PIPE-01 target-blind freeze runbook](docs/PIPE01_PRETARGET_FREEZE.md)
 - [PIPE-02 protected binding runbook](docs/PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING.md)
 - [PIPE-03 Wisconsin development binding runbook](docs/PIPE03_WISCONSIN_DEVELOPMENT_TARGET_ACCESS_BINDING.md)

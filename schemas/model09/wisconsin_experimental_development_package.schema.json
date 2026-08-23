@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model09:wisconsin-experimental-development-package:v1",
+  "title": "MODEL-09 protected Wisconsin experimental development package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "package_id", "version", "development_run_id", "state", "authority", "evidence_accounting", "feature_authority", "candidate_comparison", "selection", "fitted_models", "observations", "consumption", "finalization", "supersedes", "supersession_policy", "protected_content_sha256", "stable_development_identity", "protected_content_hash_semantics"],
+  "properties": {
+    "$schema": {"const": "model09-wisconsin-experimental-development-package-v1"},
+    "package_id": {"const": "MODEL09_WISCONSIN_EXPERIMENTAL_DEVELOPMENT_PACKAGE_V1"},
+    "version": {"type": "string", "pattern": "^1\\.0\\.[0-9]+$"},
+    "development_run_id": {"type": "string", "pattern": "^m09run-[A-Za-z0-9_-]+$"},
+    "state": {"const": "ready"},
+    "authority": {"type": "object"},
+    "evidence_accounting": {"type": "object"},
+    "feature_authority": {"type": "object"},
+    "candidate_comparison": {"type": "array", "minItems": 4, "maxItems": 4},
+    "selection": {"type": "object"},
+    "fitted_models": {"type": "array", "minItems": 4, "maxItems": 4},
+    "observations": {"type": "array", "minItems": 1},
+    "consumption": {"type": "object"},
+    "finalization": {"type": "object"},
+    "supersedes": {"type": ["string", "null"]},
+    "supersession_policy": {"type": "string", "minLength": 1},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stable_development_identity": {"type": "string", "pattern": "^model09-development:sha256:[0-9a-f]{64}$"},
+    "protected_content_hash_semantics": {"type": "string", "minLength": 1}
+  }
+}
