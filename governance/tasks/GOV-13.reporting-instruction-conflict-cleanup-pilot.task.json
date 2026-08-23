@@ -1,0 +1,32 @@
+{
+  "task_id": "GOV-13",
+  "title": "Reporting Instruction Conflict Cleanup Pilot",
+  "capability_owner": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+  "authority_source": "Master Control Room authorized GOV-13 Lane A pilot contract",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Remove the mandatory Business Takeaway requirement from AGENTS.md",
+    "Replace the universal completion-report checklist with a concise task-relevant evidence contract",
+    "Test the GOV-12 routine-lane Issue/PR/pre-merge-acceptance lifecycle"
+  ],
+  "exclusions": [
+    "No protected evidence",
+    "No methodology, analytical, source, geography, scoring, or product change",
+    "No authority or confidentiality change",
+    "No schema, validator, test, CI, ruleset, template, or branch-protection change",
+    "No GOV-11 reconciliation",
+    "No history backfill",
+    "No broader operating-model migration",
+    "No deployment or external publication beyond the authorized repository merge"
+  ],
+  "accepted_input_artifacts": [],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-13-reporting-instruction-conflict-cleanup-pilot",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

@@ -92,13 +92,15 @@ Use meaningful tests appropriate to the authorized task. As relevant, cover sour
 
 ## Completion reports
 
-Every substantive Work or Codex task report must be self-contained for Capability Acceptance and Master Control Room disposition. As applicable, include outcome, acceptance recommendation, business problem, before/after metrics, tests, limitations, failure behavior, confidentiality and protected-state preservation, sustainability, reconstructability, branch, commit, promotion readiness, backlog and lifecycle recommendations, blockers, dependencies, authorization checkpoints, exact next action and destination, recommended tool/model/reasoning, and a concise Control Room Decision Record.
+Report only evidence material to the task and its acceptance or next decision. As applicable, include:
 
-End every substantive report with:
+- outcome;
+- validation;
+- confidentiality and protected-state preservation;
+- blockers;
+- branch, commit, pull-request, and CI state;
+- exact destination.
 
-### Business Takeaway
+Do not repeat evidence already directly recoverable from the repository or GitHub unless needed to explain a discrepancy, limitation, or decision.
 
-- **Scenario**
-- **Issue/Goal**
-- **Solution/Decision**
-- **Business impact / Next step**
+Current Project and chat instructions control prose style, tone, section structure, and whether a summary section is used. Do not require a formulaic Business Takeaway or other generic closing boilerplate.
