@@ -3,7 +3,7 @@
   "title": "MODEL-10 Wisconsin Development Binding Integration",
   "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
   "authority_source": "Master Control Room authorized PIPE-04 MODEL-10 Wisconsin Development Binding Integration",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Verify the exact accepted MODEL-10 commitment and protected successor package",
     "Freeze the complete MODEL-10-eligible Wisconsin successor cohort before target projection",
@@ -31,6 +31,7 @@
     "PROTECTED_PIPE04_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/pipe-04-model10-wisconsin-development-binding-integration",
+  "implementation_commit": "5b96203ac7849fdd48601dc0129d1bbbe1b91d0e",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -39,8 +40,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "PIPE: Analytical Pipeline Decisions & Acceptance",
-  "exact_next_destination": "PIPE: Analytical Pipeline Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_by": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
