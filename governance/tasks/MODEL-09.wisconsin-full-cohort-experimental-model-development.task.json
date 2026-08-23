@@ -3,7 +3,7 @@
   "title": "Wisconsin Full-Cohort Experimental Model Development",
   "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
   "authority_source": "Master Control Room authorized MODEL-09 Wisconsin Full-Cohort Experimental Model Development",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Develop one bounded interpretable experimental Wisconsin public-data model using the complete accepted PIPE-04 eligible cohort",
     "Use only PIPE-04-bound Isolated Sales as development target evidence",
@@ -32,6 +32,7 @@
     "PROTECTED_MODEL09_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/model-09-wisconsin-full-cohort-experimental-model-development",
+  "implementation_commit": "dec2bd9af1aff15b7d7751211594dd056bc0e434",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -40,8 +41,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
-  "exact_next_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_by": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }

@@ -4,7 +4,7 @@ Sprouts Customer Geography is public-data decision support for understanding lik
 
 ## Current orientation
 
-The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B11001 household estimates/MOEs and 2024 TIGER tract geography. Household opportunity is accepted and distinct from customer fit. MODEL-09 has produced one Wisconsin full-cohort experimental formulation that is awaiting Lane B capability acceptance at exact H; it is development evidence only and is not yet accepted, independently validated, production ready, or operational Demand Heat authority.
+The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B11001 household estimates/MOEs and 2024 TIGER tract geography. Household opportunity is accepted and distinct from customer fit. MODEL-09's preferred experimental formulation, `challenger_spatial_concentration`, is accepted as a Wisconsin development-only customer-fit proxy. Independent validation and market transport are not established; it is not production ready, grants no operational Demand Heat authority, and makes no proprietary-model-equivalence claim.
 
 MODEL-07 ended `TEMPORAL_VALIDATION_INCONCLUSIVE`: two eligible repeated physical-location groups were evaluated against a minimum of five. Ordering was favorable, but insufficient to validate operational model behavior; this is not evidence of instability. The prospective Milwaukee holdout and Madison stages remain sealed. See the [MODEL-07 temporal validation gate](docs/work_orders/MODEL_07_MILWAUKEE_TEMPORAL_VALIDATION_GATE.md).
 
