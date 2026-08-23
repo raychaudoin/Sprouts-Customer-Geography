@@ -11,9 +11,13 @@ The product is not a final site-selection engine, a substitute for human judgmen
 ## Authority and workflow
 
 - Ray's explicit instructions and authorizations control within applicable higher-level instructions.
-- The Brainstorming Project's Master Control Room controls roadmap, sequencing, and task authorization. Capability Decisions & Acceptance chats control detailed acceptance.
+- Ray remains the business decision-maker and manual transition point.
+- The Brainstorming Project's Master Control Room controls roadmap, sequencing, exact task authorization, lane assignment, acceptance for routine Lane A work, and merge authorization. The named Capability Decisions & Acceptance owner controls methodology/business acceptance for Lane B work.
 - Treat Work as read-only assessment or research unless explicitly granted other capabilities. Treat Codex as bounded implementation.
-- Work and Codex may recommend but may not self-authorize, self-accept, promote, or begin follow-on work.
+- Codex performs bounded implementation and only explicitly authorized Git/GitHub writes. Work and Codex may recommend but may not self-authorize, self-accept, promote, or begin follow-on work.
+- Lane A is permitted only for exact implementation of already accepted authority or preservation of existing behavior when there is no new interpretation, protected evidence, target access, or unresolved question. Analytical, source/provenance, geography, protected-evidence, product-semantics, production-sensitive, destructive, CI-policy, legal/compliance, or ambiguous work is Lane B.
+- Both lanes require explicit acceptance of exact substantive commit H before canonical merge. Lane A acceptance belongs to Master Control Room; Lane B acceptance belongs to the named capability owner, after which Master Control Room controls the acceptance-record continuation and merge authorization. Any substantive post-H change invalidates acceptance.
+- Acceptance-record-only commit A records H and repository-safe acceptance metadata. Required CI runs on H and A, and canonical `main` lands already accepted; no post-merge acceptance-only publication loop is used.
 - Stay within the execution prompt. Embed any inaccessible context needed for execution in that prompt.
 - Ask only questions that materially change safe execution; otherwise make and label reasonable assumptions.
 
@@ -22,6 +26,8 @@ The product is not a final site-selection engine, a substitute for human judgmen
 Use this reading order to recover current controlling state: (1) README current orientation; (2) this AGENTS authority and boundary contract; (3) exactly matching task manifest(s); (4) detailed work order where needed; (5) accepted `config/` and `schemas/` authority; and (6) relevant GitHub PR, commit, CI, and ruleset evidence. Repository authority remains controlling over derivative GitHub coordination evidence. Material conflict, missing authority, stale detail, inaccessible evidence, or ambiguous retrieval must fail closed. Because this repository is PUBLIC, treat all tracked repository material as public disclosure.
 
 Every future material repository/GitHub execution or other acceptance-bearing durable implementation must use exactly one governed task manifest. Pure read-only exploratory Work does not require a manifest merely because it occurred. If a read-only result becomes accepted controlling state, reconcile it into an existing durable authority artifact or a justified work-order/current-state record; do not create a second registry.
+
+When public disclosure is safe, use one disclosure-safe GitHub Issue as the task cockpit for posture, the current decision, the next manual transition, and links to repository evidence. The Issue is derivative and non-authoritative. Do not create one when even an opaque public posture would reveal protected information, and do not create Issue synchronization or mirrored authority.
 
 ## Scope control
 
@@ -72,7 +78,7 @@ Every handoff artifact has two distinct parts:
 
 The recipient-only prompt must not contain `SEND TO`, `PASTE/DO THIS`, `WHEN COMPLETE, RETURN TO`, `THEN`, instructions for Ray to open another thread, or instructions for the recipient to delegate to another thread. No automatic handoff occurs unless Ray explicitly requests one.
 
-Where durable detailed authority already exists, a continuation/resumption may use a short launcher containing only task ID, exact thread title, tool/surface, model, reasoning, and exact current step identity. The repository-connected receiver must resolve this contract, exactly one matching manifest, exactly one required detailed work order, referenced accepted config/schema authority, and relevant GitHub PR evidence. Fail closed for no or multiple controlling task records, non-executable manifest state, missing/stale/superseded required work order, conflicting authority, inaccessible evidence, or ambiguous retrieval. Do not use a short launcher for first execution of a new task without durable detailed execution authority; a full self-contained Master Control Room prompt remains the default and fallback.
+Where durable detailed authority already exists, continuation/resumption normally uses a short launcher containing only task ID, exact thread title, tool/surface, model, reasoning, and exact current step identity. The repository-connected receiver must recover the controlling state in the order above, including exactly one matching manifest, exactly one required detailed work order, referenced accepted config/schema authority, and relevant GitHub evidence. Fail closed for no or multiple controlling task records, non-executable manifest state, missing/stale/superseded required work order, conflicting authority, inaccessible evidence, or ambiguous retrieval. Do not use a short launcher for first execution of a new task without durable detailed execution authority; a full self-contained Master Control Room prompt remains the default and fallback. Ray remains the manual decision/transition point, not the routine carrier of recoverable state.
 
 ## Systematic problem-solving
 
@@ -85,7 +91,7 @@ Use meaningful tests appropriate to the authorized task. As relevant, cover sour
 ## Git safety
 
 - Work on a task-specific branch or isolated worktree; do not edit the default branch unless explicitly authorized.
-- For governed execution, maintain the repository-safe task manifest and apply the task, branch, commit, state, protected-boundary, and separate-acceptance rules in [docs/GITHUB_WORKFLOW_GOVERNANCE.md](docs/GITHUB_WORKFLOW_GOVERNANCE.md). Do not infer `ACCEPTED_CLOSED` from implementation evidence.
+- For governed execution, maintain the repository-safe task manifest and apply the task, lane, branch, exact-H acceptance, acceptance-record-only A, protected-boundary, and merge rules in [docs/GITHUB_WORKFLOW_GOVERNANCE.md](docs/GITHUB_WORKFLOW_GOVERNANCE.md). Do not infer `ACCEPTED_CLOSED` from implementation evidence, CI, a PR, or a merge.
 - Do not force-push, destructively reset, delete user work, rebase, squash, merge, cherry-pick, or promote without explicit authorization.
 - Use concise task-specific commits. Before completion, review repository status and the complete diff; check for accidental large data, secrets, confidential inputs, and unrelated changes.
 - Report the actual branch/worktree, commit, push result, and promotion readiness.
