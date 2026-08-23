@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model10:protected-handle-registry:v1",
+  "title": "MODEL-10 protected exact-handle registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "version", "protected_roots", "resources", "materialization_request", "successor_source_authorities"],
+  "properties": {
+    "registry_id": {"const": "MODEL10_PROTECTED_HANDLE_REGISTRY_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_roots": {"type": "object", "minProperties": 1},
+    "resources": {"type": "object", "minProperties": 1},
+    "materialization_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model04_package_handle", "model04_verification_material_handle", "successor_workbook_handles", "materialization_output_root_handle"],
+      "properties": {
+        "model04_package_handle": {"type": "string", "pattern": "^phandle-"},
+        "model04_verification_material_handle": {"type": "string", "pattern": "^phandle-"},
+        "successor_workbook_handles": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^phandle-"}},
+        "materialization_output_root_handle": {"type": "string", "pattern": "^phandle-"}
+      }
+    },
+    "successor_source_authorities": {"type": "array", "minItems": 1, "items": {"type": "object"}}
+  }
+}

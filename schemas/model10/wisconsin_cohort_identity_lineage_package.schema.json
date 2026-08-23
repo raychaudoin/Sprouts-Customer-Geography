@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model10:wisconsin-cohort-identity-lineage-package:v1",
+  "title": "MODEL-10 protected-local Wisconsin successor identity and lineage package",
+  "type": "object",
+  "required": ["package_id", "version", "materialization_run_id", "state", "contract_authority", "model04_authority", "target_blind_projection", "source_authorities", "identity_rules", "records", "aggregate_conformance", "target_access", "supersedes", "supersession_policy", "protected_content_sha256", "protected_content_hash_semantics"],
+  "properties": {
+    "package_id": {"const": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1"},
+    "version": {"pattern": "^1\\.0\\.[0-9]+$"},
+    "state": {"const": "ready"},
+    "records": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/record"}},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "required": ["source_observation_id", "source_observation_lineage", "market", "forecast_vintage", "successor_physical_location_id", "historical_model04_physical_location_id", "identity_state", "identity_rule_reason_code", "quarantined", "quarantine_reason", "historical_evidence_role_lineage", "model09_development_eligible", "target_access_state"],
+      "properties": {
+        "identity_state": {"enum": ["SAME_UNDERLYING_LOCATION", "PROBABLE_SAME_LOCATION", "AMBIGUOUS_IDENTITY", "GENUINELY_NEW_LOCATION"]},
+        "quarantined": {"type": "boolean"},
+        "model09_development_eligible": {"type": "boolean"},
+        "target_access_state": {"const": "NOT_ACCESSED_BY_MODEL10"}
+      }
+    }
+  }
+}

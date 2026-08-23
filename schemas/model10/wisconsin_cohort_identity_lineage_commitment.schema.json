@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:model10:wisconsin-cohort-identity-lineage-commitment:v1",
+  "title": "MODEL-10 disclosure-safe protected-package commitment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_id", "version", "protected_package_id", "protected_package_version", "domain", "commitment_sha256", "commitment_semantics", "protected_package_digest_disclosed", "nonce_disclosed", "observation_content_disclosed", "supersedes", "supersession_policy"],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "artifact_id": {"const": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_COMMITMENT_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_package_id": {"const": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1"},
+    "protected_package_version": {"pattern": "^1\\.0\\.[0-9]+$"},
+    "domain": {"const": "sprouts-customer-geography/pipe01/freeze-commitment/v1"},
+    "commitment_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "protected_package_digest_disclosed": {"const": false},
+    "nonce_disclosed": {"const": false},
+    "observation_content_disclosed": {"const": false},
+    "supersedes": {"type": ["string", "null"]},
+    "supersession_policy": {"type": "string", "minLength": 1}
+  }
+}
