@@ -23,6 +23,7 @@ PROTECTED_ARTIFACT_FILENAMES = {
     "model10_wisconsin_cohort_identity_lineage_package.json",
     "model10_commitment_nonce.bin",
     "model10_commitment_evidence.json",
+    "pipe04_model10_wisconsin_development_binding.json",
     "materialization_state.json",
     "READY.json",
 }
@@ -37,6 +38,8 @@ PROTECTED_DIRECTORY_NAMES = {
     ".pipe03-local",
     "model10-materializations",
     ".model10-local",
+    "pipe04-bindings",
+    ".pipe04-local",
 }
 
 

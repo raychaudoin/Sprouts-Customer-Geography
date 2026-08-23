@@ -1,0 +1,59 @@
+{
+  "$schema": "../../schemas/pipe04/model10_wisconsin_development_binding_contract.schema.json",
+  "artifact_id": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1",
+  "version": "1.0.0",
+  "purpose": "Repository-safe contract binding accepted MODEL-10 Wisconsin successor identity and lineage to the minimum Isolated Sales projection for later authorized MODEL-09 development.",
+  "accepted_model10_authority": {
+    "commitment_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_COMMITMENT_V1",
+    "package_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1",
+    "substantive_h": "f199624d16eb42e3e6c6b4d8eb73b8dcd3109dc8",
+    "acceptance_record_a": "4f4dbf8fdf1f5de9633baa9c088bfece2f44b9e2",
+    "canonical_merge": "c9f97d2a3314a64db583ec9b0ea4f53aeb0b5c1b"
+  },
+  "cohort_rule": {
+    "membership_source": "verified MODEL-10 protected package only",
+    "complete_eligible_cohort_required": true,
+    "quarantined_excluded": true,
+    "cohort_frozen_before_target_projection": true,
+    "target_content_may_change_membership_or_identity": false
+  },
+  "identity_rule": {
+    "target_join_identity": "MODEL-10 successor source-observation lineage",
+    "analytical_identity": "MODEL-10 successor physical-location identity",
+    "historical_model04_linkage": "preserve exactly where MODEL-10 provides it without forcing",
+    "historical_source_observation_equality_required": false,
+    "source_market_and_forecast_vintage_preserved": true
+  },
+  "target_projection": {
+    "default_deny": true,
+    "allowed_state": "wisconsin",
+    "allowed_target_field": "Isolated Sales",
+    "denied_target_field": "Impacted Sales",
+    "allowed_content": [
+      "successor source-observation join lineage",
+      "forecast vintage",
+      "minimum safe binding lineage",
+      "Isolated Sales"
+    ],
+    "non_wisconsin_denied": true,
+    "unrelated_rows_and_fields_denied": true,
+    "broad_preview_denied": true
+  },
+  "consumption": {
+    "binding_marks_development_consumed": false,
+    "model09_analytical_influence_triggers_consumption_later": true,
+    "prior_evidence_role_and_target_view_lineage_preserved": true
+  },
+  "protected_execution": {
+    "explicit_opaque_handles_only": true,
+    "protected_root_containment": true,
+    "incomplete_first": true,
+    "immutable_runs": true,
+    "ready_marker_written_last": true,
+    "protected_content_outside_git": true,
+    "disclosure_safe_reporting": true
+  },
+  "binding_package_id": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_V1",
+  "supersedes": null,
+  "failure_behavior": "Fail closed on MODEL-10 verification mismatch incomplete eligible cohort quarantine leakage unresolved or conflicting successor-row mapping denied target scope containment interruption overwrite or supersession mismatch."
+}

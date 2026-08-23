@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe04:model10-wisconsin-development-binding-contract:v1",
+  "title": "PIPE-04 repository-safe MODEL-10 Wisconsin development binding contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_id", "version", "purpose", "accepted_model10_authority", "cohort_rule", "identity_rule", "target_projection", "consumption", "protected_execution", "binding_package_id", "supersedes", "failure_behavior"],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "artifact_id": {"const": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "purpose": {"type": "string", "minLength": 1},
+    "accepted_model10_authority": {"type": "object"},
+    "cohort_rule": {"type": "object"},
+    "identity_rule": {"type": "object"},
+    "target_projection": {"type": "object"},
+    "consumption": {"type": "object"},
+    "protected_execution": {"type": "object"},
+    "binding_package_id": {"const": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_V1"},
+    "supersedes": {"type": ["string", "null"]},
+    "failure_behavior": {"type": "string", "minLength": 1}
+  }
+}
