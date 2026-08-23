@@ -3,7 +3,7 @@
   "title": "Two-Lane Operating Model Migration",
   "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
   "authority_source": "Master Control Room authorized GOV-14 Two-Lane Operating Model Migration",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Institutionalize the accepted GOV-12 and GOV-13 two-lane governance workflow",
     "Make exact-H pre-merge acceptance and acceptance-record-only A the normal governed lifecycle",
@@ -24,11 +24,18 @@
   "accepted_input_artifacts": [],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-14-two-lane-operating-model-migration",
+  "implementation_commit": "7c51d81cc04d10e7a9858b9fc472d49bfd705c51",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST"],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
-  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_by": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_on": "2026-08-22"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
