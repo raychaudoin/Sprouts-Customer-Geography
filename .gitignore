@@ -36,6 +36,9 @@ data/external/
 **/model10_commitment_evidence.json
 **/.model10-local/
 **/model10-materializations/
+**/pipe04_model10_wisconsin_development_binding.json
+**/.pipe04-local/
+**/pipe04-bindings/
 
 # Generated outputs and large local artifacts
 outputs/

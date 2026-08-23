@@ -1,0 +1,46 @@
+{
+  "task_id": "PIPE-04",
+  "title": "MODEL-10 Wisconsin Development Binding Integration",
+  "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized PIPE-04 MODEL-10 Wisconsin Development Binding Integration",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Verify the exact accepted MODEL-10 commitment and protected successor package",
+    "Freeze the complete MODEL-10-eligible Wisconsin successor cohort before target projection",
+    "Bind successor source-observation lineage to Isolated Sales while preserving accepted physical-location identity",
+    "Reuse accepted PIPE protected-local resolution finalization commitment and disclosure controls",
+    "Provide repository-safe contract schemas documentation code guard and fictional conformance tests",
+    "Materialize one real protected READY binding usable by MODEL-09"
+  ],
+  "exclusions": [
+    "No MODEL-09 analytical development or target consumption",
+    "No identity eligibility quarantine cohort or historical-linkage interpretation",
+    "No Impacted Sales access",
+    "No Michigan Detroit or other non-Wisconsin target access",
+    "No modification of MODEL-04 MODEL-05 MODEL-07 MODEL-08 MODEL-10 or PIPE-03",
+    "No protected instances execution artifacts paths values identities nonces hashes workbook details or reconstructable lineage in Git or GitHub",
+    "No acceptance record merge deployment Power BI or Site Scanner work"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_COMMITMENT_V1",
+    "MODEL09_WISCONSIN_FULL_COHORT_EXPERIMENTAL_MODEL_DEVELOPMENT_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1",
+    "PROTECTED_WISCONSIN_DEVELOPMENT_TARGET_SOURCE_V1",
+    "PROTECTED_PIPE04_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/pipe-04-model10-wisconsin-development-binding-integration",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "PIPE: Analytical Pipeline Decisions & Acceptance",
+  "exact_next_destination": "PIPE: Analytical Pipeline Decisions & Acceptance"
+}

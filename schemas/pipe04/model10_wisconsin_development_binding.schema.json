@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe04:model10-wisconsin-development-binding:v1",
+  "title": "PIPE-04 protected MODEL-10 Wisconsin development binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "package_id", "version", "binding_run_id", "state", "model10_authority", "eligible_wisconsin_cohort", "cohort_freeze", "target_source_authorities", "minimum_target_projection", "consumption_semantics", "protected_handle_registry_identity", "finalization", "supersedes", "supersession_policy", "protected_content_sha256", "stable_binding_identity", "protected_content_hash_semantics"],
+  "properties": {
+    "$schema": {"const": "pipe04-model10-wisconsin-development-binding-v1"},
+    "package_id": {"const": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_V1"},
+    "version": {"type": "string", "pattern": "^1\\.0\\.[0-9]+$"},
+    "binding_run_id": {"type": "string", "pattern": "^p4bind-[A-Za-z0-9_-]+$"},
+    "state": {"const": "ready"},
+    "model10_authority": {"type": "object"},
+    "eligible_wisconsin_cohort": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/cohort_record"}},
+    "cohort_freeze": {"type": "object"},
+    "target_source_authorities": {"type": "array", "minItems": 1},
+    "minimum_target_projection": {
+      "type": "object",
+      "required": ["projection_id", "version", "default_deny", "allowed_fields", "denied_scope", "rows", "target_access_audit"],
+      "properties": {
+        "projection_id": {"const": "MODEL09_MINIMUM_MODEL10_WISCONSIN_DEVELOPMENT_TARGET_PROJECTION_V1"},
+        "version": {"const": "1.0.0"},
+        "default_deny": {"const": true},
+        "rows": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/target_row"}}
+      }
+    },
+    "consumption_semantics": {"type": "object"},
+    "protected_handle_registry_identity": {"type": "string", "minLength": 1},
+    "finalization": {"type": "object"},
+    "supersedes": {"type": ["string", "null"]},
+    "supersession_policy": {"type": "string", "minLength": 1},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stable_binding_identity": {"type": "string", "pattern": "^pipe04-binding:sha256:[0-9a-f]{64}$"},
+    "protected_content_hash_semantics": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "cohort_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_observation_id", "source_observation_lineage", "successor_physical_location_id", "historical_model04_physical_location_id", "market", "forecast_vintage", "identity_state", "historical_evidence_role_lineage", "target_access_state"],
+      "properties": {
+        "source_observation_id": {"type": "string", "pattern": "^sobs-"},
+        "source_observation_lineage": {"type": "object"},
+        "successor_physical_location_id": {"type": "string", "minLength": 1},
+        "historical_model04_physical_location_id": {"type": ["string", "null"]},
+        "market": {"type": "string", "minLength": 1},
+        "forecast_vintage": {"type": "integer"},
+        "identity_state": {"not": {"const": "AMBIGUOUS_IDENTITY"}},
+        "historical_evidence_role_lineage": {"type": "array"},
+        "target_access_state": {"const": "NOT_ACCESSED_BY_MODEL10"}
+      }
+    },
+    "target_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_observation_id", "forecast_vintage", "isolated_sales"],
+      "properties": {
+        "source_observation_id": {"type": "string", "pattern": "^sobs-"},
+        "forecast_vintage": {"type": "integer"},
+        "isolated_sales": {"type": "string", "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[Ee][+-]?[0-9]+)?$"}
+      }
+    }
+  }
+}
