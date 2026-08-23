@@ -3,7 +3,7 @@
   "title": "Reporting Instruction Conflict Cleanup Pilot",
   "capability_owner": "MASTER CONTROL ROOM: Sprouts Customer Geography",
   "authority_source": "Master Control Room authorized GOV-13 Lane A pilot contract",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Remove the mandatory Business Takeaway requirement from AGENTS.md",
     "Replace the universal completion-report checklist with a concise task-relevant evidence contract",
@@ -22,11 +22,18 @@
   "accepted_input_artifacts": [],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-13-reporting-instruction-conflict-cleanup-pilot",
+  "implementation_commit": "c3b6dbe937c78cc980bcdbf544b8b113e9233a18",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS"],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography",
-  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+    "recorded_by": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+    "recorded_on": "2026-08-22"
+  },
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
 }
