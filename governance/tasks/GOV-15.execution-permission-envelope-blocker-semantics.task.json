@@ -1,0 +1,43 @@
+{
+  "task_id": "GOV-15",
+  "title": "Execution Permission Envelope & Blocker Semantics",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-15 Execution Permission Envelope & Blocker Semantics",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Codify the default non-destructive same-task execution permission envelope",
+    "Codify recoverable, access, and authority blocker semantics",
+    "Codify repository-first proactive recovery before Ray requests",
+    "Codify the single A/merge continuation permission envelope",
+    "Clarify Issue blocked-posture recording"
+  ],
+  "exclusions": [
+    "No task-manifest schema change",
+    "No README change",
+    "No CI, workflow, ruleset, or branch-protection change",
+    "No auto-merge",
+    "No new integration, plugin, bot, webhook, Project, dispatch, or synchronization",
+    "No historical backfill",
+    "No analytical, data, model, GEO, PIPE, BI, or product change",
+    "No protected evidence access",
+    "No deployment",
+    "No follow-on task"
+  ],
+  "accepted_input_artifacts": [],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-15-execution-permission-envelope-blocker-semantics",
+  "implementation_commit": "ae191d4da1caf44306c55b69989b9bf2375d7e97",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST"],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_by": "GOV: Repository Workflow Decisions & Acceptance",
+    "recorded_on": "2026-08-22"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

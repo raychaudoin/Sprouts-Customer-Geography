@@ -20,6 +20,31 @@ Lane B is capability-sensitive work. It includes any analytical methodology, mod
 
 When classification is uncertain, use Lane B. Lane choice never weakens confidentiality, testing, branch protection, or explicit-authorization requirements.
 
+## Execution permission envelope and blocker semantics
+
+Unless an authorization expressly excludes an operation, an authorized governed task implicitly authorizes the non-destructive same-task execution operations needed to complete its exact scope. The default envelope includes:
+
+- repository and connected-GitHub recovery plus exact-task access/readiness preflight;
+- creation and maintenance of the authorized manifest and one disclosure-safe Issue when public posture is safe;
+- creation and use of the task branch or worktree;
+- task-scoped repository edits, commits, pushes, and authorized PR creation or maintenance;
+- approved repository-safe tests and checks, required CI, retries of approved tests or CI, and environment-only retries;
+- bounded mechanical corrections that do not alter authority, substantive behavior, protected access, or scope;
+- derivative Issue/PR posture updates; and
+- exact-H verification and preparation for the correct acceptance owner.
+
+Separate tools or Git/GitHub actions within this envelope do not create additional Ray permission transitions. The envelope does not authorize scope expansion, lane change, new business/methodology/analytical/product behavior, protected evidence or target access, destructive Git operations, history rewrite, force push, direct unprotected publication, unscoped dependencies, new integrations/plugins/bots/webhooks/Projects/dispatch/synchronization, substantive post-H changes, deployment, publication beyond the authorized normal repository merge, or follow-on work.
+
+Executors must classify execution blockers as exactly one of the following:
+
+1. **Recoverable execution blocker.** Resolution remains wholly inside current task authority and the default envelope, such as an in-scope test or CI failure, formatting/lint/schema correction, transient network/tool failure, environment retry, non-destructive worktree/temporary-directory correction, repository/GitHub refresh, or authority-preserving mechanical correction. Recover or retry directly on the same task, Issue, branch, and PR; record material retry/correction evidence in derivative posture when useful. Ray involvement is not required unless recovery reveals an access or authority blocker.
+2. **Access blocker.** A required authentication, account, connector, repository permission, user-side permission, or other external access dependency is unavailable and cannot be restored within existing executor capability. First verify the access cause and check repository/connected-GitHub evidence for an allowed existing path. Then request only the minimum user-side action needed to restore the exact blocked capability, without broadening scope. Resume the same task identity and current step after restoration unless authority changed.
+3. **Authority blocker.** Resolution requires a decision or permission outside the task envelope, including scope or lane change; methodology, business, analytical, product, source, geography, or scoring authority; protected evidence or target access; destructive action; a new dependency or integration; deployment; publication outside the authorized merge; substantive post-H modification; or follow-on work. Stop, recover and cite the conflicting/current authority, and route only the minimum decision to the correct owner. Do not continue through a workaround or create a new task without MCR authorization.
+
+Before asking Ray for permission, information, evidence, or action, determine whether the action is already in the task envelope, whether repository/GitHub recovery already provides the information, whether the blocker is mechanically recoverable, and whether a genuine access or authority blocker remains. Uncertainty and ordinary execution friction are not by themselves Ray transitions.
+
+Repository-first recovery precedes recommending, authorizing, accepting, sequencing, resuming, or escalating governed work whenever relevant repository/GitHub access is available. Recover current orientation; inspect the exact task authority and relevant accepted config/schema/work-order authority; inspect active task, Issue, branch, PR, CI, and blocker state; and identify conflicting active tasks, settled decisions, protected or sealed stages, unmet prerequisites, and already-durable evidence. Repository authority controls over derivative GitHub posture. If required evidence is inaccessible, stale, ambiguous, or conflicting, fail closed rather than guessing or asking Ray to transport accessible evidence. GitHub must not be used to infer local-only state.
+
 ## Immutable identities, branches, and states
 
 - Task IDs, corrections, retries, and bounded rework retain the same identity while authority is unchanged.
@@ -46,6 +71,12 @@ The current governed integration path is:
 8. Required `repository-validation` reruns and succeeds on A. Verify H..A before merge.
 9. MCR authorizes or executes normal protected merge as applicable. Canonical `main` lands already accepted. Do not use auto-merge unless separately authorized.
 10. Close the Issue with the canonical merge and next destination. There is no post-merge acceptance-only commit or publication loop.
+
+## A/merge continuation permission envelope
+
+After the correct owner accepts exact H, one MCR authorization to proceed with the A/merge continuation covers creation of acceptance-record-only A; recording `implementation_commit = H` and repository-safe acceptance metadata; derivative Issue/PR acceptance updates; local validation and required CI on A; retries of approved CI or environment failures that do not change substantive H; H..A allowed-diff verification; normal protected merge when every accepted gate passes; verification of canonical `main`; and Issue closure with derivative closure posture. Do not ask Ray separately for these mechanical operations.
+
+This continuation applies only while H remains the accepted substantive commit, A changes only explicitly authorized acceptance/closure surfaces, required checks pass, and the continuation authorizes normal protected merge. Any substantive post-H change invalidates acceptance and is an authority blocker requiring revised-H acceptance.
 
 ## Main integration and validation policy
 
