@@ -1,34 +1,27 @@
 # <TASK-ID>: <Short Action>
 
-## Governed task evidence
+## Governed evidence
 
-- Immutable task ID:
-- Repository-safe manifest:
-- Authority source:
-- Capability acceptance destination:
-- Current task state:
+- Task ID:
+- Issue:
+- Manifest:
+- Lane:
+- Authorized scope / exclusions:
 
-## Evidence
+- Validation:
+- Protected-data confirmation: No protected paths, values, coordinates, nonces, digests, registries, workbook copies, target identities, or reconstructable protected lineage are included; tracked-path safeguards pass.
 
-- Local tests/checks:
-- Local commit(s):
-- Scope and exclusions reconfirmed:
+- Substantive commit H:
+- Acceptance owner:
+- Acceptance disposition / status:
+- Acceptance-record-only commit A (when authorized):
+- Canonical merge / exact next destination (when applicable):
 
-## Protected-data confirmation
+## Confirmation
 
-- [ ] No protected paths, values, coordinates, nonces, digests, registries, workbook copies, or reconstructable protected lineage are included.
-- [ ] Existing tracked-path safeguards pass.
+- [ ] The PR head is the stated H or authorized A, required CI applies to that exact head, and scope/exclusions are unchanged.
+- [ ] No copied completion report or protected information is included.
 
 ## Governance notice
 
-A pull request is implementation evidence only. It does not make a task `ACCEPTED_CLOSED`; explicit capability acceptance metadata is required in the repository-safe task manifest.
-
-## Optional post-acceptance record
-
-Use only after this PR has merged and a capability decision was made elsewhere. This section records derivative, repository-safe metadata; editing it does not create capability acceptance, and GitHub remains evidence rather than acceptance authority. Historical PRs do not require backfill.
-
-- Capability disposition:
-- Capability acceptance source:
-- Acceptance date:
-- Accepted merge/main commit:
-- Exact next destination:
+This PR is derivative implementation evidence. It does not authorize work, assign a lane, create acceptance, or authorize merge. Exact-H acceptance must come from the correct owner and be recorded only through the authorized H/A lifecycle before canonical merge.

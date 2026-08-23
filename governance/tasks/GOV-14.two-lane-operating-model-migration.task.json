@@ -1,0 +1,34 @@
+{
+  "task_id": "GOV-14",
+  "title": "Two-Lane Operating Model Migration",
+  "capability_owner": "GOV: Repository Workflow Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized GOV-14 Two-Lane Operating Model Migration",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Institutionalize the accepted GOV-12 and GOV-13 two-lane governance workflow",
+    "Make exact-H pre-merge acceptance and acceptance-record-only A the normal governed lifecycle",
+    "Make a disclosure-safe derivative Issue cockpit and durable short-launch recovery the normal workflow when safe",
+    "Reconcile the explicitly authorized repository-safe accepted GOV-11 state"
+  ],
+  "exclusions": [
+    "No task-manifest schema change",
+    "No main-integration, ruleset, or branch-protection change",
+    "No repository-validation workflow-policy change",
+    "No auto-merge",
+    "No Projects, Jira, Confluence, Notion, plugins, bots, webhooks, dispatch, or synchronization",
+    "No historical backfill",
+    "No protected evidence",
+    "No analytical or product methodology changes",
+    "No deployment"
+  ],
+  "accepted_input_artifacts": [],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/gov-14-two-lane-operating-model-migration",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": ["LOCAL_COMMIT", "TEST_PASS", "FUTURE_PULL_REQUEST"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GOV: Repository Workflow Decisions & Acceptance",
+  "exact_next_destination": "GOV: Repository Workflow Decisions & Acceptance"
+}

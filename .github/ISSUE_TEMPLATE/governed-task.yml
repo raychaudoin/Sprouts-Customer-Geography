@@ -1,15 +1,16 @@
 name: Governed task coordination
-description: Deferred GitHub issue template for an already-authorized task; use only after a concrete separate authorization.
+description: Disclosure-safe derivative cockpit for an already-authorized governed task.
 title: "<TASK-ID>: <Short Action>"
 labels: []
 body:
   - type: markdown
     attributes:
       value: |
-        GitHub Issues are currently deferred. Use this template only after a concrete separately authorized need.
-        Issues are not task authority: an Issue is derivative coordination evidence only and does not authorize work or create capability acceptance.
-        No Issue synchronization or mirrored task system is authorized.
-        Do not include protected paths, values, coordinates, nonces, digests, registries, workbook data, or full chat transcripts.
+        Use one exact-identity Issue only for an already-authorized task when public disclosure is safe.
+        This Issue is derivative coordination evidence only. It does not authorize work, create acceptance, or override repository authority.
+        Do not create an Issue when even an opaque public posture would reveal protected information.
+        Never include protected paths, values, coordinates, nonces, digests, registries, workbook data, target identities, or full reports/transcripts.
+        No Issue synchronization, mirrored authority system, bot, or lifecycle automation is authorized.
   - type: input
     id: task_id
     attributes:
@@ -17,25 +18,30 @@ body:
       placeholder: GOV-02
     validations:
       required: true
-  - type: input
-    id: capability_owner
+  - type: dropdown
+    id: lane
     attributes:
-      label: Capability acceptance destination
+      label: Assigned lane
+      description: Use the lane assigned by Master Control Room; ambiguity requires Lane B.
+      options:
+        - Lane A — routine technical
+        - Lane B — capability-sensitive
+    validations:
+      required: true
+  - type: input
+    id: acceptance_owner
+    attributes:
+      label: Acceptance owner / destination
       placeholder: "GOV: Repository Workflow Decisions & Acceptance"
     validations:
       required: true
   - type: textarea
-    id: scope
+    id: objective_scope
     attributes:
-      label: Authorized scope and exclusions
-      description: Repository-safe summary only.
+      label: Concise objective, scope, and exclusions
+      description: Repository-safe summary only; do not copy a full authorization or report.
     validations:
       required: true
-  - type: textarea
-    id: artifact_ids
-    attributes:
-      label: Accepted input artifact logical IDs and opaque protected dependency logical IDs
-      description: Logical IDs only; no paths or protected evidence.
   - type: input
     id: manifest
     attributes:
@@ -43,9 +49,10 @@ body:
       placeholder: governance/tasks/GOV-02.example.task.json
     validations:
       required: true
-  - type: input
-    id: next_destination
+  - type: textarea
+    id: posture_decision_transition
     attributes:
-      label: Exact next destination
+      label: Current posture, decision needed, and next manual transition
+      description: Keep this current and disclosure-safe; link PR/CI evidence when available.
     validations:
       required: true
