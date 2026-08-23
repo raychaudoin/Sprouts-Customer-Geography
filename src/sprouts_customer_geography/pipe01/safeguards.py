@@ -17,11 +17,21 @@ PROTECTED_ARTIFACT_FILENAMES = {
     "model04_identity_role_anchor_package.json",
     "commitment_nonce.bin",
     "pipe02_protected_validation_access_binding.json",
+    "pipe03_wisconsin_development_target_access_binding.json",
     "binding_nonce.bin",
     "binding_manifest.json",
     "READY.json",
 }
-PROTECTED_DIRECTORY_NAMES = {"protected", "protected-local", "confidential-local", "live-freeze", "protected-bindings", ".pipe02-local"}
+PROTECTED_DIRECTORY_NAMES = {
+    "protected",
+    "protected-local",
+    "confidential-local",
+    "live-freeze",
+    "protected-bindings",
+    "pipe03-bindings",
+    ".pipe02-local",
+    ".pipe03-local",
+}
 
 
 def assert_no_protected_tracked_paths(paths: Iterable[str]) -> None:

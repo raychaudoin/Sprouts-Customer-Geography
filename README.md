@@ -26,4 +26,5 @@ Start with this orientation, then read the [agent contract](AGENTS.md), matching
 - [MODEL-08 Wisconsin evidence expansion strategy](docs/work_orders/MODEL_08_WISCONSIN_EVIDENCE_EXPANSION_STRATEGY.md)
 - [PIPE-01 target-blind freeze runbook](docs/PIPE01_PRETARGET_FREEZE.md)
 - [PIPE-02 protected binding runbook](docs/PIPE02_PROTECTED_VALIDATION_ACCESS_BINDING.md)
+- [PIPE-03 Wisconsin development binding runbook](docs/PIPE03_WISCONSIN_DEVELOPMENT_TARGET_ACCESS_BINDING.md)
 - [Data governance](docs/DATA_GOVERNANCE.md)
