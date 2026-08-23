@@ -25,6 +25,8 @@ jobs:
       - run: python scripts/check_pipe03_repository.py
       - run: python scripts/check_model10_repository.py
       - run: python scripts/check_pipe04_repository.py
+      - run: python scripts/check_model09_repository.py
       - run: python -m unittest discover -s tests -v
         env:
           PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}
+          MODEL09_TEST_TEMP_ROOT: ${{ runner.temp }}

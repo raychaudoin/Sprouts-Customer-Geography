@@ -1,0 +1,47 @@
+{
+  "task_id": "MODEL-09",
+  "title": "Wisconsin Full-Cohort Experimental Model Development",
+  "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized MODEL-09 Wisconsin Full-Cohort Experimental Model Development",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Develop one bounded interpretable experimental Wisconsin public-data model using the complete accepted PIPE-04 eligible cohort",
+    "Use only PIPE-04-bound Isolated Sales as development target evidence",
+    "Construct reproducible target-blind household-opportunity and spatial-concentration features from accepted ACS 2024 B11001 and TIGER 2024 Wisconsin authority",
+    "Compare one transparent baseline and three preregistered challengers with physical-location-grouped development diagnostics",
+    "Keep household opportunity customer-fit proxy and modeled target mass distinct",
+    "Materialize protected target-conditioned outputs outside Git and publish only disclosure-safe aggregate development evidence"
+  ],
+  "exclusions": [
+    "No Impacted Sales Michigan Detroit non-Wisconsin target or quarantined observation access",
+    "No target-derived change to MODEL-10 identity lineage quarantine eligibility or cohort membership",
+    "No independent validation production readiness causal interpretation or proprietary-model-equivalence claim",
+    "No modification of MODEL-05 MODEL-07 MODEL-08 MODEL-10 PIPE-03 or PIPE-04",
+    "No protected values observation outputs fitted parameters identities coordinates paths nonces digests or reconstructable lineage in Git or GitHub",
+    "No Power BI Site Scanner deployment acceptance record merge or follow-on work"
+  ],
+  "accepted_input_artifacts": [
+    "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1",
+    "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+    "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+    "GEO03_INTERNAL_POINT_MEMBERSHIP_SPATIAL_SPEC_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_V1",
+    "PROTECTED_MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_PACKAGE_V1",
+    "PROTECTED_MODEL09_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/model-09-wisconsin-full-cohort-experimental-model-development",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+  "exact_next_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance"
+}

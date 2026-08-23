@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schemas/model09/wisconsin_experimental_model_contract.schema.json",
+  "artifact_id": "MODEL09_WISCONSIN_EXPERIMENTAL_MODEL_CONTRACT_V1",
+  "version": "1.0.0",
+  "analysis_unit": "one PIPE-04-eligible Wisconsin source observation",
+  "target": {
+    "allowed_field": "Isolated Sales",
+    "transformation": "log1p",
+    "development_only": true,
+    "denied_fields": ["Impacted Sales", "every non-Wisconsin target", "quarantined MODEL-10 observations"]
+  },
+  "identity": {
+    "authority": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+    "physical_location_grouping_required": true,
+    "canonical_anchor_source": "MODEL-10 successor canonical target-blind anchor",
+    "target_may_change_identity_or_membership": false
+  },
+  "public_sources": {
+    "acs_manifest_id": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+    "tiger_manifest_id": "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1",
+    "acs_vintage": "2024",
+    "tiger_vintage": "2024",
+    "household_estimate": "B11001_001E",
+    "household_moe": "B11001_001M"
+  },
+  "feature_construction": {
+    "crs": "EPSG:5070",
+    "radii_m": [4828.032, 8046.72, 11265.408],
+    "membership": "tract internal-point distance_m <= radius_m with containing anchor tract forced",
+    "aggregation": "whole-tract B11001 estimate once",
+    "missingness": "fail complete run on any noncomputable observation; no imputation",
+    "household_opportunity": "households_5mi",
+    "customer_fit_proxy_features": ["inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient"],
+    "quality_diagnostics": ["households_3mi_moe", "households_5mi_moe", "households_7mi_moe", "relative_moe_5mi"]
+  },
+  "candidates": [
+    {"candidate_id": "baseline_opportunity", "complexity_rank": 0, "ridge_penalty": 0.0, "terms": ["log_households_5mi"]},
+    {"candidate_id": "challenger_spatial_concentration", "complexity_rank": 1, "ridge_penalty": 0.1, "terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient"]},
+    {"candidate_id": "challenger_spatial_vintage", "complexity_rank": 2, "ridge_penalty": 0.5, "terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient", "vintage_indicators"]},
+    {"candidate_id": "challenger_market_sensitive", "complexity_rank": 3, "ridge_penalty": 5.0, "terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient", "vintage_indicators", "market_indicators"]}
+  ],
+  "development_diagnostics": {
+    "grouped_fold_count": 5,
+    "group_assignment": "SHA-256 ordered physical-location groups distributed round-robin",
+    "estimation_weighting": "each observation receives inverse physical-location observation-count weight so each MODEL-10 physical location contributes total weight one",
+    "metric_weighting": "aggregate actual and predicted levels to one mean pair per MODEL-10 physical location before metric calculation",
+    "row_level_folding_denied": true,
+    "market_sensitivity": "leave one source-market lineage out while excluding every physical-location group represented in that test lineage from training",
+    "metrics": ["spearman", "kendall_tau_b", "log_rmse", "level_mae"]
+  },
+  "selection": {
+    "minimum_spearman_improvement_over_baseline": 0.03,
+    "maximum_log_rmse_ratio_to_baseline": 1.05,
+    "tie_break_order": ["higher grouped spearman", "lower grouped log_rmse", "lower complexity_rank"],
+    "no_qualifying_challenger": "NO_CUSTOMER_FIT_MODEL_JUSTIFIED"
+  },
+  "output_semantics": {
+    "household_opportunity": "unmodeled public B11001 five-mile household mass",
+    "customer_fit_proxy": "target-conditioned multiplicative contribution of concentration terms only",
+    "modeled_target_mass": "inverse-log fitted target level",
+    "concepts_must_remain_separate": true
+  },
+  "consumption": {
+    "model09_state": "DEVELOPMENT_CONSUMED",
+    "historical_records_rewritten": false,
+    "independent_validation_claim_permitted": false
+  },
+  "protected_execution": {
+    "explicit_opaque_handles_only": true,
+    "protected_root_containment": true,
+    "immutable_runs": true,
+    "incomplete_first": true,
+    "ready_marker_last": true,
+    "observation_outputs_outside_git": true,
+    "fitted_parameters_outside_git": true
+  },
+  "failure_behavior": "Fail closed on authority mismatch incomplete cohort denied target scope identity drift source mismatch noncomputable feature duplicate observation leakage non-determinism overwrite or disclosure violation."
+}
