@@ -3,7 +3,7 @@
   "title": "Wisconsin Development Target Access Binding",
   "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
   "authority_source": "Master Control Room authorized PIPE-03 Wisconsin Development Target Access Binding",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Implement one exact-source default-deny Wisconsin development binding for MODEL-09",
     "Establish the complete eligible Wisconsin cohort from accepted target-blind identity authority before target projection",
@@ -30,6 +30,7 @@
     "PROTECTED_PIPE03_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/pipe-03-wisconsin-development-target-access-binding",
+  "implementation_commit": "cfa3f420c0ebf7aea351638f24c01db77cd4ec21",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -38,8 +39,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "PIPE: Analytical Pipeline Decisions & Acceptance",
-  "exact_next_destination": "PIPE: Analytical Pipeline Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_by": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
