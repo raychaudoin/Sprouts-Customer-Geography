@@ -113,6 +113,30 @@ def tiger_rows_from_pinned_zip(source_zip: Path, tiger_manifest: Mapping[str, An
     return rows
 
 
+def tiger_rows_from_source_zip(
+    source_zip: Path,
+    tiger_manifest: Mapping[str, Any],
+    state_fips: str,
+) -> list[dict[str, str]]:
+    """Verify one fixed-vintage state TIGER archive and return its DBF rows."""
+    require(len(state_fips) == 2 and state_fips.isdigit(), "TIGER_STATE_FIPS_INVALID", "state FIPS must contain two digits")
+    expected_filename = f"tl_2024_{state_fips}_tract.zip"
+    require(source_zip.name == expected_filename == tiger_manifest.get("source_filename"), "TIGER_SOURCE_FILENAME_MISMATCH", "TIGER local filename differs from source authority")
+    expected_length = tiger_manifest.get("retrieval", {}).get("expected_byte_length")
+    require(source_zip.is_file() and source_zip.stat().st_size == expected_length, "TIGER_SOURCE_LENGTH_MISMATCH", "TIGER local byte length differs from source authority")
+    expected_sha = str(tiger_manifest.get("byte_sha256", ""))
+    require(file_sha256(source_zip) == expected_sha, "TIGER_SOURCE_CHECKSUM_MISMATCH", "TIGER local bytes differ from source authority")
+    dbf_member = expected_filename.removesuffix(".zip") + ".dbf"
+    with ZipFile(source_zip) as archive:
+        names = set(archive.namelist())
+        required_entries = set(tiger_manifest.get("expected_file_properties", {}).get("required_entries", []))
+        require(required_entries <= names and dbf_member in names, "TIGER_ZIP_ENTRY_MISSING", "TIGER ZIP entries are incomplete")
+        rows = _read_dbf_records(archive.read(dbf_member))
+    required_fields = {"STATEFP", "COUNTYFP", "TRACTCE", "GEOID", "INTPTLAT", "INTPTLON"}
+    require(rows and required_fields <= set(rows[0]), "TIGER_SOURCE_FIELD_MISSING", "TIGER source fields are absent")
+    return rows
+
+
 def derive_ordered_geoids(rows: Iterable[Mapping[str, object]], county_allow_list: Iterable[str]) -> list[str]:
     """Apply the accepted GEO-04 canonical tract selection and order semantics."""
     counties = list(county_allow_list)

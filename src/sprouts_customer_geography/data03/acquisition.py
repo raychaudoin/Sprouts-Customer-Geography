@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from http.client import HTTPException
 import json
 import os
 from pathlib import Path
@@ -69,6 +70,77 @@ def _download_exact(url: str, destination: Path, progress: Progress) -> dict[str
         raise
     progress(f"observed {destination.name} bytes={length} sha256={digest.hexdigest()}")
     return {"filename": destination.name, "byte_length": length, "byte_sha256": digest.hexdigest(), "reused_existing": False}
+
+
+def download_pinned_exact(
+    url: str,
+    destination: Path,
+    expected_length: int,
+    expected_sha256: str,
+    progress: Progress,
+    max_attempts: int = 3,
+) -> dict[str, Any]:
+    """Retry safely while promoting only bytes that match an existing pinned identity."""
+    require(expected_length > 0, "PINNED_SOURCE_LENGTH_INVALID", "pinned source length must be positive")
+    require(len(expected_sha256) == 64 and all(character in "0123456789abcdef" for character in expected_sha256), "PINNED_SOURCE_CHECKSUM_INVALID", "pinned source checksum must be lowercase SHA-256")
+    require(max_attempts > 0, "PINNED_SOURCE_RETRY_COUNT_INVALID", "pinned source retry count must be positive")
+
+    def require_expected(observation: Mapping[str, Any]) -> None:
+        require(observation["byte_length"] == expected_length, "PINNED_SOURCE_LENGTH_MISMATCH", f"pinned byte length differs for {destination.name}")
+        require(observation["byte_sha256"] == expected_sha256, "PINNED_SOURCE_CHECKSUM_MISMATCH", f"pinned checksum differs for {destination.name}")
+
+    if destination.is_file():
+        observation = _observe_file(destination, True)
+        require_expected(observation)
+        progress(f"reuse {destination.name}")
+        return observation
+    require(not destination.exists(), "PINNED_SOURCE_DESTINATION_INVALID", f"destination is not a regular file: {destination}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+
+    last_error: OSError | HTTPException | None = None
+    for attempt in range(1, max_attempts + 1):
+        suffix = ".partial" if attempt == 1 else f".partial.{attempt}"
+        partial = destination.with_name(destination.name + suffix)
+        if partial.exists():
+            require(partial.is_file(), "PINNED_SOURCE_PARTIAL_INVALID", f"partial attempt is not a regular file: {partial.name}")
+            observation = _observe_file(partial, True)
+            if observation["byte_length"] == expected_length and observation["byte_sha256"] == expected_sha256:
+                os.replace(partial, destination)
+                progress(f"promote verified {partial.name}")
+                return _observe_file(destination, True)
+            progress(f"preserve incomplete {partial.name}; use next bounded attempt")
+            continue
+
+        progress(f"download {destination.name} attempt={attempt}/{max_attempts}")
+        request = Request(url, headers={"User-Agent": USER_AGENT})
+        digest = hashlib.sha256()
+        length = 0
+        try:
+            with urlopen(request, timeout=180) as response, partial.open("xb") as handle:
+                while True:
+                    block = response.read(1024 * 1024)
+                    if not block:
+                        break
+                    handle.write(block)
+                    digest.update(block)
+                    length += len(block)
+                handle.flush()
+                os.fsync(handle.fileno())
+        except (OSError, HTTPException) as error:
+            last_error = error
+            progress(f"preserve failed {partial.name}; retry remains bounded")
+            continue
+
+        observation = {"filename": destination.name, "byte_length": length, "byte_sha256": digest.hexdigest(), "reused_existing": False}
+        require_expected(observation)
+        os.replace(partial, destination)
+        progress(f"verified {destination.name} bytes={length} sha256={digest.hexdigest()}")
+        return observation
+
+    if last_error is not None:
+        raise last_error
+    require(False, "PINNED_SOURCE_RETRY_EXHAUSTED", f"all preserved partial attempt slots are occupied for {destination.name}")
+    raise AssertionError("unreachable")
 
 
 def acquire_sources(

@@ -24,7 +24,6 @@ from sprouts_customer_geography.pipe01.canonical import content_digest, file_sha
 from sprouts_customer_geography.pipe01.errors import require
 
 
-ACS_GEO_ID_RE = re.compile(r"^1400000US(55[0-9]{9})$")
 STATUS_PRECEDENCE = {
     "valid": 0,
     "missing": 1,
@@ -33,6 +32,33 @@ STATUS_PRECEDENCE = {
     "suppressed": 4,
     "invalid": 5,
 }
+
+
+def _state_scope(contract: Mapping[str, Any], state_configuration: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    """Resolve state-specific extraction/output values without changing DATA-03 defaults."""
+    configured = dict(state_configuration or {})
+    geography = contract["geography"]
+    state_fips = str(configured.get("state_fips", geography["state_fips"]))
+    require(re.fullmatch(r"[0-9]{2}", state_fips) is not None, "DATA03_STATE_FIPS_INVALID", "state FIPS must contain two digits")
+    state_name = str(configured.get("state_name", "Wisconsin" if state_fips == "55" else state_fips))
+    state_slug = str(configured.get("state_slug", "wisconsin" if state_fips == "55" else state_name.lower().replace(" ", "_")))
+    require(re.fullmatch(r"[a-z][a-z0-9_]*", state_slug) is not None, "DATA03_STATE_SLUG_INVALID", "state slug is invalid")
+    prefix = str(configured.get("table_file_geo_id_prefix", geography["table_file_geo_id_prefix"]))
+    require(prefix == f"1400000US{state_fips}", "DATA03_STATE_PREFIX_MISMATCH", "tract GEO_ID prefix differs from state FIPS")
+    expected_count = int(configured.get("expected_tract_count", geography["expected_tract_count"]))
+    require(expected_count > 0, "DATA03_STATE_TRACT_COUNT_INVALID", "state tract count must be positive")
+    return {
+        "state_fips": state_fips,
+        "state_name": state_name,
+        "state_slug": state_slug,
+        "table_file_geo_id_prefix": prefix,
+        "geoid_re": re.compile(rf"^1400000US({re.escape(state_fips)}[0-9]{{9}})$"),
+        "tract_geoid_re": re.compile(rf"^{re.escape(state_fips)}[0-9]{{9}}$"),
+        "expected_tract_count": expected_count,
+        "normalized_filename": str(configured.get("normalized_filename", f"{state_slug}_tract_source_values.csv")),
+        "candidate_filename": str(configured.get("candidate_filename", f"{state_slug}_tract_candidate_measures.csv")),
+        "report_id": str(configured.get("report_id", "DATA03_WISCONSIN_MULTIVARIATE_ACS_MATERIALIZATION_REPORT_V1" if state_fips == "55" else f"DATA03_{state_fips}_MULTIVARIATE_ACS_MATERIALIZATION_REPORT_V1")),
+    }
 
 
 def _assert_generated_output(path: Path, repository_root: Path) -> Path:
@@ -115,9 +141,11 @@ def parse_table_file(
     manifest: Mapping[str, Any],
     contract: Mapping[str, Any],
     enforce_contract_count: bool = True,
+    state_configuration: Mapping[str, Any] | None = None,
 ) -> dict[str, dict[str, dict[str, Any]]]:
     """Verify and parse one exact table file into tract/component pairs."""
     table_id = table["table_id"]
+    scope = _state_scope(contract, state_configuration)
     require(source_file.name == manifest.get("source_filename"), "DATA03_SOURCE_FILENAME_MISMATCH", f"local filename differs for {table_id}")
     require(source_file.is_file(), "DATA03_SOURCE_FILE_MISSING", f"source file is absent for {table_id}")
     require(source_file.stat().st_size == manifest.get("retrieval", {}).get("expected_byte_length"), "DATA03_SOURCE_LENGTH_MISMATCH", f"source length differs for {table_id}")
@@ -131,10 +159,10 @@ def parse_table_file(
         for source_row in reader:
             require(None not in source_row, "DATA03_SOURCE_ROW_MALFORMED", f"row has more fields than the header for {table_id}")
             geo_id = str(source_row.get("GEO_ID", ""))
-            if not geo_id.startswith(contract["geography"]["table_file_geo_id_prefix"]):
+            if not geo_id.startswith(scope["table_file_geo_id_prefix"]):
                 continue
-            match = ACS_GEO_ID_RE.fullmatch(geo_id)
-            require(match is not None, "DATA03_TRACT_IDENTITY_INVALID", f"invalid Wisconsin tract GEO_ID in {table_id}")
+            match = scope["geoid_re"].fullmatch(geo_id)
+            require(match is not None, "DATA03_TRACT_IDENTITY_INVALID", f"invalid {scope['state_name']} tract GEO_ID in {table_id}")
             geoid = match.group(1)
             require(geoid not in by_geoid, "DATA03_DUPLICATE_TRACT", f"duplicate tract {geoid} in {table_id}")
             components: dict[str, dict[str, Any]] = {}
@@ -148,7 +176,8 @@ def parse_table_file(
                 )
             by_geoid[geoid] = components
     if enforce_contract_count:
-        require(len(by_geoid) == contract["geography"]["expected_tract_count"], "DATA03_WISCONSIN_TRACT_COUNT_MISMATCH", f"Wisconsin tract count differs for {table_id}")
+        count_code = "DATA03_WISCONSIN_TRACT_COUNT_MISMATCH" if scope["state_fips"] == "55" else "DATA03_STATE_TRACT_COUNT_MISMATCH"
+        require(len(by_geoid) == scope["expected_tract_count"], count_code, f"{scope['state_name']} tract count differs for {table_id}")
     return by_geoid
 
 
@@ -209,16 +238,19 @@ def materialize_from_tables(
     *,
     enforce_contract_count: bool = True,
     validate_cached_metadata: bool = True,
+    state_configuration: Mapping[str, Any] | None = None,
+    allow_missing_source_rows: bool = False,
 ) -> dict[str, Any]:
     """Materialize verified source and candidate outputs against an explicit tract inventory."""
     validate_contract(contract)
+    scope = _state_scope(contract, state_configuration)
     output_dir = _assert_generated_output(output_dir, repository_root)
     require(not output_dir.exists(), "DATA03_OUTPUT_OVERWRITE_DENIED", "materialization output already exists")
     ordered_geoids = list(expected_geoids)
     require(ordered_geoids == sorted(ordered_geoids) and len(ordered_geoids) == len(set(ordered_geoids)), "DATA03_TIGER_INVENTORY_INVALID", "expected GEOIDs must be unique and sorted")
-    require(all(re.fullmatch(r"55[0-9]{9}", geoid) for geoid in ordered_geoids), "DATA03_TIGER_INVENTORY_INVALID", "expected GEOID is not a Wisconsin tract")
+    require(all(scope["tract_geoid_re"].fullmatch(geoid) for geoid in ordered_geoids), "DATA03_TIGER_INVENTORY_INVALID", f"expected GEOID is not a {scope['state_name']} tract")
     if enforce_contract_count:
-        require(len(ordered_geoids) == contract["geography"]["expected_tract_count"], "DATA03_TIGER_TRACT_COUNT_MISMATCH", "accepted TIGER tract count differs")
+        require(len(ordered_geoids) == scope["expected_tract_count"], "DATA03_TIGER_TRACT_COUNT_MISMATCH", "accepted TIGER tract count differs")
 
     if validate_cached_metadata:
         metadata_documents = {
@@ -231,15 +263,39 @@ def materialize_from_tables(
 
     parsed_tables: dict[str, dict[str, dict[str, dict[str, Any]]]] = {}
     manifest_evidence: list[dict[str, Any]] = []
+    source_row_reconciliation: dict[str, dict[str, Any]] = {}
     expected_set = set(ordered_geoids)
     for table in contract["tables"]:
         table_id = table["table_id"]
         manifest = manifests.get(table_id)
         require(isinstance(manifest, Mapping), "DATA03_MANIFEST_MISSING", f"manifest is absent for {table_id}")
         manifest_sha = validate_source_manifest(contract, table, manifest)
-        parsed = parse_table_file(raw_dir / manifest["source_filename"], table, manifest, contract, enforce_contract_count=enforce_contract_count)
+        parsed = parse_table_file(raw_dir / manifest["source_filename"], table, manifest, contract, enforce_contract_count=enforce_contract_count and not allow_missing_source_rows, state_configuration=scope)
         actual_set = set(parsed)
-        require(actual_set == expected_set, "DATA03_COMPLETE_TRACT_COVERAGE_FAILED", f"{table_id} has {len(expected_set - actual_set)} missing and {len(actual_set - expected_set)} extra tract keys")
+        missing_geoids = sorted(expected_set - actual_set)
+        extra_geoids = sorted(actual_set - expected_set)
+        require(not extra_geoids, "DATA03_COMPLETE_TRACT_COVERAGE_FAILED", f"{table_id} has {len(missing_geoids)} missing and {len(extra_geoids)} extra tract keys")
+        require(allow_missing_source_rows or not missing_geoids, "DATA03_COMPLETE_TRACT_COVERAGE_FAILED", f"{table_id} has {len(missing_geoids)} missing and 0 extra tract keys")
+        if missing_geoids:
+            for geoid in missing_geoids:
+                parsed[geoid] = {
+                    variable["component_id"]: {
+                        "estimate_raw": None,
+                        "moe_raw": None,
+                        "estimate": None,
+                        "moe": None,
+                        "status": "missing",
+                        "status_detail": "source_row_missing",
+                    }
+                    for variable in table["variables"]
+                }
+        source_row_reconciliation[table_id] = {
+            "expected_tract_count": len(expected_set),
+            "present_source_row_count": len(actual_set),
+            "missing_source_row_count": len(missing_geoids),
+            "extra_source_row_count": len(extra_geoids),
+            "missing_source_row_geoids": missing_geoids,
+        }
         parsed_tables[table_id] = parsed
         manifest_evidence.append({
             "table_id": table_id,
@@ -299,8 +355,8 @@ def materialize_from_tables(
     for measure_id in output["measure_order"]:
         wide_columns.extend(f"{measure_id}_{suffix}" for suffix in output["wide_measure_suffixes"])
     output_dir.mkdir(parents=True, exist_ok=False)
-    normalized_path = output_dir / "wisconsin_tract_source_values.csv"
-    wide_path = output_dir / "wisconsin_tract_candidate_measures.csv"
+    normalized_path = output_dir / scope["normalized_filename"]
+    wide_path = output_dir / scope["candidate_filename"]
     _write_csv(normalized_path, normalized_columns, normalized_rows)
     _write_csv(wide_path, wide_columns, wide_rows)
 
@@ -313,14 +369,14 @@ def materialize_from_tables(
         for measure_id, values in measure_status.items()
     }
     report = {
-        "report_id": "DATA03_WISCONSIN_MULTIVARIATE_ACS_MATERIALIZATION_REPORT_V1",
+        "report_id": scope["report_id"],
         "state": "VERIFIED",
         "contract_id": contract["artifact_id"],
         "contract_version": contract["version"],
         "contract_content_sha256": contract["content_sha256"],
         "source_release": contract["source_product"]["product"],
         "source_vintage": contract["source_product"]["vintage"],
-        "state_fips": contract["geography"]["state_fips"],
+        "state_fips": scope["state_fips"],
         "geography_level": contract["geography"]["level"],
         "tract_count": len(ordered_geoids),
         "ordered_tract_inventory_sha256": content_digest({"ordered_geoids": ordered_geoids}),
@@ -335,6 +391,8 @@ def materialize_from_tables(
         "candidate_authority_boundary": "source-safe candidate measures only; no final MODEL feature selection or scoring authority",
         "protected_characteristic_policy": "passed",
     }
+    if allow_missing_source_rows:
+        report["source_row_reconciliation"] = source_row_reconciliation
     report_path = output_dir / "verification_report.json"
     write_json_exclusive(report_path, report)
     ready = {
@@ -349,14 +407,14 @@ def materialize_from_tables(
     return report
 
 
-def _statewide_tiger_geoids(tiger_rows: Iterable[Mapping[str, Any]]) -> list[str]:
+def _statewide_tiger_geoids(tiger_rows: Iterable[Mapping[str, Any]], state_fips: str = "55") -> list[str]:
     geoids: list[str] = []
     for row in tiger_rows:
         state = str(row.get("STATEFP", ""))
         county = str(row.get("COUNTYFP", ""))
         tract = str(row.get("TRACTCE", ""))
         geoid = str(row.get("GEOID", ""))
-        require(state == "55" and re.fullmatch(r"[0-9]{3}", county) and re.fullmatch(r"[0-9]{6}", tract) and geoid == state + county + tract, "DATA03_TIGER_GEOID_INVALID", "TIGER tract identity is invalid")
+        require(state == state_fips and re.fullmatch(r"[0-9]{3}", county) and re.fullmatch(r"[0-9]{6}", tract) and geoid == state + county + tract, "DATA03_TIGER_GEOID_INVALID", "TIGER tract identity is invalid")
         geoids.append(geoid)
     require(len(geoids) == len(set(geoids)), "DATA03_TIGER_DUPLICATE_TRACT", "TIGER contains a duplicate tract")
     return sorted(geoids)
@@ -373,8 +431,8 @@ def materialize_real(repository_root: Path, raw_dir: Path, output_dir: Path) -> 
     return materialize_from_tables(contract, manifests, repository_root, raw_dir, geoids, output_dir)
 
 
-def compare_materializations(first: Path, second: Path) -> dict[str, str]:
-    filenames = ("wisconsin_tract_source_values.csv", "wisconsin_tract_candidate_measures.csv", "verification_report.json", "READY.json")
+def compare_materializations(first: Path, second: Path, state_slug: str = "wisconsin") -> dict[str, str]:
+    filenames = (f"{state_slug}_tract_source_values.csv", f"{state_slug}_tract_candidate_measures.csv", "verification_report.json", "READY.json")
     first_hashes = {filename: file_sha256(first / filename) for filename in filenames}
     second_hashes = {filename: file_sha256(second / filename) for filename in filenames}
     require(first_hashes == second_hashes, "DATA03_RERUN_NONDETERMINISTIC", "materialization outputs differ across reruns")

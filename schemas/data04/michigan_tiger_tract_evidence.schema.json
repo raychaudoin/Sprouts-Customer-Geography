@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:data04:michigan-tiger-tract-evidence:v1",
+  "title": "DATA-04 normalized Michigan TIGER tract source evidence row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tract_geoid", "state_fips", "county_fips", "tract_code", "intptlat_raw", "intptlon_raw", "intptlat", "intptlon", "internal_point_status", "geometry_record_status", "source_crs", "source_manifest_id"],
+  "properties": {
+    "tract_geoid": {"type": "string", "pattern": "^26[0-9]{9}$"},
+    "state_fips": {"const": "26"},
+    "county_fips": {"type": "string", "pattern": "^[0-9]{3}$"},
+    "tract_code": {"type": "string", "pattern": "^[0-9]{6}$"},
+    "intptlat_raw": {"type": ["string", "null"]},
+    "intptlon_raw": {"type": ["string", "null"]},
+    "intptlat": {"type": ["number", "null"], "minimum": -90, "maximum": 90},
+    "intptlon": {"type": ["number", "null"], "minimum": -180, "maximum": 180},
+    "internal_point_status": {"enum": ["valid", "missing", "invalid_parse", "invalid_nonfinite", "invalid_range"]},
+    "geometry_record_status": {"enum": ["valid", "invalid"]},
+    "source_crs": {"const": "EPSG:4269"},
+    "source_manifest_id": {"const": "DATA04_TIGER2024_MI_TRACT_SOURCE_MANIFEST_V1"}
+  }
+}
