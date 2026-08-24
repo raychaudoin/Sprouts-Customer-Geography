@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schemas/model11/wisconsin_multivariate_model_contract.schema.json",
+  "artifact_id": "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1",
+  "version": "1.0.0",
+  "development_only": true,
+  "accepted_authority": {
+    "model09_contract_id": "MODEL09_WISCONSIN_EXPERIMENTAL_MODEL_CONTRACT_V1",
+    "model09_substantive_h": "dec2bd9af1aff15b7d7751211594dd056bc0e434",
+    "data03_contract_id": "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+    "data03_content_sha256": "c20814fe55047889a1dc49c39e8d93ba875fe9b0caccaa8a12f0ee58b11f004d",
+    "model10_contract_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+    "pipe04_contract_id": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1"
+  },
+  "cohort": {
+    "state": "wisconsin",
+    "eligible_observation_count": 63,
+    "physical_location_count": 41,
+    "quarantined_observation_count": 2,
+    "identity_or_membership_change_permitted": false
+  },
+  "target": {
+    "allowed_field": "Isolated Sales",
+    "transformation": "log1p",
+    "denied_fields": ["Impacted Sales", "every non-Wisconsin target", "quarantined MODEL-10 observations", "unrelated protected fields"]
+  },
+  "phase1_feature_freeze": {
+    "target_access_permitted": false,
+    "primary_context_radius_m": 8046.72,
+    "reuse_model09_radii_m": [4828.032, 8046.72, 11265.408],
+    "crs": "EPSG:5070",
+    "membership": "tract internal-point distance_m <= radius_m with containing anchor tract forced",
+    "all_member_tracts_must_be_computable": true,
+    "observation_row_dropping": false,
+    "imputation": "prohibited",
+    "currency_transform": "log1p",
+    "share_scale": "proportion_zero_to_one",
+    "redundancy": {
+      "method": "absolute Pearson correlation over one vector per physical location",
+      "threshold": 0.95,
+      "priority_order": ["median_household_income", "bachelors_or_higher_share", "employment_rate", "civilian_labor_force_share", "owner_occupancy_share", "vacancy_share", "median_home_value", "median_gross_rent", "per_capita_income", "average_household_size", "no_vehicle_household_share", "drive_alone_commuter_share", "work_from_home_commuter_share"],
+      "spatial_terms_exempt": true
+    }
+  },
+  "candidate_measures": [
+    {"measure_id": "median_household_income", "family": "economic_capacity", "kind": "direct", "aggregation": "household-weighted tract-profile proxy", "weight": "B11001 household estimate", "transform": "log1p"},
+    {"measure_id": "per_capita_income", "family": "economic_capacity", "kind": "direct", "aggregation": "household-weighted tract-profile proxy", "weight": "B11001 household estimate", "transform": "log1p"},
+    {"measure_id": "civilian_labor_force_share", "family": "economic_capacity", "kind": "share", "numerators": ["civilian_labor_force"], "denominator": "labor_population_16_plus", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "employment_rate", "family": "economic_capacity", "kind": "share", "numerators": ["civilian_employed"], "denominator": "civilian_labor_force", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "bachelors_or_higher_share", "family": "education_socioeconomic_structure", "kind": "share", "numerators": ["education_bachelors", "education_masters", "education_professional", "education_doctorate"], "denominator": "education_population_25_plus", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "owner_occupancy_share", "family": "housing_neighborhood_economics", "kind": "share", "numerators": ["owner_occupied_housing_units"], "denominator": "occupied_housing_units_total", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "vacancy_share", "family": "housing_neighborhood_economics", "kind": "share", "numerators": ["housing_units_vacant"], "denominator": "housing_units_total", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "median_home_value", "family": "housing_neighborhood_economics", "kind": "direct", "aggregation": "owner-unit-weighted tract-profile proxy", "weight": "owner_occupied_housing_units", "transform": "log1p"},
+    {"measure_id": "median_gross_rent", "family": "housing_neighborhood_economics", "kind": "direct", "aggregation": "renter-unit-weighted tract-profile proxy", "weight": "occupied_housing_units_total minus owner_occupied_housing_units", "transform": "log1p"},
+    {"measure_id": "average_household_size", "family": "household_scale", "kind": "direct", "aggregation": "occupied-unit-weighted tract-profile proxy", "weight": "occupied_housing_units_total", "transform": "identity"},
+    {"measure_id": "no_vehicle_household_share", "family": "transportation_accessibility", "kind": "share", "numerators": ["households_no_vehicle"], "denominator": "vehicle_table_households_total", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "drive_alone_commuter_share", "family": "transportation_accessibility", "kind": "share", "numerators": ["commuters_drive_alone"], "denominator": "commuters_total", "aggregation": "sum numerators and denominator then divide", "transform": "identity"},
+    {"measure_id": "work_from_home_commuter_share", "family": "transportation_accessibility", "kind": "share", "numerators": ["commuters_work_from_home"], "denominator": "commuters_total", "aggregation": "sum numerators and denominator then divide", "transform": "identity"}
+  ],
+  "candidates": [
+    {"candidate_id": "model09_spatial_concentration_reference", "architecture": "ridge", "complexity_rank": 0, "terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient"], "fixed_alpha": 0.1},
+    {"candidate_id": "challenger_multivariate_ridge", "architecture": "ridge", "complexity_rank": 1, "terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient", "eligible_frozen_data03_features"], "alpha_grid": [0.1, 1.0, 10.0, 100.0]},
+    {"candidate_id": "challenger_multivariate_elastic_net", "architecture": "elastic_net", "complexity_rank": 2, "terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient", "eligible_frozen_data03_features"], "alpha_grid": [0.01, 0.1, 1.0, 10.0], "l1_ratio_grid": [0.25, 0.5, 0.75]}
+  ],
+  "development_diagnostics": {
+    "outer_grouped_fold_count": 5,
+    "inner_grouped_fold_count": 4,
+    "group_assignment": "SHA-256 ordered physical-location groups distributed round-robin",
+    "estimation_weighting": "inverse physical-location observation count",
+    "metric_weighting": "one mean actual and prediction pair per physical location",
+    "preprocessing_fit_scope": "training rows only",
+    "nested_tuning_required": true,
+    "row_level_folding_denied": true,
+    "market_and_vintage_predictors_denied": true,
+    "market_sensitivity": "leave one source-market lineage out with complete represented physical-location groups excluded from training",
+    "metrics": ["spearman", "kendall_tau_b", "log_rmse", "level_mae"]
+  },
+  "reference_reproduction": {
+    "candidate_id": "challenger_spatial_concentration",
+    "grouped_spearman": 0.7000,
+    "grouped_kendall_tau_b": 0.5146,
+    "grouped_log_rmse": 0.1019,
+    "level_mae": null,
+    "rounded_metric_tolerance": 0.0001
+  },
+  "selection": {
+    "minimum_spearman_improvement_over_reference": 0.03,
+    "maximum_log_rmse_ratio_to_reference": 1.05,
+    "tie_break_order": ["higher grouped spearman", "lower grouped log_rmse", "fewer effective degrees of freedom"],
+    "no_qualifying_challenger": "NO_MULTIVARIATE_IMPROVEMENT_JUSTIFIED"
+  },
+  "output_semantics": {
+    "household_opportunity": "unmodeled public B11001 five-mile household mass",
+    "customer_fit_proxy": "multiplicative contribution of every selected non-opportunity term only",
+    "modeled_target_mass": "inverse-log fitted target level",
+    "concepts_must_remain_separate": true
+  },
+  "protected_characteristic_policy": {
+    "allowed_menu_complete": true,
+    "direct_proxy_recreation_prohibited": true,
+    "excluded_bases": ["race", "ethnicity", "sex", "age composition", "disability", "religion", "national origin", "other protected-class status"]
+  },
+  "protected_execution": {
+    "explicit_opaque_handles_only": true,
+    "feature_freeze_precedes_target_access": true,
+    "protected_root_containment": true,
+    "immutable_runs": true,
+    "incomplete_first": true,
+    "ready_marker_last": true,
+    "observation_and_target_conditioned_outputs_outside_git": true
+  },
+  "failure_behavior": "Fail closed on authority source vintage cohort target feature missingness candidate nested-grouping reference-reproduction selection output-semantics rerun interruption overwrite or disclosure mismatch."
+}
