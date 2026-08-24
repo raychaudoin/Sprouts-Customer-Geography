@@ -3,7 +3,7 @@
   "title": "Michigan Statewide Geography Enablement",
   "capability_owner": "GEO Decisions Acceptance",
   "authority_source": "Master Control Room authorized GEO-05 Michigan Statewide Geography Enablement",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Establish additive configuration-driven statewide Michigan spatial support over the complete accepted DATA-04 3,017-tract public inventory",
     "Bind the exact accepted DATA-04 Michigan TIGER source identity to the accepted GEO-03 EPSG 4269 to EPSG 5070 projection distance membership and forced-containing-tract methodology",
@@ -32,6 +32,7 @@
   ],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/geo-05-michigan-statewide-geography-enablement",
+  "implementation_commit": "b3bad006d0db922a7e82114dccf6636f4260119d",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -40,8 +41,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "GEO Decisions Acceptance",
-  "exact_next_destination": "GEO Decisions Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "GEO Decisions Acceptance",
+    "recorded_by": "GEO Decisions Acceptance",
+    "recorded_on": "2026-08-24"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
