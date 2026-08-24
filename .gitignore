@@ -49,6 +49,15 @@ data/external/
 **/pipe05_model12_michigan_isolated_sales_binding.json
 **/.pipe05-local/
 **/pipe05-bindings/
+**/.model13-local/
+**/model13-runs/
+**/model13_michigan_frozen_benchmark.json
+**/model13_combined_target_blind_feature_freeze.json
+**/model13_pooled_successor_development.json
+**/model13_michigan_statewide_tract_scoring.json
+**/model13_michigan_tract_scores.csv
+**/model13_michigan_seed_context.csv
+**/model13_michigan_power_bi_metadata.json
 
 # Generated outputs and large local artifacts
 outputs/

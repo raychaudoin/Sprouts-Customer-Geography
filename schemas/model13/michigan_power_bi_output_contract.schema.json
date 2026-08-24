@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/michigan_power_bi_output_contract.schema.json",
+  "title": "MODEL-13 protected-local presentation output contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "protected_local_only", "tract_output", "seed_context_output", "metadata_output", "git_boundary"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "artifact_id": {"const": "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_local_only": {"const": true},
+    "tract_output": {"type": "object", "properties": {"filename": {"const": "model13_michigan_tract_scores.csv"}, "row_count": {"const": 3017}, "columns": {"type": "array", "minItems": 24, "uniqueItems": true}}, "required": ["filename", "row_count", "ordering", "columns", "rank_semantics", "percentile_semantics"]},
+    "seed_context_output": {"type": "object", "properties": {"filename": {"const": "model13_michigan_seed_context.csv"}, "columns": {"type": "array", "minItems": 13, "uniqueItems": true}}, "required": ["filename", "unit", "columns"]},
+    "metadata_output": {"type": "object", "properties": {"filename": {"const": "model13_michigan_power_bi_metadata.json"}}, "required": ["filename", "required_bindings"]},
+    "git_boundary": {"type": "object", "required": ["schemas_and_contract_only", "tract_rows_tracked", "seed_rows_tracked", "fitted_parameters_tracked"]}
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/michigan_power_bi_metadata.schema.json",
+  "type": "object",
+  "required": ["metadata_id", "version", "state", "output_contract_id", "model_lineage_id", "public_lineage_id", "tract_output", "seed_context_output", "ready_written_last"],
+  "properties": {"metadata_id": {"const": "MODEL13_MICHIGAN_POWER_BI_METADATA_V1"}, "version": {"const": "1.0.0"}, "state": {"const": "ready"}, "ready_written_last": {"const": true}}
+}

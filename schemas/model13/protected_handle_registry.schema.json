@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/protected_handle_registry.schema.json",
+  "title": "MODEL-13 protected handle registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "version", "protected_roots", "resources", "execution_request"],
+  "properties": {
+    "registry_id": {"const": "MODEL13_PROTECTED_HANDLE_REGISTRY_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_roots": {"type": "object", "minProperties": 1, "propertyNames": {"pattern": "^proot-[a-z0-9-]+$"}, "additionalProperties": {"type": "string", "minLength": 3}},
+    "resources": {"type": "object", "minProperties": 5, "propertyNames": {"pattern": "^phandle-[a-z0-9-]+$"}, "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["root_handle", "relative_path", "kind"], "properties": {"root_handle": {"type": "string", "pattern": "^proot-"}, "relative_path": {"type": "string", "minLength": 1}, "kind": {"type": "string", "minLength": 1}}}},
+    "execution_request": {"type": "object", "additionalProperties": false, "required": ["model11_registry_handle", "model12_registry_handle", "pipe05_registry_handle", "pipe05_ready_run_handle", "model13_output_root_handle"]}
+  }
+}

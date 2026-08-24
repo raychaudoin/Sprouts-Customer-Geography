@@ -1,0 +1,170 @@
+{
+  "$schema": "../../schemas/model13/michigan_benchmark_pooled_successor_statewide_scoring_contract.schema.json",
+  "artifact_id": "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "FROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION",
+  "controlling_task": "MODEL-13: Michigan Benchmark, Wisconsin+Michigan Successor Development, and Statewide Scoring",
+  "canonical_main_at_authorization": "04a85783ef3f09c82cb0c38c79c225da888f3eb9",
+  "accepted_authority": {
+    "model10_contract_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+    "pipe04_contract_id": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1",
+    "pipe04_substantive_h": "5b96203ac7849fdd48601dc0129d1bbbe1b91d0e",
+    "model11_contract_id": "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1",
+    "model11_substantive_h": "085ab4f58b40325d6ce2515358363cf9d93d525e",
+    "model12_contract_id": "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1",
+    "model12_contract_content_sha256": "79bc0fda3cc6bf9caab22da96d6292d5c373c2bc13418e9b14c7f9c23aae8e9e",
+    "model12_substantive_h": "ed4e8196debee378fe49a53e3a4b133afe451eec",
+    "pipe05_contract_id": "PIPE05_MICHIGAN_ISOLATED_SALES_BINDING_CONTRACT_V1",
+    "pipe05_contract_content_sha256": "52541a2b5819e2881571b6128fbb5389a14e98dce83b6b0f6f073a46adecb630",
+    "pipe05_substantive_h": "124ce185eca23083273dc454ce39f450e7278f1f",
+    "data03_contract_id": "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+    "data03_contract_content_sha256": "c20814fe55047889a1dc49c39e8d93ba875fe9b0caccaa8a12f0ee58b11f004d",
+    "data04_contract_id": "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+    "data04_contract_content_sha256": "4818c91e70d64119391aecf57f7306cd5dd2b3c0e174abb9fdfec6730676155d",
+    "geo05_spec_id": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1",
+    "geo05_spec_content_sha256": "47e4c1e929fb9915861824ea7e011280442346cb2c678781185713c6b0ae5be5"
+  },
+  "frozen_michigan_benchmark": {
+    "package_id": "MODEL13_MICHIGAN_FROZEN_BENCHMARK_V1",
+    "independence_unit": "accepted MODEL-12 unique physical location",
+    "eligible_when": [
+      "physical-location identity is nonquarantined",
+      "frozen MODEL-12 prediction is computable",
+      "PIPE-05 Isolated Sales binding is valid"
+    ],
+    "expected_model12_physical_location_count": 86,
+    "expected_model12_quarantine_count": 1,
+    "expected_model12_computable_count": 82,
+    "expected_model12_noncomputable_count": 3,
+    "pair_count_source": "protected lineage reconciliation",
+    "actual_reduction": "mean level per physical location",
+    "prediction_reduction": "mean immutable prediction per physical location",
+    "prediction_repeat_tolerance": 1e-12,
+    "metrics": ["spearman", "kendall_tau_b", "log_rmse", "level_mae"],
+    "target_transform": "log1p",
+    "support_completeness_role": "descriptive_stratification_only",
+    "threshold_or_pass_fail_claim": false,
+    "ready_before_michigan_development": true
+  },
+  "development_role_transition": {
+    "pipe05_binding_marks_development_consumed": false,
+    "begins_at": "first target-conditioned successor fitting or selection operation",
+    "benchmark_must_be_ready": true,
+    "michigan_permanent_holdout_after_transition": false
+  },
+  "combined_cohort": {
+    "wisconsin": {"observation_count": 63, "physical_location_count": 41, "target": "Isolated Sales"},
+    "michigan": {"observation_count": 138, "physical_location_count": 85, "target": "Isolated Sales"},
+    "pooled": {"observation_count": 201, "physical_location_count": 126},
+    "analytical_group_namespace": "state-qualified accepted physical-location identity",
+    "cross_state_identity_merge": false,
+    "estimation_weighting": "inverse observation count within physical location",
+    "impacted_sales_permitted": false
+  },
+  "target_blind_feature_freeze": {
+    "package_id": "MODEL13_COMBINED_TARGET_BLIND_FEATURE_FREEZE_V1",
+    "radii_m": [4828.032, 8046.72, 11265.408],
+    "spatial_terms": ["log_households_5mi", "inner_household_share_3mi_of_7mi", "log_inner_outer_household_density_gradient"],
+    "opportunity_term": "log_households_5mi",
+    "candidate_measure_source": "accepted MODEL-11 thirteen-measure menu",
+    "candidate_measure_count": 13,
+    "complete_combined_cohort_required": true,
+    "missing_measure_policy": "exclude globally with target-blind reason",
+    "constant_measure_policy": "exclude globally with target-blind reason",
+    "imputation": false,
+    "row_dropping": false,
+    "redundancy": {
+      "method": "absolute Pearson correlation over one vector per state-qualified physical location",
+      "threshold": 0.95,
+      "priority_order": ["median_household_income", "bachelors_or_higher_share", "employment_rate", "civilian_labor_force_share", "owner_occupancy_share", "vacancy_share", "median_home_value", "median_gross_rent", "per_capita_income", "average_household_size", "no_vehicle_household_share", "drive_alone_commuter_share", "work_from_home_commuter_share"],
+      "spatial_terms_exempt": true
+    }
+  },
+  "candidate_family": [
+    {"candidate_id": "successor_spatial_reference", "architecture": "ridge", "term_source": "accepted three spatial household terms", "fixed_alpha": 0.1, "complexity_rank": 0},
+    {"candidate_id": "successor_model11_termset_elastic_net", "architecture": "elastic_net", "term_source": "accepted MODEL-11 preferred nonzero DATA-03 terms plus accepted three spatial household terms", "alpha_grid": [0.01, 0.1, 1.0, 10.0], "l1_ratio_grid": [0.25, 0.5, 0.75], "complexity_rank": 1},
+    {"candidate_id": "successor_combined_multivariate_ridge", "architecture": "ridge", "term_source": "all target-blind eligible combined features plus accepted three spatial household terms", "alpha_grid": [0.1, 1.0, 10.0, 100.0], "complexity_rank": 2},
+    {"candidate_id": "successor_combined_multivariate_elastic_net", "architecture": "elastic_net", "term_source": "all target-blind eligible combined features plus accepted three spatial household terms", "alpha_grid": [0.01, 0.1, 1.0, 10.0], "l1_ratio_grid": [0.25, 0.5, 0.75], "complexity_rank": 3}
+  ],
+  "grouped_validation": {
+    "outer_fold_count": 5,
+    "inner_fold_count": 4,
+    "assignment": "within each state SHA-256 order physical-location groups then distribute round-robin",
+    "preprocessing_scope": "training fold only",
+    "metric_unit": "one mean actual and prediction pair per state-qualified physical location",
+    "reported_domains": ["pooled", "michigan", "wisconsin"],
+    "metrics": ["spearman", "kendall_tau_b", "log_rmse", "level_mae"],
+    "diagnostics": ["outer-fold metric ranges", "coefficient sign stability", "nonzero selection frequency", "effective degrees of freedom", "maximum physical-location absolute log error", "state-holdout sensitivity"],
+    "state_holdout_role": "diagnostic_not_validation_claim"
+  },
+  "selection": {
+    "primary_reference_candidate_id": "successor_model11_termset_elastic_net",
+    "challenger_qualification": {
+      "pooled_spearman_minimum_ratio_to_reference": 1.0,
+      "pooled_log_rmse_maximum_ratio_to_reference": 1.05,
+      "michigan_spearman_minimum_delta_to_reference": -0.01
+    },
+    "qualifier_order": ["higher michigan spearman", "higher pooled spearman", "lower pooled log_rmse", "higher stability score", "fewer mean outer effective degrees of freedom"],
+    "stability_score": "mean across terms nonzero in at least one outer model of the average of selection frequency and dominant-sign agreement",
+    "no_qualifying_challenger": "retain successor_model11_termset_elastic_net",
+    "immutable_after_development_targets_supplied": true
+  },
+  "final_refit": {
+    "selected_candidate_only": true,
+    "full_cohort_inner_selection_procedure": true,
+    "fit_count_after_selection": 1,
+    "post_selection_search": false,
+    "target_transform": "log1p",
+    "inverse_target_transform": "max zero expm1"
+  },
+  "output_semantics": {
+    "household_opportunity": "raw five-mile B11001 household mass",
+    "customer_fit_proxy": "multiplicative contribution from selected non-opportunity terms only",
+    "modeled_target_mass": "inverse-log fitted target level from selected successor",
+    "concepts_must_remain_separate": true
+  },
+  "statewide_scoring": {
+    "package_id": "MODEL13_MICHIGAN_STATEWIDE_TRACT_SCORING_V1",
+    "state_fips": "26",
+    "tract_count": 3017,
+    "anchor": "accepted 2024 TIGER internal point",
+    "source_crs": "EPSG:4269",
+    "target_crs": "EPSG:5070",
+    "operation_id": "GEO03_EPSG4269_TO_EPSG5070_DIRECT_NAD83_CONUS_ALBERS_V1",
+    "membership": "unrounded distance_m less than or equal to radius with containing tract forced",
+    "retain_noncomputable": true,
+    "imputation": false,
+    "unsupported_demographic_fetch": false,
+    "support_truncation_role": "descriptive_only"
+  },
+  "presentation_outputs": {
+    "contract_id": "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1",
+    "tract_csv_required": true,
+    "seed_context_csv_required": true,
+    "machine_readable_metadata_required": true,
+    "protected_local_only": true,
+    "power_bi_implementation": false
+  },
+  "protected_execution": {
+    "registry_id": "MODEL13_PROTECTED_HANDLE_REGISTRY_V1",
+    "explicit_bounded_handles": true,
+    "protected_root_containment": true,
+    "broad_discovery": false,
+    "immutable_runs": true,
+    "incomplete_first": true,
+    "ready_last": true,
+    "overwrite": "deny",
+    "independent_semantic_rerun_required": true,
+    "protected_output_outside_git": true
+  },
+  "interpretation_boundary": {
+    "pooled_development_model": true,
+    "michigan_clean_benchmark_preserved": true,
+    "michigan_permanent_holdout": false,
+    "production_ready": false,
+    "operational_demand_heat_authority": false,
+    "proprietary_model_equivalence": false,
+    "final_site_selection_authority": false
+  },
+  "content_sha256": "3d0fc64b6f9d78fb79bacf211970a5c31538501fcc26f53eab3d1fd68fae9fbe"
+}

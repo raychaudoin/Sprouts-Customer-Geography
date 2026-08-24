@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/michigan_statewide_tract_scoring_package.schema.json",
+  "type": "object",
+  "required": ["$schema", "package_id", "version", "state", "authority", "tract_accounting", "tracts", "presentation_outputs", "execution_boundary", "finalization"],
+  "properties": {"package_id": {"const": "MODEL13_MICHIGAN_STATEWIDE_TRACT_SCORING_V1"}, "version": {"const": "1.0.0"}, "state": {"const": "ready"}, "tracts": {"type": "array", "minItems": 3017, "maxItems": 3017}}
+}

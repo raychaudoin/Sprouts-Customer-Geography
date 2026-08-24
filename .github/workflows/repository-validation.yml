@@ -33,6 +33,7 @@ jobs:
       - run: python scripts/check_model11_repository.py
       - run: python scripts/check_model12_repository.py
       - run: python scripts/check_pipe05_repository.py
+      - run: python scripts/check_model13_repository.py
       - run: python -m unittest discover -s tests -v
         env:
           PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}
@@ -42,3 +43,4 @@ jobs:
           GEO05_TEST_TEMP_ROOT: ${{ runner.temp }}
           MODEL11_TEST_TEMP_ROOT: ${{ runner.temp }}
           MODEL12_TEST_TEMP_ROOT: ${{ runner.temp }}
+          MODEL13_TEST_TEMP_ROOT: ${{ runner.temp }}
