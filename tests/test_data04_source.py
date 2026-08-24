@@ -372,7 +372,13 @@ class Data04SourceTests(unittest.TestCase):
         task = load("governance/tasks/DATA-04.michigan-public-data-parity-foundation.task.json")
         self.assertEqual(task["implementation_branch"], "task/data-04-michigan-public-data-parity-foundation")
         self.assertEqual(task["capability_owner"], "DATA Public Data Sources")
-        self.assertEqual(task["completion_state"]["capability_acceptance"], "NOT_REVIEWED")
+        self.assertIn(
+            (task["state"], task["completion_state"]["capability_acceptance"]),
+            {
+                ("COMPLETED_AWAITING_ACCEPTANCE", "NOT_REVIEWED"),
+                ("ACCEPTED_CLOSED", "ACCEPTED"),
+            },
+        )
 
 
 if __name__ == "__main__":
