@@ -59,7 +59,7 @@ def _load_object(path: Path, code: str) -> dict[str, Any]:
     return value
 
 
-def verify_repository_authority(repository_root: Path, *, require_git_lineage: bool = True) -> dict[str, Any]:
+def verify_repository_authority(repository_root: Path) -> dict[str, Any]:
     contract = _load_object(repository_root / "config/model/model11_wisconsin_multivariate_model_contract.json", "MODEL11_CONTRACT_MISSING")
     data03 = _load_object(repository_root / "config/data/data03_wisconsin_multivariate_acs_feature_source_contract.json", "DATA03_CONTRACT_MISSING")
     model09 = _load_object(repository_root / "config/model/model09_wisconsin_experimental_model_contract.json", "MODEL09_CONTRACT_MISSING")
@@ -72,12 +72,11 @@ def verify_repository_authority(repository_root: Path, *, require_git_lineage: b
     require(pipe04.get("artifact_id") == contract["accepted_authority"]["pipe04_contract_id"], "PIPE04_CONTRACT_MISMATCH", "accepted PIPE-04 contract differs")
     require([item.get("measure_id") for item in contract.get("candidate_measures", [])] == data03.get("output_contract", {}).get("measure_order"), "DATA03_CANDIDATE_MENU_MISMATCH", "MODEL-11 menu differs from exact DATA-03 order")
     require(len(contract.get("candidate_measures", [])) == 13 and len(contract.get("candidates", [])) == 3, "MODEL11_BOUNDED_CONTRACT_MISMATCH", "MODEL-11 menu or candidate bound differs")
-    if require_git_lineage:
-        for commit in ACCEPTED_LINEAGE:
-            present = subprocess.run(["git", "cat-file", "-e", commit + "^{commit}"], cwd=repository_root, capture_output=True, text=True)
-            require(present.returncode == 0, "ACCEPTED_GIT_LINEAGE_MISSING", "accepted predecessor commit lineage is absent")
-        ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", "f49e7d8e0129febd883a7335d56ccc74523d43a7", "HEAD"], cwd=repository_root, capture_output=True, text=True)
-        require(ancestor.returncode == 0, "ACCEPTED_GIT_LINEAGE_MISSING", "authorized canonical main is not an ancestor of execution HEAD")
+    for commit in ACCEPTED_LINEAGE:
+        present = subprocess.run(["git", "cat-file", "-e", commit + "^{commit}"], cwd=repository_root, capture_output=True, text=True)
+        require(present.returncode == 0, "ACCEPTED_GIT_LINEAGE_MISSING", "accepted predecessor commit lineage is absent")
+    ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", "f49e7d8e0129febd883a7335d56ccc74523d43a7", "HEAD"], cwd=repository_root, capture_output=True, text=True)
+    require(ancestor.returncode == 0, "ACCEPTED_GIT_LINEAGE_MISSING", "authorized canonical main is not an ancestor of execution HEAD")
     return contract
 
 

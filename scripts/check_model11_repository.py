@@ -29,8 +29,7 @@ def main() -> int:
     missing = [path for path in REQUIRED if not (repository / path).is_file()]
     if missing:
         raise SystemExit(f"MODEL-11 required repository files absent: {missing}")
-    shallow = subprocess.run(["git", "rev-parse", "--is-shallow-repository"], cwd=repository, check=True, capture_output=True, text=True).stdout.strip() == "true"
-    contract = verify_repository_authority(repository, require_git_lineage=not shallow)
+    contract = verify_repository_authority(repository)
     if contract.get("artifact_id") != CONTRACT_ID or len(contract.get("candidate_measures", [])) != 13 or len(contract.get("candidates", [])) != 3:
         raise SystemExit("MODEL-11 exact contract identity/menu/candidate bound differs")
     if contract.get("target", {}).get("allowed_field") != "Isolated Sales" or "Impacted Sales" not in contract.get("target", {}).get("denied_fields", []):

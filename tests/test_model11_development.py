@@ -86,8 +86,6 @@ def _rows(group_count: int = 10) -> list[dict]:
 class Model11DevelopmentTests(unittest.TestCase):
     def test_exact_authority_candidate_menu_vintage_and_bounds(self) -> None:
         contract = verify_repository_authority(ROOT)
-        shallow_safe = verify_repository_authority(ROOT, require_git_lineage=False)
-        self.assertEqual(contract, shallow_safe)
         expected = ["median_household_income", "per_capita_income", "civilian_labor_force_share", "employment_rate", "bachelors_or_higher_share", "owner_occupancy_share", "vacancy_share", "median_home_value", "median_gross_rent", "average_household_size", "no_vehicle_household_share", "drive_alone_commuter_share", "work_from_home_commuter_share"]
         self.assertEqual([item["measure_id"] for item in contract["candidate_measures"]], expected)
         self.assertEqual(len(contract["candidates"]), 3)
