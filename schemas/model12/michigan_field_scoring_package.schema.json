@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model12/michigan_field_scoring_package.schema.json",
+  "title": "Protected MODEL-12 Michigan local field scoring package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "package_id", "version", "state", "contract_authority", "input_schema", "anchors", "aggregate_conformance", "model_lineage", "execution_boundary", "interpretation_boundary", "protected_handle_registry_identity"],
+  "properties": {
+    "$schema": {"const": "model12-michigan-field-scoring-package-v1"},
+    "package_id": {"const": "MODEL12_MICHIGAN_FIELD_SCORING_PACKAGE_V1"},
+    "version": {"const": "1.0.0"},
+    "state": {"const": "ready"},
+    "contract_authority": {"type": "object"},
+    "input_schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields", "additional_fields_permitted"],
+      "properties": {
+        "fields": {"const": ["opaque_anchor_id", "latitude", "longitude"]},
+        "additional_fields_permitted": {"const": false}
+      }
+    },
+    "anchors": {"type": "array", "minItems": 1},
+    "aggregate_conformance": {"type": "object"},
+    "model_lineage": {"type": "object"},
+    "execution_boundary": {"type": "object"},
+    "interpretation_boundary": {"type": "object"},
+    "protected_handle_registry_identity": {"type": "string", "pattern": "^protected-handle-registry:sha256:[0-9a-f]{64}$"},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stable_package_identity": {"type": "string", "pattern": "^model12-field_scoring:sha256:[0-9a-f]{64}$"}
+  }
+}

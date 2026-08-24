@@ -25,6 +25,11 @@ PROTECTED_ARTIFACT_FILENAMES = {
     "model10_commitment_evidence.json",
     "pipe04_model10_wisconsin_development_binding.json",
     "materialization_state.json",
+    "model12_michigan_physical_location_identity_package.json",
+    "model12_michigan_public_feature_package.json",
+    "model12_michigan_frozen_scoring_package.json",
+    "model12_michigan_field_scoring_package.json",
+    "commitment_evidence.json",
     "READY.json",
 }
 PROTECTED_DIRECTORY_NAMES = {
@@ -40,6 +45,9 @@ PROTECTED_DIRECTORY_NAMES = {
     ".model10-local",
     "pipe04-bindings",
     ".pipe04-local",
+    "model12-materializations",
+    "model12-field-scorer-runs",
+    ".model12-local",
 }
 
 

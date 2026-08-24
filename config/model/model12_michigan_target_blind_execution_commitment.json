@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schemas/model12/michigan_target_blind_execution_commitment.schema.json",
+  "artifact_id": "MODEL12_MICHIGAN_TARGET_BLIND_EXECUTION_COMMITMENT_V1",
+  "version": "1.0.0",
+  "status": "completed_awaiting_acceptance",
+  "contract_authority": {
+    "artifact_id": "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1",
+    "version": "1.0.0",
+    "content_sha256": "79bc0fda3cc6bf9caab22da96d6292d5c373c2bc13418e9b14c7f9c23aae8e9e"
+  },
+  "aggregate_conformance": {
+    "source_observation_count": 139,
+    "physical_location_count": 86,
+    "quarantined_physical_location_count": 1,
+    "computable_frozen_score_physical_location_count": 82,
+    "noncomputable_frozen_score_physical_location_count": 3,
+    "any_support_truncation_physical_location_count": 6,
+    "complete_source_observation_accounting": true,
+    "complete_location_accounting": true
+  },
+  "independent_materializations": [
+    {
+      "ordinal": 1,
+      "state": "ready",
+      "stage_commitments": {
+        "identity": "a3584387faa9c77fe66ad9a3446e9c4f0597b880f42f31468de05ee6ef8ee89b",
+        "public_features": "ed6bb493163920db8ce21fb66ab65bd8d362f7a500b430d66912f03c06694c90",
+        "frozen_scoring": "bc1b05a4588fd7d31259634af86fba9dca6f230418149631660e6b37f476658e"
+      }
+    },
+    {
+      "ordinal": 2,
+      "state": "ready",
+      "stage_commitments": {
+        "identity": "55b7d992eee8168b0ba0365b0a8330296bba674a0cfd5efe643be29e9aab705d",
+        "public_features": "338ba3c91434a6097403563561e967846d8c373f986e23713ab2372fdfd7ce2f",
+        "frozen_scoring": "e92e2cfc3dd49ec065e953e2e6a43b245077bf2a9520a4ec4f824d31d399b900"
+      }
+    }
+  ],
+  "deterministic_comparison": {
+    "semantic_stage_count": 3,
+    "semantic_packages_byte_identical": true,
+    "aggregate_conformance_identical": true
+  },
+  "execution_boundary": {
+    "michigan_target_body_values_accessed": 0,
+    "model_refit_performed": false,
+    "model_retraining_performed": false,
+    "model_retuning_performed": false,
+    "michigan_feature_selection_performed": false,
+    "michigan_redundancy_screen_performed": false,
+    "prediction_recalibration_performed": false,
+    "michigan_distribution_used_to_modify_model": false,
+    "protected_output_outside_git": true
+  },
+  "disclosure_boundary": {
+    "protected_package_digest_disclosed": false,
+    "commitment_nonce_disclosed": false,
+    "protected_paths_or_filenames_disclosed": false,
+    "observation_or_location_identity_disclosed": false,
+    "coordinates_or_market_lineage_disclosed": false,
+    "feature_vectors_or_scores_disclosed": false,
+    "fitted_parameters_disclosed": false
+  },
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, no NaN.",
+  "content_sha256": "d9da8a9e16671faffe1762425548cf78a932c94f9719baf18ca098006395798d"
+}

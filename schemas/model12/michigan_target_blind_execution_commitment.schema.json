@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model12/michigan_target_blind_execution_commitment.schema.json",
+  "title": "MODEL-12 nondisclosing protected execution commitment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "artifact_id",
+    "version",
+    "status",
+    "contract_authority",
+    "aggregate_conformance",
+    "independent_materializations",
+    "deterministic_comparison",
+    "execution_boundary",
+    "disclosure_boundary",
+    "hash_algorithm",
+    "content_hash_semantics",
+    "content_sha256"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "artifact_id": {"const": "MODEL12_MICHIGAN_TARGET_BLIND_EXECUTION_COMMITMENT_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "completed_awaiting_acceptance"},
+    "contract_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "version", "content_sha256"],
+      "properties": {
+        "artifact_id": {"const": "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1"},
+        "version": {"const": "1.0.0"},
+        "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "aggregate_conformance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_observation_count",
+        "physical_location_count",
+        "quarantined_physical_location_count",
+        "computable_frozen_score_physical_location_count",
+        "noncomputable_frozen_score_physical_location_count",
+        "any_support_truncation_physical_location_count",
+        "complete_source_observation_accounting",
+        "complete_location_accounting"
+      ],
+      "properties": {
+        "source_observation_count": {"type": "integer", "minimum": 1},
+        "physical_location_count": {"type": "integer", "minimum": 1},
+        "quarantined_physical_location_count": {"type": "integer", "minimum": 0},
+        "computable_frozen_score_physical_location_count": {"type": "integer", "minimum": 0},
+        "noncomputable_frozen_score_physical_location_count": {"type": "integer", "minimum": 0},
+        "any_support_truncation_physical_location_count": {"type": "integer", "minimum": 0},
+        "complete_source_observation_accounting": {"const": true},
+        "complete_location_accounting": {"const": true}
+      }
+    },
+    "independent_materializations": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ordinal", "state", "stage_commitments"],
+        "properties": {
+          "ordinal": {"type": "integer", "minimum": 1, "maximum": 2},
+          "state": {"const": "ready"},
+          "stage_commitments": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["identity", "public_features", "frozen_scoring"],
+            "properties": {
+              "identity": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "public_features": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+              "frozen_scoring": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "deterministic_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["semantic_stage_count", "semantic_packages_byte_identical", "aggregate_conformance_identical"],
+      "properties": {
+        "semantic_stage_count": {"const": 3},
+        "semantic_packages_byte_identical": {"const": true},
+        "aggregate_conformance_identical": {"const": true}
+      }
+    },
+    "execution_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "michigan_target_body_values_accessed",
+        "model_refit_performed",
+        "model_retraining_performed",
+        "model_retuning_performed",
+        "michigan_feature_selection_performed",
+        "michigan_redundancy_screen_performed",
+        "prediction_recalibration_performed",
+        "michigan_distribution_used_to_modify_model",
+        "protected_output_outside_git"
+      ],
+      "properties": {
+        "michigan_target_body_values_accessed": {"const": 0},
+        "model_refit_performed": {"const": false},
+        "model_retraining_performed": {"const": false},
+        "model_retuning_performed": {"const": false},
+        "michigan_feature_selection_performed": {"const": false},
+        "michigan_redundancy_screen_performed": {"const": false},
+        "prediction_recalibration_performed": {"const": false},
+        "michigan_distribution_used_to_modify_model": {"const": false},
+        "protected_output_outside_git": {"const": true}
+      }
+    },
+    "disclosure_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protected_package_digest_disclosed",
+        "commitment_nonce_disclosed",
+        "protected_paths_or_filenames_disclosed",
+        "observation_or_location_identity_disclosed",
+        "coordinates_or_market_lineage_disclosed",
+        "feature_vectors_or_scores_disclosed",
+        "fitted_parameters_disclosed"
+      ],
+      "properties": {
+        "protected_package_digest_disclosed": {"const": false},
+        "commitment_nonce_disclosed": {"const": false},
+        "protected_paths_or_filenames_disclosed": {"const": false},
+        "observation_or_location_identity_disclosed": {"const": false},
+        "coordinates_or_market_lineage_disclosed": {"const": false},
+        "feature_vectors_or_scores_disclosed": {"const": false},
+        "fitted_parameters_disclosed": {"const": false}
+      }
+    },
+    "hash_algorithm": {"const": "SHA-256"},
+    "content_hash_semantics": {"type": "string", "minLength": 1},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
