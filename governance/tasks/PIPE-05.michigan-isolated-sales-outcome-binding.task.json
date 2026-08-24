@@ -3,7 +3,7 @@
   "title": "Michigan Isolated Sales Outcome Binding",
   "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
   "authority_source": "Master Control Room authorized PIPE-05 Michigan Isolated Sales Outcome Binding",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Verify the exact accepted MODEL-12 repository authority and protected Michigan identity and frozen-scoring lineage",
     "Freeze every nonquarantined MODEL-12 Michigan source observation as the target-binding cohort before target-body access",
@@ -36,6 +36,7 @@
     "PROTECTED_PIPE05_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/pipe-05-michigan-isolated-sales-outcome-binding",
+  "implementation_commit": "124ce185eca23083273dc454ce39f450e7278f1f",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -44,8 +45,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "PIPE: Analytical Pipeline Decisions & Acceptance",
-  "exact_next_destination": "PIPE: Analytical Pipeline Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_by": "PIPE: Analytical Pipeline Decisions & Acceptance",
+    "recorded_on": "2026-08-24"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
