@@ -3,7 +3,7 @@
   "title": "Multivariate Wisconsin Customer-Fit Model Development",
   "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
   "authority_source": "Master Control Room authorized MODEL-11 Multivariate Wisconsin Customer-Fit Model Development",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Freeze target-blind five-mile MODEL-11 feature construction from the accepted DATA-03 thirteen-measure menu before target-conditioned comparison",
     "Reuse the exact accepted MODEL-10 and PIPE-04 63-observation 41-physical-location Wisconsin development cohort and Isolated Sales target",
@@ -32,6 +32,7 @@
     "PROTECTED_MODEL11_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/model-11-multivariate-wisconsin-customer-fit-model-development",
+  "implementation_commit": "085ab4f58b40325d6ce2515358363cf9d93d525e",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -40,8 +41,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
-  "exact_next_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_by": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_on": "2026-08-24"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
