@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:data04:michigan-b11001-tract-evidence:v1",
+  "title": "DATA-04 normalized Michigan B11001 tract evidence row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tract_geoid", "state_fips", "county_fips", "tract_code", "estimate_variable_id", "moe_variable_id", "estimate_raw", "moe_raw", "estimate", "moe", "annotation", "status", "status_detail", "source_manifest_id"],
+  "properties": {
+    "tract_geoid": {"type": "string", "pattern": "^26[0-9]{9}$"},
+    "state_fips": {"const": "26"},
+    "county_fips": {"type": "string", "pattern": "^[0-9]{3}$"},
+    "tract_code": {"type": "string", "pattern": "^[0-9]{6}$"},
+    "estimate_variable_id": {"const": "B11001_001E"},
+    "moe_variable_id": {"const": "B11001_001M"},
+    "estimate_raw": {"type": ["string", "null"]},
+    "moe_raw": {"type": ["string", "null"]},
+    "estimate": {"type": ["integer", "null"], "minimum": 0},
+    "moe": {"type": ["integer", "null"], "minimum": 0},
+    "annotation": {"type": ["string", "null"]},
+    "status": {"enum": ["valid", "missing", "inapplicable", "suppressed", "invalid"]},
+    "status_detail": {"type": "object", "required": ["estimate", "moe"]},
+    "source_manifest_id": {"const": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1"}
+  }
+}

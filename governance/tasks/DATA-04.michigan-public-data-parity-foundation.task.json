@@ -1,0 +1,53 @@
+{
+  "task_id": "DATA-04",
+  "title": "Michigan Public-Data Parity Foundation",
+  "capability_owner": "DATA Public Data Sources",
+  "authority_source": "Master Control Room authorized DATA-04 Michigan Public-Data Parity Foundation",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Establish additive statewide Michigan public-source parity with accepted Wisconsin B11001 and DATA-03 multivariate ACS evidence using exact 2024 national source-byte identities",
+    "Acquire and pin exact official 2024 TIGER Line Michigan Census tract authority for state FIPS 26",
+    "Implement the smallest configuration-driven public-source refactor that preserves accepted Wisconsin contract identities behavior CLI semantics and deterministic outputs",
+    "Materialize and reconcile complete statewide Michigan B11001 component multivariate candidate-measure TIGER tract and internal-point source evidence outside tracked Git",
+    "Publish repository-safe contracts manifests schemas tests documentation and concise aggregate verification evidence needed by later separately authorized Michigan GEO and frozen MODEL-11 execution"
+  ],
+  "exclusions": [
+    "No Michigan or Wisconsin Sprouts seed point sales target forecast prediction residual coefficient protected binding or other protected evidence access",
+    "No model fitting tuning calibration evaluation scoring or access to protected MODEL-11 fitted parameters",
+    "No authoritative Michigan market inventory GEO methodology change radius change EPSG 5070 change or follow-on GEO execution",
+    "No protected-characteristic scoring variable or direct proxy based on race ethnicity sex age composition disability religion national origin or another protected-class basis",
+    "No ACS or TIGER vintage other than 2024 block-group LODES Overture commercial proprietary licensed or non-Michigan source substitution",
+    "No change or supersession of accepted Wisconsin DATA-01 DATA-02 DATA-03 GEO or MODEL authority",
+    "No acceptance record self-acceptance merge deployment or follow-on task"
+  ],
+  "accepted_input_artifacts": [
+    "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+    "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+    "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1",
+    "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+    "GEO03_INTERNAL_POINT_MEMBERSHIP_SPATIAL_SPEC_V1",
+    "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1",
+    "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1"
+  ],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/data-04-michigan-public-data-parity-foundation",
+  "implementation_commit": "951476a2757d9063bd3dd6180fbbc924aec1794f",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "DATA Public Data Sources",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "DATA Public Data Sources",
+    "recorded_by": "DATA Public Data Sources",
+    "recorded_on": "2026-08-24"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

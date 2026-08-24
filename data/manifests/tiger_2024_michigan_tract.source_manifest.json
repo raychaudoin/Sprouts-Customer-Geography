@@ -1,0 +1,60 @@
+{
+  "$schema": "../../schemas/pipe01/source_manifest.schema.json",
+  "manifest_id": "DATA04_TIGER2024_MI_TRACT_SOURCE_MANIFEST_V1",
+  "manifest_version": "1.0.0",
+  "source_id": "census-tiger2024-michigan-tract",
+  "source_name": "2024 TIGER/Line Michigan Census Tracts",
+  "publisher": "U.S. Census Bureau",
+  "accepted_vintage": "2024",
+  "source_reference": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_26_tract.zip",
+  "official_product_identity": "2024 TIGER/Line Shapefile, Census Tracts, Michigan (state FIPS 26)",
+  "source_filename": "tl_2024_26_tract.zip",
+  "source_geography_and_type": "Michigan statewide Census Tracts TIGER/Line ZIP archive; public source evidence for later separately authorized Michigan GEO execution.",
+  "retrieval": {
+    "method": "HTTPS GET of the exact source_reference URL; do not use a Current service, TIGERweb output, another release, or a transformed derivative.",
+    "retrieval_date": "2026-08-24",
+    "expected_byte_length": 5575554
+  },
+  "checksum_algorithm": "SHA-256",
+  "byte_sha256": "220c0a351d94c9de456d87c5db78f3e3864b3287370350f1e503a84565224e82",
+  "checksum_semantics": "SHA-256 over the exact downloaded tl_2024_26_tract.zip bytes before extraction or interpretation.",
+  "acquisition_state": "acquired",
+  "schema_version": "data-authoritative-source-manifest-v1",
+  "expected_file_properties": {
+    "container": "ZIP",
+    "required_entries": [
+      "tl_2024_26_tract.cpg",
+      "tl_2024_26_tract.dbf",
+      "tl_2024_26_tract.prj",
+      "tl_2024_26_tract.shp",
+      "tl_2024_26_tract.shp.ea.iso.xml",
+      "tl_2024_26_tract.shp.iso.xml",
+      "tl_2024_26_tract.shx"
+    ],
+    "required_source_fields": ["STATEFP", "COUNTYFP", "TRACTCE", "GEOID", "INTPTLAT", "INTPTLON"],
+    "expected_state_fips": "26",
+    "expected_statewide_tract_row_count_at_retrieval": 3017,
+    "expected_unique_geoid_count_at_retrieval": 3017,
+    "expected_geometry_record_count_at_retrieval": 3017,
+    "expected_parseable_internal_point_count_at_retrieval": 3017,
+    "expected_crs": "EPSG:4269",
+    "expected_crs_reference": "NAD83 geographic coordinates as supplied by the TIGER/Line projection metadata; DATA-04 does not establish a new transformation operation.",
+    "projection_member_sha256": "0b9041e921d9ebb43247d314608fe9e38a0b008ee793067fc1806199ea1fb9dd",
+    "dbf_member_sha256": "13f305c6c5cf01026c4145cee15319e1179036c7bd0c5264fba8d9027252faa3",
+    "shapefile_member_sha256": "c1cc3adf41b9e9fa565a2bc5c58fd78dcd9a7488dddbf16e044ac036586af3c1",
+    "shapefile_index_member_sha256": "b731f1d0105815df41e994e0a384b786a7f46c4107ca6d48fb121be7db0b3215"
+  },
+  "reproduction": "Download exactly source_reference as bytes; require exact filename, byte length, ZIP members, member hashes, source-byte SHA-256, STATEFP 26, required DBF fields, 3,017 unique GEOID component identities, 3,017 structurally valid geometry records, and 3,017 parseable internal points.",
+  "failure_behavior": "Fail closed on unavailable URL, filename/product/vintage mismatch, byte-length or checksum mismatch, incomplete archive, field/schema drift, non-Michigan row, malformed or duplicate GEOID, attribute/geometry count mismatch, invalid geometry, incompatible CRS metadata, or tract-count mismatch. Do not substitute another vintage, TIGERweb, Current service, or derivative.",
+  "attribution": "U.S. Census Bureau, 2024 TIGER/Line Shapefiles. Legal disclaimer and citation terms: https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2024/TGRSHP2024_TechDoc_Ch1.pdf",
+  "lineage": {
+    "controlling_decision": "DATA-04: Michigan Public-Data Parity Foundation",
+    "data_contract_id": "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+    "data_contract_version": "1.0.0",
+    "data_contract_content_sha256": "4818c91e70d64119391aecf57f7306cd5dd2b3c0e174abb9fdfec6730676155d",
+    "geo_boundary": "This is complete statewide public source evidence only. DATA-04 does not create a Michigan market inventory or alter accepted GEO methodology."
+  },
+  "supersedes": null,
+  "supersession_policy": "A correction or new accepted release requires a new manifest ID/version and explicit supersedes lineage; never overwrite this accepted manifest.",
+  "manifest_content_sha256": "de0c9dc0e654990ee03a57b697289f4c480d29b3b3c64ef3162d390adc29d731"
+}

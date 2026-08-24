@@ -328,11 +328,15 @@ class AcsProductionBundle:
     source_lineage: Mapping[str, Any]
 
 
-def load_acs_b11001_production_bundle(
+def load_statewide_acs_b11001_evidence(
     source_file: Path,
     manifest: Mapping[str, Any],
-    inventories: Mapping[str, Mapping[str, Any]],
-) -> AcsProductionBundle:
+    state_fips: str,
+    expected_tract_count: int,
+) -> tuple[dict[str, Mapping[str, Any]], dict[str, Any]]:
+    """Verify the accepted national B11001 bytes and extract one configured state."""
+    require(len(state_fips) == 2 and state_fips.isdigit(), "ACS_STATE_FIPS_INVALID", "state FIPS must contain two digits")
+    require(expected_tract_count > 0, "ACS_STATE_TRACT_COUNT_INVALID", "state tract count must be positive")
     require(source_file.name == manifest.get("source_filename"), "ACS_SOURCE_FILENAME_MISMATCH", "ACS local filename differs from accepted source identity")
     expected_length = manifest.get("retrieval", {}).get("expected_byte_length")
     require(source_file.is_file() and source_file.stat().st_size == expected_length, "ACS_SOURCE_LENGTH_MISMATCH", "ACS local byte length differs from accepted source")
@@ -341,6 +345,9 @@ def load_acs_b11001_production_bundle(
     request = manifest.get("request_identity")
     require(isinstance(request, Mapping) and content_digest(request) == manifest.get("request_sha256"), "ACS_REQUEST_IDENTITY_MISMATCH", "ACS request identity hash differs")
     required_header = set(request.get("header_required", []))
+    prefix = f"1400000US{state_fips}"
+    geoid_pattern = re.compile(rf"1400000US({re.escape(state_fips)}[0-9]{{9}})")
+    state_name = "Wisconsin" if state_fips == "55" else "Michigan" if state_fips == "26" else f"state {state_fips}"
     by_geoid: dict[str, Mapping[str, Any]] = {}
     with source_file.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle, delimiter="|")
@@ -348,17 +355,17 @@ def load_acs_b11001_production_bundle(
         for source_row in reader:
             require(None not in source_row, "ACS_SOURCE_ROW_MALFORMED", "ACS row has more fields than its header")
             geo_identity = str(source_row.get("GEO_ID", ""))
-            if not geo_identity.startswith(ACS_TRACT_PREFIX):
+            if not geo_identity.startswith(prefix):
                 continue
-            match = ACS_GEOID_PATTERN.fullmatch(geo_identity)
-            require(match is not None, "ACS_TRACT_IDENTITY_INVALID", "Wisconsin tract GEO_ID is structurally invalid")
+            match = geoid_pattern.fullmatch(geo_identity)
+            require(match is not None, "ACS_TRACT_IDENTITY_INVALID", f"{state_name} tract GEO_ID is structurally invalid")
             geoid = match.group(1)
-            require(geoid not in by_geoid, "ACS_DUPLICATE_TRACT_GEOID", "ACS source contains a duplicate Wisconsin tract GEOID")
+            require(geoid not in by_geoid, "ACS_DUPLICATE_TRACT_GEOID", f"ACS source contains a duplicate {state_name} tract GEOID")
             parsed = parse_acs_b11001_values(source_row.get("B11001_E001"), source_row.get("B11001_M001"))
             by_geoid[geoid] = {"tract_geoid": geoid, **parsed}
-    expected_count = manifest.get("expected_file_properties", {}).get("expected_wisconsin_tract_row_count_at_retrieval")
-    require(len(by_geoid) == expected_count, "ACS_WISCONSIN_TRACT_COUNT_MISMATCH", "ACS Wisconsin tract row count differs from accepted source evidence")
-
+    count_code = "ACS_WISCONSIN_TRACT_COUNT_MISMATCH" if state_fips == "55" else "ACS_STATE_TRACT_COUNT_MISMATCH"
+    count_message = "ACS Wisconsin tract row count differs from accepted source evidence" if state_fips == "55" else "ACS state tract row count differs from source authority"
+    require(len(by_geoid) == expected_tract_count, count_code, count_message)
     source_lineage = {
         "acs_manifest_id": manifest.get("manifest_id"),
         "acs_manifest_version": manifest.get("manifest_version"),
@@ -371,7 +378,21 @@ def load_acs_b11001_production_bundle(
         "estimate_contract_field": "B11001_001E",
         "moe_contract_field": "B11001_001M",
         "annotation_source_state": "not_present_in_pinned_table_based_source",
+        "state_fips": state_fips,
+        "table_file_geo_id_prefix": prefix,
     }
+    return by_geoid, source_lineage
+
+
+def load_acs_b11001_production_bundle(
+    source_file: Path,
+    manifest: Mapping[str, Any],
+    inventories: Mapping[str, Mapping[str, Any]],
+) -> AcsProductionBundle:
+    expected_count = manifest.get("expected_file_properties", {}).get("expected_wisconsin_tract_row_count_at_retrieval")
+    require(isinstance(expected_count, int), "ACS_WISCONSIN_TRACT_COUNT_MISMATCH", "accepted Wisconsin tract count is absent")
+    by_geoid, source_lineage = load_statewide_acs_b11001_evidence(source_file, manifest, "55", expected_count)
+    source_lineage = {key: value for key, value in source_lineage.items() if key not in {"state_fips", "table_file_geo_id_prefix"}}
     markets: dict[str, tuple[Mapping[str, Any], ...]] = {}
     for market_id, inventory in inventories.items():
         ordered = inventory.get("ordered_geoids")

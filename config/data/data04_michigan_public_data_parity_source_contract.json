@@ -1,0 +1,167 @@
+{
+  "$schema": "../../schemas/data04/michigan_public_data_parity_source_contract.schema.json",
+  "artifact_id": "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "active",
+  "controlling_decision": "DATA-04: Michigan Public-Data Parity Foundation",
+  "purpose": "Additive statewide Michigan source authority that reuses exact accepted 2024 national ACS bytes and definitions, pins exact 2024 Michigan TIGER tract evidence, and grants no scoring or protected-evidence access.",
+  "state_scope": {
+    "state_name": "Michigan",
+    "state_slug": "michigan",
+    "state_fips": "26",
+    "geography_level": "tract",
+    "table_file_geo_id_prefix": "1400000US26",
+    "tract_geoid_pattern": "^26[0-9]{9}$",
+    "statewide": true,
+    "observed_tract_count": 3017,
+    "count_authority": "Exact 2024 Michigan TIGER tract DBF, shapefile record inventory, and B11001 rows reconcile to 3,017 unique Michigan GEOIDs. Ten accepted DATA-03 tables contain all 3,017 source rows; B19301 contains 3,011 and its six absent source rows remain explicit missing-source-row evidence in the complete 3,017-key outputs."
+  },
+  "source_products": {
+    "acs": {
+      "publisher": "U.S. Census Bureau",
+      "family": "American Community Survey",
+      "product": "2020-2024 ACS 5-Year Detailed Tables",
+      "release_period": "2020-2024",
+      "vintage": "2024",
+      "table_file_base_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData",
+      "materialization_access_surface": "official ACS table-based Summary File",
+      "fixed_release": true,
+      "credential_required": false,
+      "official_terms_url": "https://www.census.gov/data/developers/about/terms-of-service.html",
+      "attribution": "U.S. Census Bureau, American Community Survey 2020-2024 5-Year Detailed Tables."
+    },
+    "tiger": {
+      "publisher": "U.S. Census Bureau",
+      "product": "2024 TIGER/Line Census Tracts",
+      "vintage": "2024",
+      "state_fips": "26",
+      "source_reference": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_26_tract.zip",
+      "fixed_release": true,
+      "official_terms_url": "https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2024/TGRSHP2024_TechDoc_Ch1.pdf",
+      "attribution": "U.S. Census Bureau, 2024 TIGER/Line Shapefiles."
+    }
+  },
+  "accepted_acs_national_authority": {
+    "household_manifest": {
+      "manifest_id": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+      "manifest_path": "data/manifests/acs_2024_acs5_b11001_wisconsin_tract.source_manifest.json",
+      "source_filename": "acsdt5y2024-b11001.dat",
+      "source_byte_length": 45827971,
+      "source_byte_sha256": "77200c3d9c0d99773bc7f78208bc96f25170e5d4d175a5de320620b478ceaff5",
+      "manifest_content_sha256": "3beb2f39ef4f0ba02953322da4fef0bc7136947d228dbf4d1353c0b5a94424ce"
+    },
+    "data03_contract": {
+      "artifact_id": "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+      "contract_path": "config/data/data03_wisconsin_multivariate_acs_feature_source_contract.json",
+      "content_sha256": "c20814fe55047889a1dc49c39e8d93ba875fe9b0caccaa8a12f0ee58b11f004d",
+      "table_identity_sha256": "50972249175dec6ff09a6589a48eeb63b997e90b9207ba999511483dcbf87aa7",
+      "candidate_measure_identity_sha256": "da73d50b16079d53173c83951d054aa0725c99661f5c1e3128e63c562fe48c0f",
+      "special_value_contract_sha256": "7be96d1e69e3a1fbb039c821020f1d8fab0d5bffd4fc3497153dd52c6aa94c90",
+      "derivation_contract_sha256": "350df5cbe925a63554a53ce91f5990df105f7b8cc521f5543f9a4a089a3c1fd6",
+      "metadata_identity_sha256": "704d5052e3a6a9b3ee3a6c4be54e63e4070c1e827dd17ea57c9a3097a838afcb"
+    },
+    "multivariate_tables": [
+      {"table_id": "B08201", "manifest_id": "DATA03_ACS2024_ACS5_B08201_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b08201_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b08201.dat", "source_byte_length": 65043091, "source_byte_sha256": "2f64e698223ba83f97b67dde4a34961a02f230e0359ffc69b9657b89a3df6b4d", "manifest_content_sha256": "385a0c7623bbe1416b339155b4690dd3e1ffff631f15a7268e10eca88a1b40cc"},
+      {"table_id": "B08301", "manifest_id": "DATA03_ACS2024_ACS5_B08301_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b08301_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b08301.dat", "source_byte_length": 88492616, "source_byte_sha256": "552b24c135b6e7c566910914a861cda6fc798ba0cd47801b1eb64295a128c2ee", "manifest_content_sha256": "62856eb29d8f0cdd457ad18fedf067e41e7765da14d3e44347bc97ae7a78dabc"},
+      {"table_id": "B15003", "manifest_id": "DATA03_ACS2024_ACS5_B15003_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b15003_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b15003.dat", "source_byte_length": 92292840, "source_byte_sha256": "d0c8609e958022459215c8a31d7452ef7528ee8dd70fbb6f9a99de0f491f42d7", "manifest_content_sha256": "b6b7c30a658e7f0d695c45f66fd50516a854f25ad66e13688a44648d0d6b60fd"},
+      {"table_id": "B19013", "manifest_id": "DATA03_ACS2024_ACS5_B19013_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b19013_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b19013.dat", "source_byte_length": 17917916, "source_byte_sha256": "b25a176b0e6c339b6f3a2a0d3d8446bf06f5f080b4395993ec9a8313efb1c229", "manifest_content_sha256": "2f2ab959ba999229a774bd323a407efd834f38180378ca8128f0f5c84dc645c9"},
+      {"table_id": "B19301", "manifest_id": "DATA03_ACS2024_ACS5_B19301_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b19301_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b19301.dat", "source_byte_length": 17123907, "source_byte_sha256": "9fc107e98fee7fa49bb8314560205569184fad65fb64b80adb5c5bdd83ccc409", "manifest_content_sha256": "bb4f1a42dbd0c0596df47e9df67dcc34186a8b134080f1b35c0f2454fbc9200a"},
+      {"table_id": "B23025", "manifest_id": "DATA03_ACS2024_ACS5_B23025_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b23025_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b23025.dat", "source_byte_length": 39968046, "source_byte_sha256": "264a5bd9367c5f58d9773fa4966fa94fe1e02f9c7106bc2ab39168d6de7c3e4a", "manifest_content_sha256": "c2714f245e83cff3d9d541aa1fb841b36479e5342363053ad4454b1c747a2a6f"},
+      {"table_id": "B25002", "manifest_id": "DATA03_ACS2024_ACS5_B25002_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b25002_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b25002.dat", "source_byte_length": 23400695, "source_byte_sha256": "eb98debfe8e8533e9a8e647a8c5dca5dbe11401c4de4e4449b4a2ba7dc75620f", "manifest_content_sha256": "4dc1be151eb1d7c22b457a1f9e963b87b6e6c44a720b2258909392f3022d765d"},
+      {"table_id": "B25003", "manifest_id": "DATA03_ACS2024_ACS5_B25003_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b25003_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b25003.dat", "source_byte_length": 26901770, "source_byte_sha256": "68e963e1ed60fcf6b0658579cefc6498b7a9eb780b9f3e87fd1b9775c4d4ac6c", "manifest_content_sha256": "3532c114a10745074a524a83a217f472dec3f78c5115f39679c735645c26c847"},
+      {"table_id": "B25010", "manifest_id": "DATA03_ACS2024_ACS5_B25010_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b25010_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b25010.dat", "source_byte_length": 28240177, "source_byte_sha256": "69482d4f74b6d1dfe00a12b100d0d3c74a3b734f5f5cf1070ac4ec22096d67ff", "manifest_content_sha256": "76e38ee44022051b9f80667ab64b20612037dc21bd5860f8896df908d1760631"},
+      {"table_id": "B25064", "manifest_id": "DATA03_ACS2024_ACS5_B25064_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b25064_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b25064.dat", "source_byte_length": 17272062, "source_byte_sha256": "b36e6dc1fcef36b8b307d31b37517b64c80d8b9c70d48c9b1894242860f42eb0", "manifest_content_sha256": "bacb539956da37b005745f6a41cb111ebf980b65a53367e66bee67b4ba86aa54"},
+      {"table_id": "B25077", "manifest_id": "DATA03_ACS2024_ACS5_B25077_WI_TRACT_SOURCE_MANIFEST_V1", "manifest_path": "data/manifests/acs_2024_acs5_b25077_wisconsin_tract_data03.source_manifest.json", "source_filename": "acsdt5y2024-b25077.dat", "source_byte_length": 18496426, "source_byte_sha256": "89eb2153764a2330b23959d8bbc29b3a8f3016f087b990f2a8ea0d5096d9a816", "manifest_content_sha256": "55f3c68700a40f9499c53d76c241f1f06f568aebbd4e9f28ce9b2019b2d62cb2"}
+    ]
+  },
+  "household_extraction": {
+    "extraction_id": "DATA04_ACS2024_ACS5_B11001_MI_TRACT_EXTRACTION_V1",
+    "table_id": "B11001",
+    "estimate_variable": "B11001_001E",
+    "moe_variable": "B11001_001M",
+    "source_estimate_field": "B11001_E001",
+    "source_moe_field": "B11001_M001",
+    "geography_selection": "Rows whose GEO_ID begins exactly 1400000US26; retain the following 11-character Michigan tract GEOID as text.",
+    "expected_tract_count": 3017,
+    "missingness": "Preserve raw estimate/MOE tokens, parsed values, annotation absence, and explicit status; no missing-to-zero conversion, imputation, or tract-row deletion."
+  },
+  "multivariate_extraction": {
+    "extraction_id": "DATA04_ACS2024_ACS5_MULTIVARIATE_MI_TRACT_EXTRACTION_V1",
+    "accepted_table_count": 11,
+    "accepted_component_pair_count": 22,
+    "accepted_candidate_measure_count": 13,
+    "table_identity_sha256": "50972249175dec6ff09a6589a48eeb63b997e90b9207ba999511483dcbf87aa7",
+    "candidate_measure_identity_sha256": "da73d50b16079d53173c83951d054aa0725c99661f5c1e3128e63c562fe48c0f",
+    "special_value_contract_sha256": "7be96d1e69e3a1fbb039c821020f1d8fab0d5bffd4fc3497153dd52c6aa94c90",
+    "derivation_contract_sha256": "350df5cbe925a63554a53ce91f5990df105f7b8cc521f5543f9a4a089a3c1fd6",
+    "metadata_identity_sha256": "704d5052e3a6a9b3ee3a6c4be54e63e4070c1e827dd17ea57c9a3097a838afcb",
+    "geography_selection": "For each exact accepted national table file, retain only GEO_ID prefix 1400000US26 and preserve all 3,017 Michigan TIGER tract keys even when a source row is absent or a component or measure is noncomputable.",
+    "expected_tract_count": 3017,
+    "expected_source_row_reconciliation": {
+      "B08201": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B08301": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B15003": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B19013": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B19301": {"expected_tract_count": 3017, "present_source_row_count": 3011, "missing_source_row_count": 6, "extra_source_row_count": 0},
+      "B23025": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B25002": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B25003": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B25010": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B25064": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0},
+      "B25077": {"expected_tract_count": 3017, "present_source_row_count": 3017, "missing_source_row_count": 0, "extra_source_row_count": 0}
+    }
+  },
+  "tiger_source_authority": {
+    "manifest_id": "DATA04_TIGER2024_MI_TRACT_SOURCE_MANIFEST_V1",
+    "manifest_path": "data/manifests/tiger_2024_michigan_tract.source_manifest.json",
+    "source_byte_sha256": "220c0a351d94c9de456d87c5db78f3e3864b3287370350f1e503a84565224e82",
+    "state_fips": "26",
+    "source_crs": "EPSG:4269",
+    "required_fields": ["STATEFP", "COUNTYFP", "TRACTCE", "GEOID", "INTPTLAT", "INTPTLON"]
+  },
+  "tract_reconciliation": {
+    "canonical_key": "GEOID text = STATEFP + COUNTYFP + TRACTCE and matches ^26[0-9]{9}$",
+    "ordering": "lexicographically ascending complete statewide GEOID",
+    "tiger_uniqueness": "exactly one TIGER DBF and geometry record per canonical Michigan tract GEOID",
+    "acs_table_equality": "B11001 must equal the complete TIGER key set. Each DATA-03 table is reconciled independently; its exact observed present/missing/extra source-row counts must equal multivariate_extraction.expected_source_row_reconciliation, and every TIGER key remains in normalized and candidate outputs.",
+    "missing_source_row": "retain null raw and parsed evidence with missing status and source_row_missing status detail; fail closed if observed per-table coverage differs from the pinned reconciliation",
+    "present_noncomputable_value": "retain the tract and preserve raw tokens, null parsed value, status, and status detail",
+    "row_dropping": "prohibited"
+  },
+  "output_contract": {
+    "schema_version": "data04-michigan-public-data-materialization-v1",
+    "household_filename": "michigan_b11001_tract_evidence.csv",
+    "tiger_filename": "michigan_tiger_tract_evidence.csv",
+    "multivariate_directory": "multivariate",
+    "multivariate_normalized_filename": "michigan_tract_source_values.csv",
+    "multivariate_candidate_filename": "michigan_tract_candidate_measures.csv",
+    "verification_report_filename": "verification_report.json",
+    "ready_filename": "READY.json",
+    "overwrite": "deny",
+    "ready_marker_last": true,
+    "raw_and_generated_git_state": "outside_tracked_git"
+  },
+  "downstream_readiness_contract": {
+    "geo_source_requirements": ["exact Michigan TIGER manifest", "complete canonical statewide tract GEOIDs", "source geometry records", "INTPTLAT and INTPTLON raw parsed and status evidence", "EPSG:4269 source CRS", "2024 vintage"],
+    "model11_public_source_requirements": ["B11001 household estimate and MOE", "all 22 accepted DATA-03 estimate/MOE component pairs", "all 13 accepted DATA-03 measure definitions and status/MOE evidence"],
+    "geo_methodology_change": "prohibited",
+    "model_execution": "prohibited"
+  },
+  "protected_characteristic_policy": {
+    "data03_policy_preserved": true,
+    "direct_proxy_recreation_prohibited": true,
+    "excluded_bases": ["race", "ethnicity", "sex", "age composition", "disability", "religion", "national origin", "other protected-class status"],
+    "all_candidate_measures_clear": true
+  },
+  "protected_evidence_boundary": {
+    "public_data_only": true,
+    "denied_evidence": ["Michigan or Wisconsin seed points", "Isolated Sales", "Impacted Sales", "forecasts", "targets", "predictions", "residuals", "coefficients", "protected PIPE or MODEL bindings and outputs"],
+    "protected_filesystem_discovery": "prohibited and unnecessary"
+  },
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, no NaN.",
+  "failure_behavior": "Fail closed on authority identity, source vintage, accepted national byte identity, metadata or schema drift, Michigan scope, TIGER archive or CRS evidence, malformed or duplicate key, B11001/TIGER key difference, unpinned multivariate source-row coverage, extra source row, output overwrite, nondeterminism, Wisconsin regression, protected boundary, or tracked raw/generated data failure. Do not substitute a source, vintage, geography, missing value, or model behavior.",
+  "supersedes": null,
+  "supersession_policy": "Do not overwrite accepted DATA-01, DATA-02, DATA-03, or Wisconsin source authority. A DATA-04 correction requires a versioned successor with explicit supersedes lineage and a newly calculated content_sha256.",
+  "content_sha256": "4818c91e70d64119391aecf57f7306cd5dd2b3c0e174abb9fdfec6730676155d"
+}
