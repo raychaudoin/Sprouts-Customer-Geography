@@ -46,6 +46,9 @@ data/external/
 **/pipe04_model10_wisconsin_development_binding.json
 **/.pipe04-local/
 **/pipe04-bindings/
+**/pipe05_model12_michigan_isolated_sales_binding.json
+**/.pipe05-local/
+**/pipe05-bindings/
 
 # Generated outputs and large local artifacts
 outputs/

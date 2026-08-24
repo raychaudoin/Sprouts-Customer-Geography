@@ -1,0 +1,51 @@
+{
+  "task_id": "PIPE-05",
+  "title": "Michigan Isolated Sales Outcome Binding",
+  "capability_owner": "PIPE: Analytical Pipeline Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized PIPE-05 Michigan Isolated Sales Outcome Binding",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Verify the exact accepted MODEL-12 repository authority and protected Michigan identity and frozen-scoring lineage",
+    "Freeze every nonquarantined MODEL-12 Michigan source observation as the target-binding cohort before target-body access",
+    "Bind exact accepted MODEL-12 source-observation lineage to the minimum Isolated Sales projection while preserving accepted physical-location identity",
+    "Reuse accepted PIPE protected-local resolution finalization commitment and disclosure controls without changing PIPE-04 behavior",
+    "Provide a repository-safe contract schemas documentation implementation conformance checker and fictional tests",
+    "Materialize and deterministically verify one real immutable protected READY Michigan target-binding package"
+  ],
+  "exclusions": [
+    "No Michigan benchmark evaluation residual rank correlation RMSE MAE pass fail or transport interpretation",
+    "No model fitting training tuning refitting feature selection scoring recalibration or prediction modification",
+    "No identity cohort quarantine canonical-anchor market-vintage feature support or frozen-score change",
+    "No Impacted Sales other outcome unrelated field non-Michigan row candidate score proprietary score or later evidence access",
+    "No imputation zero fill silent drop or MODEL eligibility decision",
+    "No development-consumption marking during binding",
+    "No protected source path filename workbook structure row identity coordinate target value prediction handle package identity nonce hash or reconstructable lineage in Git GitHub CI or repository-safe reports",
+    "No acceptance record self-acceptance merge Power BI Site Scanner deployment or follow-on work"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1",
+    "MODEL12_MICHIGAN_TARGET_BLIND_EXECUTION_COMMITMENT_V1",
+    "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+    "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1",
+    "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL12_MICHIGAN_PHYSICAL_LOCATION_IDENTITY_PACKAGE_V1",
+    "PROTECTED_MODEL12_MICHIGAN_FROZEN_SCORING_PACKAGE_V1",
+    "PROTECTED_MICHIGAN_ISOLATED_SALES_TARGET_SOURCE_V1",
+    "PROTECTED_PIPE05_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/pipe-05-michigan-isolated-sales-outcome-binding",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "PIPE: Analytical Pipeline Decisions & Acceptance",
+  "exact_next_destination": "PIPE: Analytical Pipeline Decisions & Acceptance"
+}

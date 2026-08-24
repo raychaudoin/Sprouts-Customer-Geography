@@ -1,0 +1,107 @@
+{
+  "$schema": "../../schemas/pipe05/michigan_isolated_sales_binding_contract.schema.json",
+  "artifact_id": "PIPE05_MICHIGAN_ISOLATED_SALES_BINDING_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "proposed_awaiting_acceptance",
+  "purpose": "Bind every nonquarantined accepted MODEL-12 Michigan source observation to the minimum Isolated Sales projection without evaluating or changing the frozen benchmark identity cohort features support state computability or predictions.",
+  "accepted_model12_authority": {
+    "contract_artifact_id": "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1",
+    "contract_version": "1.0.0",
+    "contract_path": "config/model/model12_michigan_target_blind_frozen_scoring_contract.json",
+    "contract_content_sha256": "79bc0fda3cc6bf9caab22da96d6292d5c373c2bc13418e9b14c7f9c23aae8e9e",
+    "execution_commitment_artifact_id": "MODEL12_MICHIGAN_TARGET_BLIND_EXECUTION_COMMITMENT_V1",
+    "execution_commitment_version": "1.0.0",
+    "execution_commitment_path": "config/model/model12_michigan_target_blind_execution_commitment.json",
+    "execution_commitment_content_sha256": "d9da8a9e16671faffe1762425548cf78a932c94f9719baf18ca098006395798d",
+    "identity_package_id": "MODEL12_MICHIGAN_PHYSICAL_LOCATION_IDENTITY_PACKAGE_V1",
+    "frozen_scoring_package_id": "MODEL12_MICHIGAN_FROZEN_SCORING_PACKAGE_V1",
+    "substantive_h": "ed4e8196debee378fe49a53e3a4b133afe451eec",
+    "acceptance_record_a": "4cf6ed16d1ab41757684f65ef587ece7819ac89b",
+    "canonical_merge": "ebebe414a56e27612e42b7f78554b513bdefebc8"
+  },
+  "inherited_authority": {
+    "identity_version": "MODEL04_TARGET_BLIND_PHYSICAL_LOCATION_IDENTITY_V1",
+    "model10_contract_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+    "model11_contract_id": "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1",
+    "pipe04_contract_id": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1",
+    "pipe04_contract_path": "config/pipe04/model10_wisconsin_development_binding_contract.json",
+    "pipe04_contract_file_sha256": "299359b16c982bc8b7f450a4edb4b82d7c7f81fa5f5fea16112ab6b8c0f83720",
+    "pipe04_substantive_h": "5b96203ac7849fdd48601dc0129d1bbbe1b91d0e",
+    "pipe04_acceptance_record_a": "195e1f9e9599e4812417954b57356327b80c5051",
+    "pipe04_canonical_merge": "0bc3a6c159d8672254f552f93d18265e539eb10e"
+  },
+  "cohort_rule": {
+    "membership_source": "verified accepted MODEL-12 protected identity package only",
+    "all_model12_source_observations_accounted": true,
+    "eligible_when": "accepted MODEL-12 physical-location identity is nonquarantined",
+    "frozen_score_computability_required": false,
+    "quarantined_excluded_before_target_access": true,
+    "cohort_frozen_before_target_body_access": true,
+    "target_content_may_change_membership_or_identity": false
+  },
+  "identity_rule": {
+    "target_join_identity": "exact accepted MODEL-12 source-observation lineage",
+    "analytical_identity": "accepted MODEL-12 physical-location identity",
+    "source_market_and_forecast_vintage_preserved": true,
+    "source_market_changes_identity": false,
+    "outcome_content_changes_identity": false,
+    "identity_recomputation_or_fuzzy_matching_after_target_access": false
+  },
+  "target_projection": {
+    "default_deny": true,
+    "allowed_state": "michigan",
+    "allowed_target_field": "Isolated Sales",
+    "denied_target_field": "Impacted Sales",
+    "allowed_content": [
+      "accepted MODEL-12 source-observation join lineage",
+      "forecast vintage where required for exact mapping",
+      "minimum binding provenance",
+      "Isolated Sales"
+    ],
+    "other_outcome_fields_denied": true,
+    "non_michigan_denied": true,
+    "unrelated_rows_and_fields_denied": true,
+    "broad_preview_denied": true,
+    "whole_workbook_hash_permitted": false
+  },
+  "missing_invalid_targets": {
+    "explicit_status_required": true,
+    "imputation": false,
+    "zero_substitution": false,
+    "silent_drop": false,
+    "model_eligibility_decision": false
+  },
+  "clean_benchmark_boundary": {
+    "accepted_frozen_predictions_immutable": true,
+    "prediction_body_materialized_by_pipe05": false,
+    "benchmark_evaluation": false,
+    "residuals": false,
+    "ranks": false,
+    "correlations": false,
+    "rmse_or_mae": false,
+    "model_fitting_training_tuning_refitting_or_scoring": false
+  },
+  "evidence_role": {
+    "bound_for_separately_authorized_frozen_benchmark": true,
+    "binding_marks_development_consumed": false,
+    "development_consumption_begins_only_on_later_authorized_analytical_use": true,
+    "permanent_holdout_designation_created": false
+  },
+  "protected_execution": {
+    "registry_id": "PIPE05_PROTECTED_HANDLE_REGISTRY_V1",
+    "explicit_bounded_handles": true,
+    "protected_root_containment": true,
+    "exact_source_basename_resolution": true,
+    "broad_filesystem_discovery": false,
+    "immutable_runs": true,
+    "incomplete_first": true,
+    "ready_marker_last": true,
+    "overwrite": "deny",
+    "deterministic_semantic_verification": true,
+    "binding_package_id": "PIPE05_MODEL12_MICHIGAN_ISOLATED_SALES_BINDING_V1",
+    "protected_output_outside_tracked_git": true
+  },
+  "supersedes": null,
+  "failure_behavior": "Fail closed on repository or protected MODEL-12 lineage mismatch incomplete accounting unfrozen cohort quarantine leakage duplicate unresolved conflicting wrong-vintage wrong-observation unexpected-row or misattached target mapping denied target scope missing or invalid status loss containment interruption overwrite supersession deterministic verification or disclosure mismatch. Never impute evaluate predictions modify model state or mark development consumption.",
+  "content_sha256": "52541a2b5819e2881571b6128fbb5389a14e98dce83b6b0f6f073a46adecb630"
+}
