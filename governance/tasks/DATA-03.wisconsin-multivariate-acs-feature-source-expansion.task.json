@@ -3,7 +3,7 @@
   "title": "Wisconsin Multivariate ACS Feature Source Expansion",
   "capability_owner": "DATA Public Data Sources",
   "authority_source": "Master Control Room authorized DATA-03 Wisconsin Multivariate ACS Feature Source Expansion",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Establish one additive target-blind Wisconsin multivariate ACS source contract without changing accepted DATA-01 authority",
     "Curate a bounded menu of 2020-2024 ACS 5-Year tract-level economic education housing household-scale vehicle-access and commute-mode measures",
@@ -28,6 +28,7 @@
   ],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/data-03-wisconsin-multivariate-acs-feature-source-expansion",
+  "implementation_commit": "ed5796e737c1c39671a081f78644577de00a17b2",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -36,8 +37,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "DATA Public Data Sources",
-  "exact_next_destination": "DATA Public Data Sources for Lane B acceptance or rejection of exact substantive H"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "DATA Public Data Sources",
+    "recorded_by": "DATA Public Data Sources",
+    "recorded_on": "2026-08-23"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
