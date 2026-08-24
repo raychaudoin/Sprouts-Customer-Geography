@@ -3,7 +3,7 @@
   "title": "Michigan Target-Blind Seed Intake and Frozen Scoring",
   "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
   "authority_source": "Master Control Room authorized MODEL-12 Michigan Target-Blind Seed Intake and Frozen Scoring",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Ingest the complete authorized Michigan seed evidence through an explicit target-blind allowlisted projection and account for every source observation without reading target-body values",
     "Resolve repeated Michigan observations to physical locations using the exact accepted MODEL-10 and MODEL-04 target-blind identity methodology with ambiguity quarantined",
@@ -37,6 +37,7 @@
     "PROTECTED_MODEL12_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/model-12-michigan-target-blind-seed-intake-frozen-scoring",
+  "implementation_commit": "ed4e8196debee378fe49a53e3a4b133afe451eec",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -45,8 +46,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
-  "exact_next_destination": "MODEL: Customer-Fit Proxy Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_by": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+    "recorded_on": "2026-08-24"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
