@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
@@ -27,8 +28,10 @@ jobs:
       - run: python scripts/check_pipe04_repository.py
       - run: python scripts/check_model09_repository.py
       - run: python scripts/check_data03_repository.py
+      - run: python scripts/check_model11_repository.py
       - run: python -m unittest discover -s tests -v
         env:
           PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}
           MODEL09_TEST_TEMP_ROOT: ${{ runner.temp }}
           DATA03_TEST_TEMP_ROOT: ${{ runner.temp }}
+          MODEL11_TEST_TEMP_ROOT: ${{ runner.temp }}

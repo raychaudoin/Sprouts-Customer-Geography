@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model11/protected_handle_registry.schema.json",
+  "title": "MODEL-11 protected handle registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "version", "protected_roots", "resources", "development_request"],
+  "properties": {
+    "registry_id": {"const": "MODEL11_PROTECTED_HANDLE_REGISTRY_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_roots": {"type": "object", "minProperties": 1},
+    "resources": {"type": "object", "minProperties": 10},
+    "development_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model10_package_handle", "model10_ready_marker_handle", "pipe04_binding_handle", "pipe04_ready_marker_handle", "acs_b11001_source_handle", "tiger_source_handle", "data03_normalized_source_handle", "data03_verification_report_handle", "data03_ready_marker_handle", "model11_output_root_handle"]
+    }
+  }
+}

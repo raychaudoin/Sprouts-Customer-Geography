@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model11/wisconsin_multivariate_model_contract.schema.json",
+  "title": "MODEL-11 Wisconsin multivariate model contract",
+  "type": "object",
+  "required": ["artifact_id", "version", "accepted_authority", "cohort", "target", "phase1_feature_freeze", "candidate_measures", "candidates", "development_diagnostics", "reference_reproduction", "selection", "output_semantics", "protected_execution", "failure_behavior"],
+  "properties": {
+    "artifact_id": {"const": "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "candidate_measures": {"type": "array", "minItems": 13, "maxItems": 13, "items": {"type": "object", "required": ["measure_id", "family", "kind", "aggregation", "transform"]}},
+    "candidates": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "object", "required": ["candidate_id", "architecture", "complexity_rank", "terms"]}}
+  },
+  "additionalProperties": true
+}
