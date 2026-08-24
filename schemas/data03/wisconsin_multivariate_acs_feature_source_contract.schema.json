@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:data03:wisconsin-multivariate-acs-feature-source-contract:v1",
+  "title": "DATA-03 Wisconsin multivariate ACS feature source contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "artifact_id",
+    "version",
+    "status",
+    "controlling_decision",
+    "purpose",
+    "additive_authority",
+    "source_product",
+    "geography",
+    "tables",
+    "candidate_measures",
+    "api_query_identity",
+    "api_query_sha256",
+    "metadata_identity_fields",
+    "metadata_identity_sha256",
+    "special_value_contract",
+    "derivation_contract",
+    "output_contract",
+    "protected_characteristic_policy",
+    "deferred_recommendations",
+    "hash_algorithm",
+    "content_hash_semantics",
+    "failure_behavior",
+    "supersedes",
+    "supersession_policy",
+    "content_sha256"
+  ],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "artifact_id": {"const": "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "active"},
+    "controlling_decision": {"const": "DATA-03: Wisconsin Multivariate ACS Feature Source Expansion"},
+    "purpose": {"type": "string", "minLength": 1},
+    "additive_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data01_contract_id", "data02_household_manifest_id", "data02_tiger_manifest_id", "geo04_inventory_derivation_id", "data01_unchanged"],
+      "properties": {
+        "data01_contract_id": {"const": "DATA01_VALIDATION_SOURCE_CONTRACT_V1"},
+        "data02_household_manifest_id": {"const": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1"},
+        "data02_tiger_manifest_id": {"const": "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1"},
+        "geo04_inventory_derivation_id": {"const": "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1"},
+        "data01_unchanged": {"const": true}
+      }
+    },
+    "source_product": {
+      "type": "object",
+      "required": ["publisher", "family", "product", "release_period", "vintage", "dataset", "api_base_url", "table_file_base_url", "retrieval_date", "fixed_release", "official_terms_url", "official_copyright_policy_url", "attribution"]
+    },
+    "geography": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "state_fips", "api_for", "api_in", "table_file_geo_id_prefix", "tract_geoid_pattern", "expected_tract_count", "tiger_manifest_path"],
+      "properties": {
+        "level": {"const": "tract"},
+        "state_fips": {"const": "55"},
+        "api_for": {"const": "tract:*"},
+        "api_in": {"const": "state:55"},
+        "table_file_geo_id_prefix": {"const": "1400000US55"},
+        "tract_geoid_pattern": {"const": "^55[0-9]{9}$"},
+        "expected_tract_count": {"const": 1542},
+        "tiger_manifest_path": {"const": "data/manifests/tiger_2024_wisconsin_tract.source_manifest.json"}
+      }
+    },
+    "tables": {
+      "type": "array",
+      "minItems": 11,
+      "maxItems": 11,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["table_id", "concept", "metadata_url", "source_manifest_id", "source_manifest_path", "variables"],
+        "properties": {
+          "table_id": {"pattern": "^B[0-9]{5}$"},
+          "concept": {"type": "string", "minLength": 1},
+          "metadata_url": {"pattern": "^https://api\\.census\\.gov/data/2024/acs/acs5/groups/B[0-9]{5}\\.json$"},
+          "source_manifest_id": {"pattern": "^DATA03_ACS2024_ACS5_B[0-9]{5}_WI_TRACT_SOURCE_MANIFEST_V1$"},
+          "source_manifest_path": {"pattern": "^data/manifests/acs_2024_acs5_b[0-9]{5}_wisconsin_tract_data03\\.source_manifest\\.json$"},
+          "variables": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["component_id", "estimate_variable", "moe_variable", "table_estimate_field", "table_moe_field", "predicate_type", "estimate_label", "moe_label", "domain"],
+              "properties": {
+                "component_id": {"pattern": "^[a-z][a-z0-9_]+$"},
+                "estimate_variable": {"pattern": "^B[0-9]{5}_[0-9]{3}E$"},
+                "moe_variable": {"pattern": "^B[0-9]{5}_[0-9]{3}M$"},
+                "table_estimate_field": {"pattern": "^B[0-9]{5}_E[0-9]{3}$"},
+                "table_moe_field": {"pattern": "^B[0-9]{5}_M[0-9]{3}$"},
+                "predicate_type": {"enum": ["int", "float"]},
+                "estimate_label": {"type": "string", "minLength": 1},
+                "moe_label": {"type": "string", "minLength": 1},
+                "domain": {"enum": ["nonnegative_count", "nonnegative_currency", "positive_average"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "candidate_measures": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["measure_id", "family", "kind", "unit", "source_components", "moe_method", "target_blind", "final_model_feature_authority", "protected_characteristic_basis"]
+      }
+    },
+    "api_query_identity": {"type": "object", "required": ["dataset_url", "ordered_get_variables", "for", "in", "credential_parameter", "credential_environment_variable", "credential_excluded_from_identity"]},
+    "api_query_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "metadata_identity_fields": {"const": ["group", "label", "predicateType"]},
+    "metadata_identity_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "special_value_contract": {"type": "object", "required": ["official_reference", "sentinels", "unrecognized_negative_status", "raw_token_preservation", "zero_policy"]},
+    "derivation_contract": {"type": "object", "required": ["component_sum_moe", "subset_percentage_moe", "negative_radicand_fallback", "invalid_denominator", "invalid_subset", "imputation"]},
+    "output_contract": {"type": "object", "required": ["schema_version", "normalized_source_columns", "wide_key_columns", "wide_measure_suffixes", "measure_order", "ordering", "raw_and_generated_git_state", "overwrite", "ready_marker_last"]},
+    "protected_characteristic_policy": {"type": "object", "required": ["candidate_menu_target_blind", "direct_proxy_recreation_prohibited", "excluded_bases", "universe_age_qualifier_is_not_feature", "all_candidate_measures_clear"]},
+    "deferred_recommendations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "hash_algorithm": {"const": "SHA-256"},
+    "content_hash_semantics": {"type": "string", "minLength": 1},
+    "failure_behavior": {"type": "string", "minLength": 1},
+    "supersedes": {"type": ["string", "null"]},
+    "supersession_policy": {"type": "string", "minLength": 1},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

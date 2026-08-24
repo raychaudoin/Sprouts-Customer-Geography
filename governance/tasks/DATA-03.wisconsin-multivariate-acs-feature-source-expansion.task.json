@@ -1,0 +1,43 @@
+{
+  "task_id": "DATA-03",
+  "title": "Wisconsin Multivariate ACS Feature Source Expansion",
+  "capability_owner": "DATA Public Data Sources",
+  "authority_source": "Master Control Room authorized DATA-03 Wisconsin Multivariate ACS Feature Source Expansion",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Establish one additive target-blind Wisconsin multivariate ACS source contract without changing accepted DATA-01 authority",
+    "Curate a bounded menu of 2020-2024 ACS 5-Year tract-level economic education housing household-scale vehicle-access and commute-mode measures",
+    "Pin exact 2024 Detailed Table variables estimate and MOE pairs official source surfaces metadata identity and Wisconsin tract query semantics",
+    "Implement repository-safe acquisition materialization schema validation missingness quality and deterministic lineage controls",
+    "Verify real public Wisconsin tract data against the accepted 2024 TIGER tract authority while keeping raw downloads and generated outputs outside Git",
+    "Preserve source values MOEs quality states and protected-characteristic exclusions for later separately authorized MODEL development"
+  ],
+  "exclusions": [
+    "No Isolated Sales Impacted Sales PIPE-04 binding protected MODEL-09 output seed-point evidence residual coefficient ranking prediction or other target access",
+    "No model fitting target-conditioned screening feature selection regularization coefficient estimation scoring MODEL-11 or PIPE work",
+    "No protected-characteristic scoring variable or obvious direct proxy selected to recreate an excluded protected characteristic",
+    "No ACS vintage other than 2024 Census block group non-Wisconsin LODES Overture proprietary licensed or commercial demographic source",
+    "No change to accepted DATA-01 MODEL-09 GEO methodology Power BI Site Scanner or deployment behavior",
+    "No acceptance record merge self-acceptance or follow-on substantive work"
+  ],
+  "accepted_input_artifacts": [
+    "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+    "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+    "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1",
+    "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1"
+  ],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/data-03-wisconsin-multivariate-acs-feature-source-expansion",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "DATA Public Data Sources",
+  "exact_next_destination": "DATA Public Data Sources for Lane B acceptance or rejection of exact substantive H"
+}
