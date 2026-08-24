@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 from sprouts_customer_geography.model13.modeling import SPATIAL_TERMS, compare_and_refit, fit_regularized, state_balanced_grouped_folds
-from sprouts_customer_geography.model13.workflow import STAGE_FILES, ProtectedModel13Run, _rank_values, build_disclosure_safe_result, compare_runs, verify_repository_authority
+from sprouts_customer_geography.model13.workflow import STAGE_FILES, ProtectedModel13Run, _rank_values, _required_spatial_features_computable, build_disclosure_safe_result, compare_runs, verify_repository_authority
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
 
@@ -60,6 +60,12 @@ class Model13AuthorityTests(unittest.TestCase):
         work_orders = list((REPOSITORY / "docs/work_orders").glob("MODEL_13*.md"))
         self.assertEqual(len(manifests), 1)
         self.assertEqual(len(work_orders), 1)
+
+    def test_target_blind_freeze_requires_complete_spatial_opportunity_vectors(self) -> None:
+        complete = {"MI:fictional": {"features": {"households_5mi": 100.0, "log_households_5mi": math.log1p(100.0), "inner_household_share_3mi_of_7mi": 0.4, "log_inner_outer_household_density_gradient": 0.2}}}
+        self.assertTrue(_required_spatial_features_computable(complete))
+        incomplete = {"MI:fictional": {"features": {**complete["MI:fictional"]["features"], "log_households_5mi": None}}}
+        self.assertFalse(_required_spatial_features_computable(incomplete))
 
 
 class Model13ModelingTests(unittest.TestCase):

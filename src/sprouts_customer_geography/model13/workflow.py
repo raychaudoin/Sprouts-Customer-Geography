@@ -261,6 +261,17 @@ def _transformed_profile(profile: Mapping[str, Any], transform: str) -> float | 
     return math.log1p(float(value)) if transform == "log1p" else float(value)
 
 
+def _required_spatial_features_computable(group_vectors: Mapping[str, Mapping[str, Any]]) -> bool:
+    required = list(dict.fromkeys(["households_5mi", *SPATIAL_TERMS]))
+    return all(
+        isinstance(vector["features"].get(term), (int, float))
+        and not isinstance(vector["features"].get(term), bool)
+        and math.isfinite(float(vector["features"][term]))
+        for vector in group_vectors.values()
+        for term in required
+    )
+
+
 def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model12Resolver, identity: Mapping[str, Any], michigan_features: Mapping[str, Any], contract: Mapping[str, Any]) -> tuple[dict[str, Any], Any]:
     model11_contract = _load_object(root / "config/model/model11_wisconsin_multivariate_model_contract.json", "MODEL13_MODEL11_CONTRACT_UNRESOLVED")
     model11_output = model11.resolve(str(model11.development_request["model11_output_root_handle"]), "model11_output_root").path
@@ -285,7 +296,8 @@ def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model
         observations.append({"analytical_observation_id": "WI:" + str(source["source_observation_id"]), "source_observation_id": source["source_observation_id"], "state": "WI", "successor_physical_location_id": group, "original_physical_location_id": original_group, "features": vector["features"]})
     michigan_physical = {str(item["physical_location_id"]): item for item in michigan_features["physical_locations"] if item["quarantined"] is False}
     for physical_id, source in michigan_physical.items():
-        features = dict(source["public_features"])
+        public_features = source.get("public_features")
+        features = dict(public_features) if isinstance(public_features, Mapping) else {}
         group_vectors["MI:" + physical_id] = {"state": "MI", "original_physical_location_id": physical_id, "features": features, "profiles": source["data03_feature_profiles"], "coordinate": source["canonical_target_blind_coordinate"], "support_truncation": source["any_support_truncation"]}
     for source in michigan_features["source_observations"]:
         physical_id = str(source["physical_location_id"])
@@ -294,6 +306,11 @@ def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model
         vector = group_vectors["MI:" + physical_id]
         observations.append({"analytical_observation_id": "MI:" + str(source["source_observation_id"]), "source_observation_id": source["source_observation_id"], "state": "MI", "successor_physical_location_id": "MI:" + physical_id, "original_physical_location_id": physical_id, "features": vector["features"]})
     require(len(observations) == 201 and len(group_vectors) == 126 and sum(item["state"] == "WI" for item in observations) == 63 and sum(item["state"] == "MI" for item in observations) == 138, "MODEL13_COMBINED_COHORT_ACCOUNTING_FAILED", "target-blind combined cohort does not reconcile")
+    require(
+        _required_spatial_features_computable(group_vectors),
+        "MODEL13_REQUIRED_SPATIAL_FEATURE_NONCOMPUTABLE",
+        "one or more complete-cohort physical-location vectors lack an authorized spatial or household-opportunity input",
+    )
     measure_ids = [str(item["measure_id"]) for item in model11_contract["candidate_measures"]]
     exclusions: dict[str, str] = {}
     variable: list[str] = []
