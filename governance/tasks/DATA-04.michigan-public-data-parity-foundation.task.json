@@ -3,7 +3,7 @@
   "title": "Michigan Public-Data Parity Foundation",
   "capability_owner": "DATA Public Data Sources",
   "authority_source": "Master Control Room authorized DATA-04 Michigan Public-Data Parity Foundation",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Establish additive statewide Michigan public-source parity with accepted Wisconsin B11001 and DATA-03 multivariate ACS evidence using exact 2024 national source-byte identities",
     "Acquire and pin exact official 2024 TIGER Line Michigan Census tract authority for state FIPS 26",
@@ -31,6 +31,7 @@
   ],
   "protected_dependency_logical_ids": [],
   "implementation_branch": "task/data-04-michigan-public-data-parity-foundation",
+  "implementation_commit": "951476a2757d9063bd3dd6180fbbc924aec1794f",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -39,8 +40,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "DATA Public Data Sources",
-  "exact_next_destination": "DATA Public Data Sources"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "DATA Public Data Sources",
+    "recorded_by": "DATA Public Data Sources",
+    "recorded_on": "2026-08-24"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
