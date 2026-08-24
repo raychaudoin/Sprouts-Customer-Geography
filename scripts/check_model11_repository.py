@@ -45,7 +45,7 @@ def main() -> int:
     stageable = subprocess.run(["git", "ls-files", "--cached", "--others", "--exclude-standard"], cwd=repository, check=True, capture_output=True, text=True).stdout.splitlines()
     assert_no_protected_tracked_paths(stageable)
     public_text = "\n".join((repository / path).read_text(encoding="utf-8", errors="ignore") for path in stageable if (repository / path).is_file())
-    forbidden = ("p4bind-model10" + "-wisconsin-v1", "m10run-wisconsin" + "-successor-v1", "m09run-wisconsin" + "-full-cohort")
+    forbidden = ("Sprouts" + "-Protected", "m11freeze-" + "wisconsin", "m11run-" + "wisconsin")
     if any(value.lower() in public_text.lower() for value in forbidden):
         raise SystemExit("MODEL-11 protected-local execution detail entered stageable repository content")
     print(json.dumps({"state": "passed", "contract_id": CONTRACT_ID, "candidate_measure_count": 13, "candidate_count": 3, "target_scope": "Isolated Sales only", "protected_path_guard": "passed"}, sort_keys=True))

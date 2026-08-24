@@ -56,3 +56,21 @@ Protected outputs keep three concepts separate: raw five-mile household opportun
 Targets, identities, coordinates, observation features, fold assignments, coefficients, intercepts, selected target-conditioned parameters, predictions, residuals, detailed target correlations, protected handles and paths, and reconstructable artifacts remain outside Git/GitHub. Repository-safe surfaces contain only the contract, implementation, schemas, fictional tests, and non-reconstructable aggregate development evidence consistent with MODEL-09 precedent.
 
 At substantive H the one MODEL-11 manifest is `COMPLETED_AWAITING_ACCEPTANCE`, execution is `COMPLETED`, capability acceptance is `NOT_REVIEWED`, the real feature freeze and development run are READY, all 63 observations are accounted for, required validation and exact-H CI pass, and the reviewed diff contains no protected detail. Exact H then stops for the named MODEL owner.
+
+## Completion evidence
+
+The code-matched protected execution completed in the required order. Phase 1 created an immutable READY target-blind freeze before target access: 63 of 63 eligible observations in all 41 physical-location groups were included, two quarantined observations remained excluded, all 13 accepted DATA-03 measures were evaluated, eight survived complete-cohort and redundancy preparation, five were excluded without dropping or imputing a row, and zero target values were accessed. Maximum absolute target-blind pairwise correlation among tested preparation pairs was 0.9115, below the fixed 0.95 exclusion threshold for the retained set.
+
+Phase 2 reused exactly 63 Isolated Sales values from PIPE-04, accessed zero Impacted Sales values and zero non-Wisconsin targets, changed no identity or cohort fact, and produced an immutable protected READY development package. The locked MODEL-09 reference reproduced exactly at the accepted rounded metrics.
+
+| Candidate | Grouped Spearman | Grouped Kendall tau-b | Log RMSE | Level MAE | Fold Spearman range | Market-holdout Spearman | Effective terms |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| MODEL-09 spatial-concentration reference | 0.7000 | 0.5146 | 0.1019 | 21,830.08 | 0.6667–0.8571 | 0.6904 | 3 |
+| Multivariate ridge | 0.7422 | 0.5317 | 0.0988 | 20,781.07 | 0.7143–0.9048 | 0.7497 | 11 |
+| Multivariate elastic net | 0.7430 | 0.5341 | 0.1000 | 20,739.73 | 0.7167–0.9048 | 0.7326 | 6 |
+
+Both challengers cleared the locked gate. Elastic net is preferred because its +0.0430 grouped-Spearman improvement was marginally higher than ridge's +0.0422; its log-RMSE ratio to the reference was approximately 0.981, within the 1.05 ceiling, and it used fewer effective terms. The required rank-first tie break therefore controls even though ridge's log RMSE was slightly lower. No gate was changed after target access.
+
+Instability remains material. Across the five outer fits, ridge retained all 11 terms but the least stable selected sign agreed in only 60% of fits. Elastic net selected nine of 11 terms at least once, only two in every outer fit, and the least stable selected sign agreed in 66.7% of nonzero fits. Maximum standardized coefficient standard deviation was 0.0235 for ridge and 0.0228 for elastic net. The maximum individual outer-held-out physical-location absolute log error was 0.28 for the reference and ridge and 0.31 for elastic net. These diagnostics prohibit treating individual coefficients or selected terms as durable customer truths.
+
+The favorable market-holdout ordering is still development reuse, not market-transport validation. The selected formulation and protected final refit remain development-only. Independent validation is not established; market transport is not established; no production or operational Demand Heat authority exists; and no Sprouts proprietary-model-equivalence claim is made.

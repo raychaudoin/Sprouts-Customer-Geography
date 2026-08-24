@@ -11,6 +11,8 @@ python -m sprouts_customer_geography.model11 develop --repository-root . --regis
 
 Both phases are immutable and incomplete-first with READY written last. A corrected target-conditioned run uses a new patch version, new opaque run identity, and explicit supersedes identity. The console emits disclosure-safe aggregate evidence only; target values, identities, locations, observation features, fold assignments, selected parameters, fitted coefficients, predictions, residuals, handles, paths, hashes, and reconstructable artifacts remain protected-local.
 
+The completed protected execution retained eight target-blind DATA-03 features and selected `challenger_multivariate_elastic_net` under the frozen gate. Its grouped out-of-fold Spearman was 0.7430 versus 0.7000 for the reproduced MODEL-09 reference, and its log RMSE was 0.1000 versus 0.1019. The exact selected parameters, terms, fitted model, predictions, residuals, and observation diagnostics remain protected. See the controlling work order for disclosure-safe aggregate comparison and stability evidence.
+
 Conformance:
 
 ```powershell
