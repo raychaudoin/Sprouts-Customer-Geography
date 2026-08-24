@@ -4,7 +4,7 @@ Sprouts Customer Geography is public-data decision support for understanding lik
 
 ## Current orientation
 
-The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B11001 household estimates/MOEs and 2024 TIGER tract geography. Household opportunity is accepted and distinct from customer fit. MODEL-09's preferred experimental formulation, `challenger_spatial_concentration`, is accepted as a Wisconsin development-only customer-fit proxy. Independent validation and market transport are not established; it is not production ready, grants no operational Demand Heat authority, and makes no proprietary-model-equivalence claim.
+The accepted public analytical core uses ACS 2020–2024 5-year Detailed Table B11001 household estimates/MOEs and 2024 TIGER tract geography. DATA-03's additive public-source authority accepts a target-blind menu of 13 economic, education, housing, household-scale, vehicle-access, and commute-mode candidate measures from the same fixed 2024 ACS release for later separately authorized multivariate development. DATA-03 does not select final model features, fit or score a model, access targets, or change MODEL-09. Household opportunity remains distinct from customer fit. MODEL-09's preferred experimental formulation, `challenger_spatial_concentration`, is accepted as a Wisconsin development-only customer-fit proxy. Independent validation and market transport are not established; it is not production ready, grants no operational Demand Heat authority, and makes no proprietary-model-equivalence claim.
 
 MODEL-07 ended `TEMPORAL_VALIDATION_INCONCLUSIVE`: two eligible repeated physical-location groups were evaluated against a minimum of five. Ordering was favorable, but insufficient to validate operational model behavior; this is not evidence of instability. The prospective Milwaukee holdout and Madison stages remain sealed. See the [MODEL-07 temporal validation gate](docs/work_orders/MODEL_07_MILWAUKEE_TEMPORAL_VALIDATION_GATE.md).
 
@@ -22,6 +22,8 @@ Start with this orientation, then read the [agent contract](AGENTS.md), matching
 
 - [GitHub workflow governance](docs/GITHUB_WORKFLOW_GOVERNANCE.md)
 - [Data source contract](config/data/data01_validation_source_contract.json)
+- [DATA-03 multivariate ACS source contract](config/data/data03_wisconsin_multivariate_acs_feature_source_contract.json)
+- [DATA-03 materialization guide](docs/DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE.md)
 - [MODEL-05 validation preregistration](config/model/model05_prospective_validation_preregistration.json)
 - [MODEL-08 Wisconsin evidence expansion strategy](docs/work_orders/MODEL_08_WISCONSIN_EVIDENCE_EXPANSION_STRATEGY.md)
 - [MODEL-09 Wisconsin experimental development](docs/work_orders/MODEL_09_WISCONSIN_FULL_COHORT_EXPERIMENTAL_MODEL_DEVELOPMENT.md)

@@ -1,0 +1,245 @@
+{
+  "$schema": "../../schemas/data03/wisconsin_multivariate_acs_feature_source_contract.schema.json",
+  "artifact_id": "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "active",
+  "controlling_decision": "DATA-03: Wisconsin Multivariate ACS Feature Source Expansion",
+  "purpose": "Additive target-blind 2024 ACS Wisconsin tract source and candidate-variable authority for a later separately authorized multivariate development task.",
+  "additive_authority": {
+    "data01_contract_id": "DATA01_VALIDATION_SOURCE_CONTRACT_V1",
+    "data02_household_manifest_id": "DATA02_ACS2024_ACS5_B11001_WI_TRACT_SOURCE_MANIFEST_V1",
+    "data02_tiger_manifest_id": "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1",
+    "geo04_inventory_derivation_id": "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1",
+    "data01_unchanged": true
+  },
+  "source_product": {
+    "publisher": "U.S. Census Bureau",
+    "family": "American Community Survey",
+    "product": "2020-2024 ACS 5-Year Detailed Tables",
+    "release_period": "2020-2024",
+    "vintage": "2024",
+    "dataset": "acs/acs5",
+    "api_base_url": "https://api.census.gov/data/2024/acs/acs5",
+    "table_file_base_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData",
+    "retrieval_date": "2026-08-23",
+    "fixed_release": true,
+    "api_access_state_at_retrieval": "credential_required",
+    "materialization_access_surface": "official ACS table-based Summary File",
+    "access_surface_reason": "The exact 2024 Census data endpoint returned its Missing Key gate without a credential. Exact official 2024 Detailed Table files provide the same release and variable evidence without committing or requiring credentials.",
+    "official_terms_url": "https://www.census.gov/data/developers/about/terms-of-service.html",
+    "official_copyright_policy_url": "https://www.census.gov/about/policies/copyright.html",
+    "attribution": "U.S. Census Bureau, American Community Survey 2020-2024 5-Year Detailed Tables."
+  },
+  "geography": {
+    "level": "tract",
+    "state_fips": "55",
+    "api_for": "tract:*",
+    "api_in": "state:55",
+    "table_file_geo_id_prefix": "1400000US55",
+    "tract_geoid_pattern": "^55[0-9]{9}$",
+    "expected_tract_count": 1542,
+    "tiger_manifest_path": "data/manifests/tiger_2024_wisconsin_tract.source_manifest.json"
+  },
+  "tables": [
+    {
+      "table_id": "B08201",
+      "concept": "Household Size by Vehicles Available",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B08201.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B08201_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b08201_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "vehicle_table_households_total", "estimate_variable": "B08201_001E", "moe_variable": "B08201_001M", "table_estimate_field": "B08201_E001", "table_moe_field": "B08201_M001", "predicate_type": "int", "estimate_label": "Estimate!!Total:", "moe_label": "Margin of Error!!Total:", "domain": "nonnegative_count"},
+        {"component_id": "households_no_vehicle", "estimate_variable": "B08201_002E", "moe_variable": "B08201_002M", "table_estimate_field": "B08201_E002", "table_moe_field": "B08201_M002", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!No vehicle available", "moe_label": "Margin of Error!!Total:!!No vehicle available", "domain": "nonnegative_count"}
+      ]
+    },
+    {
+      "table_id": "B08301",
+      "concept": "Means of Transportation to Work",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B08301.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B08301_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b08301_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "commuters_total", "estimate_variable": "B08301_001E", "moe_variable": "B08301_001M", "table_estimate_field": "B08301_E001", "table_moe_field": "B08301_M001", "predicate_type": "int", "estimate_label": "Estimate!!Total:", "moe_label": "Margin of Error!!Total:", "domain": "nonnegative_count"},
+        {"component_id": "commuters_drive_alone", "estimate_variable": "B08301_003E", "moe_variable": "B08301_003M", "table_estimate_field": "B08301_E003", "table_moe_field": "B08301_M003", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Car, truck, or van:!!Drove alone", "moe_label": "Margin of Error!!Total:!!Car, truck, or van:!!Drove alone", "domain": "nonnegative_count"},
+        {"component_id": "commuters_work_from_home", "estimate_variable": "B08301_021E", "moe_variable": "B08301_021M", "table_estimate_field": "B08301_E021", "table_moe_field": "B08301_M021", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Worked from home", "moe_label": "Margin of Error!!Total:!!Worked from home", "domain": "nonnegative_count"}
+      ]
+    },
+    {
+      "table_id": "B15003",
+      "concept": "Educational Attainment for the Population 25 Years and Over",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B15003.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B15003_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b15003_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "education_population_25_plus", "estimate_variable": "B15003_001E", "moe_variable": "B15003_001M", "table_estimate_field": "B15003_E001", "table_moe_field": "B15003_M001", "predicate_type": "int", "estimate_label": "Estimate!!Total:", "moe_label": "Margin of Error!!Total:", "domain": "nonnegative_count"},
+        {"component_id": "education_bachelors", "estimate_variable": "B15003_022E", "moe_variable": "B15003_022M", "table_estimate_field": "B15003_E022", "table_moe_field": "B15003_M022", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Bachelor's degree", "moe_label": "Margin of Error!!Total:!!Bachelor's degree", "domain": "nonnegative_count"},
+        {"component_id": "education_masters", "estimate_variable": "B15003_023E", "moe_variable": "B15003_023M", "table_estimate_field": "B15003_E023", "table_moe_field": "B15003_M023", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Master's degree", "moe_label": "Margin of Error!!Total:!!Master's degree", "domain": "nonnegative_count"},
+        {"component_id": "education_professional", "estimate_variable": "B15003_024E", "moe_variable": "B15003_024M", "table_estimate_field": "B15003_E024", "table_moe_field": "B15003_M024", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Professional school degree", "moe_label": "Margin of Error!!Total:!!Professional school degree", "domain": "nonnegative_count"},
+        {"component_id": "education_doctorate", "estimate_variable": "B15003_025E", "moe_variable": "B15003_025M", "table_estimate_field": "B15003_E025", "table_moe_field": "B15003_M025", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Doctorate degree", "moe_label": "Margin of Error!!Total:!!Doctorate degree", "domain": "nonnegative_count"}
+      ]
+    },
+    {
+      "table_id": "B19013",
+      "concept": "Median Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B19013.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B19013_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b19013_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "median_household_income", "estimate_variable": "B19013_001E", "moe_variable": "B19013_001M", "table_estimate_field": "B19013_E001", "table_moe_field": "B19013_M001", "predicate_type": "int", "estimate_label": "Estimate!!Median household income in the past 12 months (in 2024 inflation-adjusted dollars)", "moe_label": "Margin of Error!!Median household income in the past 12 months (in 2024 inflation-adjusted dollars)", "domain": "nonnegative_currency"}
+      ]
+    },
+    {
+      "table_id": "B19301",
+      "concept": "Per Capita Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B19301.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B19301_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b19301_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "per_capita_income", "estimate_variable": "B19301_001E", "moe_variable": "B19301_001M", "table_estimate_field": "B19301_E001", "table_moe_field": "B19301_M001", "predicate_type": "int", "estimate_label": "Estimate!!Per capita income in the past 12 months (in 2024 inflation-adjusted dollars)", "moe_label": "Margin of Error!!Per capita income in the past 12 months (in 2024 inflation-adjusted dollars)", "domain": "nonnegative_currency"}
+      ]
+    },
+    {
+      "table_id": "B23025",
+      "concept": "Employment Status for the Population 16 Years and Over",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B23025.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B23025_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b23025_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "labor_population_16_plus", "estimate_variable": "B23025_001E", "moe_variable": "B23025_001M", "table_estimate_field": "B23025_E001", "table_moe_field": "B23025_M001", "predicate_type": "int", "estimate_label": "Estimate!!Total:", "moe_label": "Margin of Error!!Total:", "domain": "nonnegative_count"},
+        {"component_id": "civilian_labor_force", "estimate_variable": "B23025_003E", "moe_variable": "B23025_003M", "table_estimate_field": "B23025_E003", "table_moe_field": "B23025_M003", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!In labor force:!!Civilian labor force:", "moe_label": "Margin of Error!!Total:!!In labor force:!!Civilian labor force:", "domain": "nonnegative_count"},
+        {"component_id": "civilian_employed", "estimate_variable": "B23025_004E", "moe_variable": "B23025_004M", "table_estimate_field": "B23025_E004", "table_moe_field": "B23025_M004", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!In labor force:!!Civilian labor force:!!Employed", "moe_label": "Margin of Error!!Total:!!In labor force:!!Civilian labor force:!!Employed", "domain": "nonnegative_count"}
+      ]
+    },
+    {
+      "table_id": "B25002",
+      "concept": "Occupancy Status",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B25002.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B25002_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b25002_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "housing_units_total", "estimate_variable": "B25002_001E", "moe_variable": "B25002_001M", "table_estimate_field": "B25002_E001", "table_moe_field": "B25002_M001", "predicate_type": "int", "estimate_label": "Estimate!!Total:", "moe_label": "Margin of Error!!Total:", "domain": "nonnegative_count"},
+        {"component_id": "housing_units_vacant", "estimate_variable": "B25002_003E", "moe_variable": "B25002_003M", "table_estimate_field": "B25002_E003", "table_moe_field": "B25002_M003", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Vacant", "moe_label": "Margin of Error!!Total:!!Vacant", "domain": "nonnegative_count"}
+      ]
+    },
+    {
+      "table_id": "B25003",
+      "concept": "Tenure",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B25003.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B25003_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b25003_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "occupied_housing_units_total", "estimate_variable": "B25003_001E", "moe_variable": "B25003_001M", "table_estimate_field": "B25003_E001", "table_moe_field": "B25003_M001", "predicate_type": "int", "estimate_label": "Estimate!!Total:", "moe_label": "Margin of Error!!Total:", "domain": "nonnegative_count"},
+        {"component_id": "owner_occupied_housing_units", "estimate_variable": "B25003_002E", "moe_variable": "B25003_002M", "table_estimate_field": "B25003_E002", "table_moe_field": "B25003_M002", "predicate_type": "int", "estimate_label": "Estimate!!Total:!!Owner occupied", "moe_label": "Margin of Error!!Total:!!Owner occupied", "domain": "nonnegative_count"}
+      ]
+    },
+    {
+      "table_id": "B25010",
+      "concept": "Average Household Size of Occupied Housing Units by Tenure",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B25010.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B25010_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b25010_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "average_household_size", "estimate_variable": "B25010_001E", "moe_variable": "B25010_001M", "table_estimate_field": "B25010_E001", "table_moe_field": "B25010_M001", "predicate_type": "float", "estimate_label": "Estimate!!Average household size --!!Total:", "moe_label": "Margin of Error!!Average household size --!!Total:", "domain": "positive_average"}
+      ]
+    },
+    {
+      "table_id": "B25064",
+      "concept": "Median Gross Rent (Dollars)",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B25064.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B25064_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b25064_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "median_gross_rent", "estimate_variable": "B25064_001E", "moe_variable": "B25064_001M", "table_estimate_field": "B25064_E001", "table_moe_field": "B25064_M001", "predicate_type": "int", "estimate_label": "Estimate!!Median gross rent", "moe_label": "Margin of Error!!Median gross rent", "domain": "nonnegative_currency"}
+      ]
+    },
+    {
+      "table_id": "B25077",
+      "concept": "Median Value (Dollars)",
+      "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/B25077.json",
+      "source_manifest_id": "DATA03_ACS2024_ACS5_B25077_WI_TRACT_SOURCE_MANIFEST_V1",
+      "source_manifest_path": "data/manifests/acs_2024_acs5_b25077_wisconsin_tract_data03.source_manifest.json",
+      "variables": [
+        {"component_id": "median_home_value", "estimate_variable": "B25077_001E", "moe_variable": "B25077_001M", "table_estimate_field": "B25077_E001", "table_moe_field": "B25077_M001", "predicate_type": "int", "estimate_label": "Estimate!!Median value (dollars)", "moe_label": "Margin of Error!!Median value (dollars)", "domain": "nonnegative_currency"}
+      ]
+    }
+  ],
+  "candidate_measures": [
+    {"measure_id": "median_household_income", "family": "economic_capacity", "kind": "direct", "unit": "2024_inflation_adjusted_dollars", "source_components": ["median_household_income"], "moe_method": "published", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "per_capita_income", "family": "economic_capacity", "kind": "direct", "unit": "2024_inflation_adjusted_dollars", "source_components": ["per_capita_income"], "moe_method": "published", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "civilian_labor_force_share", "family": "economic_capacity", "kind": "subset_percentage", "unit": "percent", "source_components": ["civilian_labor_force", "labor_population_16_plus"], "numerator_components": ["civilian_labor_force"], "denominator_component": "labor_population_16_plus", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "employment_rate", "family": "economic_capacity", "kind": "subset_percentage", "unit": "percent", "source_components": ["civilian_employed", "civilian_labor_force"], "numerator_components": ["civilian_employed"], "denominator_component": "civilian_labor_force", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "bachelors_or_higher_share", "family": "education_socioeconomic_structure", "kind": "subset_percentage", "unit": "percent", "source_components": ["education_bachelors", "education_masters", "education_professional", "education_doctorate", "education_population_25_plus"], "numerator_components": ["education_bachelors", "education_masters", "education_professional", "education_doctorate"], "denominator_component": "education_population_25_plus", "moe_method": "acs_component_sum_then_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "owner_occupancy_share", "family": "housing_neighborhood_economics", "kind": "subset_percentage", "unit": "percent", "source_components": ["owner_occupied_housing_units", "occupied_housing_units_total"], "numerator_components": ["owner_occupied_housing_units"], "denominator_component": "occupied_housing_units_total", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "vacancy_share", "family": "housing_neighborhood_economics", "kind": "subset_percentage", "unit": "percent", "source_components": ["housing_units_vacant", "housing_units_total"], "numerator_components": ["housing_units_vacant"], "denominator_component": "housing_units_total", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "median_home_value", "family": "housing_neighborhood_economics", "kind": "direct", "unit": "dollars", "source_components": ["median_home_value"], "moe_method": "published", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "median_gross_rent", "family": "housing_neighborhood_economics", "kind": "direct", "unit": "dollars", "source_components": ["median_gross_rent"], "moe_method": "published", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "average_household_size", "family": "household_scale", "kind": "direct", "unit": "persons_per_occupied_housing_unit", "source_components": ["average_household_size"], "moe_method": "published", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "no_vehicle_household_share", "family": "transportation_accessibility", "kind": "subset_percentage", "unit": "percent", "source_components": ["households_no_vehicle", "vehicle_table_households_total"], "numerator_components": ["households_no_vehicle"], "denominator_component": "vehicle_table_households_total", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "drive_alone_commuter_share", "family": "transportation_accessibility", "kind": "subset_percentage", "unit": "percent", "source_components": ["commuters_drive_alone", "commuters_total"], "numerator_components": ["commuters_drive_alone"], "denominator_component": "commuters_total", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false},
+    {"measure_id": "work_from_home_commuter_share", "family": "transportation_accessibility", "kind": "subset_percentage", "unit": "percent", "source_components": ["commuters_work_from_home", "commuters_total"], "numerator_components": ["commuters_work_from_home"], "denominator_component": "commuters_total", "moe_method": "acs_subset_percentage", "target_blind": true, "final_model_feature_authority": false, "protected_characteristic_basis": false}
+  ],
+  "api_query_identity": {
+    "dataset_url": "https://api.census.gov/data/2024/acs/acs5",
+    "ordered_get_variables": ["B08201_001E", "B08201_001M", "B08201_002E", "B08201_002M", "B08301_001E", "B08301_001M", "B08301_003E", "B08301_003M", "B08301_021E", "B08301_021M", "B15003_001E", "B15003_001M", "B15003_022E", "B15003_022M", "B15003_023E", "B15003_023M", "B15003_024E", "B15003_024M", "B15003_025E", "B15003_025M", "B19013_001E", "B19013_001M", "B19301_001E", "B19301_001M", "B23025_001E", "B23025_001M", "B23025_003E", "B23025_003M", "B23025_004E", "B23025_004M", "B25002_001E", "B25002_001M", "B25002_003E", "B25002_003M", "B25003_001E", "B25003_001M", "B25003_002E", "B25003_002M", "B25010_001E", "B25010_001M", "B25064_001E", "B25064_001M", "B25077_001E", "B25077_001M"],
+    "for": "tract:*",
+    "in": "state:55",
+    "credential_parameter": "key",
+    "credential_environment_variable": "CENSUS_API_KEY",
+    "credential_excluded_from_identity": true
+  },
+  "api_query_sha256": "35b99170e9434328bf411d51b92bcbea481a0091be4d4ce1a9fd42194a29b7fb",
+  "metadata_identity_fields": ["group", "label", "predicateType"],
+  "metadata_identity_sha256": "704d5052e3a6a9b3ee3a6c4be54e63e4070c1e827dd17ea57c9a3097a838afcb",
+  "special_value_contract": {
+    "official_reference": "https://www.census.gov/data/developers/data-sets/acs-1year/notes-on-acs-estimate-and-annotation-values.html",
+    "sentinels": [
+      {"token": "-999999999", "status": "suppressed", "meaning": "insufficient sample cases"},
+      {"token": "-888888888", "status": "inapplicable", "meaning": "not applicable or not available"},
+      {"token": "-777777777", "status": "special", "meaning": "rounded special value"},
+      {"token": "-666666666", "status": "missing", "meaning": "estimate could not be computed"},
+      {"token": "-555555555", "status": "inapplicable", "meaning": "controlled estimate or MOE not applicable"},
+      {"token": "-333333333", "status": "inapplicable", "meaning": "open-interval median annotation"},
+      {"token": "-222222222", "status": "missing", "meaning": "MOE unavailable because sample observations are insufficient"}
+    ],
+    "unrecognized_negative_status": "invalid",
+    "raw_token_preservation": true,
+    "zero_policy": "Published numeric zero is valid for count and currency domains; it is never substituted for missing special or invalid evidence."
+  },
+  "derivation_contract": {
+    "component_sum_moe": "square_root_of_sum_of_squared_component_moes",
+    "subset_percentage_moe": "100 * sqrt(numerator_moe^2 - proportion^2 * denominator_moe^2) / denominator",
+    "negative_radicand_fallback": "replace subtraction with addition inside the square root",
+    "invalid_denominator": "null estimate and MOE with invalid_denominator status when denominator is nonpositive or noncomputable",
+    "invalid_subset": "null estimate and MOE with invalid_subset status when numerator is outside zero through denominator",
+    "imputation": "prohibited"
+  },
+  "output_contract": {
+    "schema_version": "data03-wisconsin-multivariate-acs-materialization-v1",
+    "normalized_source_columns": ["tract_geoid", "state_fips", "county_fips", "tract_code", "table_id", "component_id", "estimate_variable_id", "moe_variable_id", "estimate_raw", "moe_raw", "estimate", "moe", "status", "status_detail"],
+    "wide_key_columns": ["tract_geoid", "state_fips", "county_fips", "tract_code"],
+    "wide_measure_suffixes": ["estimate", "moe", "status", "status_detail"],
+    "measure_order": ["median_household_income", "per_capita_income", "civilian_labor_force_share", "employment_rate", "bachelors_or_higher_share", "owner_occupancy_share", "vacancy_share", "median_home_value", "median_gross_rent", "average_household_size", "no_vehicle_household_share", "drive_alone_commuter_share", "work_from_home_commuter_share"],
+    "ordering": "tract_geoid ascending; normalized rows then table_id and component_id ascending",
+    "raw_and_generated_git_state": "outside_tracked_git",
+    "overwrite": "deny",
+    "ready_marker_last": true
+  },
+  "protected_characteristic_policy": {
+    "candidate_menu_target_blind": true,
+    "direct_proxy_recreation_prohibited": true,
+    "excluded_bases": ["race", "ethnicity", "sex", "age composition", "disability", "religion", "national origin", "other protected-class status"],
+    "universe_age_qualifier_is_not_feature": true,
+    "all_candidate_measures_clear": true
+  },
+  "deferred_recommendations": [
+    "Housing-stock vintage or structural-age measures require a later dimensionality and interpretation decision.",
+    "Commute-time approximations require a later derivation and stability decision.",
+    "Any source family product vintage geography or protected-characteristic-sensitive variable outside this contract requires separate authority."
+  ],
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys compact separators Unicode preserved no NaN.",
+  "failure_behavior": "Fail closed on contract or manifest identity hash product vintage source URL metadata variable estimate/MOE geography TIGER coverage duplicate key special-value denominator schema ordering output checksum rerun or protected-characteristic-policy mismatch. Do not substitute another release source geography value or zero.",
+  "supersedes": null,
+  "supersession_policy": "Do not overwrite this accepted artifact. A correction creates a versioned successor with explicit supersedes lineage and newly calculated hashes.",
+  "content_sha256": "c20814fe55047889a1dc49c39e8d93ba875fe9b0caccaa8a12f0ee58b11f004d"
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schemas/pipe01/source_manifest.schema.json",
+  "manifest_id": "DATA03_ACS2024_ACS5_B08301_WI_TRACT_SOURCE_MANIFEST_V1",
+  "manifest_version": "1.0.0",
+  "source_id": "census-acs-2024-acs5-detailed-b08301",
+  "source_name": "2020-2024 ACS 5-Year Detailed Table B08301",
+  "publisher": "U.S. Census Bureau",
+  "accepted_vintage": "2024",
+  "source_reference": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-b08301.dat",
+  "official_product_identity": "2020-2024 ACS 5-Year Detailed Tables, official table-based Summary File, B08301",
+  "source_filename": "acsdt5y2024-b08301.dat",
+  "source_geography_and_type": "National table-based Detailed Table B08301 file, deterministically filtered to GEO_ID prefix 1400000US55 for Wisconsin Census tracts.",
+  "retrieval": {
+    "method": "HTTPS GET of the exact source_reference URL; no latest/current alias or API credential is used.",
+    "retrieval_date": "2026-08-23",
+    "expected_byte_length": 88492616,
+    "access_surface_reason": "The exact 2024 Census data endpoint returned its Missing Key gate without a credential. Exact official 2024 Detailed Table files provide the same release and variable evidence without committing or requiring credentials."
+  },
+  "request_identity": {
+    "access_surface": "official ACS table-based Summary File HTTPS distribution",
+    "source_file": "acsdt5y2024-b08301.dat",
+    "record_delimiter": "LF",
+    "field_delimiter": "|",
+    "header_required": [
+      "GEO_ID",
+      "B08301_E001",
+      "B08301_M001",
+      "B08301_E003",
+      "B08301_M003",
+      "B08301_E021",
+      "B08301_M021"
+    ],
+    "geography_selection": "Rows whose GEO_ID begins exactly 1400000US55; no market target or seed filtering.",
+    "metadata_reference": "https://api.census.gov/data/2024/acs/acs5/groups/B08301.json",
+    "source_to_contract_mapping": {
+      "B08301_E001": "B08301_001E",
+      "B08301_E003": "B08301_003E",
+      "B08301_E021": "B08301_021E",
+      "B08301_M001": "B08301_001M",
+      "B08301_M003": "B08301_003M",
+      "B08301_M021": "B08301_021M"
+    }
+  },
+  "request_hash_algorithm": "SHA-256",
+  "request_hash_semantics": "SHA-256 of canonical UTF-8 JSON for request_identity: recursively sorted object keys compact separators Unicode preserved no NaN.",
+  "request_sha256": "e76f895495d1dc3ea79fbc8db638306a2b32e37f8f99daf8cab53b27b685aae7",
+  "checksum_algorithm": "SHA-256",
+  "byte_sha256": "552b24c135b6e7c566910914a861cda6fc798ba0cd47801b1eb64295a128c2ee",
+  "checksum_semantics": "SHA-256 over the exact downloaded acsdt5y2024-b08301.dat bytes before filtering parsing normalization or conversion.",
+  "acquisition_state": "acquired",
+  "schema_version": "data-authoritative-source-manifest-v1",
+  "expected_file_properties": {
+    "container": "UTF-8-compatible pipe-delimited text with one header row",
+    "required_source_fields": [
+      "GEO_ID",
+      "B08301_E001",
+      "B08301_M001",
+      "B08301_E003",
+      "B08301_M003",
+      "B08301_E021",
+      "B08301_M021"
+    ],
+    "required_contract_estimate_fields": [
+      "B08301_001E",
+      "B08301_003E",
+      "B08301_021E"
+    ],
+    "required_contract_moe_fields": [
+      "B08301_001M",
+      "B08301_003M",
+      "B08301_021M"
+    ],
+    "selected_metadata_identity_sha256": "7ca6b53907437fe8e7798a695f5f554eabc73fc82b8f1bd592fad7e1b48f4daa",
+    "expected_wisconsin_tract_row_count_at_retrieval": 1542
+  },
+  "annotation_and_special_value_contract": {
+    "official_reference": "https://www.census.gov/data/developers/data-sets/acs-1year/notes-on-acs-estimate-and-annotation-values.html",
+    "api_annotation_state": "The official metadata defines paired annotation variables, but the selected table-based file contains no annotation columns.",
+    "required_parser_behavior": "Preserve raw estimate and MOE tokens. Apply the DATA-03 special-value contract; missing suppressed inapplicable special or invalid evidence remains noncomputable and never becomes zero."
+  },
+  "reproduction": "Download exactly source_reference as acsdt5y2024-b08301.dat; require exact byte length SHA-256 header mapping metadata identity and 1,542 unique Wisconsin tract rows before downstream use.",
+  "failure_behavior": "Fail closed on unavailable source product vintage filename byte length checksum header metadata estimate/MOE pairing duplicate tract special value malformed record or Wisconsin coverage mismatch for B08301. Do not substitute another release table geography or zero.",
+  "attribution": "U.S. Census Bureau, American Community Survey 2020-2024 5-Year Detailed Table B08301.",
+  "lineage": {
+    "controlling_decision": "DATA-03: Wisconsin Multivariate ACS Feature Source Expansion",
+    "data_contract_id": "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+    "data_contract_version": "1.0.0",
+    "data_contract_content_sha256": "c20814fe55047889a1dc49c39e8d93ba875fe9b0caccaa8a12f0ee58b11f004d",
+    "additive_to": "DATA01_VALIDATION_SOURCE_CONTRACT_V1; accepted DATA-01 authority is unchanged.",
+    "model_boundary": "Source variables and documented source-safe derivations only; no final model feature selection fitting scoring or target-conditioned authority."
+  },
+  "supersedes": null,
+  "supersession_policy": "A correction or newly accepted release requires a new manifest ID/version and explicit supersedes lineage; never overwrite this accepted manifest.",
+  "manifest_content_sha256": "62856eb29d8f0cdd457ad18fedf067e41e7765da14d3e44347bc97ae7a78dabc"
+}
