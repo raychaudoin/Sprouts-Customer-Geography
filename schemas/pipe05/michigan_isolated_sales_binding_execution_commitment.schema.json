@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe05:michigan-isolated-sales-binding-execution-commitment:v1",
+  "title": "Repository-safe PIPE-05 execution commitment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "status", "contract_authority", "accepted_model12_authority", "aggregate_conformance", "deterministic_binding_verification", "execution_boundary", "disclosure_boundary", "protected_binding_commitment", "hash_algorithm", "content_hash_semantics", "content_sha256"],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "artifact_id": {"const": "PIPE05_MICHIGAN_ISOLATED_SALES_BINDING_EXECUTION_COMMITMENT_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "completed_awaiting_acceptance"},
+    "contract_authority": {"type": "object"},
+    "accepted_model12_authority": {"type": "object"},
+    "aggregate_conformance": {"type": "object"},
+    "deterministic_binding_verification": {"type": "object"},
+    "execution_boundary": {"type": "object"},
+    "disclosure_boundary": {"type": "object"},
+    "protected_binding_commitment": {"type": "object"},
+    "hash_algorithm": {"const": "SHA-256"},
+    "content_hash_semantics": {"type": "string", "minLength": 1},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

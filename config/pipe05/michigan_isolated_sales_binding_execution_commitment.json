@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schemas/pipe05/michigan_isolated_sales_binding_execution_commitment.schema.json",
+  "artifact_id": "PIPE05_MICHIGAN_ISOLATED_SALES_BINDING_EXECUTION_COMMITMENT_V1",
+  "version": "1.0.0",
+  "status": "completed_awaiting_acceptance",
+  "contract_authority": {
+    "artifact_id": "PIPE05_MICHIGAN_ISOLATED_SALES_BINDING_CONTRACT_V1",
+    "version": "1.0.0",
+    "content_sha256": "52541a2b5819e2881571b6128fbb5389a14e98dce83b6b0f6f073a46adecb630"
+  },
+  "accepted_model12_authority": {
+    "repository_contract_id": "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1",
+    "repository_execution_commitment_id": "MODEL12_MICHIGAN_TARGET_BLIND_EXECUTION_COMMITMENT_V1",
+    "substantive_h": "ed4e8196debee378fe49a53e3a4b133afe451eec",
+    "acceptance_record_a": "4cf6ed16d1ab41757684f65ef587ece7819ac89b",
+    "canonical_merge": "ebebe414a56e27612e42b7f78554b513bdefebc8",
+    "source_observation_count": 139,
+    "physical_location_count": 86,
+    "independent_materialization_count": 2,
+    "protected_identity_and_frozen_scoring_lineage_verified": true,
+    "individual_predictions_materialized_by_pipe05": false
+  },
+  "aggregate_conformance": {
+    "source_observation_count": 139,
+    "target_binding_eligible_source_observation_count": 138,
+    "unique_bound_physical_location_count": 85,
+    "quarantine_excluded_source_observation_count": 1,
+    "valid_isolated_sales_binding_count": 138,
+    "missing_isolated_sales_count": 0,
+    "invalid_isolated_sales_count": 0,
+    "missing_or_invalid_isolated_sales_count": 0,
+    "complete_source_observation_accounting": true,
+    "complete_target_binding_accounting": true
+  },
+  "deterministic_binding_verification": {
+    "state": "MATCH",
+    "source_observation_accounting_identical": true,
+    "eligible_cohort_identity_identical": true,
+    "minimum_target_projection_identical": true,
+    "protected_content_verified": true,
+    "ready_commitment_verified": true
+  },
+  "execution_boundary": {
+    "cohort_frozen_before_target_body_access": true,
+    "quarantine_excluded_before_target_access": true,
+    "impacted_sales_body_values_accessed": 0,
+    "other_outcome_body_values_accessed": 0,
+    "quarantined_target_body_values_accessed": 0,
+    "benchmark_evaluation_performed": false,
+    "prediction_values_modified": false,
+    "prediction_values_materialized": false,
+    "residuals_ranks_correlations_or_error_metrics_calculated": false,
+    "model_fitting_training_tuning_refitting_or_scoring_performed": false,
+    "development_consumption_marked": false,
+    "protected_output_outside_git": true
+  },
+  "disclosure_boundary": {
+    "protected_package_digest_disclosed": false,
+    "commitment_nonce_disclosed": false,
+    "protected_paths_or_filenames_disclosed": false,
+    "workbook_or_sheet_structure_disclosed": false,
+    "observation_or_location_identity_disclosed": false,
+    "coordinates_or_market_lineage_disclosed": false,
+    "target_values_disclosed": false,
+    "predictions_or_model_parameters_disclosed": false
+  },
+  "protected_binding_commitment": {
+    "domain": "sprouts-customer-geography/pipe01/freeze-commitment/v1",
+    "commitment_sha256": "28b7f68c5d5226e54ea8a404361d8a89d9ac604bedbeb1ae2e361a17f9c6825c",
+    "protected_package_digest_disclosed": false,
+    "nonce_disclosed": false,
+    "binding_content_disclosed": false
+  },
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, no NaN.",
+  "content_sha256": "50dd3d49cdc0ecf356322f15fed547f68e17830c1078059987d64aa26655a3c0"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe05:protected-handle-registry:v1",
+  "title": "PIPE-05 protected exact-handle registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "version", "protected_roots", "resources", "model12_materialization_authorities", "source_authority", "binding_request"],
+  "properties": {
+    "registry_id": {"const": "PIPE05_PROTECTED_HANDLE_REGISTRY_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_roots": {"type": "object", "minProperties": 1},
+    "resources": {"type": "object", "minProperties": 1},
+    "model12_materialization_authorities": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ordinal", "run_ready_marker_handle", "stages"],
+        "properties": {
+          "ordinal": {"type": "integer", "minimum": 1, "maximum": 2},
+          "run_ready_marker_handle": {"type": "string", "pattern": "^phandle-"},
+          "stages": {"type": "object"}
+        }
+      }
+    },
+    "source_authority": {"type": "object"},
+    "binding_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary_identity_authority_ordinal", "michigan_target_source_handle", "binding_output_root_handle"],
+      "properties": {
+        "primary_identity_authority_ordinal": {"const": 1},
+        "michigan_target_source_handle": {"type": "string", "pattern": "^phandle-"},
+        "binding_output_root_handle": {"type": "string", "pattern": "^phandle-"}
+      }
+    }
+  }
+}

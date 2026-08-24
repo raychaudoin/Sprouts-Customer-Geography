@@ -9,7 +9,7 @@ import os
 import re
 import uuid
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any, Mapping
 
 from sprouts_customer_geography.model10.binding import (
@@ -254,34 +254,65 @@ def validate_semantic_package(package: Mapping[str, Any]) -> None:
 
 
 class ProtectedBindingRun:
-    """One immutable incomplete-first PIPE-04 protected binding run."""
+    """One immutable incomplete-first protected binding run.
 
-    def __init__(self, protected_root: Path, repository_root: Path, *, binding_run_id: str | None = None, package_version: str = BINDING_PACKAGE_VERSION, supersedes: str | None = None):
+    PIPE-04 remains the default specification.  Later governed PIPE bindings may
+    reuse the exact writer/finalizer by supplying an additive specification;
+    this keeps the accepted immutability and READY-last behavior centralized.
+    """
+
+    def __init__(
+        self,
+        protected_root: Path,
+        repository_root: Path,
+        *,
+        binding_run_id: str | None = None,
+        package_version: str = BINDING_PACKAGE_VERSION,
+        supersedes: str | None = None,
+        run_id_prefix: str = "p4bind-",
+        collection: str = "pipe04-bindings",
+        package_filename: str = "pipe04_model10_wisconsin_development_binding.json",
+        package_id: str = BINDING_PACKAGE_ID,
+        binding_schema_version: str = BINDING_SCHEMA_VERSION,
+        stable_identity_prefix: str = "pipe04-binding",
+        semantic_validator: Any = validate_semantic_package,
+        task_label: str = "PIPE-04",
+    ):
         self.protected_root = protected_root.resolve()
         self.repository_root = repository_root.resolve()
-        require(not _is_within(self.protected_root, self.repository_root), "PROTECTED_ROOT_INSIDE_REPOSITORY", "PIPE-04 output must remain outside Git")
-        self.binding_run_id = binding_run_id or "p4bind-" + str(uuid.uuid4())
-        require(self.binding_run_id.startswith("p4bind-") and all(character.isalnum() or character in "-_" for character in self.binding_run_id), "BINDING_RUN_ID_INVALID", "binding run ID must be opaque and safe")
-        require(bool(re.fullmatch(r"1\.0\.[0-9]+", package_version)), "BINDING_VERSION_INVALID", "PIPE-04 version must remain in 1.0 patch line")
+        require(not _is_within(self.protected_root, self.repository_root), "PROTECTED_ROOT_INSIDE_REPOSITORY", f"{task_label} output must remain outside Git")
+        require(bool(re.fullmatch(r"[a-z0-9]+-", run_id_prefix)), "BINDING_RUN_ID_INVALID", "binding run prefix must be opaque and safe")
+        require(bool(re.fullmatch(r"[a-z0-9-]+", collection)), "BINDING_COLLECTION_INVALID", "binding collection must be safe")
+        require(PurePath(package_filename).name == package_filename, "BINDING_PACKAGE_FILENAME_INVALID", "binding package filename must be local")
+        require(bool(package_id) and bool(binding_schema_version) and bool(stable_identity_prefix) and callable(semantic_validator), "BINDING_SPECIFICATION_INVALID", "binding specification is incomplete")
+        self.binding_run_id = binding_run_id or run_id_prefix + str(uuid.uuid4())
+        require(self.binding_run_id.startswith(run_id_prefix) and all(character.isalnum() or character in "-_" for character in self.binding_run_id), "BINDING_RUN_ID_INVALID", "binding run ID must be opaque and safe")
+        require(bool(re.fullmatch(r"1\.0\.[0-9]+", package_version)), "BINDING_VERSION_INVALID", f"{task_label} version must remain in 1.0 patch line")
         if supersedes is not None:
             require(package_version != BINDING_PACKAGE_VERSION, "BINDING_SUPERSESSION_VERSION_REQUIRED", "correction requires a new patch version")
-            require(supersedes.startswith("p4bind-"), "BINDING_SUPERSESSION_INVALID", "supersession must name an earlier PIPE-04 run")
+            require(supersedes.startswith(run_id_prefix), "BINDING_SUPERSESSION_INVALID", f"supersession must name an earlier {task_label} run")
         self.package_version = package_version
         self.supersedes = supersedes
-        self.run_dir = self.protected_root / "pipe04-bindings" / self.binding_run_id
-        require(not self.run_dir.exists(), "BINDING_ALREADY_EXISTS", "never overwrite a PIPE-04 run")
+        self.package_filename = package_filename
+        self.package_id = package_id
+        self.binding_schema_version = binding_schema_version
+        self.stable_identity_prefix = stable_identity_prefix
+        self.semantic_validator = semantic_validator
+        self.task_label = task_label
+        self.run_dir = self.protected_root / collection / self.binding_run_id
+        require(not self.run_dir.exists(), "BINDING_ALREADY_EXISTS", f"never overwrite a {task_label} run")
         self.run_dir.mkdir(parents=True, exist_ok=False)
         write_json_exclusive(self.run_dir / "binding_state.json", {"binding_run_id": self.binding_run_id, "state": "incomplete", "finalization_state": "not_started", "package_version": package_version, "supersedes": supersedes})
 
     def finalize(self, semantic_package: Mapping[str, Any]) -> dict[str, str]:
         require(semantic_package.get("binding_run_id") == self.binding_run_id and semantic_package.get("version") == self.package_version and semantic_package.get("supersedes") == self.supersedes, "BINDING_IDENTITY_MISMATCH", "staged package differs from run")
-        validate_semantic_package(semantic_package)
+        self.semantic_validator(semantic_package)
         protected_hash = content_digest(semantic_package)
-        stable_identity = "pipe04-binding:sha256:" + protected_hash
+        stable_identity = self.stable_identity_prefix + ":sha256:" + protected_hash
         package = {**copy.deepcopy(dict(semantic_package)), "protected_content_sha256": protected_hash, "stable_binding_identity": stable_identity, "protected_content_hash_semantics": "SHA-256 of canonical UTF-8 JSON before adding protected_content_sha256 stable_binding_identity and protected_content_hash_semantics."}
-        package_path = self.run_dir / "pipe04_model10_wisconsin_development_binding.json"
+        package_path = self.run_dir / self.package_filename
         write_json_exclusive(package_path, package)
-        manifest = {"binding_run_id": self.binding_run_id, "package_id": BINDING_PACKAGE_ID, "package_version": self.package_version, "binding_schema_version": BINDING_SCHEMA_VERSION, "state": "ready", "finalization_state": "complete", "supersedes": self.supersedes, "protected_content_sha256": protected_hash, "stable_binding_identity": stable_identity, "package_file_sha256": file_sha256(package_path)}
+        manifest = {"binding_run_id": self.binding_run_id, "package_id": self.package_id, "package_version": self.package_version, "binding_schema_version": self.binding_schema_version, "state": "ready", "finalization_state": "complete", "supersedes": self.supersedes, "protected_content_sha256": protected_hash, "stable_binding_identity": stable_identity, "package_file_sha256": file_sha256(package_path)}
         write_json_exclusive(self.run_dir / "binding_manifest.json", manifest)
         nonce = new_nonce()
         commitment = freeze_commitment(content_digest(manifest), nonce)
@@ -290,7 +321,7 @@ class ProtectedBindingRun:
             handle.flush()
             os.fsync(handle.fileno())
         write_json_exclusive(self.run_dir / "commitment_evidence.json", {"domain": DOMAIN_SEPARATOR.decode("utf-8"), "commitment_sha256": commitment})
-        write_json_exclusive(self.run_dir / "READY.json", {"binding_run_id": self.binding_run_id, "package_id": BINDING_PACKAGE_ID, "package_version": self.package_version, "state": "ready", "finalization_state": "complete", "protected_content_sha256": protected_hash, "stable_binding_identity": stable_identity, "commitment_sha256": commitment})
+        write_json_exclusive(self.run_dir / "READY.json", {"binding_run_id": self.binding_run_id, "package_id": self.package_id, "package_version": self.package_version, "state": "ready", "finalization_state": "complete", "protected_content_sha256": protected_hash, "stable_binding_identity": stable_identity, "commitment_sha256": commitment})
         return {"protected_content_sha256": protected_hash, "stable_binding_identity": stable_identity, "commitment_sha256": commitment}
 
 

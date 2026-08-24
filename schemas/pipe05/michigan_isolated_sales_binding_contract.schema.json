@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sprouts-customer-geography:pipe05:michigan-isolated-sales-binding-contract:v1",
+  "title": "PIPE-05 repository-safe Michigan Isolated Sales binding contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "status", "purpose", "accepted_model12_authority", "inherited_authority", "cohort_rule", "identity_rule", "target_projection", "missing_invalid_targets", "clean_benchmark_boundary", "evidence_role", "protected_execution", "supersedes", "failure_behavior", "content_sha256"],
+  "properties": {
+    "$schema": {"type": "string", "minLength": 1},
+    "artifact_id": {"const": "PIPE05_MICHIGAN_ISOLATED_SALES_BINDING_CONTRACT_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "proposed_awaiting_acceptance"},
+    "purpose": {"type": "string", "minLength": 1},
+    "accepted_model12_authority": {"type": "object"},
+    "inherited_authority": {"type": "object"},
+    "cohort_rule": {"type": "object"},
+    "identity_rule": {"type": "object"},
+    "target_projection": {"type": "object"},
+    "missing_invalid_targets": {"type": "object"},
+    "clean_benchmark_boundary": {"type": "object"},
+    "evidence_role": {"type": "object"},
+    "protected_execution": {"type": "object"},
+    "supersedes": {"type": ["string", "null"]},
+    "failure_behavior": {"type": "string", "minLength": 1},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

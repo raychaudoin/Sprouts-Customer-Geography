@@ -33,3 +33,5 @@ model11-bootstrap-registry = "sprouts_customer_geography.model11.registry_bootst
 geo05-spatial = "sprouts_customer_geography.geo05.cli:main"
 model12-score = "sprouts_customer_geography.model12.cli:main"
 model12-bootstrap-registry = "sprouts_customer_geography.model12.registry_bootstrap:main"
+pipe05-bind = "sprouts_customer_geography.pipe05.cli:main"
+pipe05-bootstrap-registry = "sprouts_customer_geography.pipe05.registry_bootstrap:main"
