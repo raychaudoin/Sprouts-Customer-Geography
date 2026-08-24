@@ -1,0 +1,141 @@
+{
+  "$schema": "../../schemas/geo05/michigan_statewide_spatial_support_spec.schema.json",
+  "artifact_id": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1",
+  "version": "1.0.0",
+  "status": "proposed_awaiting_acceptance",
+  "controlling_task": "GEO-05: Michigan Statewide Geography Enablement",
+  "purpose": "Additive public-only Michigan statewide spatial support that binds accepted DATA-04 source evidence to the exact accepted GEO-03 projection, distance, membership, and forced-containing-tract methodology for later separately authorized anchor execution.",
+  "state_scope": {
+    "state_name": "Michigan",
+    "state_slug": "michigan",
+    "state_fips": "26",
+    "geography_level": "tract",
+    "statewide": true,
+    "tract_geoid_pattern": "^26[0-9]{9}$",
+    "tract_count": 3017,
+    "named_market_inventory": false
+  },
+  "data04_source_authority": {
+    "contract": {
+      "artifact_id": "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+      "version": "1.0.0",
+      "path": "config/data/data04_michigan_public_data_parity_source_contract.json",
+      "content_sha256": "4818c91e70d64119391aecf57f7306cd5dd2b3c0e174abb9fdfec6730676155d"
+    },
+    "tiger_manifest": {
+      "artifact_id": "DATA04_TIGER2024_MI_TRACT_SOURCE_MANIFEST_V1",
+      "version": "1.0.0",
+      "path": "data/manifests/tiger_2024_michigan_tract.source_manifest.json",
+      "content_sha256": "de0c9dc0e654990ee03a57b697289f4c480d29b3b3c64ef3162d390adc29d731"
+    },
+    "tiger_source": {
+      "filename": "tl_2024_26_tract.zip",
+      "byte_length": 5575554,
+      "byte_sha256": "220c0a351d94c9de456d87c5db78f3e3864b3287370350f1e503a84565224e82"
+    },
+    "source_geometry": {
+      "projection_member_sha256": "0b9041e921d9ebb43247d314608fe9e38a0b008ee793067fc1806199ea1fb9dd",
+      "dbf_member_sha256": "13f305c6c5cf01026c4145cee15319e1179036c7bd0c5264fba8d9027252faa3",
+      "shapefile_member_sha256": "c1cc3adf41b9e9fa565a2bc5c58fd78dcd9a7488dddbf16e044ac036586af3c1",
+      "shapefile_index_member_sha256": "b731f1d0105815df41e994e0a384b786a7f46c4107ca6d48fb121be7db0b3215",
+      "geometry_record_count": 3017
+    },
+    "source_crs": "EPSG:4269",
+    "source_vintage": "2024",
+    "required_fields": ["STATEFP", "COUNTYFP", "TRACTCE", "GEOID", "INTPTLAT", "INTPTLON"]
+  },
+  "statewide_inventory": {
+    "artifact_id": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_INVENTORY_V1",
+    "support_kind": "complete_statewide_spatial_support",
+    "selection": "Every exact accepted DATA-04 Michigan TIGER tract row with STATEFP 26 and component-consistent canonical GEOID; no county or named-market filter.",
+    "ordering": "lexicographically ascending full 11-character GEOID",
+    "tract_count": 3017,
+    "inventory_sha256": "8b6698b55423911163f1a2330ad600218a3b8b452576cc9b3d3997ada19e6c9b",
+    "hash_semantics": "SHA-256 of canonical UTF-8 JSON object with the single ordered_geoids array, recursively sorted keys, compact separators, Unicode preserved, and no NaN.",
+    "market_inventory": false,
+    "source_lineage": "Exact accepted DATA-04 source contract, Michigan TIGER manifest, archive bytes, DBF components, and shapefile record order reconciled to one complete ordered key set."
+  },
+  "geo03_methodology": {
+    "specification": {
+      "artifact_id": "GEO03_INTERNAL_POINT_MEMBERSHIP_SPATIAL_SPEC_V1",
+      "version": "1.0.0",
+      "path": "config/geo/geo03_internal_point_membership_spatial_spec.json",
+      "content_sha256": "756af48a51ebf8130383f81a9eee971db1cd5543e72aa92dc6243d11e5b4b105"
+    },
+    "operation_id": "GEO03_EPSG4269_TO_EPSG5070_DIRECT_NAD83_CONUS_ALBERS_V1",
+    "operation_fingerprint_sha256": "3c7421053e63df6e120d8aefd142399c9c53e6a1594ed23c37c644609a21bf14",
+    "source_crs": "EPSG:4269",
+    "target_crs": "EPSG:5070",
+    "logical_input_axis_order": ["longitude", "latitude"],
+    "projection_method": "EPSG:9822 Albers Equal Area / Conus Albers",
+    "alternate_datum_transformation_permitted": false,
+    "grid_dependencies": [],
+    "distance_artifact_id": "GEO03_EPSG5070_PLANAR_ANCHOR_TO_TRACT_INTPT_M_V1",
+    "distance_semantics": "Full unrounded EPSG:5070 Euclidean planar distance in metres from the projected anchor coordinate to each official tract internal point.",
+    "membership_comparison": "distance_m <= radius_m",
+    "membership_rounding": "none",
+    "internal_point_source": "official 2024 TIGER INTPTLAT and INTPTLON",
+    "forced_containing_tract": true,
+    "one_contribution_per_tract": true,
+    "noncomputability": "Invalid or absent source, geometry, internal point, anchor, containment, projection, distance, inventory, or lineage evidence is explicit noncomputability and never silent nonmembership."
+  },
+  "model_downstream_compatibility": {
+    "radius_owner": "MODEL",
+    "model11_contract": {
+      "artifact_id": "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1",
+      "version": "1.0.0",
+      "path": "config/model/model11_wisconsin_multivariate_model_contract.json",
+      "content_sha256": "e37799d4b6966d93215875d2e1ca8bd432bb4a28ae290b1d76224a2a273c5dd1"
+    },
+    "radii_m": [4828.032, 8046.72, 11265.408],
+    "required_public_spatial_inputs": ["five-mile household opportunity", "inner household share 3mi of 7mi", "inner-versus-outer household-density gradient", "five-mile multivariate feature aggregation", "containing anchor tract", "deterministic tract memberships"],
+    "model_execution_performed": false,
+    "scoring_authority_created": false
+  },
+  "support_completeness_qa": {
+    "analytical_support": "union of all accepted Michigan tract geometries projected to EPSG:5070",
+    "projected_crs": "EPSG:5070",
+    "footprint_construction": "projected anchor point buffer at supplied radius",
+    "footprint_quad_segs": 64,
+    "outputs": ["full circle area in square metres", "area inside Michigan analytical support in square metres", "support completeness ratio", "positive-area extension outside Michigan analytical support", "anchor distance and footprint margin to Michigan support boundary"],
+    "threshold": null,
+    "automatic_rejection": false,
+    "other_state_or_canadian_demographics": false
+  },
+  "anchor_interface": {
+    "input_fields": ["latitude", "longitude", "opaque_anchor_identity", "opaque_anchor_lineage"],
+    "output_schema_id": "GEO05_ANCHOR_SPATIAL_EVIDENCE_V1",
+    "output_schema_path": "schemas/geo05/anchor_spatial_evidence.schema.json",
+    "anchor_containment": "Resolve official source polygon coverage; if multiple polygons cover the point, retain only strict contains matches; require exactly one containing tract.",
+    "boundary_ambiguity": "A point covered by multiple tract polygons with no unique strict-contains result is explicit noncomputability.",
+    "generic_radius_support": true,
+    "default_radii_m": [4828.032, 8046.72, 11265.408],
+    "output_instance_git_state": "outside_tracked_git"
+  },
+  "materialization_contract": {
+    "schema_version": "geo05-michigan-statewide-spatial-support-v1",
+    "inventory_filename": "michigan_statewide_spatial_support_inventory.json",
+    "projected_internal_points_filename": "michigan_projected_internal_points.csv",
+    "source_geometries_filename": "michigan_tract_source_geometries.jsonl",
+    "projected_support_geometry_filename": "michigan_state_support_epsg5070.wkb",
+    "runtime_provenance_filename": "operation_runtime_provenance.json",
+    "verification_report_filename": "verification_report.json",
+    "ready_filename": "READY.json",
+    "overwrite": "deny",
+    "ready_marker_last": true,
+    "raw_and_generated_git_state": "outside_tracked_git"
+  },
+  "protected_evidence_boundary": {
+    "public_data_only": true,
+    "protected_dependencies": [],
+    "protected_filesystem_discovery": "prohibited and unnecessary",
+    "anchor_instances_created_by_geo05": false,
+    "denied_evidence": ["Michigan or Wisconsin Sprouts seed points or coordinates", "Michigan candidate-site coordinates", "Isolated Sales", "Impacted Sales", "forecasts or targets", "protected PIPE bindings", "MODEL coefficients intercepts selected target-conditioned parameters predictions or residuals"]
+  },
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, and no NaN.",
+  "failure_behavior": "Fail closed on authority identity, source vintage or checksum, source member identity, Michigan scope, CRS, GEO-03 operation fingerprint, coordinate order, malformed duplicate missing extra or substituted tract, invalid geometry or internal point, invalid or ambiguous anchor containment, projection or distance failure, output overwrite, premature READY, nondeterminism, Wisconsin regression, tracked raw/generated evidence, or protected-boundary mismatch. Do not substitute source or geography, round membership, impute spatial evidence, score an anchor, or infer nonmembership from noncomputability.",
+  "supersedes": null,
+  "supersession_policy": "This additive proposed authority does not overwrite or supersede accepted Wisconsin GEO-02, GEO-03, or GEO-04 artifacts. A correction requires a versioned successor with explicit supersedes lineage and newly calculated hashes.",
+  "content_sha256": "47e4c1e929fb9915861824ea7e011280442346cb2c678781185713c6b0ae5be5"
+}

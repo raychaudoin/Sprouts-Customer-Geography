@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/geo05/michigan_statewide_spatial_support_spec.schema.json",
+  "title": "GEO-05 Michigan statewide spatial-support specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "artifact_id",
+    "version",
+    "status",
+    "controlling_task",
+    "purpose",
+    "state_scope",
+    "data04_source_authority",
+    "statewide_inventory",
+    "geo03_methodology",
+    "model_downstream_compatibility",
+    "support_completeness_qa",
+    "anchor_interface",
+    "materialization_contract",
+    "protected_evidence_boundary",
+    "hash_algorithm",
+    "content_hash_semantics",
+    "failure_behavior",
+    "supersedes",
+    "supersession_policy",
+    "content_sha256"
+  ],
+  "properties": {
+    "$schema": {"type": "string", "const": "../../schemas/geo05/michigan_statewide_spatial_support_spec.schema.json"},
+    "artifact_id": {"type": "string", "const": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1"},
+    "version": {"type": "string", "const": "1.0.0"},
+    "status": {"type": "string", "enum": ["proposed_awaiting_acceptance", "accepted"]},
+    "controlling_task": {"type": "string", "const": "GEO-05: Michigan Statewide Geography Enablement"},
+    "purpose": {"type": "string", "minLength": 1},
+    "state_scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state_name", "state_slug", "state_fips", "geography_level", "statewide", "tract_geoid_pattern", "tract_count", "named_market_inventory"],
+      "properties": {
+        "state_name": {"const": "Michigan"},
+        "state_slug": {"const": "michigan"},
+        "state_fips": {"const": "26"},
+        "geography_level": {"const": "tract"},
+        "statewide": {"const": true},
+        "tract_geoid_pattern": {"const": "^26[0-9]{9}$"},
+        "tract_count": {"const": 3017},
+        "named_market_inventory": {"const": false}
+      }
+    },
+    "data04_source_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract", "tiger_manifest", "tiger_source", "source_geometry", "source_crs", "source_vintage", "required_fields"],
+      "properties": {
+        "contract": {"$ref": "#/$defs/artifactReference"},
+        "tiger_manifest": {"$ref": "#/$defs/artifactReference"},
+        "tiger_source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["filename", "byte_length", "byte_sha256"],
+          "properties": {
+            "filename": {"const": "tl_2024_26_tract.zip"},
+            "byte_length": {"const": 5575554},
+            "byte_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "source_geometry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["projection_member_sha256", "dbf_member_sha256", "shapefile_member_sha256", "shapefile_index_member_sha256", "geometry_record_count"],
+          "properties": {
+            "projection_member_sha256": {"$ref": "#/$defs/sha256"},
+            "dbf_member_sha256": {"$ref": "#/$defs/sha256"},
+            "shapefile_member_sha256": {"$ref": "#/$defs/sha256"},
+            "shapefile_index_member_sha256": {"$ref": "#/$defs/sha256"},
+            "geometry_record_count": {"const": 3017}
+          }
+        },
+        "source_crs": {"const": "EPSG:4269"},
+        "source_vintage": {"const": "2024"},
+        "required_fields": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "STATEFP"}, {"const": "COUNTYFP"}, {"const": "TRACTCE"},
+            {"const": "GEOID"}, {"const": "INTPTLAT"}, {"const": "INTPTLON"}
+          ],
+          "items": false,
+          "minItems": 6,
+          "maxItems": 6
+        }
+      }
+    },
+    "statewide_inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "support_kind", "selection", "ordering", "tract_count", "inventory_sha256", "hash_semantics", "market_inventory", "source_lineage"],
+      "properties": {
+        "artifact_id": {"const": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_INVENTORY_V1"},
+        "support_kind": {"const": "complete_statewide_spatial_support"},
+        "selection": {"type": "string", "minLength": 1},
+        "ordering": {"const": "lexicographically ascending full 11-character GEOID"},
+        "tract_count": {"const": 3017},
+        "inventory_sha256": {"$ref": "#/$defs/sha256"},
+        "hash_semantics": {"type": "string", "minLength": 1},
+        "market_inventory": {"const": false},
+        "source_lineage": {"type": "string", "minLength": 1}
+      }
+    },
+    "geo03_methodology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specification", "operation_id", "operation_fingerprint_sha256", "source_crs", "target_crs", "logical_input_axis_order", "projection_method", "alternate_datum_transformation_permitted", "grid_dependencies", "distance_artifact_id", "distance_semantics", "membership_comparison", "membership_rounding", "internal_point_source", "forced_containing_tract", "one_contribution_per_tract", "noncomputability"],
+      "properties": {
+        "specification": {"$ref": "#/$defs/artifactReference"},
+        "operation_id": {"const": "GEO03_EPSG4269_TO_EPSG5070_DIRECT_NAD83_CONUS_ALBERS_V1"},
+        "operation_fingerprint_sha256": {"$ref": "#/$defs/sha256"},
+        "source_crs": {"const": "EPSG:4269"},
+        "target_crs": {"const": "EPSG:5070"},
+        "logical_input_axis_order": {
+          "type": "array",
+          "prefixItems": [{"const": "longitude"}, {"const": "latitude"}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "projection_method": {"const": "EPSG:9822 Albers Equal Area / Conus Albers"},
+        "alternate_datum_transformation_permitted": {"const": false},
+        "grid_dependencies": {"type": "array", "maxItems": 0},
+        "distance_artifact_id": {"const": "GEO03_EPSG5070_PLANAR_ANCHOR_TO_TRACT_INTPT_M_V1"},
+        "distance_semantics": {"type": "string", "minLength": 1},
+        "membership_comparison": {"const": "distance_m <= radius_m"},
+        "membership_rounding": {"const": "none"},
+        "internal_point_source": {"const": "official 2024 TIGER INTPTLAT and INTPTLON"},
+        "forced_containing_tract": {"const": true},
+        "one_contribution_per_tract": {"const": true},
+        "noncomputability": {"type": "string", "minLength": 1}
+      }
+    },
+    "model_downstream_compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["radius_owner", "model11_contract", "radii_m", "required_public_spatial_inputs", "model_execution_performed", "scoring_authority_created"],
+      "properties": {
+        "radius_owner": {"const": "MODEL"},
+        "model11_contract": {"$ref": "#/$defs/artifactReference"},
+        "radii_m": {
+          "type": "array",
+          "prefixItems": [{"const": 4828.032}, {"const": 8046.72}, {"const": 11265.408}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "required_public_spatial_inputs": {"type": "array", "minItems": 6, "items": {"type": "string", "minLength": 1}},
+        "model_execution_performed": {"const": false},
+        "scoring_authority_created": {"const": false}
+      }
+    },
+    "support_completeness_qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["analytical_support", "projected_crs", "footprint_construction", "footprint_quad_segs", "outputs", "threshold", "automatic_rejection", "other_state_or_canadian_demographics"],
+      "properties": {
+        "analytical_support": {"const": "union of all accepted Michigan tract geometries projected to EPSG:5070"},
+        "projected_crs": {"const": "EPSG:5070"},
+        "footprint_construction": {"const": "projected anchor point buffer at supplied radius"},
+        "footprint_quad_segs": {"const": 64},
+        "outputs": {"type": "array", "minItems": 5, "items": {"type": "string", "minLength": 1}},
+        "threshold": {"type": "null"},
+        "automatic_rejection": {"const": false},
+        "other_state_or_canadian_demographics": {"const": false}
+      }
+    },
+    "anchor_interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_fields", "output_schema_id", "output_schema_path", "anchor_containment", "boundary_ambiguity", "generic_radius_support", "default_radii_m", "output_instance_git_state"],
+      "properties": {
+        "input_fields": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}},
+        "output_schema_id": {"const": "GEO05_ANCHOR_SPATIAL_EVIDENCE_V1"},
+        "output_schema_path": {"const": "schemas/geo05/anchor_spatial_evidence.schema.json"},
+        "anchor_containment": {"type": "string", "minLength": 1},
+        "boundary_ambiguity": {"type": "string", "minLength": 1},
+        "generic_radius_support": {"const": true},
+        "default_radii_m": {
+          "type": "array",
+          "prefixItems": [{"const": 4828.032}, {"const": 8046.72}, {"const": 11265.408}],
+          "items": false,
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "output_instance_git_state": {"const": "outside_tracked_git"}
+      }
+    },
+    "materialization_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "inventory_filename", "projected_internal_points_filename", "source_geometries_filename", "projected_support_geometry_filename", "runtime_provenance_filename", "verification_report_filename", "ready_filename", "overwrite", "ready_marker_last", "raw_and_generated_git_state"],
+      "properties": {
+        "schema_version": {"const": "geo05-michigan-statewide-spatial-support-v1"},
+        "inventory_filename": {"const": "michigan_statewide_spatial_support_inventory.json"},
+        "projected_internal_points_filename": {"const": "michigan_projected_internal_points.csv"},
+        "source_geometries_filename": {"const": "michigan_tract_source_geometries.jsonl"},
+        "projected_support_geometry_filename": {"const": "michigan_state_support_epsg5070.wkb"},
+        "runtime_provenance_filename": {"const": "operation_runtime_provenance.json"},
+        "verification_report_filename": {"const": "verification_report.json"},
+        "ready_filename": {"const": "READY.json"},
+        "overwrite": {"const": "deny"},
+        "ready_marker_last": {"const": true},
+        "raw_and_generated_git_state": {"const": "outside_tracked_git"}
+      }
+    },
+    "protected_evidence_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public_data_only", "protected_dependencies", "protected_filesystem_discovery", "anchor_instances_created_by_geo05", "denied_evidence"],
+      "properties": {
+        "public_data_only": {"const": true},
+        "protected_dependencies": {"type": "array", "maxItems": 0},
+        "protected_filesystem_discovery": {"const": "prohibited and unnecessary"},
+        "anchor_instances_created_by_geo05": {"const": false},
+        "denied_evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "hash_algorithm": {"const": "SHA-256"},
+    "content_hash_semantics": {"type": "string", "minLength": 1},
+    "failure_behavior": {"type": "string", "minLength": 1},
+    "supersedes": {"type": "null"},
+    "supersession_policy": {"type": "string", "minLength": 1},
+    "content_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "version", "path", "content_sha256"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "content_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/geo05/spatial_support_materialization_report.schema.json",
+  "title": "GEO-05 Michigan statewide spatial-support materialization report",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["report_id", "schema_version", "state", "state_fips", "tract_count", "inventory_sha256", "source_authority", "projection", "spatial_evidence", "state_support", "public_anchor_qa", "protected_evidence_access"],
+  "properties": {
+    "report_id": {"const": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_MATERIALIZATION_REPORT_V1"},
+    "schema_version": {"const": "geo05-michigan-statewide-spatial-support-v1"},
+    "state": {"const": "VERIFIED"},
+    "state_fips": {"const": "26"},
+    "tract_count": {"const": 3017},
+    "inventory_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_authority": {"type": "object"},
+    "projection": {"type": "object"},
+    "spatial_evidence": {"type": "object"},
+    "state_support": {"type": "object"},
+    "public_anchor_qa": {"type": "object"},
+    "protected_evidence_access": {"type": "object"}
+  }
+}

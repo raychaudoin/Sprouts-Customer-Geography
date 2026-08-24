@@ -1,0 +1,47 @@
+{
+  "task_id": "GEO-05",
+  "title": "Michigan Statewide Geography Enablement",
+  "capability_owner": "GEO Decisions Acceptance",
+  "authority_source": "Master Control Room authorized GEO-05 Michigan Statewide Geography Enablement",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "scope": [
+    "Establish additive configuration-driven statewide Michigan spatial support over the complete accepted DATA-04 3,017-tract public inventory",
+    "Bind the exact accepted DATA-04 Michigan TIGER source identity to the accepted GEO-03 EPSG 4269 to EPSG 5070 projection distance membership and forced-containing-tract methodology",
+    "Materialize deterministic ordered Michigan tract projected-internal-point and statewide-support geometry evidence outside tracked Git using incomplete-first READY-last semantics",
+    "Implement public-only geometric support-completeness QA for arbitrary later-supplied anchors and radii without creating a scoring or rejection threshold",
+    "Expose a machine-consumable target-blind interface for later protected latitude longitude and opaque anchor-lineage inputs to receive containing-tract 3 5 and 7 mile membership and spatial lineage evidence",
+    "Preserve accepted Wisconsin GEO-02 GEO-03 GEO-04 and MODEL-09 MODEL-11 public feature-construction behavior exactly"
+  ],
+  "exclusions": [
+    "No Michigan or Wisconsin Sprouts seed point candidate location sales target forecast prediction residual coefficient protected binding or other protected evidence access or filesystem discovery",
+    "No model fitting scoring tuning execution validation eligibility threshold or change to MODEL-11 radii feature ownership or semantics",
+    "No Detroit Ann Arbor Grand Rapids Lansing or other Michigan market inventory county allow-list or reinterpretation of accepted GEO-04 market methodology",
+    "No other-state or Canadian demographic support and no manufactured completeness beyond accepted Michigan analytical support",
+    "No change overwrite or supersession of accepted Wisconsin DATA GEO or MODEL artifacts",
+    "No bulk geometry raw source generated operational output or protected anchor instance in tracked Git",
+    "No acceptance record self-acceptance merge deployment Power BI Site Scanner or follow-on task"
+  ],
+  "accepted_input_artifacts": [
+    "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+    "DATA04_TIGER2024_MI_TRACT_SOURCE_MANIFEST_V1",
+    "GEO02_VALIDATION_CONTEXT_SPATIAL_SPEC_V1",
+    "GEO03_INTERNAL_POINT_MEMBERSHIP_SPATIAL_SPEC_V1",
+    "GEO04_CANONICAL_TRACT_INVENTORY_DERIVATION_V1",
+    "MODEL09_WISCONSIN_EXPERIMENTAL_MODEL_CONTRACT_V1",
+    "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1"
+  ],
+  "protected_dependency_logical_ids": [],
+  "implementation_branch": "task/geo-05-michigan-statewide-geography-enablement",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "GEO Decisions Acceptance",
+  "exact_next_destination": "GEO Decisions Acceptance"
+}
