@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model12/protected_handle_registry.schema.json",
+  "title": "MODEL-12 protected handle registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "version", "protected_roots", "resources", "source_authority", "public_dependencies", "materialization_request", "upstream_model11_registry_identity"],
+  "properties": {
+    "registry_id": {"const": "MODEL12_PROTECTED_HANDLE_REGISTRY_V1"},
+    "version": {"const": "1.0.0"},
+    "protected_roots": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+    "resources": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["root_handle", "relative_path", "kind"],
+        "properties": {
+          "root_handle": {"type": "string", "pattern": "^proot-"},
+          "relative_path": {"type": "string", "minLength": 1},
+          "kind": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "source_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_authority_id", "source_root_handle", "exact_basename", "workbook_handle", "whole_workbook_hash_permitted", "expected_forecast_vintages", "header_alias_overrides"],
+      "properties": {
+        "source_authority_id": {"type": "string", "minLength": 1},
+        "source_root_handle": {"type": "string", "pattern": "^proot-"},
+        "exact_basename": {"type": "string", "minLength": 1},
+        "workbook_handle": {"type": "string", "pattern": "^phandle-"},
+        "whole_workbook_hash_permitted": {"const": false},
+        "expected_forecast_vintages": {"const": [2024, 2025, 2026]},
+        "header_alias_overrides": {"type": "object"}
+      }
+    },
+    "public_dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data04_ready_dir", "geo05_support_dir"],
+      "properties": {
+        "data04_ready_dir": {"type": "string", "minLength": 1},
+        "geo05_support_dir": {"type": "string", "minLength": 1}
+      }
+    },
+    "materialization_request": {"type": "object", "minProperties": 7},
+    "upstream_model11_registry_identity": {"type": "string", "pattern": "^protected-handle-registry:sha256:[0-9a-f]{64}$"}
+  }
+}

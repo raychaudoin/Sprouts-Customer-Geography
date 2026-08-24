@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model12/generic_anchor_input.schema.json",
+  "title": "MODEL-12 protected-local generic Michigan anchor input",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["opaque_anchor_id", "latitude", "longitude"],
+    "properties": {
+      "opaque_anchor_id": {"type": "string", "minLength": 1},
+      "latitude": {"type": "number", "minimum": -90, "maximum": 90},
+      "longitude": {"type": "number", "minimum": -180, "maximum": 180}
+    }
+  }
+}

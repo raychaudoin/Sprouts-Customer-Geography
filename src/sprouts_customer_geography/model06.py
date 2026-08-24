@@ -169,7 +169,12 @@ class ProjectedWorkbook:
     access_report: Mapping[str, Any]
 
 
-def read_target_blind_projection(path: Path | bytes, source_identity: str) -> ProjectedWorkbook:
+def read_target_blind_projection(
+    path: Path | bytes,
+    source_identity: str,
+    *,
+    header_alias_overrides: Mapping[str, Sequence[str]] | None = None,
+) -> ProjectedWorkbook:
     """Read Sheet1 headers and A:I body cells without materializing target values."""
 
     if isinstance(path, bytes):
@@ -302,8 +307,27 @@ def read_target_blind_projection(path: Path | bytes, source_identity: str) -> Pr
             "forecast target headers were not confirmed exclusively outside A:I",
         )
 
+    aliases_by_field = {field: set(aliases) for field, aliases in HEADER_ALIASES.items()}
+    if header_alias_overrides is not None:
+        require(
+            isinstance(header_alias_overrides, Mapping)
+            and set(header_alias_overrides) <= set(aliases_by_field),
+            "TARGET_BLIND_HEADER_ALIAS_OVERRIDE_INVALID",
+            "target-blind header alias override fields differ from the accepted identity projection",
+        )
+        for field, raw_aliases in header_alias_overrides.items():
+            require(
+                isinstance(raw_aliases, Sequence)
+                and not isinstance(raw_aliases, (str, bytes))
+                and bool(raw_aliases)
+                and all(isinstance(alias, str) and bool(alias.strip()) for alias in raw_aliases),
+                "TARGET_BLIND_HEADER_ALIAS_OVERRIDE_INVALID",
+                "target-blind header alias overrides must contain nonempty strings",
+            )
+            aliases_by_field[field].update(_normalized_header(alias) for alias in raw_aliases)
+
     field_columns: dict[str, int] = {}
-    for field, aliases in HEADER_ALIASES.items():
+    for field, aliases in aliases_by_field.items():
         matches = [
             column
             for column, value in headers_by_column.items()
@@ -346,6 +370,7 @@ def read_target_blind_projection(path: Path | bytes, source_identity: str) -> Pr
             "styles_comments_charts_metadata_loaded": False,
             "target_headers_confirmed_outside_projection": sorted(target_headers.values()),
             "max_body_column_observed_by_reference_only": max_body_column_observed,
+            "header_alias_override_fields": sorted(header_alias_overrides or {}),
         },
     )
 

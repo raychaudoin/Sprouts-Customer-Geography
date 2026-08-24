@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model12/michigan_public_feature_package.schema.json",
+  "title": "Protected MODEL-12 Michigan public feature package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "package_id", "version", "state", "contract_authority", "identity_package_id", "physical_locations", "source_observations", "aggregate_conformance", "feature_construction", "target_access", "protected_handle_registry_identity"],
+  "properties": {
+    "$schema": {"const": "model12-michigan-public-feature-package-v1"},
+    "package_id": {"const": "MODEL12_MICHIGAN_PUBLIC_FEATURE_PACKAGE_V1"},
+    "version": {"const": "1.0.0"},
+    "state": {"const": "ready"},
+    "contract_authority": {"type": "object"},
+    "identity_package_id": {"const": "MODEL12_MICHIGAN_PHYSICAL_LOCATION_IDENTITY_PACKAGE_V1"},
+    "physical_locations": {"type": "array", "minItems": 1},
+    "source_observations": {"type": "array", "minItems": 1},
+    "aggregate_conformance": {"type": "object"},
+    "feature_construction": {"type": "object"},
+    "target_access": {"type": "object"},
+    "protected_handle_registry_identity": {"type": "string", "pattern": "^protected-handle-registry:sha256:[0-9a-f]{64}$"},
+    "protected_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stable_package_identity": {"type": "string", "pattern": "^model12-public_features:sha256:[0-9a-f]{64}$"}
+  }
+}

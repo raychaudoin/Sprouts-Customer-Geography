@@ -1,0 +1,235 @@
+{
+  "$schema": "../../schemas/model12/michigan_target_blind_frozen_scoring_contract.schema.json",
+  "artifact_id": "MODEL12_MICHIGAN_TARGET_BLIND_FROZEN_SCORING_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "proposed_awaiting_acceptance",
+  "controlling_task": "MODEL-12: Michigan Target-Blind Seed Intake and Frozen Scoring",
+  "purpose": "Apply the exact accepted frozen Wisconsin-developed MODEL-11 preferred formulation to complete Michigan evidence through a target-blind identity and public-feature pipeline while preserving Michigan outcomes for later separately authorized transport evaluation.",
+  "accepted_authority": {
+    "canonical_main_at_authorization": "5531b8c751d075da59ca7d4fcb74ec31ddd05cde",
+    "data04": {
+      "artifact_id": "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+      "version": "1.0.0",
+      "path": "config/data/data04_michigan_public_data_parity_source_contract.json",
+      "content_sha256": "4818c91e70d64119391aecf57f7306cd5dd2b3c0e174abb9fdfec6730676155d",
+      "repository_file_sha256": "464c0b6ce3dfaef8ca355636da9fe12d5415de96469cf2d8c49490f69d5ae942",
+      "accepted_substantive_h": "951476a2757d9063bd3dd6180fbbc924aec1794f"
+    },
+    "geo05": {
+      "artifact_id": "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1",
+      "version": "1.0.0",
+      "path": "config/geo/geo05_michigan_statewide_spatial_support_spec.json",
+      "content_sha256": "47e4c1e929fb9915861824ea7e011280442346cb2c678781185713c6b0ae5be5",
+      "repository_file_sha256": "1e6f2e79ebbc2329342a9d55edc1fe894cdbd5b3b005c1efe6b7d274dd4fba6b",
+      "accepted_substantive_h": "b3bad006d0db922a7e82114dccf6636f4260119d"
+    },
+    "model10": {
+      "artifact_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
+      "version": "1.0.0",
+      "path": "config/model/model10_wisconsin_cohort_identity_lineage_contract.json",
+      "content_sha256": "66ef0e9508c30f6a52af352e910a91bdebb12752611730eb5597921311baf897",
+      "repository_file_sha256": "7100fc66da8fc8f9fc3dff07e4f64365a4ad13a8959cfc3f2313ffd9a8eed57d",
+      "accepted_substantive_h": "f199624d16eb42e3e6c6b4d8eb73b8dcd3109dc8"
+    },
+    "model11": {
+      "artifact_id": "MODEL11_WISCONSIN_MULTIVARIATE_MODEL_CONTRACT_V1",
+      "version": "1.0.0",
+      "path": "config/model/model11_wisconsin_multivariate_model_contract.json",
+      "content_sha256": "e37799d4b6966d93215875d2e1ca8bd432bb4a28ae290b1d76224a2a273c5dd1",
+      "repository_file_sha256": "84ea542d86fab4a666f00975c88e8983ec750d8181f08b1934784f879ab805a1",
+      "accepted_substantive_h": "085ab4f58b40325d6ce2515358363cf9d93d525e",
+      "preferred_candidate_id": "challenger_multivariate_elastic_net",
+      "protected_development_package_id": "MODEL11_WISCONSIN_MULTIVARIATE_DEVELOPMENT_PACKAGE_V1",
+      "protected_feature_freeze_package_id": "MODEL11_TARGET_BLIND_FEATURE_FREEZE_PACKAGE_V1"
+    }
+  },
+  "source_projection": {
+    "canonical_fields": [
+      "vintage",
+      "seed_point_id",
+      "address",
+      "city",
+      "state",
+      "zip",
+      "latitude",
+      "longitude",
+      "market"
+    ],
+    "exact_header_alias_overrides": "protected registry only",
+    "downstream_receives_allowlisted_projection_only": true,
+    "outcome_header_presence_check_only": true,
+    "outcome_body_values_materialized": false,
+    "body_values_outside_projection_materialized": false,
+    "whole_source_file_hash_permitted": false,
+    "projection_content_hash_excludes_outcome_body": true,
+    "required_forecast_vintages": [2024, 2025, 2026],
+    "state_scope": "michigan",
+    "complete_projected_observation_accounting_required": true,
+    "duplicate_source_observation_policy": "fail_closed",
+    "target_content_invariance_required": true
+  },
+  "physical_location_identity": {
+    "reused_identity_version": "MODEL04_TARGET_BLIND_PHYSICAL_LOCATION_IDENTITY_V1",
+    "matching_partition": "michigan_state",
+    "exact_observed_coordinate": "SAME_UNDERLYING_LOCATION",
+    "coherent_stable_non_target_lineage_max_m": 500.0,
+    "probable_same_max_m": 10.0,
+    "probable_same_requirements": [
+      "coarser precision equality",
+      "address or city and ZIP corroboration",
+      "unique mutual nearest prior-vintage group",
+      "no lineage conflict"
+    ],
+    "ambiguity_band_m": {
+      "exclusive_minimum": 10.0,
+      "inclusive_maximum": 500.0
+    },
+    "genuinely_new_minimum_m_exclusive": 500.0,
+    "seed_id_novelty_alone_is_novelty": false,
+    "market_label_is_identity_partition": false,
+    "target_evidence_permitted": false,
+    "ambiguous_identity": "quarantine",
+    "canonical_anchor": "earliest vintage then source lineage among actual observed members",
+    "wisconsin_historical_linkage_required": false,
+    "new_threshold_or_tolerance_introduced": false
+  },
+  "public_feature_application": {
+    "state_fips": "26",
+    "statewide_tract_count": 3017,
+    "radii_m": [4828.032, 8046.72, 11265.408],
+    "source_crs": "EPSG:4269",
+    "target_crs": "EPSG:5070",
+    "operation_id": "GEO03_EPSG4269_TO_EPSG5070_DIRECT_NAD83_CONUS_ALBERS_V1",
+    "operation_fingerprint_sha256": "3c7421053e63df6e120d8aefd142399c9c53e6a1594ed23c37c644609a21bf14",
+    "membership": "full unrounded distance_m <= radius_m with containing tract forced and one contribution per tract",
+    "base_feature_order": [
+      "households_3mi",
+      "households_5mi",
+      "households_7mi",
+      "households_3mi_moe",
+      "households_5mi_moe",
+      "households_7mi_moe",
+      "relative_moe_5mi",
+      "tract_member_count_3mi",
+      "tract_member_count_5mi",
+      "tract_member_count_7mi",
+      "log_households_5mi",
+      "inner_household_share_3mi_of_7mi",
+      "log_inner_outer_household_density_gradient",
+      "anchor_tract_geoid"
+    ],
+    "multivariate_context_radius_m": 8046.72,
+    "share_aggregation": "sum accepted numerators and denominator over exact member tracts then divide once",
+    "direct_profile_weights": {
+      "median_household_income": "B11001 household estimate",
+      "per_capita_income": "B11001 household estimate",
+      "median_home_value": "owner occupied housing units",
+      "median_gross_rent": "renter occupied units",
+      "average_household_size": "occupied housing units"
+    },
+    "model11_transformations_reused_exactly": true,
+    "michigan_redundancy_screen": false,
+    "michigan_feature_selection": false,
+    "imputation": false,
+    "missing_to_zero": false,
+    "member_tract_dropping": false,
+    "support_completeness_threshold": null,
+    "support_truncation_changes_score_computability": false,
+    "other_state_or_canadian_demographics": false
+  },
+  "frozen_scoring": {
+    "preferred_candidate_id": "challenger_multivariate_elastic_net",
+    "final_feature_order_source": "accepted protected MODEL-11 preferred-model artifact",
+    "preprocessing_source": "accepted protected MODEL-11 fitted means and scales",
+    "parameter_source": "accepted protected MODEL-11 coefficients intercept and selected hyperparameters",
+    "target_transformation": "log1p",
+    "inverse_target_transformation": "max zero expm1",
+    "refit": false,
+    "retrain": false,
+    "retune": false,
+    "feature_selection": false,
+    "recalibration": false,
+    "michigan_distribution_used_to_modify_model": false,
+    "required_output_semantics": {
+      "household_opportunity": "raw unmodeled five-mile B11001 household mass",
+      "customer_fit_proxy": "frozen multiplicative contribution of selected non-opportunity terms only",
+      "modeled_target_mass": "inverse-log frozen fitted MODEL-11 target level"
+    },
+    "noncomputable_status": "MODEL_SCORE_NONCOMPUTABLE"
+  },
+  "support_completeness": {
+    "preserve_by_radius": [
+      "support_completeness_ratio",
+      "extends_outside_michigan_support",
+      "outside_support_area_m2",
+      "anchor_to_support_boundary_m",
+      "footprint_edge_margin_m"
+    ],
+    "descriptive_only": true,
+    "score_adjustment": false,
+    "transport_evidence_created": false
+  },
+  "generic_anchor_scorer": {
+    "input_fields": ["opaque_anchor_id", "latitude", "longitude"],
+    "additional_input_fields_permitted": false,
+    "seed_source_required": false,
+    "target_required": false,
+    "market_required": false,
+    "historical_lineage_required": false,
+    "local_protected_output_only": true,
+    "deployment": false
+  },
+  "future_transport_evaluation_freeze": {
+    "independence_unit": "unique physical location",
+    "repeated_vintages": "grouped by physical location and never independent",
+    "metrics": ["spearman", "kendall_tau_b", "log_rmse", "level_mae"],
+    "support_completeness_stratification": "descriptive_only",
+    "post_target_changes_prohibited": [
+      "identity",
+      "cohort",
+      "model",
+      "features",
+      "coefficients",
+      "radii",
+      "missingness_treatment",
+      "support_treatment",
+      "metrics",
+      "exclusions",
+      "grouping",
+      "prediction_outputs"
+    ],
+    "pass_fail_conclusion_authorized": false,
+    "target_access_authorized": false
+  },
+  "protected_execution": {
+    "registry_id": "MODEL12_PROTECTED_HANDLE_REGISTRY_V1",
+    "explicit_bounded_handles": true,
+    "protected_root_containment": true,
+    "broad_filesystem_discovery": false,
+    "immutable_runs": true,
+    "incomplete_first": true,
+    "ready_marker_last": true,
+    "overwrite": "deny",
+    "semantic_packages_compared_deterministically": true,
+    "package_ids": {
+      "identity": "MODEL12_MICHIGAN_PHYSICAL_LOCATION_IDENTITY_PACKAGE_V1",
+      "public_features": "MODEL12_MICHIGAN_PUBLIC_FEATURE_PACKAGE_V1",
+      "frozen_scoring": "MODEL12_MICHIGAN_FROZEN_SCORING_PACKAGE_V1",
+      "field_scoring": "MODEL12_MICHIGAN_FIELD_SCORING_PACKAGE_V1"
+    },
+    "protected_output_outside_tracked_git": true
+  },
+  "interpretation_boundary": {
+    "experimental_out_of_state_application": true,
+    "market_transport_established": false,
+    "independent_validation_established": false,
+    "production_ready": false,
+    "operational_demand_heat_authority": false,
+    "proprietary_model_equivalence": false,
+    "final_site_selection_authority": false
+  },
+  "hash_algorithm": "SHA-256",
+  "content_hash_semantics": "SHA-256 of canonical UTF-8 JSON after removing content_sha256: recursively sorted object keys, compact separators, Unicode preserved, no NaN.",
+  "failure_behavior": "Fail closed on authority identity or lineage source-root or exact-basename resolution source projection target-boundary source accounting identity ambiguity public package GEO membership feature missingness frozen-state parameter order scoring determinism immutability containment or disclosure mismatch. Preserve every observation and location with explicit quarantine or noncomputability; do not substitute refit impute select recalibrate or access Michigan outcomes.",
+  "content_sha256": "79bc0fda3cc6bf9caab22da96d6292d5c373c2bc13418e9b14c7f9c23aae8e9e"
+}
