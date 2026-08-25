@@ -1,10 +1,24 @@
 {
   "$schema": "../../schemas/model13/michigan_benchmark_pooled_successor_statewide_scoring_contract.schema.json",
   "artifact_id": "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1",
-  "version": "1.0.0",
-  "status": "FROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION",
+  "version": "1.1.0",
+  "status": "AMENDED_AND_REFROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION",
   "controlling_task": "MODEL-13: Michigan Benchmark, Wisconsin+Michigan Successor Development, and Statewide Scoring",
   "canonical_main_at_authorization": "04a85783ef3f09c82cb0c38c79c225da888f3eb9",
+  "authority_amendment": {
+    "decision": "bounded public-feature computability exclusion",
+    "incorporated_by": "Master Control Room after MODEL capability decision",
+    "incorporated_on": "2026-08-24",
+    "pre_amendment_contract_version": "1.0.0",
+    "pre_amendment_contract_content_sha256": "3d0fc64b6f9d78fb79bacf211970a5c31538501fcc26f53eab3d1fd68fae9fbe",
+    "pre_amendment_repository_commit": "daf8f26072e6fae705f7d1f7a01419f21f528550",
+    "reason_code": "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS",
+    "excluded_from_fitting": {"michigan_observation_count": 5, "michigan_physical_location_count": 3},
+    "retained_in_protected_accounting_and_qa": true,
+    "imputation_zero_fill_or_manufacture": false,
+    "new_anchor_resolution_rule": false,
+    "frozen_benchmark_changed_or_rerun": false
+  },
   "accepted_authority": {
     "model10_contract_id": "MODEL10_WISCONSIN_COHORT_IDENTITY_LINEAGE_CONTRACT_V1",
     "pipe04_contract_id": "PIPE04_MODEL10_WISCONSIN_DEVELOPMENT_BINDING_CONTRACT_V1",
@@ -53,9 +67,17 @@
     "michigan_permanent_holdout_after_transition": false
   },
   "combined_cohort": {
-    "wisconsin": {"observation_count": 63, "physical_location_count": 41, "target": "Isolated Sales"},
-    "michigan": {"observation_count": 138, "physical_location_count": 85, "target": "Isolated Sales"},
-    "pooled": {"observation_count": 201, "physical_location_count": 126},
+    "protected_accounting": {
+      "wisconsin": {"observation_count": 63, "physical_location_count": 41},
+      "michigan": {"observation_count": 138, "physical_location_count": 85},
+      "pooled": {"observation_count": 201, "physical_location_count": 126}
+    },
+    "fitting": {
+      "wisconsin": {"observation_count": 63, "physical_location_count": 41, "target": "Isolated Sales"},
+      "michigan": {"observation_count": 133, "physical_location_count": 82, "target": "Isolated Sales"},
+      "pooled": {"observation_count": 196, "physical_location_count": 123}
+    },
+    "computability_exclusion": {"reason_code": "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS", "michigan_observation_count": 5, "michigan_physical_location_count": 3, "protected_accounting_and_qa_retained": true},
     "analytical_group_namespace": "state-qualified accepted physical-location identity",
     "cross_state_identity_merge": false,
     "estimation_weighting": "inverse observation count within physical location",
@@ -68,7 +90,8 @@
     "opportunity_term": "log_households_5mi",
     "candidate_measure_source": "accepted MODEL-11 thirteen-measure menu",
     "candidate_measure_count": 13,
-    "complete_combined_cohort_required": true,
+    "complete_fitting_cohort_required": true,
+    "all_authorized_observations_retained_in_protected_accounting": true,
     "missing_measure_policy": "exclude globally with target-blind reason",
     "constant_measure_policy": "exclude globally with target-blind reason",
     "imputation": false,
@@ -115,7 +138,9 @@
     "fit_count_after_selection": 1,
     "post_selection_search": false,
     "target_transform": "log1p",
-    "inverse_target_transform": "max zero expm1"
+    "inverse_target_transform": "max zero expm1",
+    "fitting_observation_count": 196,
+    "fitting_physical_location_count": 123
   },
   "output_semantics": {
     "household_opportunity": "raw five-mile B11001 household mass",
@@ -155,6 +180,8 @@
     "ready_last": true,
     "overwrite": "deny",
     "independent_semantic_rerun_required": true,
+    "frozen_benchmark_rerun_permitted": false,
+    "deterministic_verification_benchmark_handling": "reuse and verify the immutable READY benchmark without reevaluation",
     "protected_output_outside_git": true
   },
   "interpretation_boundary": {
@@ -166,5 +193,5 @@
     "proprietary_model_equivalence": false,
     "final_site_selection_authority": false
   },
-  "content_sha256": "3d0fc64b6f9d78fb79bacf211970a5c31538501fcc26f53eab3d1fd68fae9fbe"
+  "content_sha256": "6f5b57484693d5c67b1a0274954dd69fd89cd9d20bce4051bd644aa17a343f86"
 }

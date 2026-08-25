@@ -95,15 +95,16 @@ def main() -> int:
         raise SystemExit("MODEL-13 contract identity differs")
     if contract["canonical_main_at_authorization"] != AUTHORIZATION_BASE:
         raise SystemExit("MODEL-13 authorization base differs")
-    if contract["combined_cohort"] != {
-        "wisconsin": {"observation_count": 63, "physical_location_count": 41, "target": "Isolated Sales"},
-        "michigan": {"observation_count": 138, "physical_location_count": 85, "target": "Isolated Sales"},
-        "pooled": {"observation_count": 201, "physical_location_count": 126},
-        "analytical_group_namespace": "state-qualified accepted physical-location identity",
-        "cross_state_identity_merge": False,
-        "estimation_weighting": "inverse observation count within physical location",
-        "impacted_sales_permitted": False,
-    }:
+    cohort = contract["combined_cohort"]
+    if (
+        cohort.get("protected_accounting") != {"wisconsin": {"observation_count": 63, "physical_location_count": 41}, "michigan": {"observation_count": 138, "physical_location_count": 85}, "pooled": {"observation_count": 201, "physical_location_count": 126}}
+        or cohort.get("fitting") != {"wisconsin": {"observation_count": 63, "physical_location_count": 41, "target": "Isolated Sales"}, "michigan": {"observation_count": 133, "physical_location_count": 82, "target": "Isolated Sales"}, "pooled": {"observation_count": 196, "physical_location_count": 123}}
+        or cohort.get("computability_exclusion") != {"reason_code": "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS", "michigan_observation_count": 5, "michigan_physical_location_count": 3, "protected_accounting_and_qa_retained": True}
+        or cohort.get("analytical_group_namespace") != "state-qualified accepted physical-location identity"
+        or cohort.get("cross_state_identity_merge") is not False
+        or cohort.get("estimation_weighting") != "inverse observation count within physical location"
+        or cohort.get("impacted_sales_permitted") is not False
+    ):
         raise SystemExit("MODEL-13 pooled cohort authority differs")
     if [item["candidate_id"] for item in contract["candidate_family"]] != CANDIDATE_IDS:
         raise SystemExit("MODEL-13 candidate family differs")
@@ -145,15 +146,19 @@ def main() -> int:
             raise SystemExit("MODEL-13 execution commitment contract binding differs")
         if result.get("frozen_michigan_benchmark_physical_location_count") != 82:
             raise SystemExit("MODEL-13 frozen benchmark pair count differs")
-        if result.get("pooled_development_observation_count") != 201 or result.get("pooled_development_physical_location_count") != 126:
+        if result.get("protected_accounting_observation_count") != 201 or result.get("protected_accounting_physical_location_count") != 126:
+            raise SystemExit("MODEL-13 protected accounting counts differ")
+        if result.get("pooled_development_observation_count") != 196 or result.get("pooled_development_physical_location_count") != 123 or result.get("michigan_fitting_observation_count") != 133 or result.get("michigan_fitting_physical_location_count") != 82:
             raise SystemExit("MODEL-13 pooled execution counts differ")
+        if result.get("computability_excluded_michigan_observation_count") != 5 or result.get("computability_excluded_michigan_physical_location_count") != 3:
+            raise SystemExit("MODEL-13 computability-exclusion counts differ")
         if result.get("target_blind_retained_feature_count", -1) + result.get("target_blind_excluded_feature_count", -1) != 13:
             raise SystemExit("MODEL-13 target-blind feature accounting differs")
         if [item.get("candidate_id") for item in result.get("candidate_metrics", [])] != CANDIDATE_IDS:
             raise SystemExit("MODEL-13 candidate execution evidence differs")
         if result.get("statewide_computable_count", -1) + result.get("statewide_noncomputable_count", -1) != 3017 or result.get("all_3017_tracts_accounted") is not True:
             raise SystemExit("MODEL-13 statewide tract accounting differs")
-        if result.get("deterministic_rerun") != "MATCH" or result.get("impacted_sales_values_accessed") != 0 or result.get("power_bi_implemented") is not False or result.get("protected_details_disclosed") is not False:
+        if result.get("deterministic_rerun") != "MATCH" or result.get("frozen_benchmark_reevaluated") is not False or result.get("impacted_sales_values_accessed") != 0 or result.get("power_bi_implemented") is not False or result.get("protected_details_disclosed") is not False:
             raise SystemExit("MODEL-13 deterministic, target, Power BI, or disclosure boundary differs")
         required_true = ("benchmark_ready_and_immutable", "benchmark_preceded_michigan_development", "target_blind_feature_freeze_ready", "development_role_transition_ready", "pooled_comparison_complete", "selected_refit_ready", "statewide_scoring_ready", "presentation_outputs_ready", "deterministic_match", "zero_impacted_sales_access", "all_repository_validation_required")
         if any(gate.get(field) is not True for field in required_true) or gate.get("independent_run_count") != 2 or gate.get("semantic_stage_count") != 5:
@@ -177,7 +182,7 @@ def main() -> int:
     if re.search(r"(?i)[A-Za-z0-9 _.-]+\.xlsx", narrative):
         raise SystemExit("MODEL-13 protected or reconstructable workbook filename entered repository narrative")
 
-    print(json.dumps({"state": "passed", "contract_id": CONTRACT_ID, "task_posture": posture, "candidate_count": 4, "pooled_physical_location_count": 126, "statewide_tract_count": 3017, "nondisclosing_execution_commitment": commitment_path.is_file(), "protected_tracked_path_guard": "passed"}, sort_keys=True))
+    print(json.dumps({"state": "passed", "contract_id": CONTRACT_ID, "task_posture": posture, "candidate_count": 4, "protected_accounting_physical_location_count": 126, "pooled_fitting_physical_location_count": 123, "statewide_tract_count": 3017, "nondisclosing_execution_commitment": commitment_path.is_file(), "protected_tracked_path_guard": "passed"}, sort_keys=True))
     return 0
 
 

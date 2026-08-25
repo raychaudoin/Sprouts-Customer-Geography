@@ -8,7 +8,7 @@ import tempfile
 import unittest
 
 from sprouts_customer_geography.model13.modeling import SPATIAL_TERMS, compare_and_refit, fit_regularized, state_balanced_grouped_folds
-from sprouts_customer_geography.model13.workflow import STAGE_FILES, ProtectedModel13Run, _rank_values, _required_spatial_features_computable, build_disclosure_safe_result, compare_runs, verify_repository_authority
+from sprouts_customer_geography.model13.workflow import STAGE_FILES, ProtectedModel13Run, _rank_values, _required_spatial_features_computable, build_disclosure_safe_result, compare_runs, execute_model13, verify_repository_authority
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
 
@@ -51,6 +51,10 @@ class Model13AuthorityTests(unittest.TestCase):
     def test_frozen_contract_and_output_contract_verify(self) -> None:
         contract, output = verify_repository_authority(REPOSITORY)
         self.assertEqual(contract["artifact_id"], "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1")
+        self.assertEqual(contract["version"], "1.1.0")
+        self.assertEqual(contract["combined_cohort"]["fitting"]["pooled"], {"observation_count": 196, "physical_location_count": 123})
+        self.assertEqual(contract["authority_amendment"]["excluded_from_fitting"], {"michigan_observation_count": 5, "michigan_physical_location_count": 3})
+        self.assertFalse(contract["authority_amendment"]["frozen_benchmark_changed_or_rerun"])
         self.assertEqual(contract["selection"]["primary_reference_candidate_id"], "successor_model11_termset_elastic_net")
         self.assertEqual(output["tract_output"]["row_count"], 3017)
         self.assertEqual(len(contract["candidate_family"]), 4)
@@ -124,6 +128,22 @@ class Model13ModelingTests(unittest.TestCase):
 
 
 class Model13ProtectedRunTests(unittest.TestCase):
+    def test_resume_reuses_ready_benchmark_without_rewriting_it(self) -> None:
+        with _temporary_directory() as directory:
+            output = Path(directory) / "protected-output"
+            output.mkdir()
+            original = ProtectedModel13Run(output, REPOSITORY, run_id="m13run-fictional-resume")
+            stage = original.write_stage("benchmark", {"package_id": "MODEL13_MICHIGAN_FROZEN_BENCHMARK_V1", "state": "ready", "fictional": True})
+            before = stage.package_path.read_bytes()
+            resumed = ProtectedModel13Run.resume_after_benchmark(output, REPOSITORY, run_id="m13run-fictional-resume")
+            self.assertEqual(tuple(resumed.stages), ("benchmark",))
+            self.assertEqual(stage.package_path.read_bytes(), before)
+            self.assertFalse((resumed.run_dir / "feature_freeze").exists())
+
+    def test_fresh_benchmark_execution_is_denied_after_amendment(self) -> None:
+        with self.assertRaisesRegex(ConformanceError, "MODEL13_FROZEN_BENCHMARK_RERUN_DENIED"):
+            execute_model13(repository_root=REPOSITORY, resolver=object())
+
     def test_incomplete_first_ready_last_and_immutability(self) -> None:
         with _temporary_directory() as directory:
             temporary = Path(directory)
@@ -159,6 +179,7 @@ class Model13ProtectedRunTests(unittest.TestCase):
             comparison = compare_runs(first, second)
             self.assertEqual(comparison["state"], "MATCH")
             self.assertTrue(comparison["presentation_csvs_byte_identical"])
+            self.assertTrue(comparison["benchmark_reused_without_reevaluation"])
 
     def test_disclosure_safe_report_rejects_no_aggregate_surface(self) -> None:
         class Result:
@@ -173,6 +194,10 @@ class Model13ProtectedRunTests(unittest.TestCase):
             statewide_support_truncation_count = 200
         report = build_disclosure_safe_result(Result(), {"state": "MATCH"})
         self.assertEqual(report["statewide_tract_count"], 3017)
+        self.assertEqual(report["protected_accounting_observation_count"], 201)
+        self.assertEqual(report["pooled_development_observation_count"], 196)
+        self.assertEqual(report["pooled_development_physical_location_count"], 123)
+        self.assertFalse(report["frozen_benchmark_reevaluated"])
         self.assertEqual(report["impacted_sales_values_accessed"], 0)
         serialized = json.dumps(report).lower()
         self.assertNotIn("latitude", serialized)

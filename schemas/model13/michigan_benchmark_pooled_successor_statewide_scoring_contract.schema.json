@@ -4,14 +4,15 @@
   "title": "MODEL-13 frozen analytical contract",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "artifact_id", "version", "status", "controlling_task", "canonical_main_at_authorization", "accepted_authority", "frozen_michigan_benchmark", "development_role_transition", "combined_cohort", "target_blind_feature_freeze", "candidate_family", "grouped_validation", "selection", "final_refit", "output_semantics", "statewide_scoring", "presentation_outputs", "protected_execution", "interpretation_boundary", "content_sha256"],
+  "required": ["$schema", "artifact_id", "version", "status", "controlling_task", "canonical_main_at_authorization", "authority_amendment", "accepted_authority", "frozen_michigan_benchmark", "development_role_transition", "combined_cohort", "target_blind_feature_freeze", "candidate_family", "grouped_validation", "selection", "final_refit", "output_semantics", "statewide_scoring", "presentation_outputs", "protected_execution", "interpretation_boundary", "content_sha256"],
   "properties": {
     "$schema": {"type": "string"},
     "artifact_id": {"const": "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1"},
-    "version": {"const": "1.0.0"},
-    "status": {"const": "FROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION"},
+    "version": {"const": "1.1.0"},
+    "status": {"const": "AMENDED_AND_REFROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION"},
     "controlling_task": {"const": "MODEL-13: Michigan Benchmark, Wisconsin+Michigan Successor Development, and Statewide Scoring"},
     "canonical_main_at_authorization": {"const": "04a85783ef3f09c82cb0c38c79c225da888f3eb9"},
+    "authority_amendment": {"type": "object", "required": ["decision", "incorporated_by", "incorporated_on", "pre_amendment_contract_version", "pre_amendment_contract_content_sha256", "pre_amendment_repository_commit", "reason_code", "excluded_from_fitting", "retained_in_protected_accounting_and_qa", "imputation_zero_fill_or_manufacture", "new_anchor_resolution_rule", "frozen_benchmark_changed_or_rerun"]},
     "accepted_authority": {"type": "object", "minProperties": 15},
     "frozen_michigan_benchmark": {
       "type": "object",
@@ -30,8 +31,8 @@
       "additionalProperties": true
     },
     "development_role_transition": {"type": "object", "required": ["pipe05_binding_marks_development_consumed", "begins_at", "benchmark_must_be_ready", "michigan_permanent_holdout_after_transition"]},
-    "combined_cohort": {"type": "object", "required": ["wisconsin", "michigan", "pooled", "analytical_group_namespace", "cross_state_identity_merge", "estimation_weighting", "impacted_sales_permitted"]},
-    "target_blind_feature_freeze": {"type": "object", "required": ["package_id", "radii_m", "spatial_terms", "opportunity_term", "candidate_measure_source", "candidate_measure_count", "complete_combined_cohort_required", "missing_measure_policy", "constant_measure_policy", "imputation", "row_dropping", "redundancy"]},
+    "combined_cohort": {"type": "object", "required": ["protected_accounting", "fitting", "computability_exclusion", "analytical_group_namespace", "cross_state_identity_merge", "estimation_weighting", "impacted_sales_permitted"]},
+    "target_blind_feature_freeze": {"type": "object", "required": ["package_id", "radii_m", "spatial_terms", "opportunity_term", "candidate_measure_source", "candidate_measure_count", "complete_fitting_cohort_required", "all_authorized_observations_retained_in_protected_accounting", "missing_measure_policy", "constant_measure_policy", "imputation", "row_dropping", "redundancy"]},
     "candidate_family": {
       "type": "array",
       "minItems": 4,

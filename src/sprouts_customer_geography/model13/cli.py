@@ -10,27 +10,34 @@ from pathlib import Path
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
 from .resolver import load_authorized_registry
-from .workflow import build_disclosure_safe_result, compare_runs, execute_model13
+from .workflow import build_disclosure_safe_result, compare_runs, resume_model13, verify_model13
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Execute protected MODEL-13")
     parser.add_argument("--repository-root", type=Path, default=Path.cwd())
     subparsers = parser.add_subparsers(dest="command", required=True)
-    run = subparsers.add_parser("run")
-    run.add_argument("--registry", type=Path)
-    run.add_argument("--run-id")
-    run.add_argument("--verification-of")
+    resume = subparsers.add_parser("resume")
+    resume.add_argument("--registry", type=Path)
+    resume.add_argument("--run-id", required=True)
+    verify = subparsers.add_parser("verify")
+    verify.add_argument("--registry", type=Path)
+    verify.add_argument("--run-id", required=True)
+    verify.add_argument("--benchmark-source-run-id", required=True)
+    verify.add_argument("--verification-of", required=True)
     compare = subparsers.add_parser("compare")
     compare.add_argument("--first", type=Path, required=True)
     compare.add_argument("--second", type=Path, required=True)
     arguments = parser.parse_args()
     root = arguments.repository_root.resolve()
     try:
-        if arguments.command == "run":
+        if arguments.command in ("resume", "verify"):
             configured = arguments.registry or (Path(os.environ["MODEL13_AUTHORITY_REGISTRY"]) if os.environ.get("MODEL13_AUTHORITY_REGISTRY") else None)
             resolver = load_authorized_registry(configured, root)
-            result = execute_model13(repository_root=root, resolver=resolver, run_id=arguments.run_id, verification_of=arguments.verification_of)
+            if arguments.command == "resume":
+                result = resume_model13(repository_root=root, resolver=resolver, run_id=arguments.run_id)
+            else:
+                result = verify_model13(repository_root=root, resolver=resolver, run_id=arguments.run_id, benchmark_source_run_id=arguments.benchmark_source_run_id, verification_of=arguments.verification_of)
             print(json.dumps(build_disclosure_safe_result(result), sort_keys=True))
         else:
             print(json.dumps(compare_runs(arguments.first, arguments.second), sort_keys=True))

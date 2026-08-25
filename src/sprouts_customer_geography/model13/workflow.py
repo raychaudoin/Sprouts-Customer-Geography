@@ -83,7 +83,19 @@ def verify_repository_authority(repository_root: Path) -> tuple[dict[str, Any], 
     output = _load_object(root / "config/model/model13_michigan_power_bi_output_contract.json", "MODEL13_OUTPUT_CONTRACT_MISSING")
     semantic = dict(contract)
     protected_hash = semantic.pop("content_sha256", None)
-    require(contract.get("artifact_id") == CONTRACT_ID and contract.get("version") == "1.0.0" and contract.get("status") == "FROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION" and protected_hash == content_digest(semantic), "MODEL13_CONTRACT_MISMATCH", "MODEL-13 frozen contract identity or content differs")
+    amendment = contract.get("authority_amendment", {})
+    require(
+        contract.get("artifact_id") == CONTRACT_ID
+        and contract.get("version") == "1.1.0"
+        and contract.get("status") == "AMENDED_AND_REFROZEN_BEFORE_MICHIGAN_DEVELOPMENT_CONSUMPTION"
+        and amendment.get("decision") == "bounded public-feature computability exclusion"
+        and amendment.get("reason_code") == "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS"
+        and amendment.get("excluded_from_fitting") == {"michigan_observation_count": 5, "michigan_physical_location_count": 3}
+        and amendment.get("frozen_benchmark_changed_or_rerun") is False
+        and protected_hash == content_digest(semantic),
+        "MODEL13_CONTRACT_MISMATCH",
+        "MODEL-13 amended frozen contract identity or content differs",
+    )
     require(output.get("artifact_id") == OUTPUT_CONTRACT_ID and output.get("version") == "1.0.0" and output.get("protected_local_only") is True and output.get("tract_output", {}).get("row_count") == 3017, "MODEL13_OUTPUT_CONTRACT_MISMATCH", "MODEL-13 presentation contract differs")
     manifests = {
         "MODEL-10": "MODEL-10.wisconsin-successor-cohort-identity-lineage-authority.task.json",
@@ -117,8 +129,40 @@ class StageResult:
     stable_identity: str
 
 
+def _validated_ready_stage(run_dir: Path, name: str) -> tuple[StageResult, dict[str, Any]]:
+    require(name in STAGE_FILES, "MODEL13_STAGE_INVALID", "MODEL-13 stage is invalid")
+    directory = run_dir / name
+    package_path = directory / STAGE_FILES[name]
+    ready_path = directory / "READY.json"
+    manifest_path = directory / "stage_manifest.json"
+    package = _load_object(package_path, "MODEL13_STAGE_PACKAGE_UNRESOLVED")
+    ready = _load_object(ready_path, "MODEL13_STAGE_READY_UNRESOLVED")
+    manifest = _load_object(manifest_path, "MODEL13_STAGE_MANIFEST_UNRESOLVED")
+    semantic = copy.deepcopy(package)
+    recorded_hash = semantic.pop("protected_content_sha256", None)
+    recorded_identity = semantic.pop("stable_package_identity", None)
+    calculated_hash = content_digest(semantic)
+    stable_identity = f"model13-{name}:sha256:{calculated_hash}"
+    package_hash = file_sha256(package_path)
+    require(
+        recorded_hash == calculated_hash
+        and recorded_identity == stable_identity
+        and ready.get("state") == "ready"
+        and ready.get("ready_marker_written_last") is True
+        and ready.get("protected_content_sha256") == calculated_hash
+        and ready.get("stable_package_identity") == stable_identity
+        and ready.get("package_file_sha256") == package_hash
+        and manifest.get("state") == "ready"
+        and manifest.get("protected_content_sha256") == calculated_hash
+        and manifest.get("package_file_sha256") == package_hash,
+        "MODEL13_STAGE_READY_MISMATCH",
+        "MODEL-13 immutable stage package or READY commitment differs",
+    )
+    return StageResult(name, package_path, ready_path, calculated_hash, stable_identity), semantic
+
+
 class ProtectedModel13Run:
-    def __init__(self, output_root: Path, repository_root: Path, *, run_id: str | None = None, verification_of: str | None = None):
+    def __init__(self, output_root: Path, repository_root: Path, *, run_id: str | None = None, verification_of: str | None = None, benchmark_reused_without_evaluation: bool = False):
         self.output_root = output_root.resolve()
         repository = repository_root.resolve()
         require(self.output_root.is_dir() and not _is_within(self.output_root, repository), "MODEL13_PROTECTED_OUTPUT_INVALID", "MODEL-13 output root must exist outside Git")
@@ -131,7 +175,27 @@ class ProtectedModel13Run:
         self.run_dir.mkdir()
         self.verification_of = verification_of
         self.stages: dict[str, StageResult] = {}
-        write_json_exclusive(self.run_dir / "run_state.json", {"run_id": self.run_id, "state": "incomplete", "finalization_state": "not_ready", "verification_of": verification_of})
+        write_json_exclusive(self.run_dir / "run_state.json", {"run_id": self.run_id, "state": "incomplete", "finalization_state": "not_ready", "verification_of": verification_of, "benchmark_reused_without_evaluation": benchmark_reused_without_evaluation})
+
+    @classmethod
+    def resume_after_benchmark(cls, output_root: Path, repository_root: Path, *, run_id: str) -> "ProtectedModel13Run":
+        output = output_root.resolve()
+        repository = repository_root.resolve()
+        require(output.is_dir() and not _is_within(output, repository), "MODEL13_PROTECTED_OUTPUT_INVALID", "MODEL-13 output root must exist outside Git")
+        require(bool(re.fullmatch(r"m13run-[A-Za-z0-9_-]+", run_id)), "MODEL13_RUN_ID_INVALID", "MODEL-13 run identity is invalid")
+        run_dir = (output / "model13-runs" / run_id).resolve()
+        require(_is_within(run_dir, output / "model13-runs") and run_dir.is_dir(), "MODEL13_RESUME_RUN_UNRESOLVED", "exact incomplete MODEL-13 run is absent")
+        state = _load_object(run_dir / "run_state.json", "MODEL13_RESUME_STATE_UNRESOLVED")
+        require(state.get("run_id") == run_id and state.get("state") == "incomplete" and state.get("finalization_state") == "not_ready" and not (run_dir / "READY.json").exists(), "MODEL13_RESUME_STATE_INVALID", "MODEL-13 run is not resumable")
+        require(not any((run_dir / name).exists() for name in ("feature_freeze", "transition", "development", "statewide", "presentation")), "MODEL13_RESUME_STAGE_COLLISION", "MODEL-13 resume run contains a post-benchmark artifact")
+        benchmark, _ = _validated_ready_stage(run_dir, "benchmark")
+        instance = cls.__new__(cls)
+        instance.output_root = output
+        instance.run_id = run_id
+        instance.run_dir = run_dir
+        instance.verification_of = state.get("verification_of")
+        instance.stages = {"benchmark": benchmark}
+        return instance
 
     def write_stage(self, name: str, semantic: Mapping[str, Any]) -> StageResult:
         require(name in STAGE_FILES and name not in self.stages, "MODEL13_STAGE_INVALID", "MODEL-13 stage is invalid or duplicate")
@@ -298,7 +362,7 @@ def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model
     for physical_id, source in michigan_physical.items():
         public_features = source.get("public_features")
         features = dict(public_features) if isinstance(public_features, Mapping) else {}
-        group_vectors["MI:" + physical_id] = {"state": "MI", "original_physical_location_id": physical_id, "features": features, "profiles": source["data03_feature_profiles"], "coordinate": source["canonical_target_blind_coordinate"], "support_truncation": source["any_support_truncation"]}
+        group_vectors["MI:" + physical_id] = {"state": "MI", "original_physical_location_id": physical_id, "features": features, "profiles": source["data03_feature_profiles"], "coordinate": source["canonical_target_blind_coordinate"], "support_truncation": source["any_support_truncation"], "public_qa_reasons": list(source.get("noncomputability_reasons") or [])}
     for source in michigan_features["source_observations"]:
         physical_id = str(source["physical_location_id"])
         if physical_id not in michigan_physical:
@@ -306,25 +370,30 @@ def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model
         vector = group_vectors["MI:" + physical_id]
         observations.append({"analytical_observation_id": "MI:" + str(source["source_observation_id"]), "source_observation_id": source["source_observation_id"], "state": "MI", "successor_physical_location_id": "MI:" + physical_id, "original_physical_location_id": physical_id, "features": vector["features"]})
     require(len(observations) == 201 and len(group_vectors) == 126 and sum(item["state"] == "WI" for item in observations) == 63 and sum(item["state"] == "MI" for item in observations) == 138, "MODEL13_COMBINED_COHORT_ACCOUNTING_FAILED", "target-blind combined cohort does not reconcile")
-    require(
-        _required_spatial_features_computable(group_vectors),
-        "MODEL13_REQUIRED_SPATIAL_FEATURE_NONCOMPUTABLE",
-        "one or more complete-cohort physical-location vectors lack an authorized spatial or household-opportunity input",
-    )
+    ineligible_groups: dict[str, str] = {}
+    for group, vector in group_vectors.items():
+        if _required_spatial_features_computable({group: vector}):
+            continue
+        require(vector["state"] == "MI" and vector.get("public_qa_reasons") == ["GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS"], "MODEL13_UNAUTHORIZED_COMPUTABILITY_EXCLUSION", "a required feature vector is absent outside the exact authorized Michigan exclusion")
+        ineligible_groups[group] = "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS"
+    ineligible_observations = [row for row in observations if row["successor_physical_location_id"] in ineligible_groups]
+    require(len(ineligible_groups) == 3 and len(ineligible_observations) == 5 and all(row["state"] == "MI" for row in ineligible_observations), "MODEL13_COMPUTABILITY_EXCLUSION_ACCOUNTING_FAILED", "the exact authorized Michigan computability exclusion does not reconcile")
+    fitting_group_vectors = {group: vector for group, vector in group_vectors.items() if group not in ineligible_groups}
+    require(len(fitting_group_vectors) == 123 and _required_spatial_features_computable(fitting_group_vectors), "MODEL13_FITTING_COHORT_SPATIAL_FEATURE_NONCOMPUTABLE", "the computability-qualified fitting cohort lacks a required spatial or opportunity feature")
     measure_ids = [str(item["measure_id"]) for item in model11_contract["candidate_measures"]]
     exclusions: dict[str, str] = {}
     variable: list[str] = []
     for measure in measure_ids:
-        values = [vector["features"].get(measure) for vector in group_vectors.values()]
+        values = [vector["features"].get(measure) for vector in fitting_group_vectors.values()]
         if not all(isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value)) for value in values):
-            exclusions[measure] = "incomplete_combined_cohort_public_evidence"
+            exclusions[measure] = "incomplete_computability_qualified_fitting_cohort_public_evidence"
         elif max(float(value) for value in values) - min(float(value) for value in values) <= 1e-12:
-            exclusions[measure] = "constant_across_combined_physical_locations"
+            exclusions[measure] = "constant_across_computability_qualified_fitting_physical_locations"
         else:
             variable.append(measure)
     priority = list(contract["target_blind_feature_freeze"]["redundancy"]["priority_order"])
     threshold = float(contract["target_blind_feature_freeze"]["redundancy"]["threshold"])
-    groups = sorted(group_vectors)
+    groups = sorted(fitting_group_vectors)
     retained: list[str] = []
     correlations: list[dict[str, Any]] = []
     for measure in priority:
@@ -332,7 +401,7 @@ def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model
             continue
         rejected: str | None = None
         for prior in retained:
-            correlation = _pearson([float(group_vectors[group]["features"][prior]) for group in groups], [float(group_vectors[group]["features"][measure]) for group in groups])
+            correlation = _pearson([float(fitting_group_vectors[group]["features"][prior]) for group in groups], [float(fitting_group_vectors[group]["features"][measure]) for group in groups])
             correlations.append({"left": prior, "right": measure, "pearson": correlation})
             if abs(correlation) >= threshold:
                 rejected = prior
@@ -342,25 +411,28 @@ def _feature_freeze_package(root: Path, model11: Model11Resolver, model12: Model
         else:
             exclusions[measure] = "redundant_with:" + rejected
     selected_model11_data03 = [term for term, coefficient in zip(frozen_model11.terms, frozen_model11.coefficients) if term not in SPATIAL_TERMS and abs(coefficient) > 1e-8]
-    require(selected_model11_data03 and set(selected_model11_data03) <= set(retained), "MODEL13_MODEL11_REFERENCE_TERM_INELIGIBLE", "accepted MODEL-11 nonzero reference term is not complete in the combined cohort")
+    require(selected_model11_data03 and set(selected_model11_data03) <= set(retained), "MODEL13_MODEL11_REFERENCE_TERM_INELIGIBLE", "accepted MODEL-11 nonzero reference term is not complete in the computability-qualified fitting cohort")
     frozen_observations: list[dict[str, Any]] = []
     required_features = ["households_5mi", *SPATIAL_TERMS, *retained]
     required_features = list(dict.fromkeys(required_features))
     for observation in sorted(observations, key=lambda row: str(row["analytical_observation_id"])):
-        features = {term: observation["features"][term] for term in required_features}
-        require(all(isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value)) for value in features.values()), "MODEL13_FROZEN_FEATURE_NONCOMPUTABLE", "one retained combined feature is noncomputable")
-        frozen_observations.append({**{key: observation[key] for key in ("analytical_observation_id", "source_observation_id", "state", "successor_physical_location_id", "original_physical_location_id")}, "features": features})
+        group = str(observation["successor_physical_location_id"])
+        fitting_eligible = group not in ineligible_groups
+        features = {term: observation["features"][term] for term in required_features} if fitting_eligible else {}
+        require(not fitting_eligible or all(isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(float(value)) for value in features.values()), "MODEL13_FROZEN_FEATURE_NONCOMPUTABLE", "one retained fitting-cohort feature is noncomputable")
+        frozen_observations.append({**{key: observation[key] for key in ("analytical_observation_id", "source_observation_id", "state", "successor_physical_location_id", "original_physical_location_id")}, "features": features, "fitting_eligible": fitting_eligible, "fitting_exclusion_reason": None if fitting_eligible else ineligible_groups[group]})
     package = {
         "$schema": "model13-combined-target-blind-feature-freeze-package-v1",
         "package_id": "MODEL13_COMBINED_TARGET_BLIND_FEATURE_FREEZE_V1",
         "version": "1.0.0",
         "state": "ready",
         "authority": {"model13_contract_id": CONTRACT_ID, "model11_feature_freeze_verified": True, "model12_identity_verified": True, "model12_public_features_verified": True, "data03_data04_geo05_reused": True},
-        "evidence_accounting": {"observation_count": len(frozen_observations), "physical_location_count": len(group_vectors), "wisconsin_observation_count": 63, "wisconsin_physical_location_count": 41, "michigan_observation_count": 138, "michigan_physical_location_count": 85, "target_values_accessed": 0, "complete_cohort_accounted": True},
-        "feature_preparation": {"target_blind": True, "candidate_measure_count": len(measure_ids), "eligible_combined_features": retained, "excluded_combined_features": exclusions, "pairwise_collinearity": correlations, "maximum_absolute_pairwise_correlation": max((abs(float(item["pearson"])) for item in correlations), default=0.0), "spatial_terms": list(SPATIAL_TERMS), "imputation": False, "row_dropping": False},
+        "evidence_accounting": {"protected_observation_count": len(frozen_observations), "protected_physical_location_count": len(group_vectors), "wisconsin_observation_count": 63, "wisconsin_physical_location_count": 41, "michigan_observation_count": 138, "michigan_physical_location_count": 85, "fitting_observation_count": 196, "fitting_physical_location_count": 123, "fitting_wisconsin_observation_count": 63, "fitting_wisconsin_physical_location_count": 41, "fitting_michigan_observation_count": 133, "fitting_michigan_physical_location_count": 82, "excluded_michigan_observation_count": len(ineligible_observations), "excluded_michigan_physical_location_count": len(ineligible_groups), "target_values_accessed": 0, "complete_protected_accounting": True},
+        "computability_exclusions": [{"successor_physical_location_id": group, "reason_code": reason, "observation_count": sum(row["successor_physical_location_id"] == group for row in observations), "retained_in_protected_accounting_and_qa": True} for group, reason in sorted(ineligible_groups.items())],
+        "feature_preparation": {"target_blind": True, "candidate_measure_count": len(measure_ids), "eligible_combined_features": retained, "excluded_combined_features": exclusions, "pairwise_collinearity": correlations, "maximum_absolute_pairwise_correlation": max((abs(float(item["pearson"])) for item in correlations), default=0.0), "spatial_terms": list(SPATIAL_TERMS), "screening_unit_count": len(fitting_group_vectors), "imputation": False, "zero_fill": False, "manufactured_spatial_terms": False, "new_anchor_resolution_rule": False, "protected_accounting_row_dropping": False, "fitting_exclusion_limited_to_authorized_reason": True},
         "model11_reference_term_authority": {"accepted_preferred_candidate_id": frozen_model11.preferred_candidate_id, "reference_data03_terms": selected_model11_data03, "reference_terms": [*SPATIAL_TERMS, *selected_model11_data03], "nonzero_threshold": 1e-8},
         "observations": frozen_observations,
-        "finalization": {"combined_targets_supplied_to_fitting_code": False, "target_correlation_screening": False, "market_state_or_vintage_predictor_created": False, "protected_characteristic_feature_created": False, "ready_marker_written_last": True},
+        "finalization": {"combined_targets_supplied_to_fitting_code": False, "target_correlation_screening": False, "market_state_or_vintage_predictor_created": False, "protected_characteristic_feature_created": False, "all_201_observations_retained": True, "ready_marker_written_last": True},
     }
     return package, frozen_model11
 
@@ -397,11 +469,29 @@ def _development_package(rows: list[dict[str, Any]], freeze: Mapping[str, Any], 
         "successor_combined_multivariate_ridge": all_terms,
         "successor_combined_multivariate_elastic_net": all_terms,
     }
-    comparison = compare_and_refit(rows, contract["candidate_family"], terms_by_candidate, outer_count=5, inner_count=4)
+    fitting_rows = [row for row in rows if row.get("fitting_eligible") is True]
+    excluded_rows = [row for row in rows if row.get("fitting_eligible") is False]
+    require(
+        len(fitting_rows) == 196
+        and len({str(row["successor_physical_location_id"]) for row in fitting_rows}) == 123
+        and sum(row["state"] == "MI" for row in fitting_rows) == 133
+        and len({str(row["successor_physical_location_id"]) for row in fitting_rows if row["state"] == "MI"}) == 82
+        and len(excluded_rows) == 5
+        and len({str(row["successor_physical_location_id"]) for row in excluded_rows}) == 3
+        and all(row.get("fitting_exclusion_reason") == "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS" for row in excluded_rows),
+        "MODEL13_FITTING_COHORT_ACCOUNTING_FAILED",
+        "the authorized computability-qualified fitting cohort does not reconcile",
+    )
+    comparison = compare_and_refit(fitting_rows, contract["candidate_family"], terms_by_candidate, outer_count=5, inner_count=4)
     selected_id = str(comparison.selection["selected_candidate_id"])
     model_identity = "model13-successor:sha256:" + content_digest(comparison.final_model.protected_parameters())
     protected_rows: list[dict[str, Any]] = []
-    for index, row in enumerate(rows):
+    fitting_index = {str(row["analytical_observation_id"]): index for index, row in enumerate(fitting_rows)}
+    for row in rows:
+        index = fitting_index.get(str(row["analytical_observation_id"]))
+        if index is None:
+            protected_rows.append({**copy.deepcopy(row), "candidate_oof_predictions": {candidate_id: None for candidate_id in comparison.oof_predictions}, "selected_oof_prediction": None, "selected_oof_absolute_log_error": None, "final_refit_prediction": None, "final_refit_residual": None, "household_opportunity": None, "customer_fit_proxy": None, "modeled_target_mass": None, "retained_in_protected_accounting_and_qa": True})
+            continue
         final_scores = comparison.final_model.score_features(row["features"])
         oof = {candidate_id: values[index] for candidate_id, values in comparison.oof_predictions.items()}
         protected_rows.append({**copy.deepcopy(row), "candidate_oof_predictions": oof, "selected_oof_prediction": oof[selected_id], "selected_oof_absolute_log_error": abs(math.log1p(float(row["isolated_sales"])) - math.log1p(max(0.0, oof[selected_id]))), "final_refit_prediction": final_scores["modeled_target_mass"], "final_refit_residual": float(row["isolated_sales"]) - final_scores["modeled_target_mass"], **final_scores})
@@ -412,13 +502,13 @@ def _development_package(rows: list[dict[str, Any]], freeze: Mapping[str, Any], 
         "state": "ready",
         "authority": {"model13_contract_id": CONTRACT_ID, "feature_freeze_identity": freeze["stable_package_identity"], "selection_rule_frozen_before_targets": True},
         "chronology": {"benchmark_ready_before_michigan_development": True, "feature_freeze_ready_before_targets": True, "development_role_transition_ready_before_first_fit": True, "michigan_evidence_role": "POOLED_DEVELOPMENT_NOT_PERMANENT_HOLDOUT"},
-        "evidence_accounting": {"observation_count": 201, "physical_location_count": 126, "wisconsin_observation_count": 63, "wisconsin_physical_location_count": 41, "michigan_observation_count": 138, "michigan_physical_location_count": 85, "isolated_sales_values_accessed": 201, "impacted_sales_values_accessed": 0, "other_outcome_values_accessed": 0, "complete_cohort_accounted": True},
+        "evidence_accounting": {"protected_observation_count": 201, "protected_physical_location_count": 126, "protected_wisconsin_observation_count": 63, "protected_wisconsin_physical_location_count": 41, "protected_michigan_observation_count": 138, "protected_michigan_physical_location_count": 85, "fitting_observation_count": 196, "fitting_physical_location_count": 123, "fitting_wisconsin_observation_count": 63, "fitting_wisconsin_physical_location_count": 41, "fitting_michigan_observation_count": 133, "fitting_michigan_physical_location_count": 82, "excluded_michigan_observation_count": 5, "excluded_michigan_physical_location_count": 3, "isolated_sales_values_accessed": 201, "impacted_sales_values_accessed": 0, "other_outcome_values_accessed": 0, "complete_protected_accounting": True},
         "candidate_comparison": list(comparison.diagnostics),
         "selection": dict(comparison.selection),
-        "final_refit": {"model_identity": model_identity, "selected_candidate_id": selected_id, "selected_parameters": comparison.final_model.protected_parameters(), "full_cohort_selected_hyperparameters": dict(comparison.final_parameters), "selected_candidate_refit_count_after_selection": 1, "post_selection_search_performed": False},
+        "final_refit": {"model_identity": model_identity, "selected_candidate_id": selected_id, "selected_parameters": comparison.final_model.protected_parameters(), "full_cohort_selected_hyperparameters": dict(comparison.final_parameters), "fitting_observation_count": 196, "fitting_physical_location_count": 123, "selected_candidate_refit_count_after_selection": 1, "post_selection_search_performed": False},
         "observations": protected_rows,
-        "execution_boundary": {"row_level_folding_used": False, "state_market_or_vintage_predictor_used": False, "target_correlation_feature_screening_used": False, "black_box_model_used": False, "imputation_used": False, "observation_dropped": False, "household_opportunity_customer_fit_and_modeled_target_mass_separate": True, "impacted_sales_values_accessed": 0},
-        "finalization": {"bounded_candidate_count": 4, "state_balanced_grouped_outer_validation": True, "state_balanced_grouped_inner_tuning": True, "final_refit_once": True, "ready_marker_written_last": True},
+        "execution_boundary": {"row_level_folding_used": False, "state_market_or_vintage_predictor_used": False, "target_correlation_feature_screening_used": False, "black_box_model_used": False, "imputation_used": False, "zero_fill_used": False, "manufactured_spatial_term_used": False, "new_anchor_resolution_rule_used": False, "protected_accounting_observation_dropped": False, "fitting_exclusion_reason": "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS", "household_opportunity_customer_fit_and_modeled_target_mass_separate": True, "impacted_sales_values_accessed": 0},
+        "finalization": {"bounded_candidate_count": 4, "state_balanced_grouped_outer_validation": True, "state_balanced_grouped_inner_tuning": True, "final_refit_once": True, "all_201_observations_retained_in_protected_qa": True, "ready_marker_written_last": True},
     }
     return package, comparison.final_model
 
@@ -520,9 +610,11 @@ def _statewide_package(run: ProtectedModel13Run, root: Path, model12: Model12Res
     for physical_id in sorted(mi_observations):
         rows = mi_observations[physical_id]
         public = mi_public[physical_id]
-        score = model.score_features(rows[0]["features"])
+        fitting_eligible = all(row.get("fitting_eligible") is True for row in rows)
+        require(fitting_eligible or all(row.get("fitting_eligible") is False and row.get("fitting_exclusion_reason") == "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS" for row in rows), "MODEL13_SEED_CONTEXT_ELIGIBILITY_MISMATCH", "Michigan seed-context fitting eligibility differs within a physical location")
+        score = model.score_features(rows[0]["features"]) if fitting_eligible else {"household_opportunity": None, "customer_fit_proxy": None, "modeled_target_mass": None}
         mean_actual = sum(float(row["isolated_sales"]) for row in rows) / len(rows)
-        mean_oof = sum(float(row["candidate_oof_predictions"][selected_id]) for row in rows) / len(rows)
+        mean_oof = sum(float(row["candidate_oof_predictions"][selected_id]) for row in rows) / len(rows) if fitting_eligible else None
         pair = benchmark_pairs.get(physical_id)
         seed_rows.append({
             "protected_physical_location_id": physical_id,
@@ -531,10 +623,10 @@ def _statewide_package(run: ProtectedModel13Run, root: Path, model12: Model12Res
             "mean_isolated_sales": mean_actual,
             "frozen_model12_prediction": None if pair is None else pair["mean_frozen_prediction"],
             "successor_oof_prediction": mean_oof,
-            "successor_oof_absolute_log_error": abs(math.log1p(mean_actual) - math.log1p(max(0.0, mean_oof))),
+            "successor_oof_absolute_log_error": None if mean_oof is None else abs(math.log1p(mean_actual) - math.log1p(max(0.0, mean_oof))),
             **score,
             "support_truncation": public["any_support_truncation"],
-            "qa_status": public["state"],
+            "qa_status": public["state"] if fitting_eligible else "FITTING_EXCLUDED:GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS",
             "model_lineage_id": model_identity,
         })
     require(len(seed_rows) == 85, "MODEL13_SEED_CONTEXT_ACCOUNTING_FAILED", "Michigan seed-context rows do not reconcile")
@@ -550,7 +642,7 @@ def _statewide_package(run: ProtectedModel13Run, root: Path, model12: Model12Res
         "model_lineage_id": model_identity,
         "public_lineage_id": public_identity,
         "tract_output": {"filename": tract_path.name, "row_count": len(tract_rows), "computable_count": computable, "noncomputable_count": len(tract_rows) - computable, "support_truncation_count": truncated, "byte_sha256": file_sha256(tract_path)},
-        "seed_context_output": {"filename": seed_path.name, "row_count": len(seed_rows), "byte_sha256": file_sha256(seed_path)},
+        "seed_context_output": {"filename": seed_path.name, "row_count": len(seed_rows), "fitting_eligible_count": sum(all(row.get("fitting_eligible") is True for row in mi_observations[physical_id]) for physical_id in mi_observations), "fitting_excluded_count": sum(all(row.get("fitting_eligible") is False for row in mi_observations[physical_id]) for physical_id in mi_observations), "byte_sha256": file_sha256(seed_path)},
         "ready_written_last": True,
     }
     metadata_path = presentation_dir / output_contract["metadata_output"]["filename"]
@@ -584,17 +676,33 @@ class Model13Result:
     statewide_support_truncation_count: int
 
 
-def execute_model13(*, repository_root: Path, resolver: ProtectedHandleResolver, run_id: str | None = None, verification_of: str | None = None) -> Model13Result:
-    root = repository_root.resolve()
-    contract, output_contract = verify_repository_authority(root)
-    output_root = resolver.resolve(str(resolver.execution_request["model13_output_root_handle"]), "model13_output_root").path
-    run = ProtectedModel13Run(output_root, root, run_id=run_id, verification_of=verification_of)
+def _validate_reused_benchmark(benchmark: Mapping[str, Any], contract: Mapping[str, Any]) -> None:
+    boundary = benchmark.get("execution_boundary", {})
+    require(
+        benchmark.get("package_id") == "MODEL13_MICHIGAN_FROZEN_BENCHMARK_V1"
+        and benchmark.get("state") == "ready"
+        and benchmark.get("pair_accounting", {}).get("physical_location_count") == 82
+        and set(benchmark.get("aggregate_metrics", {})) == {"spearman", "kendall_tau_b", "log_rmse", "level_mae"}
+        and benchmark.get("chronology", {}).get("michigan_development_consumed_before_benchmark") is False
+        and benchmark.get("chronology", {}).get("verification_of") is None
+        and boundary.get("impacted_sales_values_accessed") == 0
+        and all(boundary.get(field) is False for field in ("identity_changed", "cohort_changed", "frozen_model_changed", "features_changed", "coefficients_changed", "predictions_changed", "radii_changed", "missingness_changed", "support_treatment_changed", "grouping_changed", "metrics_changed", "exclusions_changed", "pass_fail_threshold_created"))
+        and contract.get("authority_amendment", {}).get("frozen_benchmark_changed_or_rerun") is False,
+        "MODEL13_FROZEN_BENCHMARK_REUSE_INVALID",
+        "the unique immutable MODEL-13 benchmark is not eligible for read-only reuse",
+    )
+
+
+def _load_inputs_without_benchmark_evaluation(root: Path, resolver: ProtectedHandleResolver) -> tuple[Model11Resolver, Model12Resolver, dict[str, Any], dict[str, Any], dict[str, Any]]:
     model11, model12, pipe05, pipe05_run = _upstream_resolvers(root, resolver)
+    verification = verify_persisted_binding(repository_root=root, resolver=pipe05, run_dir=pipe05_run)
+    require(verification.get("state") == "MATCH" and verification.get("valid_isolated_sales_binding_count") == 138, "MODEL13_PIPE05_BINDING_VERIFICATION_FAILED", "accepted PIPE-05 binding did not reconcile")
+    identity, michigan_features, _scoring, _authority = _accepted_model12_packages(root, pipe05)
+    pipe05_binding = _load_object(pipe05_run / BINDING_FILENAME, "MODEL13_PIPE05_BINDING_UNRESOLVED")
+    return model11, model12, identity, michigan_features, pipe05_binding
 
-    benchmark_semantic, identity, michigan_features, _michigan_scoring, pipe05_binding = _benchmark_package(root, pipe05, pipe05_run, contract, verification_of=verification_of)
-    run.write_stage("benchmark", benchmark_semantic)
-    run.require_ready("benchmark")
 
+def _continue_after_benchmark(*, root: Path, contract: Mapping[str, Any], output_contract: Mapping[str, Any], run: ProtectedModel13Run, benchmark_semantic: Mapping[str, Any], model11: Model11Resolver, model12: Model12Resolver, identity: Mapping[str, Any], michigan_features: Mapping[str, Any], pipe05_binding: Mapping[str, Any]) -> Model13Result:
     freeze_semantic, _frozen_model11 = _feature_freeze_package(root, model11, model12, identity, michigan_features, contract)
     run.write_stage("feature_freeze", freeze_semantic)
     run.require_ready("feature_freeze")
@@ -611,7 +719,8 @@ def execute_model13(*, repository_root: Path, resolver: ProtectedHandleResolver,
         "pipe05_binding_alone_marked_development_consumed": False,
         "first_target_conditioned_operation": "bounded state-balanced grouped successor comparison",
         "michigan_permanent_holdout": False,
-        "finalization": {"benchmark_ready_verified": True, "feature_freeze_ready_verified": True, "written_before_first_target_conditioned_fit": True, "ready_marker_written_last": True},
+        "authority_amendment": {"computability_exclusion_reason": "GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS", "excluded_michigan_observation_count": 5, "excluded_michigan_physical_location_count": 3, "retained_in_protected_accounting_and_qa": True},
+        "finalization": {"benchmark_ready_verified": True, "benchmark_reused_without_reevaluation": True, "feature_freeze_ready_verified": True, "written_before_first_target_conditioned_fit": True, "ready_marker_written_last": True},
     }
     run.write_stage("transition", transition)
     run.require_ready("transition")
@@ -624,10 +733,41 @@ def execute_model13(*, repository_root: Path, resolver: ProtectedHandleResolver,
     statewide_semantic = _statewide_package(run, root, model12, final_model, development_semantic, benchmark_semantic, michigan_features, output_contract)
     run.write_stage("statewide", statewide_semantic)
     run.require_ready("statewide")
-    aggregate = {"benchmark_physical_location_count": benchmark_semantic["pair_accounting"]["physical_location_count"], "pooled_observation_count": 201, "pooled_physical_location_count": 126, "selected_candidate_id": development_semantic["selection"]["selected_candidate_id"], **statewide_semantic["tract_accounting"], "deterministic_verification_run": verification_of is not None, "impacted_sales_values_accessed": 0}
+    aggregate = {"benchmark_physical_location_count": benchmark_semantic["pair_accounting"]["physical_location_count"], "protected_accounting_observation_count": 201, "protected_accounting_physical_location_count": 126, "pooled_fitting_observation_count": 196, "pooled_fitting_physical_location_count": 123, "selected_candidate_id": development_semantic["selection"]["selected_candidate_id"], **statewide_semantic["tract_accounting"], "deterministic_verification_run": run.verification_of is not None, "benchmark_reevaluated": False, "impacted_sales_values_accessed": 0}
     run.finalize(aggregate)
     tract = statewide_semantic["tract_accounting"]
     return Model13Result(run.run_dir, int(benchmark_semantic["pair_accounting"]["physical_location_count"]), benchmark_semantic["aggregate_metrics"], len(freeze_semantic["feature_preparation"]["eligible_combined_features"]), len(freeze_semantic["feature_preparation"]["excluded_combined_features"]), tuple(development_semantic["candidate_comparison"]), str(development_semantic["selection"]["selected_candidate_id"]), int(tract["computable_count"]), int(tract["noncomputable_count"]), int(tract["support_truncation_count"]))
+
+
+def resume_model13(*, repository_root: Path, resolver: ProtectedHandleResolver, run_id: str) -> Model13Result:
+    root = repository_root.resolve()
+    contract, output_contract = verify_repository_authority(root)
+    output_root = resolver.resolve(str(resolver.execution_request["model13_output_root_handle"]), "model13_output_root").path
+    run = ProtectedModel13Run.resume_after_benchmark(output_root, root, run_id=run_id)
+    _benchmark_stage, benchmark_semantic = _validated_ready_stage(run.run_dir, "benchmark")
+    _validate_reused_benchmark(benchmark_semantic, contract)
+    model11, model12, identity, michigan_features, pipe05_binding = _load_inputs_without_benchmark_evaluation(root, resolver)
+    return _continue_after_benchmark(root=root, contract=contract, output_contract=output_contract, run=run, benchmark_semantic=benchmark_semantic, model11=model11, model12=model12, identity=identity, michigan_features=michigan_features, pipe05_binding=pipe05_binding)
+
+
+def verify_model13(*, repository_root: Path, resolver: ProtectedHandleResolver, run_id: str, benchmark_source_run_id: str, verification_of: str) -> Model13Result:
+    root = repository_root.resolve()
+    contract, output_contract = verify_repository_authority(root)
+    output_root = resolver.resolve(str(resolver.execution_request["model13_output_root_handle"]), "model13_output_root").path
+    source_run = (output_root / "model13-runs" / benchmark_source_run_id).resolve()
+    require(_is_within(source_run, output_root / "model13-runs") and source_run.is_dir(), "MODEL13_BENCHMARK_SOURCE_RUN_UNRESOLVED", "exact benchmark source run is absent")
+    _source_stage, benchmark_semantic = _validated_ready_stage(source_run, "benchmark")
+    _validate_reused_benchmark(benchmark_semantic, contract)
+    run = ProtectedModel13Run(output_root, root, run_id=run_id, verification_of=verification_of, benchmark_reused_without_evaluation=True)
+    run.write_stage("benchmark", benchmark_semantic)
+    run.require_ready("benchmark")
+    model11, model12, identity, michigan_features, pipe05_binding = _load_inputs_without_benchmark_evaluation(root, resolver)
+    return _continue_after_benchmark(root=root, contract=contract, output_contract=output_contract, run=run, benchmark_semantic=benchmark_semantic, model11=model11, model12=model12, identity=identity, michigan_features=michigan_features, pipe05_binding=pipe05_binding)
+
+
+def execute_model13(*, repository_root: Path, resolver: ProtectedHandleResolver, run_id: str | None = None, verification_of: str | None = None) -> Model13Result:
+    require(False, "MODEL13_FROZEN_BENCHMARK_RERUN_DENIED", "the amended MODEL-13 authority requires resuming from the unique immutable READY benchmark")
+    raise AssertionError("unreachable")
 
 
 def _semantic_package(path: Path) -> Any:
@@ -654,7 +794,7 @@ def compare_runs(first: Path, second: Path) -> dict[str, Any]:
     presentation_files = ("model13_michigan_tract_scores.csv", "model13_michigan_seed_context.csv")
     presentation = {name: (first_presentation / name).read_bytes() == (second_presentation / name).read_bytes() for name in presentation_files}
     require(all(matches.values()) and all(presentation.values()), "MODEL13_DETERMINISTIC_RERUN_MISMATCH", "independent MODEL-13 semantic outputs differ")
-    return {"state": "MATCH", "semantic_stage_count": len(matches), "semantic_packages_equal": True, "presentation_csvs_byte_identical": True, "tract_count": 3017, "impacted_sales_values_accessed": 0, "protected_details_disclosed": False}
+    return {"state": "MATCH", "semantic_stage_count": len(matches), "semantic_packages_equal": True, "presentation_csvs_byte_identical": True, "benchmark_reused_without_reevaluation": True, "tract_count": 3017, "impacted_sales_values_accessed": 0, "protected_details_disclosed": False}
 
 
 def _rounded_metrics(metrics: Mapping[str, Any]) -> dict[str, Any]:
@@ -666,8 +806,14 @@ def build_disclosure_safe_result(result: Model13Result, rerun: Mapping[str, Any]
         "completion_state": "MODEL-13 protected execution ready",
         "frozen_michigan_benchmark_physical_location_count": result.benchmark_count,
         "frozen_michigan_benchmark_metrics": _rounded_metrics(result.benchmark_metrics),
-        "pooled_development_observation_count": 201,
-        "pooled_development_physical_location_count": 126,
+        "protected_accounting_observation_count": 201,
+        "protected_accounting_physical_location_count": 126,
+        "pooled_development_observation_count": 196,
+        "pooled_development_physical_location_count": 123,
+        "michigan_fitting_observation_count": 133,
+        "michigan_fitting_physical_location_count": 82,
+        "computability_excluded_michigan_observation_count": 5,
+        "computability_excluded_michigan_physical_location_count": 3,
         "target_blind_retained_feature_count": result.retained_feature_count,
         "target_blind_excluded_feature_count": result.excluded_feature_count,
         "candidate_metrics": [{"candidate_id": item["candidate_id"], "pooled": _rounded_metrics(item["aggregate_oof"]["pooled"]), "michigan": _rounded_metrics(item["aggregate_oof"]["michigan"]), "wisconsin": _rounded_metrics(item["aggregate_oof"]["wisconsin"]), "stability_score": round(float(item["stability"]["stability_score"]), 4), "mean_outer_effective_degrees_of_freedom": round(float(item["mean_outer_effective_degrees_of_freedom"]), 2), "maximum_physical_location_absolute_log_error": round(float(item["maximum_physical_location_absolute_log_error"]), 4)} for item in result.comparison],
@@ -680,6 +826,7 @@ def build_disclosure_safe_result(result: Model13Result, rerun: Mapping[str, Any]
         "power_bi_ready_tract_output_ready": True,
         "power_bi_ready_seed_context_output_ready": True,
         "deterministic_rerun": None if rerun is None else rerun.get("state"),
+        "frozen_benchmark_reevaluated": False,
         "impacted_sales_values_accessed": 0,
         "power_bi_implemented": False,
         "protected_output_outside_git": True,
