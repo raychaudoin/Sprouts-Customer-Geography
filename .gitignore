@@ -95,6 +95,7 @@ powerbi/.cache/
 *.pbi.local.json
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+**/.pbi/
 
 # PBI-01 protected-local inputs, staging, and binary runtime artifacts
 powerbi/pbi01/local/

@@ -1,0 +1,26 @@
+{
+  "$schema": "pbi01-michigan-presentation-geometry-manifest-v1",
+  "artifact_id": "PBI01_MICHIGAN_2024_TIGER_TRACT_PRESENTATION_GEOMETRY_V1",
+  "version": "1.0.0",
+  "source_authority": {
+    "publisher": "U.S. Census Bureau",
+    "product": "2024 TIGER/Line Census Tracts",
+    "state_fips": "26",
+    "source_filename": "tl_2024_26_tract.zip",
+    "source_byte_sha256": "220c0a351d94c9de456d87c5db78f3e3864b3287370350f1e503a84565224e82",
+    "source_crs": "EPSG:4269"
+  },
+  "presentation_only": true,
+  "analytical_gis_logic_in_power_bi": false,
+  "tract_count": 3017,
+  "unique_geoid_count": 3017,
+  "inventory_sha256": "8b6698b55423911163f1a2330ad600218a3b8b452576cc9b3d3997ada19e6c9b",
+  "geoid_property": "GEOID",
+  "output_format": "GeoJSON FeatureCollection",
+  "output_crs": "OGC CRS84 longitude latitude",
+  "simplify_tolerance_degrees": 0.001,
+  "coordinate_precision_decimal_places": 5,
+  "output_byte_sha256": "e0f32095d2e2307f5ad78c9545fc0d3c74fca2250bc866bea8db2368848786ad",
+  "protected_content": false,
+  "attribution": "U.S. Census Bureau, 2024 TIGER/Line Shapefiles."
+}
