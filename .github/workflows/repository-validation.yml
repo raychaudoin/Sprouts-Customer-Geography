@@ -35,6 +35,7 @@ jobs:
       - run: python scripts/check_pipe05_repository.py
       - run: python scripts/check_model13_repository.py
       - run: python scripts/check_pbi01_repository.py
+      - run: python scripts/check_pbi02_repository.py
       - run: python -m unittest discover -s tests -v
         env:
           PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}

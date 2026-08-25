@@ -1,0 +1,44 @@
+{
+  "task_id": "PBI-02",
+  "title": "Michigan Map-First Scouting & Public Context Redesign",
+  "capability_owner": "PBI: Power BI Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized Lane B PBI-02 from canonical main commit 499cd611605380a3f2abca1e3e1d2f27cc56301c and incorporated the PBI capability decision ACCEPT WITH REQUIRED MODIFICATIONS for Product Design Option 1",
+  "state": "BLOCKED_FAIL_CLOSED",
+  "scope": [
+    "Redesign the accepted PBI-01 Michigan Opportunity Explorer in the existing MICustomerGeography PBIP as a 1920 by 1080 map-first statewide scouting experience with a dominant built-in Azure Maps surface and inspector rail",
+    "Preserve the accepted MODEL-13 semantic baseline and protected-local outputs while extending the disconnected metric catalog to exactly 16 selectable production layers without changing analytical authority",
+    "Consume the exact accepted DATA-04 Michigan 13-measure candidate materialization through fail-closed hash schema status missingness and 3017-key reconciliation checks and a one-to-one Michigan Public Context relationship",
+    "Implement refresh-stable fixed 0 to 100 percentile domains and statewide valid-value P02 to P98 presentation domains with exact values preserved and explicit No Data behavior",
+    "Implement selected-tract empty single and multiple-selection inspector states contextual warnings report-page tooltip and DATA-04 QA while preserving the separate protected-local Sprouts Evidence Context page",
+    "Prove Azure Maps tenant access Road Satellite road labels native Style picker and protected-data nontransmission using a synthetic canary before connecting real protected MODEL-13 values",
+    "Provide deterministic PBIR TMDL reconstruction local preflight conformance tests operator documentation and target Desktop refresh save close reopen and PBIR validation evidence"
+  ],
+  "exclusions": [
+    "No refit rescore reinterpretation normalization mutation or analytical change to MODEL-13 DATA-04 DATA-03 GEO-05 or accepted 2024 Michigan TIGER authority",
+    "No second Power BI application custom HTML JavaScript React map marketplace visual ArcGIS organizational dependency Power BI Service Fabric publication or deployment",
+    "No transmission of protected MODEL-13 values seed coordinates or identities Isolated Sales predictions errors protected paths metadata identifiers or other protected physical-location information to Azure Maps",
+    "No Average Household Income Area Median Income invented county city or community fields routing drive-time lasso traffic navigation or multi-selection subprocessors",
+    "No protected rows paths handles raw traces revealing screenshots imported caches PBIX binaries real DATA-04 tract rows or protected MODEL-13 content in Git or GitHub",
+    "No capability self-acceptance acceptance-record-only commit A merge publication or follow-on substantive task"
+  ],
+  "accepted_input_artifacts": [
+    "PBI01_MICHIGAN_2024_TIGER_TRACT_PRESENTATION_GEOMETRY_V1",
+    "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1",
+    "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL13_OUTPUT_ROOT_V1",
+    "PROTECTED_DATA04_MICHIGAN_PUBLIC_MATERIALIZATION_V1"
+  ],
+  "implementation_branch": "task/pbi-02-michigan-map-first-scouting-public-context-redesign",
+  "completion_state": {
+    "execution": "BLOCKED",
+    "implementation_evidence": [
+      "TEST_PASS",
+      "COMPLETION_REPORT"
+    ],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "PBI: Power BI Decisions & Acceptance",
+  "exact_next_destination": "PBI: Power BI Decisions & Acceptance"
+}
