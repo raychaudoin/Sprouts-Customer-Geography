@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/execution_commitment.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "state", "contract_authority", "execution_result", "exact_h_gate", "content_sha256"],
+  "properties": {
+    "$schema": {"const": "../../schemas/model13/execution_commitment.schema.json"},
+    "artifact_id": {"const": "MODEL13_EXECUTION_COMMITMENT_V1"},
+    "version": {"const": "1.0.0"},
+    "state": {"const": "READY"},
+    "contract_authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_id", "version", "content_sha256"],
+      "properties": {
+        "artifact_id": {"const": "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1"},
+        "version": {"const": "1.1.0"},
+        "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "execution_result": {
+      "type": "object",
+      "required": ["completion_state", "frozen_michigan_benchmark_physical_location_count", "frozen_michigan_benchmark_metrics", "protected_accounting_observation_count", "protected_accounting_physical_location_count", "pooled_development_observation_count", "pooled_development_physical_location_count", "michigan_fitting_observation_count", "michigan_fitting_physical_location_count", "computability_excluded_michigan_observation_count", "computability_excluded_michigan_physical_location_count", "target_blind_retained_feature_count", "target_blind_excluded_feature_count", "candidate_metrics", "selected_successor_formulation", "statewide_tract_count", "statewide_computable_count", "statewide_noncomputable_count", "statewide_support_truncation_count", "all_3017_tracts_accounted", "power_bi_ready_tract_output_ready", "power_bi_ready_seed_context_output_ready", "deterministic_rerun", "frozen_benchmark_reevaluated", "impacted_sales_values_accessed", "power_bi_implemented", "protected_output_outside_git", "protected_details_disclosed"]
+    },
+    "exact_h_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["benchmark_ready_and_immutable", "benchmark_preceded_michigan_development", "target_blind_feature_freeze_ready", "development_role_transition_ready", "pooled_comparison_complete", "selected_refit_ready", "statewide_scoring_ready", "presentation_outputs_ready", "independent_run_count", "semantic_stage_count", "deterministic_match", "zero_impacted_sales_access", "all_repository_validation_required"],
+      "properties": {
+        "benchmark_ready_and_immutable": {"const": true},
+        "benchmark_preceded_michigan_development": {"const": true},
+        "target_blind_feature_freeze_ready": {"const": true},
+        "development_role_transition_ready": {"const": true},
+        "pooled_comparison_complete": {"const": true},
+        "selected_refit_ready": {"const": true},
+        "statewide_scoring_ready": {"const": true},
+        "presentation_outputs_ready": {"const": true},
+        "independent_run_count": {"const": 2},
+        "semantic_stage_count": {"const": 5},
+        "deterministic_match": {"const": true},
+        "zero_impacted_sales_access": {"const": true},
+        "all_repository_validation_required": {"const": true}
+      }
+    },
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

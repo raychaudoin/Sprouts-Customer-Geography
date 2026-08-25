@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/michigan_frozen_benchmark_package.schema.json",
+  "type": "object",
+  "required": ["$schema", "package_id", "version", "state", "authority", "chronology", "pair_accounting", "aggregate_metrics", "support_stratification", "pairs", "execution_boundary", "finalization"],
+  "properties": {"package_id": {"const": "MODEL13_MICHIGAN_FROZEN_BENCHMARK_V1"}, "version": {"const": "1.0.0"}, "state": {"const": "ready"}, "pairs": {"type": "array", "minItems": 1}, "aggregate_metrics": {"type": "object", "required": ["spearman", "kendall_tau_b", "log_rmse", "level_mae"]}}
+}

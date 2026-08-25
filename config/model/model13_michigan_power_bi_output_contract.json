@@ -1,0 +1,33 @@
+{
+  "$schema": "../../schemas/model13/michigan_power_bi_output_contract.schema.json",
+  "artifact_id": "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1",
+  "version": "1.0.0",
+  "protected_local_only": true,
+  "tract_output": {
+    "filename": "model13_michigan_tract_scores.csv",
+    "row_count": 3017,
+    "ordering": "GEOID ascending",
+    "columns": [
+      "geoid", "internal_point_latitude", "internal_point_longitude", "computability_status", "household_opportunity", "customer_fit_proxy", "customer_fit_statewide_rank", "customer_fit_statewide_percentile", "modeled_target_mass", "modeled_target_mass_statewide_rank", "modeled_target_mass_statewide_percentile", "tract_member_count_3mi", "tract_member_count_5mi", "tract_member_count_7mi", "support_completeness_3mi", "support_completeness_5mi", "support_completeness_7mi", "support_truncation_3mi", "support_truncation_5mi", "support_truncation_7mi", "any_support_truncation", "qa_missingness_status", "model_lineage_id", "public_lineage_id"
+    ],
+    "rank_semantics": "competition rank one is highest with exact ties sharing rank",
+    "percentile_semantics": "100 times count of computable values strictly below value divided by max one less than computable count"
+  },
+  "seed_context_output": {
+    "filename": "model13_michigan_seed_context.csv",
+    "unit": "accepted nonquarantined Michigan physical location",
+    "columns": [
+      "protected_physical_location_id", "latitude", "longitude", "mean_isolated_sales", "frozen_model12_prediction", "successor_oof_prediction", "successor_oof_absolute_log_error", "household_opportunity", "customer_fit_proxy", "modeled_target_mass", "support_truncation", "qa_status", "model_lineage_id"
+    ]
+  },
+  "metadata_output": {
+    "filename": "model13_michigan_power_bi_metadata.json",
+    "required_bindings": ["contract identity", "model identity", "public lineage identity", "row counts", "CSV byte hashes", "computability counts", "support-truncation count", "READY chronology"]
+  },
+  "git_boundary": {
+    "schemas_and_contract_only": true,
+    "tract_rows_tracked": false,
+    "seed_rows_tracked": false,
+    "fitted_parameters_tracked": false
+  }
+}

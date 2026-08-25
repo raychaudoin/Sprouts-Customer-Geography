@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/model13/combined_target_blind_feature_freeze_package.schema.json",
+  "type": "object",
+  "required": ["$schema", "package_id", "version", "state", "authority", "evidence_accounting", "computability_exclusions", "feature_preparation", "model11_reference_term_authority", "observations", "finalization"],
+  "properties": {"package_id": {"const": "MODEL13_COMBINED_TARGET_BLIND_FEATURE_FREEZE_V1"}, "version": {"const": "1.0.0"}, "state": {"const": "ready"}, "computability_exclusions": {"type": "array", "minItems": 3, "maxItems": 3}, "observations": {"type": "array", "minItems": 201, "maxItems": 201}}
+}
