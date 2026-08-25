@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from hashlib import sha256
 import json
 from pathlib import Path
 import subprocess
@@ -11,7 +10,9 @@ import sys
 
 TASK_BRANCH = "task/pbi-02-michigan-map-first-scouting-public-context-redesign"
 CAPABILITY_OWNER = "PBI: Power BI Decisions & Acceptance"
-PBI01_MANIFEST_SHA256 = "d46ae2cef8401ba4e461e4234892b83643a0218eeec1b4b2e839faae48faf8ae"
+PBI01_ACCEPTED_BASE = "499cd611605380a3f2abca1e3e1d2f27cc56301c"
+PBI01_MANIFEST_PATH = "governance/tasks/PBI-01.michigan-customer-geography-power-bi-mvp.task.json"
+PBI01_MANIFEST_BLOB_ID = "23ecf6512e310d151ffdf1b43d555e13faab3efb"
 REQUIRED = (
     "governance/tasks/PBI-02.michigan-map-first-scouting-public-context-redesign.task.json",
     "docs/work_orders/PBI_02_MICHIGAN_MAP_FIRST_SCOUTING_PUBLIC_CONTEXT_REDESIGN.md",
@@ -55,8 +56,19 @@ def main() -> int:
     if task.get("implementation_commit") or task.get("acceptance_disposition") or task.get("acceptance_metadata"):
         raise SystemExit("PBI-02 blocker must not claim implementation H or acceptance")
 
-    pbi01 = repository / "governance/tasks/PBI-01.michigan-customer-geography-power-bi-mvp.task.json"
-    if sha256(pbi01.read_bytes()).hexdigest() != PBI01_MANIFEST_SHA256:
+    pbi01_blob_id = subprocess.run(
+        ["git", "rev-parse", f"HEAD:{PBI01_MANIFEST_PATH}"],
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    pbi01_diff = subprocess.run(
+        ["git", "diff", "--quiet", PBI01_ACCEPTED_BASE, "--", PBI01_MANIFEST_PATH],
+        cwd=repository,
+        check=False,
+    ).returncode
+    if pbi01_blob_id != PBI01_MANIFEST_BLOB_ID or pbi01_diff != 0:
         raise SystemExit("PBI-01 accepted manifest bytes changed")
 
     canary = (repository / "docs/pbi02/AZURE_MAPS_CANARY.md").read_text(encoding="utf-8")

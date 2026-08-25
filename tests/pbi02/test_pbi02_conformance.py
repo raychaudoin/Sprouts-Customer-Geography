@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from hashlib import sha256
 import json
 from pathlib import Path
 import subprocess
@@ -8,7 +7,9 @@ import unittest
 
 
 REPOSITORY = Path(__file__).resolve().parents[2]
-PBI01_MANIFEST_SHA256 = "d46ae2cef8401ba4e461e4234892b83643a0218eeec1b4b2e839faae48faf8ae"
+PBI01_ACCEPTED_BASE = "499cd611605380a3f2abca1e3e1d2f27cc56301c"
+PBI01_MANIFEST_PATH = "governance/tasks/PBI-01.michigan-customer-geography-power-bi-mvp.task.json"
+PBI01_MANIFEST_BLOB_ID = "23ecf6512e310d151ffdf1b43d555e13faab3efb"
 
 
 class Pbi02FailClosedConformanceTests(unittest.TestCase):
@@ -33,8 +34,20 @@ class Pbi02FailClosedConformanceTests(unittest.TestCase):
         self.assertNotIn("canary passed", text.lower())
 
     def test_pbi01_acceptance_record_remains_byte_identical(self) -> None:
-        path = REPOSITORY / "governance/tasks/PBI-01.michigan-customer-geography-power-bi-mvp.task.json"
-        self.assertEqual(sha256(path.read_bytes()).hexdigest(), PBI01_MANIFEST_SHA256)
+        blob_id = subprocess.run(
+            ["git", "rev-parse", f"HEAD:{PBI01_MANIFEST_PATH}"],
+            cwd=REPOSITORY,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        diff = subprocess.run(
+            ["git", "diff", "--quiet", PBI01_ACCEPTED_BASE, "--", PBI01_MANIFEST_PATH],
+            cwd=REPOSITORY,
+            check=False,
+        )
+        self.assertEqual(blob_id, PBI01_MANIFEST_BLOB_ID)
+        self.assertEqual(diff.returncode, 0)
 
     def test_no_local_runtime_capture_or_binary_is_stageable(self) -> None:
         stageable = subprocess.run(
