@@ -1,0 +1,33 @@
+{
+  "task_id": "PBI-01",
+  "title": "Michigan Customer Geography Power BI MVP",
+  "capability_owner": "PBI: Power BI Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized the Lane B PBI-01 bootstrap from canonical main commit a7ee04bb6cd9710fa161858f0b5b2559565cfc9f",
+  "state": "IN_PROGRESS",
+  "scope": [
+    "Create the governed repository and short-path local workspace needed for Power BI Desktop to create the initial blank PBIP skeleton",
+    "Establish tracked conventions for Desktop-created PBIP report and semantic-model definitions deterministic presentation geometry and task-scoped scripts tests and documentation",
+    "Establish ignored-local conventions for protected MODEL-13 presentation inputs metadata staging Power BI caches local settings and binary runtime artifacts",
+    "Inspect locally observable Power BI Desktop version and PBIP PBIR and TMDL support and provide the exact manual Save As handoff"
+  ],
+  "exclusions": [
+    "No hand-authored PBIP report or semantic-model skeleton and no blank report saved on Ray's behalf",
+    "No protected MODEL-13 row access copying inspection relocation or tracking beyond minimum opaque handle or path-existence checks",
+    "No report page visual measure Power Query transformation tract geometry map DAX styling or dashboard implementation",
+    "No substantive H acceptance record A pull request merge publication deployment Power BI Service Fabric or follow-on work"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL13_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/pbi-01-michigan-customer-geography-power-bi-mvp",
+  "completion_state": {
+    "execution": "IN_PROGRESS",
+    "implementation_evidence": [],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "PBI: Power BI Decisions & Acceptance",
+  "exact_next_destination": "POWER BI DESKTOP: Ray creates the initial blank PBIP skeleton"
+}
