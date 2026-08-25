@@ -51,4 +51,19 @@ An independent immutable rerun must reproduce the target-blind freeze, developme
 
 At H the manifest is `COMPLETED_AWAITING_ACCEPTANCE`; execution is `COMPLETED`; acceptance is `NOT_REVIEWED`; benchmark, freeze, final refit, statewide scoring, tract CSV, and seed-context CSV are READY; benchmark chronology precedes Michigan development consumption; the selected successor follows the frozen rule; all 3,017 tracts are accounted for; deterministic verification passes; Impacted Sales access is zero; and all tests, conformance checks, disclosure safeguards, and exact-H Repository Validation succeed.
 
+The disclosure-safe protected execution result is READY. The immutable 82-location benchmark recorded Spearman 0.3306, Kendall tau-b 0.2332, log RMSE 0.1480, and level MAE 34098.48. The fitting cohort contained 196 observations / 123 state-qualified physical locations, including 133 / 82 from Michigan; all 201 / 126 authorized records remain in protected accounting. Target-blind screening retained eight and excluded five candidate measures.
+
+Grouped validation produced the following pooled and Michigan aggregate metrics:
+
+| Candidate | Pooled Spearman | Pooled Kendall tau-b | Pooled log RMSE | Pooled level MAE | Michigan Spearman | Michigan Kendall tau-b | Michigan log RMSE | Michigan level MAE | Stability | Mean effective df | Maximum absolute log error |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `successor_spatial_reference` | 0.5630 | 0.3952 | 0.1057 | 24000.04 | 0.4438 | 0.3066 | 0.1066 | 24630.40 | 0.9667 | 3.0 | 0.2633 |
+| `successor_model11_termset_elastic_net` | 0.5747 | 0.4048 | 0.1073 | 23880.59 | 0.4357 | 0.2975 | 0.1097 | 24639.93 | 0.7833 | 3.4 | 0.2762 |
+| `successor_combined_multivariate_ridge` | 0.6336 | 0.4549 | 0.1050 | 22957.64 | 0.4846 | 0.3433 | 0.1102 | 24586.29 | 0.9273 | 11.0 | 0.2701 |
+| `successor_combined_multivariate_elastic_net` | 0.6293 | 0.4544 | 0.1048 | 23378.51 | 0.4903 | 0.3487 | 0.1084 | 24712.41 | 0.8826 | 9.4 | 0.2637 |
+
+The frozen rule selected `successor_combined_multivariate_elastic_net`: it qualified against the MODEL-11-term-set reference and ranked first on Michigan Spearman among qualifying challengers. The protected development package retains outer-fold ranges, term-level sign/selection stability, state-holdout sensitivity, and the one-time final refit state. Those protected diagnostics and parameters are not reproduced in Git.
+
+Statewide scoring retained all 3,017 tracts, with 2,973 computable, 44 explicitly noncomputable, and 438 carrying descriptive support-truncation flags. Both Power-BI-ready protected-local CSV outputs and their metadata are READY. An independent run matched all five semantic packages, and its tract and seed-context CSVs were byte-identical. The benchmark was reused without reevaluation, and Impacted Sales access remained zero.
+
 H stops for `MODEL: Customer-Fit Proxy Decisions & Acceptance`. No A, merge, Power BI implementation, or follow-on work is authorized.

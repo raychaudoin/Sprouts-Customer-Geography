@@ -3,7 +3,7 @@
   "title": "Michigan Benchmark, Wisconsin+Michigan Successor Development, and Statewide Scoring",
   "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
   "authority_source": "Master Control Room authorized MODEL-13 and incorporated the MODEL capability decision authorizing the bounded Michigan public-feature computability exclusion before development consumption",
-  "state": "IN_PROGRESS",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
   "scope": [
     "Evaluate the immutable accepted MODEL-12 Michigan predictions exactly once against accepted PIPE-05 Isolated Sales at one mean pair per eligible physical location and READY the clean pre-Michigan benchmark before development consumption",
     "Freeze target-blind successor feature eligibility before pooled target-conditioned comparison retain all 201 authorized observations in protected accounting and exclude from fitting only the 5 Michigan observations across 3 physical locations whose accepted public feature vector is unavailable for GEO05_ANCHOR_TRACT_MISSING_OR_AMBIGUOUS",
@@ -44,8 +44,11 @@
   ],
   "implementation_branch": "task/model-13-michigan-benchmark-pooled-successor-statewide-scoring",
   "completion_state": {
-    "execution": "IN_PROGRESS",
+    "execution": "COMPLETED",
     "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
     "capability_acceptance": "NOT_REVIEWED"

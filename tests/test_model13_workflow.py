@@ -9,6 +9,7 @@ import unittest
 
 from sprouts_customer_geography.model13.modeling import SPATIAL_TERMS, compare_and_refit, fit_regularized, state_balanced_grouped_folds
 from sprouts_customer_geography.model13.workflow import STAGE_FILES, ProtectedModel13Run, _rank_values, _required_spatial_features_computable, build_disclosure_safe_result, compare_runs, execute_model13, verify_repository_authority
+from sprouts_customer_geography.pipe01.canonical import content_digest
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
 
@@ -64,6 +65,19 @@ class Model13AuthorityTests(unittest.TestCase):
         work_orders = list((REPOSITORY / "docs/work_orders").glob("MODEL_13*.md"))
         self.assertEqual(len(manifests), 1)
         self.assertEqual(len(work_orders), 1)
+
+    def test_disclosure_safe_execution_commitment_binds_amended_authority(self) -> None:
+        commitment = json.loads((REPOSITORY / "config/model/model13_execution_commitment.json").read_text(encoding="utf-8"))
+        semantic = dict(commitment)
+        expected_hash = semantic.pop("content_sha256")
+        self.assertEqual(expected_hash, content_digest(semantic))
+        self.assertEqual(commitment["contract_authority"]["version"], "1.1.0")
+        result = commitment["execution_result"]
+        self.assertEqual(result["selected_successor_formulation"], "successor_combined_multivariate_elastic_net")
+        self.assertEqual(result["statewide_computable_count"] + result["statewide_noncomputable_count"], 3017)
+        self.assertEqual(result["deterministic_rerun"], "MATCH")
+        self.assertTrue(result["benchmark_reused_without_reevaluation"])
+        self.assertEqual(result["impacted_sales_values_accessed"], 0)
 
     def test_target_blind_freeze_requires_complete_spatial_opportunity_vectors(self) -> None:
         complete = {"MI:fictional": {"features": {"households_5mi": 100.0, "log_households_5mi": math.log1p(100.0), "inner_household_share_3mi_of_7mi": 0.4, "log_inner_outer_household_density_gradient": 0.2}}}

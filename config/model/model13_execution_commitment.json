@@ -1,0 +1,103 @@
+{
+  "$schema": "../../schemas/model13/execution_commitment.schema.json",
+  "artifact_id": "MODEL13_EXECUTION_COMMITMENT_V1",
+  "version": "1.0.0",
+  "state": "READY",
+  "contract_authority": {
+    "artifact_id": "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1",
+    "version": "1.1.0",
+    "content_sha256": "6f5b57484693d5c67b1a0274954dd69fd89cd9d20bce4051bd644aa17a343f86"
+  },
+  "execution_result": {
+    "completion_state": "MODEL-13 protected execution ready",
+    "frozen_michigan_benchmark_physical_location_count": 82,
+    "frozen_michigan_benchmark_metrics": {
+      "spearman": 0.3306,
+      "kendall_tau_b": 0.2332,
+      "log_rmse": 0.148,
+      "level_mae": 34098.48
+    },
+    "protected_accounting_observation_count": 201,
+    "protected_accounting_physical_location_count": 126,
+    "pooled_development_observation_count": 196,
+    "pooled_development_physical_location_count": 123,
+    "michigan_fitting_observation_count": 133,
+    "michigan_fitting_physical_location_count": 82,
+    "computability_excluded_michigan_observation_count": 5,
+    "computability_excluded_michigan_physical_location_count": 3,
+    "target_blind_retained_feature_count": 8,
+    "target_blind_excluded_feature_count": 5,
+    "candidate_metrics": [
+      {
+        "candidate_id": "successor_spatial_reference",
+        "pooled": {"spearman": 0.563, "kendall_tau_b": 0.3952, "log_rmse": 0.1057, "level_mae": 24000.04},
+        "michigan": {"spearman": 0.4438, "kendall_tau_b": 0.3066, "log_rmse": 0.1066, "level_mae": 24630.4},
+        "wisconsin": {"spearman": 0.6776, "kendall_tau_b": 0.4991, "log_rmse": 0.1038, "level_mae": 22739.31},
+        "stability_score": 0.9667,
+        "mean_outer_effective_degrees_of_freedom": 3.0,
+        "maximum_physical_location_absolute_log_error": 0.2633
+      },
+      {
+        "candidate_id": "successor_model11_termset_elastic_net",
+        "pooled": {"spearman": 0.5747, "kendall_tau_b": 0.4048, "log_rmse": 0.1073, "level_mae": 23880.59},
+        "michigan": {"spearman": 0.4357, "kendall_tau_b": 0.2975, "log_rmse": 0.1097, "level_mae": 24639.93},
+        "wisconsin": {"spearman": 0.7482, "kendall_tau_b": 0.5625, "log_rmse": 0.1024, "level_mae": 22361.92},
+        "stability_score": 0.7833,
+        "mean_outer_effective_degrees_of_freedom": 3.4,
+        "maximum_physical_location_absolute_log_error": 0.2762
+      },
+      {
+        "candidate_id": "successor_combined_multivariate_ridge",
+        "pooled": {"spearman": 0.6336, "kendall_tau_b": 0.4549, "log_rmse": 0.105, "level_mae": 22957.64},
+        "michigan": {"spearman": 0.4846, "kendall_tau_b": 0.3433, "log_rmse": 0.1102, "level_mae": 24586.29},
+        "wisconsin": {"spearman": 0.7794, "kendall_tau_b": 0.5869, "log_rmse": 0.0939, "level_mae": 19700.35},
+        "stability_score": 0.9273,
+        "mean_outer_effective_degrees_of_freedom": 11.0,
+        "maximum_physical_location_absolute_log_error": 0.2701
+      },
+      {
+        "candidate_id": "successor_combined_multivariate_elastic_net",
+        "pooled": {"spearman": 0.6293, "kendall_tau_b": 0.4544, "log_rmse": 0.1048, "level_mae": 23378.51},
+        "michigan": {"spearman": 0.4903, "kendall_tau_b": 0.3487, "log_rmse": 0.1084, "level_mae": 24712.41},
+        "wisconsin": {"spearman": 0.7606, "kendall_tau_b": 0.5601, "log_rmse": 0.0972, "level_mae": 20710.72},
+        "stability_score": 0.8826,
+        "mean_outer_effective_degrees_of_freedom": 9.4,
+        "maximum_physical_location_absolute_log_error": 0.2637
+      }
+    ],
+    "selected_successor_formulation": "successor_combined_multivariate_elastic_net",
+    "statewide_tract_count": 3017,
+    "statewide_computable_count": 2973,
+    "statewide_noncomputable_count": 44,
+    "statewide_support_truncation_count": 438,
+    "all_3017_tracts_accounted": true,
+    "power_bi_ready_tract_output_ready": true,
+    "power_bi_ready_seed_context_output_ready": true,
+    "deterministic_rerun": "MATCH",
+    "semantic_packages_equal": true,
+    "semantic_stage_count": 5,
+    "presentation_csvs_byte_identical": true,
+    "benchmark_reused_without_reevaluation": true,
+    "frozen_benchmark_reevaluated": false,
+    "impacted_sales_values_accessed": 0,
+    "power_bi_implemented": false,
+    "protected_output_outside_git": true,
+    "protected_details_disclosed": false
+  },
+  "exact_h_gate": {
+    "benchmark_ready_and_immutable": true,
+    "benchmark_preceded_michigan_development": true,
+    "target_blind_feature_freeze_ready": true,
+    "development_role_transition_ready": true,
+    "pooled_comparison_complete": true,
+    "selected_refit_ready": true,
+    "statewide_scoring_ready": true,
+    "presentation_outputs_ready": true,
+    "independent_run_count": 2,
+    "semantic_stage_count": 5,
+    "deterministic_match": true,
+    "zero_impacted_sales_access": true,
+    "all_repository_validation_required": true
+  },
+  "content_sha256": "a9d55d442a69fd492a1f98cacee0a1485f990d8f7c182256c65a60ed130699ed"
+}

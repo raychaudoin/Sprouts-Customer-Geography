@@ -142,24 +142,31 @@ def main() -> int:
         gate = commitment.get("exact_h_gate", {})
         if commitment.get("artifact_id") != "MODEL13_EXECUTION_COMMITMENT_V1" or commitment.get("state") != "READY" or expected_hash != content_digest(semantic):
             raise SystemExit("MODEL-13 execution commitment identity or hash differs")
-        if commitment.get("contract_authority", {}).get("content_sha256") != contract["content_sha256"]:
+        authority = commitment.get("contract_authority", {})
+        if authority.get("artifact_id") != CONTRACT_ID or authority.get("version") != contract["version"] or authority.get("content_sha256") != contract["content_sha256"]:
             raise SystemExit("MODEL-13 execution commitment contract binding differs")
-        if result.get("frozen_michigan_benchmark_physical_location_count") != 82:
+        if result.get("completion_state") != "MODEL-13 protected execution ready" or result.get("frozen_michigan_benchmark_physical_location_count") != 82:
             raise SystemExit("MODEL-13 frozen benchmark pair count differs")
+        if result.get("frozen_michigan_benchmark_metrics") != {"spearman": 0.3306, "kendall_tau_b": 0.2332, "log_rmse": 0.148, "level_mae": 34098.48}:
+            raise SystemExit("MODEL-13 frozen benchmark aggregate metrics differ")
         if result.get("protected_accounting_observation_count") != 201 or result.get("protected_accounting_physical_location_count") != 126:
             raise SystemExit("MODEL-13 protected accounting counts differ")
         if result.get("pooled_development_observation_count") != 196 or result.get("pooled_development_physical_location_count") != 123 or result.get("michigan_fitting_observation_count") != 133 or result.get("michigan_fitting_physical_location_count") != 82:
             raise SystemExit("MODEL-13 pooled execution counts differ")
         if result.get("computability_excluded_michigan_observation_count") != 5 or result.get("computability_excluded_michigan_physical_location_count") != 3:
             raise SystemExit("MODEL-13 computability-exclusion counts differ")
-        if result.get("target_blind_retained_feature_count", -1) + result.get("target_blind_excluded_feature_count", -1) != 13:
+        if result.get("target_blind_retained_feature_count") != 8 or result.get("target_blind_excluded_feature_count") != 5:
             raise SystemExit("MODEL-13 target-blind feature accounting differs")
         if [item.get("candidate_id") for item in result.get("candidate_metrics", [])] != CANDIDATE_IDS:
             raise SystemExit("MODEL-13 candidate execution evidence differs")
-        if result.get("statewide_computable_count", -1) + result.get("statewide_noncomputable_count", -1) != 3017 or result.get("all_3017_tracts_accounted") is not True:
+        if result.get("selected_successor_formulation") != "successor_combined_multivariate_elastic_net":
+            raise SystemExit("MODEL-13 selected successor differs")
+        if result.get("statewide_computable_count") != 2973 or result.get("statewide_noncomputable_count") != 44 or result.get("statewide_support_truncation_count") != 438 or result.get("all_3017_tracts_accounted") is not True:
             raise SystemExit("MODEL-13 statewide tract accounting differs")
-        if result.get("deterministic_rerun") != "MATCH" or result.get("frozen_benchmark_reevaluated") is not False or result.get("impacted_sales_values_accessed") != 0 or result.get("power_bi_implemented") is not False or result.get("protected_details_disclosed") is not False:
+        if result.get("deterministic_rerun") != "MATCH" or result.get("semantic_packages_equal") is not True or result.get("presentation_csvs_byte_identical") is not True or result.get("benchmark_reused_without_reevaluation") is not True or result.get("frozen_benchmark_reevaluated") is not False or result.get("impacted_sales_values_accessed") != 0 or result.get("power_bi_implemented") is not False or result.get("protected_details_disclosed") is not False:
             raise SystemExit("MODEL-13 deterministic, target, Power BI, or disclosure boundary differs")
+        if result.get("power_bi_ready_tract_output_ready") is not True or result.get("power_bi_ready_seed_context_output_ready") is not True or result.get("protected_output_outside_git") is not True:
+            raise SystemExit("MODEL-13 protected-local presentation readiness differs")
         required_true = ("benchmark_ready_and_immutable", "benchmark_preceded_michigan_development", "target_blind_feature_freeze_ready", "development_role_transition_ready", "pooled_comparison_complete", "selected_refit_ready", "statewide_scoring_ready", "presentation_outputs_ready", "deterministic_match", "zero_impacted_sales_access", "all_repository_validation_required")
         if any(gate.get(field) is not True for field in required_true) or gate.get("independent_run_count") != 2 or gate.get("semantic_stage_count") != 5:
             raise SystemExit("MODEL-13 exact-H execution gate evidence differs")
