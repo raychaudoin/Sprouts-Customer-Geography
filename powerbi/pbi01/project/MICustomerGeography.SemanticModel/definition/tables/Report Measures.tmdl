@@ -1,0 +1,162 @@
+/// Light report presentation measures only; all analytical values remain MODEL-13 authoritative.
+table 'Report Measures'
+	lineageTag: 39a37780-bba8-54fe-9435-8778f10caf7e
+
+	column Anchor
+		dataType: string
+		isHidden
+		lineageTag: c65668a4-7f01-51a9-b46a-3639863b2139
+		summarizeBy: none
+		sourceColumn: Anchor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Statewide tract count after report filters.
+	measure 'Total Tracts' = COUNTROWS('Michigan Tracts')
+		formatString: #,0
+		lineageTag: 1c5a770c-0302-56c1-8256-7b7c5befa237
+
+	/// Tracts with authoritative MODEL-13 scores.
+	measure 'Computable Tracts' = CALCULATE(COUNTROWS('Michigan Tracts'), 'Michigan Tracts'[Computability Status] = "MODEL_SCORE_COMPUTABLE")
+		formatString: #,0
+		lineageTag: e2817e05-040b-5569-945d-9433022ec832
+
+	/// Tracts explicitly noncomputable in MODEL-13.
+	measure 'Noncomputable Tracts' = [Total Tracts] - [Computable Tracts]
+		formatString: #,0
+		lineageTag: 8a0b1f33-de41-5278-9eb0-f3e35b7261f4
+
+	/// Tracts with descriptive boundary support truncation.
+	measure 'Support-Truncated Tracts' = CALCULATE(COUNTROWS('Michigan Tracts'), 'Michigan Tracts'[Any Support Truncation] = TRUE())
+		formatString: #,0
+		lineageTag: 429bea4e-8f62-5bc1-848d-768412580b67
+
+	/// Presentation-only switch across distinct authoritative MODEL-13 fields.
+	measure 'Selected Metric Value' = ```
+		VAR MetricName = SELECTEDVALUE('Metric Selector'[Metric], "Customer Fit")
+		RETURN
+		    SWITCH(
+		        MetricName,
+		        "Customer Fit", AVERAGE('Michigan Tracts'[Customer Fit Percentile]),
+		        "Household Opportunity", AVERAGE('Michigan Tracts'[Household Opportunity]),
+		        "Modeled Target Mass", AVERAGE('Michigan Tracts'[Modeled Target Mass Percentile]),
+		        AVERAGE('Michigan Tracts'[Customer Fit Percentile])
+		    )
+		```
+		formatString: 0.00
+		lineageTag: 5db80892-4fe9-5ec8-b5c8-34819a900ab7
+
+	/// Current map metric label.
+	measure 'Selected Metric Label' = SELECTEDVALUE('Metric Selector'[Metric], "Customer Fit")
+		lineageTag: 86a8396d-ff55-54ea-a107-bae1d687cadc
+
+	/// Authoritative MODEL-13 customer-fit proxy.
+	measure 'Customer Fit' = AVERAGE('Michigan Tracts'[Customer Fit])
+		formatString: 0.0000
+		lineageTag: 72714228-7667-5eb1-8cfa-d2d0e8e90838
+
+	measure 'Customer Fit Statewide Rank' = SELECTEDVALUE('Michigan Tracts'[Customer Fit Statewide Rank])
+		formatString: #,0
+		lineageTag: 36e3f03e-2ccd-5836-9c70-983a5521c0fb
+
+	measure 'Customer Fit Percentile' = AVERAGE('Michigan Tracts'[Customer Fit Percentile])
+		formatString: 0.0
+		lineageTag: 9c17f5cd-918b-5ed2-8800-48a78102b4c5
+
+	/// Authoritative MODEL-13 household opportunity.
+	measure 'Household Opportunity' = AVERAGE('Michigan Tracts'[Household Opportunity])
+		formatString: #,0.00
+		lineageTag: 1e9e706f-ba09-5257-9018-ac7144970728
+
+	/// Authoritative MODEL-13 modeled target mass.
+	measure 'Modeled Target Mass' = AVERAGE('Michigan Tracts'[Modeled Target Mass])
+		formatString: #,0.00
+		lineageTag: b9f3cea5-8937-547d-8325-dc67199027ae
+
+	measure 'Modeled Target Mass Statewide Rank' = SELECTEDVALUE('Michigan Tracts'[Modeled Target Mass Statewide Rank])
+		formatString: #,0
+		lineageTag: e5ca9025-a881-5e68-a410-92e9cedf4f42
+
+	measure 'Modeled Target Mass Percentile' = AVERAGE('Michigan Tracts'[Modeled Target Mass Percentile])
+		formatString: 0.0
+		lineageTag: 0068b24b-6e50-5cb3-b7d0-717fa2fecdb6
+
+	measure 'Member Count 3 Mile' = SELECTEDVALUE('Michigan Tracts'[Member Count 3 Mile])
+		formatString: #,0
+		lineageTag: 31093b1d-71e1-5e30-9b7c-b1ca2d381c0f
+
+	measure 'Member Count 5 Mile' = SELECTEDVALUE('Michigan Tracts'[Member Count 5 Mile])
+		formatString: #,0
+		lineageTag: a076afbf-5f2c-5f32-bd38-3f27fb44a456
+
+	measure 'Member Count 7 Mile' = SELECTEDVALUE('Michigan Tracts'[Member Count 7 Mile])
+		formatString: #,0
+		lineageTag: d26b5ed0-b045-5c77-a6e1-8df6e12137f9
+
+	measure 'Support Completeness 3 Mile' = AVERAGE('Michigan Tracts'[Support Completeness 3 Mile])
+		formatString: 0.0%
+		lineageTag: 2eacc09a-a62b-5ffe-8560-6f6a90f6444e
+
+	measure 'Support Completeness 5 Mile' = AVERAGE('Michigan Tracts'[Support Completeness 5 Mile])
+		formatString: 0.0%
+		lineageTag: 518ea635-ac62-54be-a570-d21c91d4c76a
+
+	measure 'Support Completeness 7 Mile' = AVERAGE('Michigan Tracts'[Support Completeness 7 Mile])
+		formatString: 0.0%
+		lineageTag: 272c0ca6-2528-5ff1-9ada-1a1f715d6180
+
+	measure 'Support Truncation State' = IF(SELECTEDVALUE('Michigan Tracts'[Any Support Truncation], FALSE()), "Boundary support truncated", "No boundary support truncation")
+		lineageTag: 73f65c8d-7c1d-579b-b0fe-3a40a3544ddd
+
+	measure 'Computability Detail' = SELECTEDVALUE('Michigan Tracts'[Computability Status], "Multiple states")
+		lineageTag: 9d4a4776-ad97-5422-b018-61d91b06f848
+
+	measure 'QA / Missingness Detail' = SELECTEDVALUE('Michigan Tracts'[QA / Missingness Status], "Multiple categories")
+		lineageTag: a50537d8-6278-5649-b647-bf6f0adc163c
+
+	/// Accepted nonquarantined Michigan physical-location evidence rows.
+	measure 'Evidence Locations' = COUNTROWS('Seed Context')
+		formatString: #,0
+		lineageTag: 2f1f4822-248c-568d-9f8f-c30024861f01
+
+	measure 'Mean Isolated Sales' = AVERAGE('Seed Context'[Mean Isolated Sales])
+		formatString: #,0.00
+		lineageTag: ba59b32c-3892-53d7-9233-c657e46df90f
+
+	measure 'Frozen MODEL-12 Prediction' = AVERAGE('Seed Context'[Frozen MODEL-12 Prediction])
+		formatString: #,0.00
+		lineageTag: 4de0824d-26b7-56dd-90fd-413151894e50
+
+	measure 'Successor OOF Prediction' = AVERAGE('Seed Context'[Successor OOF Prediction])
+		formatString: #,0.00
+		lineageTag: 4c2ff04a-44b8-5653-9f75-ebafe993109e
+
+	measure 'Successor OOF Absolute Log Error' = AVERAGE('Seed Context'[Successor OOF Absolute Log Error])
+		formatString: 0.000
+		lineageTag: 84587734-264d-55ce-9f41-d40178d338ba
+
+	measure 'Seed Household Opportunity' = AVERAGE('Seed Context'[Household Opportunity])
+		formatString: #,0.00
+		lineageTag: db411a0b-44b6-542b-bc52-dff2829abdd7
+
+	measure 'Seed Customer Fit' = AVERAGE('Seed Context'[Customer Fit])
+		formatString: 0.0000
+		lineageTag: 73e2cb61-77f3-5b80-b13e-657cd1576a93
+
+	measure 'Seed Modeled Target Mass' = AVERAGE('Seed Context'[Modeled Target Mass])
+		formatString: #,0.00
+		lineageTag: e3ea7fd4-b5a2-5114-9a8b-c1bbb645a0f6
+
+	measure 'Seed Support State' = IF(SELECTEDVALUE('Seed Context'[Support Truncation], FALSE()), "Boundary support truncated", "No boundary support truncation")
+		lineageTag: d9f412d7-ba9c-5351-9a2e-2e865a552f8c
+
+	measure 'Seed QA Status' = SELECTEDVALUE('Seed Context'[QA Status], "Multiple categories")
+		lineageTag: fa9225f0-3ac2-5ce6-b827-649b135700d4
+
+	partition 'Report Measures' = m
+		mode: import
+		source = #table(type table [Anchor = text], {{"PBI-01"}})
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

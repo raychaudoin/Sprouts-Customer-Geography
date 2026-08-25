@@ -1,0 +1,48 @@
+{
+  "task_id": "PBI-01",
+  "title": "Michigan Customer Geography Power BI MVP",
+  "capability_owner": "PBI: Power BI Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized Lane B PBI-01 from canonical main commit a7ee04bb6cd9710fa161858f0b5b2559565cfc9f and amended the existing bootstrap authority to full Michigan Power BI MVP implementation after the Desktop-created PBIP gate",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Implement a functional local Michigan-first Power BI Desktop MVP in the Desktop-created PBIP PBIR and TMDL representation",
+    "Bind only the accepted protected-local MODEL-13 tract seed-context and metadata presentation outputs after deterministic fail-closed preflight",
+    "Create Michigan Opportunity Explorer Sprouts Evidence Context and QA and Coverage report pages with customer fit household opportunity modeled target mass evidence context and limitations kept visibly distinct",
+    "Create deterministic public 2024 Michigan TIGER tract presentation geometry joined by GEOID with exact 3017-key reconciliation and no analytical GIS logic moved into Power BI",
+    "Implement only light presentation semantics metric selection display measures counts filters formatting and selected-tract detail over authoritative MODEL-13 outputs",
+    "Provide repository-safe preflight reconstruction checks tests documentation and local Desktop refresh render save close and reopen validation"
+  ],
+  "exclusions": [
+    "No change recomputation reinterpretation refit rescore or replacement of MODEL-13 or any accepted predecessor",
+    "No model fitting scoring spatial membership feature construction support-completeness calculation target transformation physical-location identity or regression logic in Power BI",
+    "No protected row coordinate identity sales prediction error fitted parameter path handle cache runtime binary or revealing screenshot in Git or GitHub",
+    "No dependency on Power BI Service Fabric ArcGIS organizational access marketplace custom visuals or unsupported out-of-state or Canadian demographics",
+    "No capability self-acceptance acceptance-record A merge publication deployment or follow-on substantive task"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL13_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/pbi-01-michigan-customer-geography-power-bi-mvp",
+  "implementation_commit": "f05643be7bc5bde94d7ff9778a21bc18d93466ad",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "PBI: Power BI Decisions & Acceptance",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "PBI: Power BI Decisions & Acceptance",
+    "recorded_by": "PBI: Power BI Decisions & Acceptance",
+    "recorded_on": "2026-08-25"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

@@ -1,0 +1,348 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "765b988498caafd0773c",
+  "position": {
+    "x": 1180,
+    "y": 370,
+    "z": 7000,
+    "height": 520,
+    "width": 700,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Mean Isolated Sales"
+                }
+              },
+              "queryRef": "Seed Context.Mean Isolated Sales",
+              "nativeQueryRef": "Mean Isolated Sales"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Frozen MODEL-12 Prediction"
+                }
+              },
+              "queryRef": "Seed Context.Frozen MODEL-12 Prediction",
+              "nativeQueryRef": "Frozen MODEL-12 Prediction"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Successor OOF Prediction"
+                }
+              },
+              "queryRef": "Seed Context.Successor OOF Prediction",
+              "nativeQueryRef": "Successor OOF Prediction"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Successor OOF Absolute Log Error"
+                }
+              },
+              "queryRef": "Seed Context.Successor OOF Absolute Log Error",
+              "nativeQueryRef": "Successor OOF Absolute Log Error"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Household Opportunity"
+                }
+              },
+              "queryRef": "Seed Context.Household Opportunity",
+              "nativeQueryRef": "Household Opportunity"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Customer Fit"
+                }
+              },
+              "queryRef": "Seed Context.Customer Fit",
+              "nativeQueryRef": "Customer Fit"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Modeled Target Mass"
+                }
+              },
+              "queryRef": "Seed Context.Modeled Target Mass",
+              "nativeQueryRef": "Modeled Target Mass"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "Support Truncation"
+                }
+              },
+              "queryRef": "Seed Context.Support Truncation",
+              "nativeQueryRef": "Support Truncation"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Seed Context"
+                    }
+                  },
+                  "Property": "QA Status"
+                }
+              },
+              "queryRef": "Seed Context.QA Status",
+              "nativeQueryRef": "QA Status"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D6DEE8'"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Evidence detail (local only)'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#16324F'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Evidence detail (local only)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

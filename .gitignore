@@ -93,6 +93,15 @@ powerbi/.temp/
 powerbi/.cache/
 *.pbix.autosave
 *.pbi.local.json
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/
+
+# PBI-01 protected-local inputs, staging, and binary runtime artifacts
+powerbi/pbi01/local/
+powerbi/pbi01/runtime/
+powerbi/pbi01/**/*.pbix
+powerbi/pbi01/**/*.pbit
 
 # Machine-specific editor settings
 .idea/

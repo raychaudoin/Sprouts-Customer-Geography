@@ -1,0 +1,38 @@
+/// Disconnected presentation selector; no analytical scoring logic.
+table 'Metric Selector'
+	lineageTag: f228f968-6740-54a6-99ee-b5ca035fe869
+
+	column Metric
+		dataType: string
+		lineageTag: 6be74f54-175e-5421-be4b-9140d6c4c1e9
+		summarizeBy: none
+		sourceColumn: Metric
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ee3db739-c07d-51e6-9661-f55dcd7631e2
+		summarizeBy: none
+		sourceColumn: Sort Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Metric Selector' = m
+		mode: import
+		source =
+				#table(
+					type table [Metric = text, Sort Order = Int64.Type],
+					{
+						{"Customer Fit", 1},
+						{"Household Opportunity", 2},
+						{"Modeled Target Mass", 3}
+					}
+				)
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

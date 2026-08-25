@@ -1,0 +1,232 @@
+/// Authoritative protected-local MODEL-13 presentation output; presentation typing and labels only.
+table 'Michigan Tracts'
+	lineageTag: a8a7efdb-6b28-596d-b781-b08f737b9e8f
+
+	column 'GEOID'
+		dataType: string
+		isKey
+		lineageTag: 87f1ba1e-374f-54be-bcb6-e9d8f3a0d677
+		summarizeBy: none
+		sourceColumn: GEOID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internal Point Latitude'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 69f95b94-f77d-56cc-a3e8-8a9465684e0c
+		summarizeBy: none
+		sourceColumn: Internal Point Latitude
+		dataCategory: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Internal Point Longitude'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: a767190e-4ebe-5b69-aebb-adb38fed608b
+		summarizeBy: none
+		sourceColumn: Internal Point Longitude
+		dataCategory: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Computability Status'
+		dataType: string
+		lineageTag: 5a953a7a-ff59-5525-a75e-dad24281c248
+		summarizeBy: none
+		sourceColumn: Computability Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Household Opportunity'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 64c35ff5-0839-5691-9566-4eb875aea175
+		summarizeBy: none
+		sourceColumn: Household Opportunity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Fit'
+		dataType: double
+		formatString: 0.00
+		lineageTag: f0df0703-27ce-53a7-a236-43ec80af70c6
+		summarizeBy: none
+		sourceColumn: Customer Fit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Fit Statewide Rank'
+		dataType: int64
+		formatString: #,0
+		lineageTag: cc865794-a7b0-5530-b5e8-a09a33d0ae67
+		summarizeBy: none
+		sourceColumn: Customer Fit Statewide Rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Customer Fit Percentile'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 9a1443a5-42e0-5087-a85e-15c112090e7c
+		summarizeBy: none
+		sourceColumn: Customer Fit Percentile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modeled Target Mass'
+		dataType: double
+		formatString: 0.00
+		lineageTag: dc04926c-c450-5a2c-a97d-bd693c0f7319
+		summarizeBy: none
+		sourceColumn: Modeled Target Mass
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modeled Target Mass Statewide Rank'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 36cc2365-45e4-5ab9-a794-0b50cdf973db
+		summarizeBy: none
+		sourceColumn: Modeled Target Mass Statewide Rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modeled Target Mass Percentile'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 43296409-bd96-5007-a402-e10f657c47d3
+		summarizeBy: none
+		sourceColumn: Modeled Target Mass Percentile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Member Count 3 Mile'
+		dataType: int64
+		formatString: #,0
+		lineageTag: cde8d58e-e653-5e86-901d-924e49584105
+		summarizeBy: none
+		sourceColumn: Member Count 3 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Member Count 5 Mile'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 38d70ac7-4ad2-5daf-ab2a-023d54affa2a
+		summarizeBy: none
+		sourceColumn: Member Count 5 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Member Count 7 Mile'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 85792d7b-dd45-5270-a865-bda9d1a881bf
+		summarizeBy: none
+		sourceColumn: Member Count 7 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support Completeness 3 Mile'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 42009b37-8153-5896-bbb6-c1a9180fad2c
+		summarizeBy: none
+		sourceColumn: Support Completeness 3 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support Completeness 5 Mile'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 6849cb55-7954-5691-b510-f252a69fb741
+		summarizeBy: none
+		sourceColumn: Support Completeness 5 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support Completeness 7 Mile'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 3dfc8c84-9aeb-5c67-913f-5b92befc9603
+		summarizeBy: none
+		sourceColumn: Support Completeness 7 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support Truncation 3 Mile'
+		dataType: boolean
+		lineageTag: fceaad14-5f8d-5fdf-b658-b619f1ae85c6
+		summarizeBy: none
+		sourceColumn: Support Truncation 3 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support Truncation 5 Mile'
+		dataType: boolean
+		lineageTag: 5ddaf259-aabc-5524-94d2-26042c2ce811
+		summarizeBy: none
+		sourceColumn: Support Truncation 5 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Support Truncation 7 Mile'
+		dataType: boolean
+		lineageTag: 3b60cdd6-7c59-5ca7-80b3-94796c9e4f37
+		summarizeBy: none
+		sourceColumn: Support Truncation 7 Mile
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Any Support Truncation'
+		dataType: boolean
+		lineageTag: 8ae709ab-1b4f-52c2-8300-3a396ab70752
+		summarizeBy: none
+		sourceColumn: Any Support Truncation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'QA / Missingness Status'
+		dataType: string
+		lineageTag: 144d6627-5fb4-5cd6-bd48-e828b2c75412
+		summarizeBy: none
+		sourceColumn: QA / Missingness Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Model Lineage ID'
+		dataType: string
+		isHidden
+		lineageTag: 98a2cc6a-06ff-520e-bbba-2b5e0edbd2b8
+		summarizeBy: none
+		sourceColumn: Model Lineage ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Public Lineage ID'
+		dataType: string
+		isHidden
+		lineageTag: 29a76047-1dd3-58fd-aa47-fdbce6d61333
+		summarizeBy: none
+		sourceColumn: Public Lineage ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Michigan Tracts' = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents("__PBI01_TRACT_CSV__"), [Delimiter = ",", Columns = 24, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					#"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"geoid", "GEOID"}, {"internal_point_latitude", "Internal Point Latitude"}, {"internal_point_longitude", "Internal Point Longitude"}, {"computability_status", "Computability Status"}, {"household_opportunity", "Household Opportunity"}, {"customer_fit_proxy", "Customer Fit"}, {"customer_fit_statewide_rank", "Customer Fit Statewide Rank"}, {"customer_fit_statewide_percentile", "Customer Fit Percentile"}, {"modeled_target_mass", "Modeled Target Mass"}, {"modeled_target_mass_statewide_rank", "Modeled Target Mass Statewide Rank"}, {"modeled_target_mass_statewide_percentile", "Modeled Target Mass Percentile"}, {"tract_member_count_3mi", "Member Count 3 Mile"}, {"tract_member_count_5mi", "Member Count 5 Mile"}, {"tract_member_count_7mi", "Member Count 7 Mile"}, {"support_completeness_3mi", "Support Completeness 3 Mile"}, {"support_completeness_5mi", "Support Completeness 5 Mile"}, {"support_completeness_7mi", "Support Completeness 7 Mile"}, {"support_truncation_3mi", "Support Truncation 3 Mile"}, {"support_truncation_5mi", "Support Truncation 5 Mile"}, {"support_truncation_7mi", "Support Truncation 7 Mile"}, {"any_support_truncation", "Any Support Truncation"}, {"qa_missingness_status", "QA / Missingness Status"}, {"model_lineage_id", "Model Lineage ID"}, {"public_lineage_id", "Public Lineage ID"}}, MissingField.Error),
+					#"Typed Columns" = Table.TransformColumnTypes(#"Renamed Columns", {{"GEOID", type text}, {"Internal Point Latitude", type number}, {"Internal Point Longitude", type number}, {"Computability Status", type text}, {"Household Opportunity", type number}, {"Customer Fit", type number}, {"Customer Fit Statewide Rank", Int64.Type}, {"Customer Fit Percentile", type number}, {"Modeled Target Mass", type number}, {"Modeled Target Mass Statewide Rank", Int64.Type}, {"Modeled Target Mass Percentile", type number}, {"Member Count 3 Mile", Int64.Type}, {"Member Count 5 Mile", Int64.Type}, {"Member Count 7 Mile", Int64.Type}, {"Support Completeness 3 Mile", type number}, {"Support Completeness 5 Mile", type number}, {"Support Completeness 7 Mile", type number}, {"Support Truncation 3 Mile", type logical}, {"Support Truncation 5 Mile", type logical}, {"Support Truncation 7 Mile", type logical}, {"Any Support Truncation", type logical}, {"QA / Missingness Status", type text}, {"Model Lineage ID", type text}, {"Public Lineage ID", type text}}, "en-US")
+				in
+					#"Typed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

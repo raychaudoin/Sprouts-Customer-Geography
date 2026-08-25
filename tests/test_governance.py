@@ -64,6 +64,7 @@ class GovernanceTests(unittest.TestCase):
 
     def test_02_task_id_rules_allow_existing_prefixes_and_reject_bad_ids(self):
         self.assertTrue(task_id_is_valid("GOV-02"))
+        self.assertTrue(task_id_is_valid("PBI-01"))
         self.assertTrue(task_id_is_valid("PIPE-01B"))
         self.assertTrue(task_id_is_valid("INTEGRATION-14"))
         for invalid in ("GOV2", "UNKNOWN-02", "GOV-2", "GOV-02-RETRY"):
@@ -77,10 +78,13 @@ class GovernanceTests(unittest.TestCase):
 
     def test_04_branch_commit_and_future_pr_naming(self):
         self.assertTrue(branch_name_is_valid("task/gov-02-github-workflow-execution-governance", "GOV-02"))
+        self.assertTrue(branch_name_is_valid("task/pbi-01-michigan-customer-geography-power-bi-mvp", "PBI-01"))
         self.assertFalse(branch_name_is_valid("codex/gov02", "GOV-02"))
         self.assertTrue(task_commit_message_is_valid("GOV-02: implement repository workflow governance", "GOV-02"))
+        self.assertTrue(task_commit_message_is_valid("PBI-01: bootstrap governed Power BI workspace", "PBI-01"))
         self.assertFalse(task_commit_message_is_valid("GOV-02 implement workflow", "GOV-02"))
         self.assertTrue(future_pr_title_is_valid("GOV-02: GitHub Workflow & Execution Governance", "GOV-02"))
+        self.assertTrue(future_pr_title_is_valid("PBI-01: Michigan Customer Geography Power BI MVP", "PBI-01"))
 
     def test_05_rejects_protected_paths_values_and_fields(self):
         cases = [
