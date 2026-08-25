@@ -11,8 +11,10 @@ import sys
 
 
 AUTHORIZATION_BASE = "a7ee04bb6cd9710fa161858f0b5b2559565cfc9f"
+EXACT_H = "f05643be7bc5bde94d7ff9778a21bc18d93466ad"
 TASK_BRANCH = "task/pbi-01-michigan-customer-geography-power-bi-mvp"
 CAPABILITY_OWNER = "PBI: Power BI Decisions & Acceptance"
+MCR_DESTINATION = "MASTER CONTROL ROOM: Sprouts Customer Geography"
 CONTRACT_ID = "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1"
 PROJECT_NAME = "MICustomerGeography"
 EXPECTED_PAGES = [
@@ -113,9 +115,8 @@ def main() -> int:
         or task["capability_owner"] != CAPABILITY_OWNER
         or task["implementation_branch"] != TASK_BRANCH
         or task["acceptance_destination"] != CAPABILITY_OWNER
-        or task["exact_next_destination"] != CAPABILITY_OWNER
     ):
-        raise SystemExit("PBI-01 task identity, branch, or acceptance destination differs")
+        raise SystemExit("PBI-01 task identity, branch, or acceptance owner differs")
     if AUTHORIZATION_BASE not in task["authority_source"]:
         raise SystemExit("PBI-01 canonical authorization base differs")
     posture = (
@@ -126,15 +127,30 @@ def main() -> int:
     if posture not in {
         ("IN_PROGRESS", "IN_PROGRESS", "NOT_REVIEWED"),
         ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"),
+        ("ACCEPTED_CLOSED", "COMPLETED", "ACCEPTED"),
     }:
         raise SystemExit(f"PBI-01 task posture is invalid: {posture}")
-    if posture[0] == "COMPLETED_AWAITING_ACCEPTANCE" and task["completion_state"]["implementation_evidence"] != [
+    expected_next_destination = MCR_DESTINATION if posture[0] == "ACCEPTED_CLOSED" else CAPABILITY_OWNER
+    if task["exact_next_destination"] != expected_next_destination:
+        raise SystemExit("PBI-01 exact next destination differs")
+    if posture[0] in {"COMPLETED_AWAITING_ACCEPTANCE", "ACCEPTED_CLOSED"} and task["completion_state"]["implementation_evidence"] != [
         "LOCAL_COMMIT",
         "TEST_PASS",
         "COMPLETION_REPORT",
         "FUTURE_PULL_REQUEST",
     ]:
         raise SystemExit("PBI-01 exact-H implementation evidence differs")
+    if posture[0] == "ACCEPTED_CLOSED" and (
+        task.get("implementation_commit") != EXACT_H
+        or task.get("acceptance_disposition") != "ACCEPTED"
+        or task.get("acceptance_metadata")
+        != {
+            "capability_owner": CAPABILITY_OWNER,
+            "recorded_by": CAPABILITY_OWNER,
+            "recorded_on": "2026-08-25",
+        }
+    ):
+        raise SystemExit("PBI-01 accepted exact-H record differs")
 
     contract = _load(repository / "config/model/model13_michigan_power_bi_output_contract.json")
     if contract.get("artifact_id") != CONTRACT_ID:

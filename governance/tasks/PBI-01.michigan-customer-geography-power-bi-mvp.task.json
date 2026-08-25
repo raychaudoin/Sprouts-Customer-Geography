@@ -3,7 +3,7 @@
   "title": "Michigan Customer Geography Power BI MVP",
   "capability_owner": "PBI: Power BI Decisions & Acceptance",
   "authority_source": "Master Control Room authorized Lane B PBI-01 from canonical main commit a7ee04bb6cd9710fa161858f0b5b2559565cfc9f and amended the existing bootstrap authority to full Michigan Power BI MVP implementation after the Desktop-created PBIP gate",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Implement a functional local Michigan-first Power BI Desktop MVP in the Desktop-created PBIP PBIR and TMDL representation",
     "Bind only the accepted protected-local MODEL-13 tract seed-context and metadata presentation outputs after deterministic fail-closed preflight",
@@ -26,6 +26,7 @@
     "PROTECTED_MODEL13_OUTPUT_ROOT_V1"
   ],
   "implementation_branch": "task/pbi-01-michigan-customer-geography-power-bi-mvp",
+  "implementation_commit": "f05643be7bc5bde94d7ff9778a21bc18d93466ad",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -34,8 +35,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "PBI: Power BI Decisions & Acceptance",
-  "exact_next_destination": "PBI: Power BI Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "PBI: Power BI Decisions & Acceptance",
+    "recorded_by": "PBI: Power BI Decisions & Acceptance",
+    "recorded_on": "2026-08-25"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
