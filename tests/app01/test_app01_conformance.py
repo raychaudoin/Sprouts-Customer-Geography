@@ -341,19 +341,23 @@ class App01ServerTests(unittest.TestCase):
 
 
 class App01GovernanceAndDisclosureTests(unittest.TestCase):
-    def test_exact_task_identity_branch_lane_and_h_posture(self) -> None:
+    def test_exact_task_identity_branch_lane_and_accepted_posture(self) -> None:
         manifests = list((REPOSITORY / "governance/tasks").glob("APP-01*.task.json"))
         work_orders = list((REPOSITORY / "docs/work_orders").glob("APP_01*.md"))
         self.assertEqual((len(manifests), len(work_orders)), (1, 1))
         task = json.loads(manifests[0].read_text(encoding="utf-8"))
         self.assertEqual(task["task_id"], "APP-01")
         self.assertEqual(task["implementation_branch"], "task/app-01-michigan-local-first-customer-geography-dashboard")
-        self.assertEqual((task["state"], task["completion_state"]["execution"], task["completion_state"]["capability_acceptance"]), ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"))
-        self.assertEqual(task["exact_next_destination"], "ARCH: Presentation Architecture Decisions & Acceptance")
+        self.assertEqual((task["state"], task["completion_state"]["execution"], task["completion_state"]["capability_acceptance"]), ("ACCEPTED_CLOSED", "COMPLETED", "ACCEPTED"))
+        self.assertEqual(task["implementation_commit"], "9aa8853f3fa78cad62d9e4e384bae6ef107f3e4f")
         self.assertEqual(set(task["completion_state"]["implementation_evidence"]), {"LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT", "FUTURE_PULL_REQUEST"})
-        self.assertNotIn("implementation_commit", task)
-        self.assertNotIn("acceptance_disposition", task)
-        self.assertNotIn("acceptance_metadata", task)
+        self.assertEqual(task["acceptance_disposition"], "ACCEPTED")
+        self.assertEqual(task["acceptance_metadata"], {
+            "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+            "recorded_by": "ARCH: Presentation Architecture Decisions & Acceptance",
+            "recorded_on": "2026-08-26",
+        })
+        self.assertEqual(task["exact_next_destination"], "MASTER CONTROL ROOM: Sprouts Customer Geography")
 
     def test_accepted_predecessors_remain_unchanged_from_authorization_base(self) -> None:
         protected = ["config/model", "config/data", "config/geo", "powerbi/pbi01", "presentation/arch01", "config/arch01", "governance/tasks/MODEL-13.michigan-benchmark-pooled-successor-statewide-scoring.task.json", "governance/tasks/DATA-04.michigan-public-data-parity-foundation.task.json", "governance/tasks/PBI-01.michigan-customer-geography-power-bi-mvp.task.json", "governance/tasks/ARCH-01.local-first-customer-geography-presentation-architecture.task.json"]

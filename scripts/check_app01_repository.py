@@ -10,9 +10,11 @@ import sys
 
 
 AUTHORIZATION_BASE = "b29be0c1c4faf173fc95f402446ddfd92f73f92c"
+EXACT_H = "9aa8853f3fa78cad62d9e4e384bae6ef107f3e4f"
 PBI02_HEAD_AT_AUTHORIZATION = "b7edf51093bfd210f2856771095dd8005557f577"
 TASK_BRANCH = "task/app-01-michigan-local-first-customer-geography-dashboard"
 CAPABILITY_OWNER = "ARCH: Presentation Architecture Decisions & Acceptance"
+MCR_DESTINATION = "MASTER CONTROL ROOM: Sprouts Customer Geography"
 EXPECTED_GEOMETRY_SHA256 = "e0f32095d2e2307f5ad78c9545fc0d3c74fca2250bc866bea8db2368848786ad"
 EXPECTED_NAMES = [
     "Customer Fit Percentile", "5-Mile Household Opportunity", "Modeled Target Mass Percentile",
@@ -94,15 +96,33 @@ def main() -> int:
         raise SystemExit("APP-01 task identity or branch differs")
     if task["capability_owner"] != CAPABILITY_OWNER or task["acceptance_destination"] != CAPABILITY_OWNER:
         raise SystemExit("APP-01 capability owner or acceptance destination differs")
-    if AUTHORIZATION_BASE not in task["authority_source"] or task["exact_next_destination"] != CAPABILITY_OWNER:
-        raise SystemExit("APP-01 authorization base or exact-H acceptance destination differs")
+    if AUTHORIZATION_BASE not in task["authority_source"]:
+        raise SystemExit("APP-01 authorization base differs")
     posture = (task["state"], task["completion_state"]["execution"], task["completion_state"]["capability_acceptance"])
     expected_evidence = {"LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT", "FUTURE_PULL_REQUEST"}
-    if posture != ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"):
-        raise SystemExit(f"APP-01 exact-H posture differs: {posture}")
+    if posture not in {
+        ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"),
+        ("ACCEPTED_CLOSED", "COMPLETED", "ACCEPTED"),
+    }:
+        raise SystemExit(f"APP-01 H/A posture differs: {posture}")
+    expected_next_destination = MCR_DESTINATION if posture[0] == "ACCEPTED_CLOSED" else CAPABILITY_OWNER
+    if task["exact_next_destination"] != expected_next_destination:
+        raise SystemExit("APP-01 H/A next destination differs")
     if set(task["completion_state"]["implementation_evidence"]) != expected_evidence:
-        raise SystemExit("APP-01 exact-H implementation evidence differs")
-    if any(key in task for key in ("implementation_commit", "acceptance_disposition", "acceptance_metadata")):
+        raise SystemExit("APP-01 H/A implementation evidence differs")
+    if posture[0] == "ACCEPTED_CLOSED":
+        if (
+            task.get("implementation_commit") != EXACT_H
+            or task.get("acceptance_disposition") != "ACCEPTED"
+            or task.get("acceptance_metadata")
+            != {
+                "capability_owner": CAPABILITY_OWNER,
+                "recorded_by": CAPABILITY_OWNER,
+                "recorded_on": "2026-08-26",
+            }
+        ):
+            raise SystemExit("APP-01 accepted exact-H record differs")
+    elif any(key in task for key in ("implementation_commit", "acceptance_disposition", "acceptance_metadata")):
         raise SystemExit("APP-01 H must not claim implementation self-reference or capability acceptance")
 
     gate = _load(repository / "config/app01/app01_stage1_gate.json")

@@ -3,7 +3,7 @@
   "title": "Michigan Local-First Customer Geography Dashboard",
   "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
   "authority_source": "Master Control Room authorized Lane B APP-01 from canonical main commit b29be0c1c4faf173fc95f402446ddfd92f73f92c and continued the same task from pre-H checkpoint cbbec075603d44586d3cafdcfa005653fab3dcc2 for the targeted final Product Design and Ultra high-severity-only review, final validation, and exact-H preparation",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Implement the accepted ARCH-01 local-first browser architecture as the real Michigan operator application over accepted prepared presentation inputs",
     "Implement fail-closed MODEL-13 and DATA-04 local input resolution validation deterministic bundle preparation and exact public geometry reconciliation",
@@ -35,6 +35,7 @@
     "PROTECTED_DATA04_MICHIGAN_PUBLIC_MATERIALIZATION_V1"
   ],
   "implementation_branch": "task/app-01-michigan-local-first-customer-geography-dashboard",
+  "implementation_commit": "9aa8853f3fa78cad62d9e4e384bae6ef107f3e4f",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -43,8 +44,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "ARCH: Presentation Architecture Decisions & Acceptance",
-  "exact_next_destination": "ARCH: Presentation Architecture Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_by": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_on": "2026-08-26"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }
