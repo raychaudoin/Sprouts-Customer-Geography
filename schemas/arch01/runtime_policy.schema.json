@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/arch01/runtime_policy.schema.json",
+  "title": "ARCH-01 local-first runtime and egress policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "status", "topology", "renderer", "basemaps", "network_egress", "telemetry"],
+  "properties": {
+    "$schema": {"const": "../../schemas/arch01/runtime_policy.schema.json"},
+    "artifact_id": {"const": "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "architecture_evidence_awaiting_acceptance"},
+    "topology": {"$ref": "#/$defs/topology"},
+    "renderer": {"$ref": "#/$defs/renderer"},
+    "basemaps": {"$ref": "#/$defs/basemaps"},
+    "network_egress": {"$ref": "#/$defs/network_egress"},
+    "telemetry": {"$ref": "#/$defs/telemetry"}
+  },
+  "$defs": {
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "architecture", "operator_runtime", "default_bind_host", "default_port",
+        "non_loopback_binding_permitted", "served_surface", "ui_framework", "database",
+        "browser_query_engine", "runtime_input_form"
+      ],
+      "properties": {
+        "architecture": {"const": "static_browser_application_with_minimal_loopback_server"},
+        "operator_runtime": {"type": "string", "minLength": 1},
+        "default_bind_host": {"const": "127.0.0.1"},
+        "default_port": {"type": "integer", "minimum": 1024, "maximum": 65535},
+        "non_loopback_binding_permitted": {"const": false},
+        "served_surface": {"type": "string", "minLength": 1},
+        "ui_framework": {"type": "null"},
+        "database": {"type": "null"},
+        "browser_query_engine": {"type": "null"},
+        "runtime_input_form": {"type": "string", "minLength": 1}
+      }
+    },
+    "renderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name", "version", "purpose", "license", "cost", "telemetry", "versioning_strategy",
+        "maintenance_posture", "replacement_boundary", "source", "vendored_files"
+      ],
+      "properties": {
+        "name": {"const": "MapLibre GL JS"},
+        "version": {"const": "6.6.0"},
+        "purpose": {"type": "string", "minLength": 1},
+        "license": {"const": "BSD-3-Clause with bundled third-party notices"},
+        "cost": {"const": "none"},
+        "telemetry": {"const": false},
+        "versioning_strategy": {"type": "string", "minLength": 1},
+        "maintenance_posture": {"type": "string", "minLength": 1},
+        "replacement_boundary": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "format": "uri", "pattern": "^https://github\\.com/[Mm]ap[Ll]ibre/"},
+        "vendored_files": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256"],
+            "properties": {
+              "path": {"type": "string", "pattern": "^presentation/arch01/site/vendor/maplibre-gl/[^/]+$"},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "local_basemap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "network_required", "purpose", "attribution"],
+      "properties": {
+        "label": {"const": "Local neutral"},
+        "network_required": {"const": false},
+        "purpose": {"type": "string", "minLength": 1},
+        "attribution": {"type": "string", "minLength": 1}
+      }
+    },
+    "external_basemap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label", "purpose", "tile_url", "service_metadata_url", "terms_url", "privacy_url",
+        "attribution", "license", "api_key_required", "recurring_cost", "sla", "maxzoom"
+      ],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "purpose": {"type": "string", "minLength": 1},
+        "tile_url": {"type": "string", "pattern": "^https://basemap\\.nationalmap\\.gov/.+/tile/\\{z\\}/\\{y\\}/\\{x\\}$"},
+        "service_metadata_url": {"type": "string", "pattern": "^https://basemap\\.nationalmap\\.gov/"},
+        "terms_url": {"type": "string", "pattern": "^https://www\\.usgs\\.gov/"},
+        "privacy_url": {"type": "string", "pattern": "^https://www\\.usgs\\.gov/"},
+        "attribution": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "api_key_required": {"const": false},
+        "recurring_cost": {"const": "none"},
+        "sla": {"const": "none"},
+        "maxzoom": {"type": "integer", "minimum": 1, "maximum": 22}
+      }
+    },
+    "basemaps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default", "fallback", "local_neutral", "usgs_topo", "usgs_imagery_topo"],
+      "properties": {
+        "default": {"const": "usgs_topo"},
+        "fallback": {"const": "local_neutral"},
+        "local_neutral": {"$ref": "#/$defs/local_basemap"},
+        "usgs_topo": {"$ref": "#/$defs/external_basemap"},
+        "usgs_imagery_topo": {"$ref": "#/$defs/external_basemap"}
+      }
+    },
+    "network_egress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed_external_hosts", "allowed_methods", "allowed_payload", "provider_logging_posture",
+        "prohibited_payload", "geocoding", "routing", "traffic", "analytics", "crash_reporting",
+        "failure_behavior"
+      ],
+      "properties": {
+        "allowed_external_hosts": {
+          "type": "array",
+          "prefixItems": [{"const": "basemap.nationalmap.gov"}],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "allowed_methods": {
+          "type": "array",
+          "prefixItems": [{"const": "GET"}],
+          "items": false,
+          "minItems": 1,
+          "maxItems": 1
+        },
+        "allowed_payload": {"type": "string", "minLength": 1},
+        "provider_logging_posture": {"type": "string", "minLength": 1},
+        "prohibited_payload": {"type": "string", "minLength": 1},
+        "geocoding": {"const": false},
+        "routing": {"const": false},
+        "traffic": {"const": false},
+        "analytics": {"const": false},
+        "crash_reporting": {"const": false},
+        "failure_behavior": {"type": "string", "minLength": 1}
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["application_telemetry", "analytics", "crash_reporting", "remote_logging", "local_diagnostics_only"],
+      "properties": {
+        "application_telemetry": {"const": false},
+        "analytics": {"const": false},
+        "crash_reporting": {"const": false},
+        "remote_logging": {"const": false},
+        "local_diagnostics_only": {"const": true}
+      }
+    }
+  }
+}

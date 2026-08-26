@@ -1,0 +1,53 @@
+{
+  "task_id": "ARCH-01",
+  "title": "Local-First Customer Geography Presentation Architecture",
+  "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized Lane B ARCH-01 from canonical main commit 499cd611605380a3f2abca1e3e1d2f27cc56301c to select and validate a local-first successor presentation architecture after the preserved non-H PBI-02 Power BI Desktop runtime exhausted local paging-file and system resources",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Select the smallest supportable local-first browser presentation architecture without changing accepted analytical geography source or scoring authority",
+    "Evaluate static browser and minimal loopback-server topologies open mapping libraries plain JavaScript or TypeScript and prepared-file or local-query loading forms",
+    "Document the selected runtime map input protected-data network-egress reconstruction dependency license cost failure and recovery boundaries",
+    "Create a minimum public and synthetic architecture spike using the accepted 3017-tract Michigan presentation geometry and exactly 16 authorized metric semantics",
+    "Validate tract coloring fixed and valid-only robust scale behavior explicit missingness map interaction inspector warnings QA source metadata local-only binding deterministic reconstruction and synthetic protected-value nontransmission",
+    "Measure disclosure-safe local startup memory interaction and repeated-restart evidence sufficient to address the Power BI Desktop resource-failure family"
+  ],
+  "exclusions": [
+    "No production dashboard replacement application deployment hosted backend cloud database account system enterprise service or recurring paid platform dependency",
+    "No change recomputation reinterpretation refit rescore replacement or reopening of MODEL-13 DATA-04 DATA-03 GEO-05 accepted 2024 Michigan TIGER or PBI-01 authority",
+    "No analytical GIS feature construction support computation target logic protected identity or scoring logic in the presentation runtime",
+    "No real protected MODEL-13 rows Seed Context values protected coordinates identities sales predictions errors parameters paths handles metadata or screenshots in Git GitHub external requests telemetry logs or crash reporting",
+    "No merge cherry-pick acceptance rewrite or promotion of the PBI-02 branch its non-H implementation or pull request",
+    "No capability self-acceptance acceptance-record-only commit A merge publication production implementation or follow-on substantive task"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1",
+    "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+    "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1",
+    "PBI01_MICHIGAN_2024_TIGER_TRACT_PRESENTATION_GEOMETRY_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL13_OUTPUT_ROOT_V1",
+    "PROTECTED_DATA04_MICHIGAN_PUBLIC_MATERIALIZATION_V1"
+  ],
+  "implementation_branch": "task/arch-01-local-first-customer-geography-presentation-architecture",
+  "implementation_commit": "6347b05d1d126f6c63053eeea317dc7abfaa9b50",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "ARCH: Presentation Architecture Decisions & Acceptance",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_by": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_on": "2026-08-26"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

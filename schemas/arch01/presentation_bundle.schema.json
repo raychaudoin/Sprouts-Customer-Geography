@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/arch01/presentation_bundle.schema.json",
+  "title": "ARCH-01 prepared local presentation bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "artifact_id", "version", "data_mode", "synthetic_notice", "canary",
+    "source_bindings", "tract_count", "metric_count", "metric_keys", "domains", "rows"
+  ],
+  "properties": {
+    "$schema": {"const": "arch01-presentation-bundle-v1"},
+    "artifact_id": {"const": "ARCH01_SYNTHETIC_MICHIGAN_PRESENTATION_BUNDLE_V1"},
+    "version": {"const": "1.0.0"},
+    "data_mode": {"const": "synthetic_architecture_evidence"},
+    "synthetic_notice": {"type": "string", "minLength": 1},
+    "canary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "external_transmission_permitted"],
+      "properties": {
+        "value": {"type": "string", "minLength": 20},
+        "external_transmission_permitted": {"const": false}
+      }
+    },
+    "source_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["geometry_artifact_id", "geometry_sha256", "geoid_inventory_sha256", "metric_catalog_artifact_id", "metric_catalog_sha256"],
+      "properties": {
+        "geometry_artifact_id": {"const": "PBI01_MICHIGAN_2024_TIGER_TRACT_PRESENTATION_GEOMETRY_V1"},
+        "geometry_sha256": {"const": "e0f32095d2e2307f5ad78c9545fc0d3c74fca2250bc866bea8db2368848786ad"},
+        "geoid_inventory_sha256": {"const": "8b6698b55423911163f1a2330ad600218a3b8b452576cc9b3d3997ada19e6c9b"},
+        "metric_catalog_artifact_id": {"const": "ARCH01_MICHIGAN_PRESENTATION_METRIC_CATALOG_V1"},
+        "metric_catalog_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "tract_count": {"const": 3017},
+    "metric_count": {"const": 16},
+    "metric_keys": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "domains": {
+      "type": "object",
+      "minProperties": 16,
+      "maxProperties": 16,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["minimum", "maximum", "policy", "valid_value_count"],
+        "properties": {
+          "minimum": {"type": "number"},
+          "maximum": {"type": "number"},
+          "policy": {"enum": ["fixed_0_100", "statewide_valid_p02_p98"]},
+          "valid_value_count": {"type": "integer", "minimum": 1, "maximum": 3017}
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 3017,
+      "maxItems": 3017,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["geoid", "values", "statuses", "status_details", "moes", "support_truncation"],
+        "properties": {
+          "geoid": {"type": "string", "pattern": "^26[0-9]{9}$"},
+          "values": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["number", "null"]}},
+          "statuses": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"enum": ["valid", "noncomputable", "missing_source_row", "unavailable"]}},
+          "status_details": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["string", "null"]}},
+          "moes": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["number", "null"]}},
+          "support_truncation": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}
