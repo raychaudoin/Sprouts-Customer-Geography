@@ -8,6 +8,16 @@ PBI-02 uses exactly one branch, one task manifest, this one controlling work ord
 
 PBI-01 remains accepted historical authority. Its manifest, accepted implementation commit, and acceptance metadata must remain byte-for-byte unchanged. PBI-02 modifies the existing `powerbi/pbi01/project/MICustomerGeography.pbip` PBIR/TMDL project as successor product work; it must not create a second Power BI application.
 
+## Current MCR preservation disposition
+
+Master Control Room completed cross-capability disposition after the protected-local and first real-data Desktop execution stage. The prior `PBI02_MODEL13_METADATA_UNRESOLVED` condition is superseded and must not be presented as the current blocker. Both authorized MODEL-13 presentation-package candidates were resolved within the governed local boundary and independently passed the accepted validator. Repository authority did not distinguish between the two valid packages, so one was selected deterministically without moving, copying, renaming, regenerating, recomputing, or changing either protected package.
+
+The selected exact package passed READY, hash, lineage, seed-readiness, and geometry-reconciliation bindings. MODEL-13 accounting reconciled exactly to 3,017 tracts: 2,973 computable, 44 noncomputable, and 438 support-truncated. The full PBI-02 preflight returned `READY`; ignored runtime preparation succeeded; the first real-data Power BI Desktop refresh completed; and the Michigan tract layer rendered on the Road basemap.
+
+Validation then stopped because local Power BI Desktop and Windows exhausted paging-file/system resources. Power BI exited before the required save, close, reopen, and second refresh, so those gates and the remaining real-data Desktop validation are incomplete. No substantive H was created, and no protected artifact was moved, copied, committed, or uploaded.
+
+MCR therefore directs PBI-02 to remain Lane B, non-H, unaccepted, unmerged, and preserved as implementation/fallback evidence while ARCH-01 evaluates the successor presentation architecture. Do not continue substantive Power BI implementation or validation solely to force H. PR #35 remains draft, and no capability acceptance is requested. The task manifest remains `BLOCKED_FAIL_CLOSED` with execution `BLOCKED`, capability acceptance `NOT_REVIEWED`, no `implementation_commit`, and no invented `PAUSED` lifecycle state. This preservation disposition returns current coordination to `MASTER CONTROL ROOM: Sprouts Customer Geography`; if MCR later resumes PBI-02 through genuine exact H, the acceptance destination remains `PBI: Power BI Decisions & Acceptance`.
+
 ## Accepted predecessor boundary
 
 The implementation must recover and preserve:
