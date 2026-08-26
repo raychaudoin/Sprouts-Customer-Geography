@@ -20,6 +20,8 @@ Observed network-capable external assets were classified by protocol, host, path
 - Canary hits remained zero and the browser runtime recorded no warning or error.
 - No protected value, GEOID-bearing request, Seed Context, coordinate, identity, sales value, prediction, error, support flag, lineage, or local path appeared in an external application request.
 
+The targeted final Ultra recheck repeated Topo, Imagery + Labels, Local neutral, and Evidence Context transitions on the accepted-real application. The current browser asset inventory contained only exact reviewed USGS Topo and ImageryTopo HTTPS tile paths at `basemap.nationalmap.gov`, with no query string or fragment. Local neutral and Evidence Context each added zero application-recorded external requests; Evidence Context reported Local neutral before evidence loaded; canary hits and runtime errors remained zero.
+
 ## Disclosure boundary
 
 This record intentionally omits protected paths, package names beyond public logical identities, tract-level values, Seed Context counts and fields, coordinates, identities, sales, predictions, errors, lineage, and raw request captures. No protected path, value, generated production bundle, raw trace, or revealing screenshot is tracked.

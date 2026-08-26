@@ -13,7 +13,6 @@ AUTHORIZATION_BASE = "b29be0c1c4faf173fc95f402446ddfd92f73f92c"
 PBI02_HEAD_AT_AUTHORIZATION = "b7edf51093bfd210f2856771095dd8005557f577"
 TASK_BRANCH = "task/app-01-michigan-local-first-customer-geography-dashboard"
 CAPABILITY_OWNER = "ARCH: Presentation Architecture Decisions & Acceptance"
-MCR_DESTINATION = "MASTER CONTROL ROOM: Sprouts Customer Geography"
 EXPECTED_GEOMETRY_SHA256 = "e0f32095d2e2307f5ad78c9545fc0d3c74fca2250bc866bea8db2368848786ad"
 EXPECTED_NAMES = [
     "Customer Fit Percentile", "5-Mile Household Opportunity", "Modeled Target Mass Percentile",
@@ -95,19 +94,22 @@ def main() -> int:
         raise SystemExit("APP-01 task identity or branch differs")
     if task["capability_owner"] != CAPABILITY_OWNER or task["acceptance_destination"] != CAPABILITY_OWNER:
         raise SystemExit("APP-01 capability owner or acceptance destination differs")
-    if AUTHORIZATION_BASE not in task["authority_source"] or task["exact_next_destination"] != MCR_DESTINATION:
-        raise SystemExit("APP-01 authorization base or Stage-1 destination differs")
+    if AUTHORIZATION_BASE not in task["authority_source"] or task["exact_next_destination"] != CAPABILITY_OWNER:
+        raise SystemExit("APP-01 authorization base or exact-H acceptance destination differs")
     posture = (task["state"], task["completion_state"]["execution"], task["completion_state"]["capability_acceptance"])
-    if posture != ("IN_PROGRESS", "IN_PROGRESS", "NOT_REVIEWED") or "implementation_commit" in task:
-        raise SystemExit(f"APP-01 must remain pre-H and IN_PROGRESS during Stage 1: {posture}")
+    expected_evidence = {"LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT", "FUTURE_PULL_REQUEST"}
+    if posture != ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"):
+        raise SystemExit(f"APP-01 exact-H posture differs: {posture}")
+    if set(task["completion_state"]["implementation_evidence"]) != expected_evidence:
+        raise SystemExit("APP-01 exact-H implementation evidence differs")
+    if any(key in task for key in ("implementation_commit", "acceptance_disposition", "acceptance_metadata")):
+        raise SystemExit("APP-01 H must not claim implementation self-reference or capability acceptance")
 
     gate = _load(repository / "config/app01/app01_stage1_gate.json")
-    if gate.get("substantive_h_exists") is not False or gate.get("exact_next_destination") != MCR_DESTINATION:
-        raise SystemExit("APP-01 Stage-1 gate differs from the pre-H stopping boundary")
-    if gate.get("state") not in {"in_progress", "pre_ultra_ready"}:
-        raise SystemExit("APP-01 Stage-1 gate has an unsupported state")
-    if gate["state"] == "pre_ultra_ready" and not all(gate.get("gates", {}).values()):
-        raise SystemExit("APP-01 cannot be pre-Ultra-ready while a Stage-1 gate is false")
+    if gate.get("substantive_h_exists") is not True or gate.get("exact_next_destination") != CAPABILITY_OWNER:
+        raise SystemExit("APP-01 final gate differs from the exact-H stopping boundary")
+    if gate.get("state") != "ultra_complete" or not all(gate.get("gates", {}).values()):
+        raise SystemExit("APP-01 final Ultra gate is incomplete")
 
     first = build_bundle_set(repository, synthetic=True)
     second = build_bundle_set(repository, synthetic=True)
@@ -165,7 +167,7 @@ def main() -> int:
     print(json.dumps({
         "state": "passed",
         "task_posture": posture,
-        "stage1_gate": gate["state"],
+        "delivery_gate": gate["state"],
         "tract_count": bundle["tract_count"],
         "metric_count": bundle["metric_count"],
         "synthetic_presentation_sha256": sha256(first.presentation_bytes).hexdigest(),

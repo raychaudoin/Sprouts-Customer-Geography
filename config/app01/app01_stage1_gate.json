@@ -1,10 +1,10 @@
 {
   "$schema": "../../schemas/app01/stage1_gate.schema.json",
   "artifact_id": "APP01_STAGE1_GATE_V1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "task_id": "APP-01",
-  "state": "pre_ultra_ready",
-  "substantive_h_exists": false,
+  "state": "ultra_complete",
+  "substantive_h_exists": true,
   "gates": {
     "production_implementation": true,
     "synthetic_egress": true,
@@ -14,7 +14,11 @@
     "product_design_corrections": true,
     "corrected_flow_recheck": true,
     "full_local_validation": true,
-    "protected_disclosure_review": true
+    "protected_disclosure_review": true,
+    "targeted_ultra_product_design_audit": true,
+    "high_severity_findings_disposed": true,
+    "final_validation": true,
+    "exact_h_preparation": true
   },
-  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+  "exact_next_destination": "ARCH: Presentation Architecture Decisions & Acceptance"
 }

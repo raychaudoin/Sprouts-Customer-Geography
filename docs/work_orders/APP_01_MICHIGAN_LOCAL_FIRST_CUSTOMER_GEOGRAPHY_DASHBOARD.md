@@ -6,9 +6,13 @@ Master Control Room authorized this Lane B task from canonical `main` commit `b2
 
 APP-01 is the real local operator application. It is not an architecture-selection spike, another Power BI implementation, or a synthetic-only prototype. It implements the already accepted local-first architecture over the exact accepted MODEL-13, DATA-04, and public Michigan tract presentation inputs.
 
-Stage 1 runs in this task, branch, Issue, pull request, and Codex thread under GPT-5.6 Sol / Max. Stage 1 must complete production implementation, the synthetic egress gate, authorized real-data validation, operator validation, and the required Product Design audit/correction cycle. Stage 1 must not create substantive H.
+Stage 1 ran in this task, branch, Issue, pull request, and Codex thread under GPT-5.6 Sol / Max. Stage 1 completed production implementation, the synthetic egress gate, authorized real-data validation, operator validation, and the required Product Design audit/correction cycle without creating substantive H.
 
-When every Stage-1 gate is complete, execution stops at the pre-Ultra review gate with the current branch and working state preserved. The exact next destination is `MASTER CONTROL ROOM: Sprouts Customer Geography`. Stage 2 later continues this same task under GPT-5.6 Sol / Ultra for final integrated review and bounded corrections before H. No second task, branch, Issue, pull request, or architecture effort is permitted.
+Stage 1 stopped at pre-H checkpoint `cbbec075603d44586d3cafdcfa005653fab3dcc2` with every gate complete and the exact branch and working state preserved. Master Control Room then continued this same task under GPT-5.6 Sol / Ultra for a targeted final Product Design/UX assessment, high-severity corrections only, final validation, and exact-H preparation. No second task, branch, Issue, pull request, worktree, architecture effort, or Product Design project is permitted.
+
+Stage 2 is not a broad redesign or polish pass. A finding is high severity only when it materially blocks the scouting workflow, creates a likely key-metric or selected-tract misunderstanding, obscures missingness, creates a serious map/fallback/readiness or keyboard/focus failure, confuses protected and public context, risks protected external exposure, or makes a common desktop viewport materially unusable. Medium- and low-severity opportunities remain deferred unless strictly necessary to resolve a high-severity problem.
+
+If the targeted review finds no high-severity issue, preserve the current APP-01 interface as the usable baseline and proceed directly to final validation and H. At H the manifest is `COMPLETED_AWAITING_ACCEPTANCE`, execution is `COMPLETED`, capability acceptance remains `NOT_REVIEWED`, no implementation-commit self-reference or acceptance metadata exists, the PR head is exact H, and the exact next destination is `ARCH: Presentation Architecture Decisions & Acceptance`. Exact-H Repository Validation must succeed before routing. Then stop: do not self-accept, create A, merge, deploy, host, publish, resume PBI-02, expand model/data scope, redesign, or begin another task.
 
 ## Controlling accepted authority
 
@@ -155,10 +159,18 @@ Tracked scope must not include real MODEL-13 rows, real Seed Context, protected 
 
 Conformance covers exact APP-01 identity and Lane B posture; accepted predecessor immutability; PBI-02 separation; exact metric order; prohibited income fields; scale and missingness semantics; geometry identity; synthetic adapter behavior; fail-closed package selection; key reconciliation; loopback/route/method/query/Host/CSP policy; external host and method allowlists; absence of telemetry/analytics/remote logging; synthetic egress protection; Local neutral network behavior; deterministic generation; protected tracked-path safeguards; launcher/restart behavior; and completion of the Product Design audit gate before pre-Ultra transition.
 
-Run focused APP-01 tests, the full unit suite, every repository conformance checker, disclosure/protected-path safeguards, appropriate static validation, and live browser/operator validation. Stage 1 remains pre-H.
+For the Stage-1 gate, run focused APP-01 tests, the full unit suite, every repository conformance checker, disclosure/protected-path safeguards, appropriate static validation, and live browser/operator validation. Stage 1 remained pre-H.
 
-## Pre-Ultra review gate
+## Stage-1 pre-Ultra review gate
 
 Stage 1 is complete only when the production application and adapters are complete; synthetic egress passes before real protected use; exact MODEL-13, DATA-04, and geometry inputs validate; the real 3,017-tract and 16-metric dashboard works; scales, missingness, inspector, warnings, QA, Evidence Context, basemaps, Local neutral, launcher, reload, and restart behavior work; Product Design has audited the actual app; material in-scope findings are corrected and rechecked; local validation passes; and no protected material has entered Git or GitHub.
 
-At that point stop. Do not create H, mark `COMPLETED_AWAITING_ACCEPTANCE`, route to ARCH acceptance, merge, deploy, or begin another task. Preserve the exact branch and working state and return only the Stage-1 evidence requested by MCR, including confirmation that APP-01 is ready for the mandatory GPT-5.6 Sol / Ultra final integrated review.
+At that point Stage 1 stopped without H, preserved the exact branch and working state, and returned the requested evidence to Master Control Room for the mandatory GPT-5.6 Sol / Ultra continuation.
+
+## Final Ultra and exact-H gate
+
+The targeted final review uses current-run accepted-real browser captures and inspects the initial Explore screen, metric switching, statewide orientation, pan/zoom, selected-value hierarchy, MODEL and DATA-04 unavailable states, explicit No Data, multiple/clear selection, all basemaps, QA, Evidence Context, ordinary keyboard/focus behavior, common desktop viewports, reload, and restart. It fixes only high-severity in-scope findings and reruns only affected flows when a correction occurs.
+
+Final validation covers focused APP-01 tests, governance checks, the full repository suite, every repository conformance checker, disclosure safeguards, accepted-real startup, exact 3,017-tract and 16-metric reconciliation, scale/missingness semantics, main operator flow, QA, Evidence Context, all basemaps, Local neutral, protected egress, launcher, and clean restart. The unchanged Windows PBI-01 line-ending-only hash condition remains preserved; authoritative Linux Repository Validation must pass on exact H.
+
+When those gates pass, create exact substantive H with the posture described above, make PR `#39` open and non-draft at exact H, obtain successful exact-H Repository Validation, update disclosure-safe Issue `#38` and PR `#39`, and stop for ARCH acceptance.

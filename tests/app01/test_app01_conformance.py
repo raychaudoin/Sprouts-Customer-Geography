@@ -265,12 +265,12 @@ class App01RuntimePolicyAndUiTests(unittest.TestCase):
         self.assertLess(exit_block.index("map.jumpTo"), exit_block.index("externalEgressEnabled = true"))
         self.assertLess(exit_block.index("externalEgressEnabled = true"), exit_block.index("selectBasemap"))
 
-    def test_stage_gate_cannot_claim_completion_or_substantive_h(self) -> None:
+    def test_stage_gate_records_final_ultra_completion_and_substantive_h(self) -> None:
         gate = json.loads(STAGE_GATE.read_text(encoding="utf-8"))
-        self.assertFalse(gate["substantive_h_exists"])
-        self.assertIn(gate["state"], {"in_progress", "pre_ultra_ready"})
-        if gate["state"] == "pre_ultra_ready":
-            self.assertTrue(all(gate["gates"].values()))
+        self.assertTrue(gate["substantive_h_exists"])
+        self.assertEqual(gate["state"], "ultra_complete")
+        self.assertEqual(gate["exact_next_destination"], "ARCH: Presentation Architecture Decisions & Acceptance")
+        self.assertTrue(all(gate["gates"].values()))
 
 
 class App01ServerTests(unittest.TestCase):
@@ -341,15 +341,19 @@ class App01ServerTests(unittest.TestCase):
 
 
 class App01GovernanceAndDisclosureTests(unittest.TestCase):
-    def test_exact_task_identity_branch_lane_and_pre_h_posture(self) -> None:
+    def test_exact_task_identity_branch_lane_and_h_posture(self) -> None:
         manifests = list((REPOSITORY / "governance/tasks").glob("APP-01*.task.json"))
         work_orders = list((REPOSITORY / "docs/work_orders").glob("APP_01*.md"))
         self.assertEqual((len(manifests), len(work_orders)), (1, 1))
         task = json.loads(manifests[0].read_text(encoding="utf-8"))
         self.assertEqual(task["task_id"], "APP-01")
         self.assertEqual(task["implementation_branch"], "task/app-01-michigan-local-first-customer-geography-dashboard")
-        self.assertEqual((task["state"], task["completion_state"]["execution"], task["completion_state"]["capability_acceptance"]), ("IN_PROGRESS", "IN_PROGRESS", "NOT_REVIEWED"))
+        self.assertEqual((task["state"], task["completion_state"]["execution"], task["completion_state"]["capability_acceptance"]), ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"))
+        self.assertEqual(task["exact_next_destination"], "ARCH: Presentation Architecture Decisions & Acceptance")
+        self.assertEqual(set(task["completion_state"]["implementation_evidence"]), {"LOCAL_COMMIT", "TEST_PASS", "COMPLETION_REPORT", "FUTURE_PULL_REQUEST"})
         self.assertNotIn("implementation_commit", task)
+        self.assertNotIn("acceptance_disposition", task)
+        self.assertNotIn("acceptance_metadata", task)
 
     def test_accepted_predecessors_remain_unchanged_from_authorization_base(self) -> None:
         protected = ["config/model", "config/data", "config/geo", "powerbi/pbi01", "presentation/arch01", "config/arch01", "governance/tasks/MODEL-13.michigan-benchmark-pooled-successor-statewide-scoring.task.json", "governance/tasks/DATA-04.michigan-public-data-parity-foundation.task.json", "governance/tasks/PBI-01.michigan-customer-geography-power-bi-mvp.task.json", "governance/tasks/ARCH-01.local-first-customer-geography-presentation-architecture.task.json"]

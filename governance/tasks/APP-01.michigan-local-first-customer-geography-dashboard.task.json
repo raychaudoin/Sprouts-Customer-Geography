@@ -2,8 +2,8 @@
   "task_id": "APP-01",
   "title": "Michigan Local-First Customer Geography Dashboard",
   "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
-  "authority_source": "Master Control Room authorized Lane B APP-01 from canonical main commit b29be0c1c4faf173fc95f402446ddfd92f73f92c for the production local browser dashboard through the complete Stage 1 candidate Product Design audit and pre-Ultra review gate",
-  "state": "IN_PROGRESS",
+  "authority_source": "Master Control Room authorized Lane B APP-01 from canonical main commit b29be0c1c4faf173fc95f402446ddfd92f73f92c and continued the same task from pre-H checkpoint cbbec075603d44586d3cafdcfa005653fab3dcc2 for the targeted final Product Design and Ultra high-severity-only review, final validation, and exact-H preparation",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
   "scope": [
     "Implement the accepted ARCH-01 local-first browser architecture as the real Michigan operator application over accepted prepared presentation inputs",
     "Implement fail-closed MODEL-13 and DATA-04 local input resolution validation deterministic bundle preparation and exact public geometry reconciliation",
@@ -12,7 +12,7 @@
     "Run the production synthetic canary egress gate before real protected input use and validate the accepted real 3017-tract runtime without protected disclosure",
     "Provide one normal Windows launcher actionable failure diagnostics clean restart and disclosure-safe performance stability and accessibility evidence",
     "Audit the complete running application with the installed Product Design capability correct material in-scope findings and recheck affected flows",
-    "Stop before substantive H at the pre-Ultra review gate with the exact branch and working state preserved for the mandatory final Ultra review"
+    "Complete the targeted final Product Design and Ultra review, correct only high-severity in-scope findings, perform final validation, create exact substantive H, and stop for ARCH acceptance"
   ],
   "exclusions": [
     "No change recomputation reinterpretation refit rescore normalization replacement or reopening of MODEL-13 DATA-04 DATA-03 GEO-05 accepted Michigan TIGER PBI-01 or ARCH-01 authority",
@@ -20,7 +20,7 @@
     "No new metric analytical semantics geography source external service paid dependency framework package manager database browser query engine account telemetry analytics crash reporting or remote logging",
     "No real MODEL-13 tract rows Seed Context identities locations sales predictions errors parameters local handles or generated production bundle in Git GitHub external requests or committed screenshots",
     "No non-loopback binding LAN exposure file upload arbitrary browsing write API remote-control API deployment hosting or publication",
-    "No substantive H capability acceptance acceptance-record-only A merge or follow-on task during Stage 1"
+    "No capability acceptance acceptance-record-only A merge deployment hosting publication PBI-02 transition model or data expansion redesign or follow-on task at H"
   ],
   "accepted_input_artifacts": [
     "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1",
@@ -36,10 +36,15 @@
   ],
   "implementation_branch": "task/app-01-michigan-local-first-customer-geography-dashboard",
   "completion_state": {
-    "execution": "IN_PROGRESS",
-    "implementation_evidence": [],
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
     "capability_acceptance": "NOT_REVIEWED"
   },
   "acceptance_destination": "ARCH: Presentation Architecture Decisions & Acceptance",
-  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+  "exact_next_destination": "ARCH: Presentation Architecture Decisions & Acceptance"
 }
