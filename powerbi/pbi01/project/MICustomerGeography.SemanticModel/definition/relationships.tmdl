@@ -1,0 +1,6 @@
+relationship 5c9dacb6-b066-51aa-aa2a-cedcb97ed5c4
+	fromColumn: 'Michigan Public Context'.GEOID
+	toColumn: 'Michigan Tracts'.GEOID
+	fromCardinality: one
+	toCardinality: one
+	crossFilteringBehavior: bothDirections

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "3d2801f508d3536638f5",
   "position": {
-    "x": 40,
-    "y": 76,
+    "x": 800,
+    "y": 16,
     "z": 2000,
-    "height": 36,
-    "width": 1240,
+    "height": 30,
+    "width": 1096,
     "tabOrder": 2000
   },
   "visual": {
@@ -19,10 +19,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Michigan Opportunity Explorer · Public-data proxy decision support, not final site selection or Sprouts’ proprietary model.",
+                    "value": "Map-first statewide decision support · public-data proxy · not routing, final site selection, a site forecast, or Sprouts’ proprietary customer model",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "15px",
+                      "fontSize": "13px",
                       "fontWeight": "normal",
                       "color": "#53657A"
                     }

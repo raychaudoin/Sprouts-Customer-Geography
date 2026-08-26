@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/pbi02/pbi02_metric_catalog.schema.json",
+  "title": "PBI-02 Michigan map metric catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_id",
+    "version",
+    "status",
+    "expected_metric_count",
+    "missing_value_policy",
+    "metrics"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "artifact_id": {"const": "PBI02_MICHIGAN_MAP_METRIC_CATALOG_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "active"},
+    "expected_metric_count": {"const": 16},
+    "missing_value_policy": {"type": "string", "minLength": 1},
+    "metrics": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/metric"}
+    }
+  },
+  "$defs": {
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["table", "column"],
+      "properties": {
+        "table": {"enum": ["Michigan Tracts", "Michigan Public Context"]},
+        "column": {"type": "string", "minLength": 1},
+        "status_column": {"type": "string", "minLength": 1},
+        "moe_column": {"type": "string", "minLength": 1},
+        "status_detail_column": {"type": "string", "minLength": 1}
+      }
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metric_key",
+        "source_authority_id",
+        "family",
+        "display_name",
+        "short_name",
+        "sort_order",
+        "unit",
+        "format_policy",
+        "definition",
+        "interpretation",
+        "source_label",
+        "vintage_label",
+        "scale_policy",
+        "availability_category",
+        "contextual_warning_policy",
+        "palette",
+        "binding"
+      ],
+      "properties": {
+        "metric_key": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "source_authority_id": {"type": "string", "minLength": 1},
+        "family": {"type": "string", "minLength": 1},
+        "display_name": {"type": "string", "minLength": 1},
+        "short_name": {"type": "string", "minLength": 1},
+        "sort_order": {"type": "integer", "minimum": 1, "maximum": 16},
+        "unit": {"type": "string", "minLength": 1},
+        "format_policy": {"enum": ["percentile_1", "count_0", "currency_0", "percent_1", "decimal_2"]},
+        "definition": {"type": "string", "minLength": 1},
+        "interpretation": {"type": "string", "minLength": 1},
+        "source_label": {"type": "string", "minLength": 1},
+        "vintage_label": {"type": "string", "minLength": 1},
+        "scale_policy": {"enum": ["fixed_0_100", "statewide_valid_p02_p98"]},
+        "availability_category": {"enum": ["model13_computability", "model13_household_support", "data04_measure_status"]},
+        "contextual_warning_policy": {"enum": ["model_noncomputability_and_relevant_support", "five_mile_support_truncation", "data04_measure_status_only"]},
+        "palette": {"const": "blue_teal_sequential"},
+        "binding": {"$ref": "#/$defs/binding"}
+      }
+    }
+  }
+}

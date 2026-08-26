@@ -1,0 +1,400 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "246ba4e3bd47725fc74c",
+  "position": {
+    "x": 0,
+    "y": 72,
+    "z": 3000,
+    "height": 1008,
+    "width": 1440,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "azureMap",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Tracts"
+                    }
+                  },
+                  "Property": "GEOID"
+                }
+              },
+              "queryRef": "Michigan Tracts.GEOID",
+              "nativeQueryRef": "GEOID",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Map Tooltip Selected Metric"
+                }
+              },
+              "queryRef": "Report Measures.Map Tooltip Selected Metric",
+              "nativeQueryRef": "Map Tooltip Selected Metric"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Customer Fit Percentile Display"
+                }
+              },
+              "queryRef": "Report Measures.Customer Fit Percentile Display",
+              "nativeQueryRef": "Customer Fit Percentile Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Household Opportunity Display"
+                }
+              },
+              "queryRef": "Report Measures.Household Opportunity Display",
+              "nativeQueryRef": "Household Opportunity Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Median Household Income Display"
+                }
+              },
+              "queryRef": "Report Measures.Median Household Income Display",
+              "nativeQueryRef": "Median Household Income Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Owner-Occupied Housing Share Display"
+                }
+              },
+              "queryRef": "Report Measures.Owner-Occupied Housing Share Display",
+              "nativeQueryRef": "Owner-Occupied Housing Share Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "No-Vehicle Household Share Display"
+                }
+              },
+              "queryRef": "Report Measures.No-Vehicle Household Share Display",
+              "nativeQueryRef": "No-Vehicle Household Share Display"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Map Tooltip GEOID"
+                }
+              },
+              "queryRef": "Report Measures.Map Tooltip GEOID",
+              "nativeQueryRef": "Map Tooltip GEOID"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Inspector Warning"
+                }
+              },
+              "queryRef": "Report Measures.Inspector Warning",
+              "nativeQueryRef": "Inspector Warning"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Measures"
+                    }
+                  },
+                  "Property": "Map Tooltip Source Vintage"
+                }
+              },
+              "queryRef": "Report Measures.Map Tooltip Source Vintage",
+              "nativeQueryRef": "Map Tooltip Source Vintage"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "mapControls": [
+        {
+          "properties": {
+            "zoom": {
+              "expr": {
+                "Literal": {
+                  "Value": "5.35D"
+                }
+              }
+            },
+            "centerLatitude": {
+              "expr": {
+                "Literal": {
+                  "Value": "44.75D"
+                }
+              }
+            },
+            "centerLongitude": {
+              "expr": {
+                "Literal": {
+                  "Value": "-85.55D"
+                }
+              }
+            },
+            "defaultStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'road'"
+                }
+              }
+            },
+            "showSelectionControl": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "referenceLayer": [
+        {
+          "properties": {
+            "additionalDatasource": {
+              "geoJson": {
+                "type": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'packaged'"
+                    }
+                  }
+                },
+                "name": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'michigan_2024_tracts.geojson'"
+                    }
+                  }
+                },
+                "content": {
+                  "expr": {
+                    "ResourcePackageItem": {
+                      "PackageName": "RegisteredResources",
+                      "PackageType": 1,
+                      "ItemName": "michigan_2024_tracts.geojson"
+                    }
+                  }
+                }
+              }
+            },
+            "polygonStrokeTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "55D"
+                }
+              }
+            },
+            "polygonStrokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "polygonStrokeColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#667784'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "polygonFillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Measures"
+                        }
+                      },
+                      "Property": "Selected Metric Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Michigan public tract reference layer on Azure Maps. Road is the default; the native Style picker permits Satellite road labels. Single tract selection filters the inspector.'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'fc683eab5b97c2df4f4c'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

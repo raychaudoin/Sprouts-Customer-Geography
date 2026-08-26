@@ -47,3 +47,4 @@ jobs:
           MODEL12_TEST_TEMP_ROOT: ${{ runner.temp }}
           MODEL13_TEST_TEMP_ROOT: ${{ runner.temp }}
           PBI01_TEST_TEMP_ROOT: ${{ runner.temp }}
+          PBI02_TEST_TEMP_ROOT: ${{ runner.temp }}

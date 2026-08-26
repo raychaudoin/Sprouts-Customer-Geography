@@ -8,8 +8,13 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
+
+REPOSITORY = Path(__file__).resolve().parents[2]
+if str(REPOSITORY / "src") not in sys.path:
+    sys.path.insert(0, str(REPOSITORY / "src"))
 
 from scripts.pbi01.build_report import build_report
 from scripts.pbi01.build_semantic_model import write_semantic_model
@@ -17,13 +22,21 @@ from sprouts_customer_geography.pbi01.preflight import Pbi01PreflightError, vali
 from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tracked_paths
 
 
-REPOSITORY = Path(__file__).resolve().parents[2]
 CONTRACT_PATH = REPOSITORY / "config" / "model" / "model13_michigan_power_bi_output_contract.json"
 GEOMETRY_PATH = REPOSITORY / "powerbi" / "pbi01" / "presentation" / "michigan_2024_tracts.geojson"
 GEOMETRY_MANIFEST_PATH = REPOSITORY / "powerbi" / "pbi01" / "presentation" / "michigan_2024_tracts.manifest.json"
 PROJECT_ROOT = REPOSITORY / "powerbi" / "pbi01" / "project"
-EXPECTED_PAGES = ["Michigan Opportunity Explorer", "Sprouts Evidence Context", "QA & Coverage"]
-EXPECTED_VISUAL_TYPES = {"textbox", "cardVisual", "slicer", "shapeMap", "scatterChart", "tableEx", "clusteredBarChart"}
+PBI02_SUCCESSOR = (REPOSITORY / "governance/tasks/PBI-02.michigan-map-first-scouting-public-context-redesign.task.json").is_file()
+EXPECTED_PAGES = (
+    ["Michigan Opportunity Explorer", "Sprouts Evidence Context", "QA & Coverage", "Tract Tooltip"]
+    if PBI02_SUCCESSOR
+    else ["Michigan Opportunity Explorer", "Sprouts Evidence Context", "QA & Coverage"]
+)
+EXPECTED_VISUAL_TYPES = (
+    {"textbox", "cardVisual", "slicer", "azureMap", "scatterChart", "tableEx"}
+    if PBI02_SUCCESSOR
+    else {"textbox", "cardVisual", "slicer", "shapeMap", "scatterChart", "tableEx", "clusteredBarChart"}
+)
 
 
 def _temporary_directory() -> tempfile.TemporaryDirectory:
@@ -203,7 +216,8 @@ class Pbi01PresentationAndReconstructionTests(unittest.TestCase):
         self.assertTrue(manifest["presentation_only"])
         self.assertFalse(manifest["analytical_gis_logic_in_power_bi"])
         self.assertEqual((len(geoids), len(set(geoids))), (3_017, 3_017))
-        self.assertEqual(manifest["output_byte_sha256"], _hash_file(GEOMETRY_PATH))
+        canonical_bytes = GEOMETRY_PATH.read_bytes().replace(b"\r\n", b"\n")
+        self.assertEqual(manifest["output_byte_sha256"], sha256(canonical_bytes).hexdigest())
 
     def test_pbip_pbir_tmdl_reconstruction_inventory(self) -> None:
         pbip = json.loads((PROJECT_ROOT / "MICustomerGeography.pbip").read_text(encoding="utf-8"))
@@ -217,11 +231,11 @@ class Pbi01PresentationAndReconstructionTests(unittest.TestCase):
         self.assertEqual([page["displayName"] for page in pages], EXPECTED_PAGES)
         visuals = [json.loads(path.read_text(encoding="utf-8")) for path in pages_root.glob("*/visuals/*/visual.json")]
         visual_types = [visual["visual"]["visualType"] for visual in visuals]
-        self.assertEqual(len(visuals), 33)
+        self.assertEqual(len(visuals), 39 if PBI02_SUCCESSOR else 33)
         self.assertEqual(set(visual_types), EXPECTED_VISUAL_TYPES)
-        self.assertEqual(visual_types.count("shapeMap"), 2)
+        self.assertEqual(visual_types.count("shapeMap"), 0 if PBI02_SUCCESSOR else 2)
         self.assertEqual(visual_types.count("scatterChart"), 1)
-        self.assertNotIn("azureMap", visual_types)
+        self.assertEqual(visual_types.count("azureMap"), 1 if PBI02_SUCCESSOR else 0)
         for visual in (item for item in visuals if item["visual"]["visualType"] == "shapeMap"):
             self.assertEqual(set(visual["visual"]["query"]["queryState"]), {"Category", "Value", "Tooltips"})
             resource = visual["visual"]["objects"]["shape"][0]["properties"]["map"]["geoJson"]["content"]["expr"]["ResourcePackageItem"]

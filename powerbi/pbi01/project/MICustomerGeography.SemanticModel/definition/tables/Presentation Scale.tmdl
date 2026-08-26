@@ -1,0 +1,82 @@
+/// Refresh-stable presentation domains; never changes authoritative values.
+table 'Presentation Scale'
+	isHidden
+	lineageTag: ca49f660-384d-5dee-a6b7-e92b5c508a10
+
+	column 'Metric Key'
+		dataType: string
+		isKey
+		isHidden
+		lineageTag: 169e26ed-4f2e-5406-aa72-e66ddd094db7
+		summarizeBy: none
+		sourceColumn: Metric Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Scale Low'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: d9084742-44a3-5dcc-9cb8-bba3fccdc163
+		summarizeBy: none
+		sourceColumn: Scale Low
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Scale High'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: b4559fef-f5b6-5295-823a-8797c9c2cf79
+		summarizeBy: none
+		sourceColumn: Scale High
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Scale Policy'
+		dataType: string
+		isHidden
+		lineageTag: 4ded460b-62be-5354-864f-fb4dc44b7095
+		summarizeBy: none
+		sourceColumn: Scale Policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valid Value Count'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cdca8d9d-8a6a-5d6c-a148-9919d92f6c5f
+		summarizeBy: none
+		sourceColumn: Valid Value Count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Presentation Scale' = m
+		mode: import
+		source =
+				#table(
+					type table [#"Metric Key" = text, #"Scale Low" = number, #"Scale High" = number, #"Scale Policy" = text, #"Valid Value Count" = Int64.Type],
+					{
+						{"customer_fit_percentile", 0.0, 100.0, "fixed_0_100", List.Count(List.RemoveNulls(Table.Column(#"Michigan Tracts", "Customer Fit Percentile")))},
+						let V = List.RemoveNulls(Table.Column(#"Michigan Tracts", "Household Opportunity")) in {"household_opportunity_5_mile", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						{"modeled_target_mass_percentile", 0.0, 100.0, "fixed_0_100", List.Count(List.RemoveNulls(Table.Column(#"Michigan Tracts", "Modeled Target Mass Percentile")))},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Median Household Income Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Median Household Income")) in {"median_household_income", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Per Capita Income Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Per Capita Income")) in {"per_capita_income", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Civilian Labor Force Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Civilian Labor Force Share")) in {"civilian_labor_force_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Employment Rate Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Employment Rate")) in {"employment_rate", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Bachelor's Degree or Higher Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Bachelor's Degree or Higher Share")) in {"bachelors_or_higher_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Owner-Occupied Housing Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Owner-Occupied Housing Share")) in {"owner_occupancy_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Vacant Housing Unit Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Vacant Housing Unit Share")) in {"vacancy_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Median Home Value Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Median Home Value")) in {"median_home_value", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Median Gross Rent Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Median Gross Rent")) in {"median_gross_rent", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Average Household Size Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Average Household Size")) in {"average_household_size", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "No-Vehicle Household Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "No-Vehicle Household Share")) in {"no_vehicle_household_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Drive-Alone Commuter Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Drive-Alone Commuter Share")) in {"drive_alone_commuter_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)},
+						let T = Table.SelectRows(#"Michigan Public Context", each Record.Field(_, "Work-from-Home Commuter Share Status") = "valid"), V = List.RemoveNulls(Table.Column(T, "Work-from-Home Commuter Share")) in {"work_from_home_commuter_share", List.Percentile(V, 0.02), List.Percentile(V, 0.98), "statewide_valid_p02_p98", List.Count(V)}
+					}
+				)
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

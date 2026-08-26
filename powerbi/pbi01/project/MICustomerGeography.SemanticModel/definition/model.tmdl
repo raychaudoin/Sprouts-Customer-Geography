@@ -19,4 +19,8 @@ ref table 'Seed Context'
 
 ref table 'Metric Selector'
 
+ref table 'Michigan Public Context'
+
+ref table 'Presentation Scale'
+
 ref table 'Report Measures'

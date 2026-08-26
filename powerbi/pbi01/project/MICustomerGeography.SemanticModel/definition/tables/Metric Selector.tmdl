@@ -1,13 +1,49 @@
-/// Disconnected presentation selector; no analytical scoring logic.
+/// Disconnected 16-layer presentation selector; no analytical scoring logic.
 table 'Metric Selector'
-	lineageTag: f228f968-6740-54a6-99ee-b5ca035fe869
+	lineageTag: 0743347c-b1e4-50d9-a31d-6f8f7a4e3c6b
 
-	column Metric
+	column 'Metric'
 		dataType: string
-		lineageTag: 6be74f54-175e-5421-be4b-9140d6c4c1e9
+		lineageTag: f9ccf2f3-4dbd-525a-8df3-d52fd304a76c
 		summarizeBy: none
 		sourceColumn: Metric
 		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Metric Key'
+		dataType: string
+		isHidden
+		lineageTag: b1e74f14-9f09-554e-aa36-5c3e9d7871eb
+		summarizeBy: none
+		sourceColumn: Metric Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Source Authority ID'
+		dataType: string
+		isHidden
+		lineageTag: d0b27a4c-bab9-5f9a-b190-ec94269bf39e
+		summarizeBy: none
+		sourceColumn: Source Authority ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Family'
+		dataType: string
+		isHidden
+		lineageTag: 0d0cfb95-867c-5d07-888a-5ae9bdbc5a10
+		summarizeBy: none
+		sourceColumn: Family
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Short Name'
+		dataType: string
+		isHidden
+		lineageTag: 6175c47f-a8f6-53be-a034-f0199639dee3
+		summarizeBy: none
+		sourceColumn: Short Name
 
 		annotation SummarizationSetBy = Automatic
 
@@ -15,9 +51,90 @@ table 'Metric Selector'
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: ee3db739-c07d-51e6-9661-f55dcd7631e2
+		lineageTag: 8d171dff-eafc-5de6-86d6-c3dc2cf3a585
 		summarizeBy: none
 		sourceColumn: Sort Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit'
+		dataType: string
+		isHidden
+		lineageTag: 0c0af007-0a50-524e-976a-9aeec011d7ae
+		summarizeBy: none
+		sourceColumn: Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Format Policy'
+		dataType: string
+		isHidden
+		lineageTag: 0cf983e2-571e-5fd9-8f17-82fdb3496690
+		summarizeBy: none
+		sourceColumn: Format Policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Definition'
+		dataType: string
+		isHidden
+		lineageTag: 8aca6f74-0c49-526f-b9a9-c8ae1a40c382
+		summarizeBy: none
+		sourceColumn: Definition
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Interpretation'
+		dataType: string
+		isHidden
+		lineageTag: 3c3795ee-6675-567f-ae23-974c9dd09f38
+		summarizeBy: none
+		sourceColumn: Interpretation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Source Label'
+		dataType: string
+		isHidden
+		lineageTag: 1f980ca6-0619-5b8f-94f4-b138702e01d2
+		summarizeBy: none
+		sourceColumn: Source Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vintage Label'
+		dataType: string
+		isHidden
+		lineageTag: 50d1a795-d8b0-537d-b2d4-17e131b98259
+		summarizeBy: none
+		sourceColumn: Vintage Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Scale Policy'
+		dataType: string
+		isHidden
+		lineageTag: ff1d34cd-8978-5e78-ad83-c1129039c615
+		summarizeBy: none
+		sourceColumn: Scale Policy
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Availability Category'
+		dataType: string
+		isHidden
+		lineageTag: c6e5534d-6781-5d95-a749-bb901c84e3b7
+		summarizeBy: none
+		sourceColumn: Availability Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Contextual Warning Policy'
+		dataType: string
+		isHidden
+		lineageTag: 4da2d4f2-1592-5665-8ded-380d9d1233ee
+		summarizeBy: none
+		sourceColumn: Contextual Warning Policy
 
 		annotation SummarizationSetBy = Automatic
 
@@ -25,11 +142,24 @@ table 'Metric Selector'
 		mode: import
 		source =
 				#table(
-					type table [Metric = text, Sort Order = Int64.Type],
+					type table [Metric = text, #"Metric Key" = text, #"Source Authority ID" = text, Family = text, #"Short Name" = text, #"Sort Order" = Int64.Type, Unit = text, #"Format Policy" = text, Definition = text, Interpretation = text, #"Source Label" = text, #"Vintage Label" = text, #"Scale Policy" = text, #"Availability Category" = text, #"Contextual Warning Policy" = text],
 					{
-						{"Customer Fit", 1},
-						{"Household Opportunity", 2},
-						{"Modeled Target Mass", 3}
+						{"Customer Fit Percentile", "customer_fit_percentile", "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1", "model_proxy", "Customer Fit", 1, "statewide percentile", "percentile_1", "Percentile position of the accepted customer-fit public-data proxy among computable Michigan tracts.", "Use as relative statewide decision support. It is not Sprouts' proprietary customer model and is not a final site recommendation.", "Accepted MODEL-13 Michigan public-data proxy output", "2024 public-source inputs", "fixed_0_100", "model13_computability", "model_noncomputability_and_relevant_support"},
+						{"5-Mile Household Opportunity", "household_opportunity_5_mile", "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1", "household_opportunity", "Household Opportunity", 2, "households", "count_0", "Accepted raw five-mile B11001 household opportunity mass around the tract's public internal-point anchor.", "This describes household opportunity mass, not customer fit, a site-level forecast, or a recommendation.", "Accepted MODEL-13 Michigan household opportunity output", "2024 ACS 5-year / 2024 TIGER", "statewide_valid_p02_p98", "model13_household_support", "five_mile_support_truncation"},
+						{"Modeled Target Mass Percentile", "modeled_target_mass_percentile", "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1", "model_proxy", "Modeled Target Mass", 3, "statewide percentile", "percentile_1", "Percentile position of the accepted modeled target-mass output among computable Michigan tracts.", "Use only as relative statewide context. It is not a site-level forecast, final recommendation, or promise of sales.", "Accepted MODEL-13 Michigan modeled target-mass output", "2024 public-source inputs", "fixed_0_100", "model13_computability", "model_noncomputability_and_relevant_support"},
+						{"Median Household Income", "median_household_income", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "economic_capacity", "Median Household Income", 4, "2024 inflation-adjusted dollars", "currency_0", "Median household income in the past 12 months for households in the tract.", "A descriptive household economic measure; it is not Average Household Income or Area Median Income.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Per Capita Income", "per_capita_income", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "economic_capacity", "Per Capita Income", 5, "2024 inflation-adjusted dollars", "currency_0", "Aggregate income in the past 12 months divided by the tract population.", "A descriptive per-person income measure; it is not household income or a site forecast.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Civilian Labor Force Share", "civilian_labor_force_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "economic_capacity", "Labor Force Share", 6, "percent of population age 16+", "percent_1", "Civilian labor force as a share of the population age 16 years and over.", "A descriptive labor-force participation measure, not employment-to-population and not a score.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Employment Rate", "employment_rate", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "economic_capacity", "Employment Rate", 7, "percent of civilian labor force", "percent_1", "Employed civilians divided by the civilian labor force.", "This is the employment share of the civilian labor force, not an employment-to-population rate.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Bachelor's Degree or Higher Share", "bachelors_or_higher_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "education_socioeconomic_structure", "Bachelor's or Higher", 8, "percent of population age 25+", "percent_1", "People age 25 years and over with a bachelor's, master's, professional, or doctoral degree as a share of the age-25-plus population.", "A descriptive educational-attainment measure; it is not a direct customer identity or protected-class measure.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Owner-Occupied Housing Share", "owner_occupancy_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "housing_neighborhood_economics", "Owner Occupancy", 9, "percent of occupied housing units", "percent_1", "Owner-occupied housing units as a share of all occupied housing units.", "A descriptive housing-tenure measure; higher or lower values are not inherently favorable.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Vacant Housing Unit Share", "vacancy_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "housing_neighborhood_economics", "Vacancy Share", 10, "percent of housing units", "percent_1", "Vacant housing units as a share of all housing units.", "A descriptive housing-availability measure; it does not by itself imply market strength or weakness.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Median Home Value", "median_home_value", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "housing_neighborhood_economics", "Median Home Value", 11, "dollars", "currency_0", "Median value of owner-occupied housing units.", "A descriptive housing-value measure; it is not a property appraisal or candidate-site valuation.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Median Gross Rent", "median_gross_rent", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "housing_neighborhood_economics", "Median Gross Rent", 12, "dollars per month", "currency_0", "Median monthly gross rent for renter-occupied housing units paying cash rent.", "A descriptive renter housing-cost measure; unavailable or inapplicable values remain explicit.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Average Household Size", "average_household_size", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "household_scale", "Average Household Size", 13, "persons per occupied housing unit", "decimal_2", "Average number of people per occupied housing unit.", "A descriptive household-scale measure; it does not indicate household income or customer fit.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"No-Vehicle Household Share", "no_vehicle_household_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "transportation_accessibility", "No-Vehicle Households", 14, "percent of households", "percent_1", "Households with no vehicle available as a share of all households.", "A descriptive transportation-access measure; it does not imply a routing, traffic, or drive-time conclusion.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Drive-Alone Commuter Share", "drive_alone_commuter_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "transportation_accessibility", "Drive Alone", 15, "percent of workers age 16+", "percent_1", "Workers age 16 years and over who drove alone to work as a share of workers age 16 years and over.", "A descriptive commuting measure; the report provides no routing, traffic, navigation, or drive-time behavior.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"},
+						{"Work-from-Home Commuter Share", "work_from_home_commuter_share", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1", "transportation_accessibility", "Work from Home", 16, "percent of workers age 16+", "percent_1", "Workers age 16 years and over who worked from home as a share of workers age 16 years and over.", "A descriptive commuting measure; it is not a traffic, routing, or site-access recommendation.", "U.S. Census Bureau, American Community Survey", "2020-2024 ACS 5-Year Detailed Tables", "statewide_valid_p02_p98", "data04_measure_status", "data04_measure_status_only"}
 					}
 				)
 
