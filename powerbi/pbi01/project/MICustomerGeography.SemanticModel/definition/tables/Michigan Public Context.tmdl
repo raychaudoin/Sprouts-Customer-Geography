@@ -1,0 +1,535 @@
+/// Exact accepted DATA-04 public tract estimates and QA evidence; presentation labels only.
+table 'Michigan Public Context'
+	lineageTag: a04f25cd-046b-5f65-8b84-c66fe1ad39bb
+
+	column 'GEOID'
+		dataType: string
+		isKey
+		lineageTag: 41ab12d8-1d26-5089-987c-1bcfcde7c615
+		summarizeBy: none
+		sourceColumn: GEOID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State FIPS'
+		dataType: string
+		isHidden
+		lineageTag: ac989c56-608a-5c86-9057-d45f38fa6567
+		summarizeBy: none
+		sourceColumn: State FIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'County FIPS'
+		dataType: string
+		isHidden
+		lineageTag: 63eb5930-51fb-5f3d-9bfa-247a6ef590a1
+		summarizeBy: none
+		sourceColumn: County FIPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tract Code'
+		dataType: string
+		isHidden
+		lineageTag: 35db182a-6578-5e87-bad2-eb11561d3a2f
+		summarizeBy: none
+		sourceColumn: Tract Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Household Income'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 31f04401-f580-58d1-95f6-2169325dc9e0
+		summarizeBy: none
+		sourceColumn: Median Household Income
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Household Income MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 2df4a5df-c734-5ec6-bd77-030260dec252
+		summarizeBy: none
+		sourceColumn: Median Household Income MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Household Income Status'
+		dataType: string
+		isHidden
+		lineageTag: 0c54aed9-3618-5dae-b362-4c5c16bbe6f1
+		summarizeBy: none
+		sourceColumn: Median Household Income Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Household Income Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 82b26273-c0a0-5697-b73c-39a1dbdaed1d
+		summarizeBy: none
+		sourceColumn: Median Household Income Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Per Capita Income'
+		dataType: double
+		formatString: 0.00
+		lineageTag: af357706-b155-5ecc-aa38-9de693ea3303
+		summarizeBy: none
+		sourceColumn: Per Capita Income
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Per Capita Income MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 05732d34-41e7-5a6d-9eed-40ec7a8cf2e8
+		summarizeBy: none
+		sourceColumn: Per Capita Income MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Per Capita Income Status'
+		dataType: string
+		isHidden
+		lineageTag: 53d192e5-9ca7-548f-833c-636adf87e634
+		summarizeBy: none
+		sourceColumn: Per Capita Income Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Per Capita Income Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 03ba46c2-a382-54dc-babf-c6a7a905da07
+		summarizeBy: none
+		sourceColumn: Per Capita Income Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Civilian Labor Force Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 9fe12fee-3011-5e7d-9597-c2211a82ca02
+		summarizeBy: none
+		sourceColumn: Civilian Labor Force Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Civilian Labor Force Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: c0b5aa99-f1d1-5e4d-b54a-9219c7e5c947
+		summarizeBy: none
+		sourceColumn: Civilian Labor Force Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Civilian Labor Force Share Status'
+		dataType: string
+		isHidden
+		lineageTag: bc3831cb-020c-5ae2-b3c6-6105bdd32703
+		summarizeBy: none
+		sourceColumn: Civilian Labor Force Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Civilian Labor Force Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 5536d5de-7d33-59c9-b1c3-0e13fe643ef0
+		summarizeBy: none
+		sourceColumn: Civilian Labor Force Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Rate'
+		dataType: double
+		formatString: 0.00
+		lineageTag: c7007d37-0237-5c15-842c-bc97aa62d006
+		summarizeBy: none
+		sourceColumn: Employment Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Rate MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 4b9c708d-ec72-53bd-8db6-74b9a3dd02a7
+		summarizeBy: none
+		sourceColumn: Employment Rate MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Rate Status'
+		dataType: string
+		isHidden
+		lineageTag: 599e0aad-f0d5-50ca-afca-1a2c2d66e380
+		summarizeBy: none
+		sourceColumn: Employment Rate Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employment Rate Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 70886f21-bb46-5122-89cd-6f0f01b3550f
+		summarizeBy: none
+		sourceColumn: Employment Rate Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bachelor''s Degree or Higher Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 7a939caa-3ae9-5621-94ce-87763b9940dc
+		summarizeBy: none
+		sourceColumn: Bachelor's Degree or Higher Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bachelor''s Degree or Higher Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: e7eb1f59-ef6b-57ed-8c01-a7f6ae1d7115
+		summarizeBy: none
+		sourceColumn: Bachelor's Degree or Higher Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bachelor''s Degree or Higher Share Status'
+		dataType: string
+		isHidden
+		lineageTag: bde6c1bd-9e12-523a-9297-381b39d6b3cc
+		summarizeBy: none
+		sourceColumn: Bachelor's Degree or Higher Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bachelor''s Degree or Higher Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: a668d37a-e640-5aff-9197-c1e5b8a194bd
+		summarizeBy: none
+		sourceColumn: Bachelor's Degree or Higher Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Owner-Occupied Housing Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 7b96eda7-5130-51ba-8cb8-5ef584e61436
+		summarizeBy: none
+		sourceColumn: Owner-Occupied Housing Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Owner-Occupied Housing Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: afb1377b-5e7e-5d6f-901a-1357f37962c7
+		summarizeBy: none
+		sourceColumn: Owner-Occupied Housing Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Owner-Occupied Housing Share Status'
+		dataType: string
+		isHidden
+		lineageTag: 9f0ded0b-3797-5969-97e6-56d4ae679de3
+		summarizeBy: none
+		sourceColumn: Owner-Occupied Housing Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Owner-Occupied Housing Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: a1e37eb2-6827-5739-a9c2-68031abd4b0a
+		summarizeBy: none
+		sourceColumn: Owner-Occupied Housing Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vacant Housing Unit Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: b565f32b-06d3-53c3-b3d8-9f31ac60c8e6
+		summarizeBy: none
+		sourceColumn: Vacant Housing Unit Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vacant Housing Unit Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 17c83221-23a6-5354-892f-8a6731b5493d
+		summarizeBy: none
+		sourceColumn: Vacant Housing Unit Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vacant Housing Unit Share Status'
+		dataType: string
+		isHidden
+		lineageTag: ce0d9fbe-c029-5641-8cc2-de8e6ea4969b
+		summarizeBy: none
+		sourceColumn: Vacant Housing Unit Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vacant Housing Unit Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 41eae3fd-d1a5-5315-b4cb-dcac5f21d29e
+		summarizeBy: none
+		sourceColumn: Vacant Housing Unit Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Home Value'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 79e8d430-6adc-5ae6-8df2-7e5bc1463059
+		summarizeBy: none
+		sourceColumn: Median Home Value
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Home Value MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 3d6764be-804b-5160-b36e-f777f839dd23
+		summarizeBy: none
+		sourceColumn: Median Home Value MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Home Value Status'
+		dataType: string
+		isHidden
+		lineageTag: 114547d5-e020-5bc4-afc5-a818478937ee
+		summarizeBy: none
+		sourceColumn: Median Home Value Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Home Value Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 20f66986-60d8-50f4-b3e0-027a7bf38591
+		summarizeBy: none
+		sourceColumn: Median Home Value Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Gross Rent'
+		dataType: double
+		formatString: 0.00
+		lineageTag: e61188f3-bd2d-5f24-8c81-b937264248a0
+		summarizeBy: none
+		sourceColumn: Median Gross Rent
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Gross Rent MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: f66b9373-bc23-5246-a1a3-f805d69d86b8
+		summarizeBy: none
+		sourceColumn: Median Gross Rent MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Gross Rent Status'
+		dataType: string
+		isHidden
+		lineageTag: 0cdb8484-9c7c-58b5-8fee-1fe45408b771
+		summarizeBy: none
+		sourceColumn: Median Gross Rent Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Median Gross Rent Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 45832bbe-4e9e-503d-b16f-9faa09de9434
+		summarizeBy: none
+		sourceColumn: Median Gross Rent Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Household Size'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 69315703-1aaf-56fb-bfc8-258f4e718542
+		summarizeBy: none
+		sourceColumn: Average Household Size
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Household Size MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: accf51b6-09db-55b1-a530-49a5d9d946be
+		summarizeBy: none
+		sourceColumn: Average Household Size MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Household Size Status'
+		dataType: string
+		isHidden
+		lineageTag: f0169020-058d-5942-afce-d54096571990
+		summarizeBy: none
+		sourceColumn: Average Household Size Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Household Size Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: e66d5f57-8bdb-5bf5-a67d-58c58424573e
+		summarizeBy: none
+		sourceColumn: Average Household Size Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No-Vehicle Household Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 4724f4ed-f450-5472-b2d7-f8ff76585a73
+		summarizeBy: none
+		sourceColumn: No-Vehicle Household Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No-Vehicle Household Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: bf7eb039-1430-57c7-b97b-41c441eeabb8
+		summarizeBy: none
+		sourceColumn: No-Vehicle Household Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No-Vehicle Household Share Status'
+		dataType: string
+		isHidden
+		lineageTag: bcfb5598-e5f8-5f43-91b1-f49d32d27e71
+		summarizeBy: none
+		sourceColumn: No-Vehicle Household Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'No-Vehicle Household Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 980f7e98-5f97-5461-b35e-8c0504f50307
+		summarizeBy: none
+		sourceColumn: No-Vehicle Household Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Drive-Alone Commuter Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 1cd85f47-a842-5540-b0cd-fc3896b76ac1
+		summarizeBy: none
+		sourceColumn: Drive-Alone Commuter Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Drive-Alone Commuter Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: bc3f90fb-8be9-539d-92aa-33c130ee6cf5
+		summarizeBy: none
+		sourceColumn: Drive-Alone Commuter Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Drive-Alone Commuter Share Status'
+		dataType: string
+		isHidden
+		lineageTag: 5bb45a0d-13c0-51df-9a62-ace57c70489b
+		summarizeBy: none
+		sourceColumn: Drive-Alone Commuter Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Drive-Alone Commuter Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: 66301422-cff6-5757-b1f0-e399936304ac
+		summarizeBy: none
+		sourceColumn: Drive-Alone Commuter Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work-from-Home Commuter Share'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 28de3453-30b1-55d4-99cb-f3ff6ba5535f
+		summarizeBy: none
+		sourceColumn: Work-from-Home Commuter Share
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work-from-Home Commuter Share MOE'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 9e7db835-9b1d-5ce4-a13e-f6b471709bca
+		summarizeBy: none
+		sourceColumn: Work-from-Home Commuter Share MOE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work-from-Home Commuter Share Status'
+		dataType: string
+		isHidden
+		lineageTag: b76f78f1-f1a0-57b5-b39d-05c6676fc8ff
+		summarizeBy: none
+		sourceColumn: Work-from-Home Commuter Share Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Work-from-Home Commuter Share Status Detail'
+		dataType: string
+		isHidden
+		lineageTag: c2e37b4f-3ba6-5085-a2cb-a6037b81b376
+		summarizeBy: none
+		sourceColumn: Work-from-Home Commuter Share Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Michigan Public Context' = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents("__PBI02_PUBLIC_CONTEXT_CSV__"), [Delimiter = ",", Columns = 56, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+					#"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+					#"Renamed Columns" = Table.RenameColumns(#"Promoted Headers", {{"tract_geoid", "GEOID"}, {"state_fips", "State FIPS"}, {"county_fips", "County FIPS"}, {"tract_code", "Tract Code"}, {"median_household_income_estimate", "Median Household Income"}, {"median_household_income_moe", "Median Household Income MOE"}, {"median_household_income_status", "Median Household Income Status"}, {"median_household_income_status_detail", "Median Household Income Status Detail"}, {"per_capita_income_estimate", "Per Capita Income"}, {"per_capita_income_moe", "Per Capita Income MOE"}, {"per_capita_income_status", "Per Capita Income Status"}, {"per_capita_income_status_detail", "Per Capita Income Status Detail"}, {"civilian_labor_force_share_estimate", "Civilian Labor Force Share"}, {"civilian_labor_force_share_moe", "Civilian Labor Force Share MOE"}, {"civilian_labor_force_share_status", "Civilian Labor Force Share Status"}, {"civilian_labor_force_share_status_detail", "Civilian Labor Force Share Status Detail"}, {"employment_rate_estimate", "Employment Rate"}, {"employment_rate_moe", "Employment Rate MOE"}, {"employment_rate_status", "Employment Rate Status"}, {"employment_rate_status_detail", "Employment Rate Status Detail"}, {"bachelors_or_higher_share_estimate", "Bachelor's Degree or Higher Share"}, {"bachelors_or_higher_share_moe", "Bachelor's Degree or Higher Share MOE"}, {"bachelors_or_higher_share_status", "Bachelor's Degree or Higher Share Status"}, {"bachelors_or_higher_share_status_detail", "Bachelor's Degree or Higher Share Status Detail"}, {"owner_occupancy_share_estimate", "Owner-Occupied Housing Share"}, {"owner_occupancy_share_moe", "Owner-Occupied Housing Share MOE"}, {"owner_occupancy_share_status", "Owner-Occupied Housing Share Status"}, {"owner_occupancy_share_status_detail", "Owner-Occupied Housing Share Status Detail"}, {"vacancy_share_estimate", "Vacant Housing Unit Share"}, {"vacancy_share_moe", "Vacant Housing Unit Share MOE"}, {"vacancy_share_status", "Vacant Housing Unit Share Status"}, {"vacancy_share_status_detail", "Vacant Housing Unit Share Status Detail"}, {"median_home_value_estimate", "Median Home Value"}, {"median_home_value_moe", "Median Home Value MOE"}, {"median_home_value_status", "Median Home Value Status"}, {"median_home_value_status_detail", "Median Home Value Status Detail"}, {"median_gross_rent_estimate", "Median Gross Rent"}, {"median_gross_rent_moe", "Median Gross Rent MOE"}, {"median_gross_rent_status", "Median Gross Rent Status"}, {"median_gross_rent_status_detail", "Median Gross Rent Status Detail"}, {"average_household_size_estimate", "Average Household Size"}, {"average_household_size_moe", "Average Household Size MOE"}, {"average_household_size_status", "Average Household Size Status"}, {"average_household_size_status_detail", "Average Household Size Status Detail"}, {"no_vehicle_household_share_estimate", "No-Vehicle Household Share"}, {"no_vehicle_household_share_moe", "No-Vehicle Household Share MOE"}, {"no_vehicle_household_share_status", "No-Vehicle Household Share Status"}, {"no_vehicle_household_share_status_detail", "No-Vehicle Household Share Status Detail"}, {"drive_alone_commuter_share_estimate", "Drive-Alone Commuter Share"}, {"drive_alone_commuter_share_moe", "Drive-Alone Commuter Share MOE"}, {"drive_alone_commuter_share_status", "Drive-Alone Commuter Share Status"}, {"drive_alone_commuter_share_status_detail", "Drive-Alone Commuter Share Status Detail"}, {"work_from_home_commuter_share_estimate", "Work-from-Home Commuter Share"}, {"work_from_home_commuter_share_moe", "Work-from-Home Commuter Share MOE"}, {"work_from_home_commuter_share_status", "Work-from-Home Commuter Share Status"}, {"work_from_home_commuter_share_status_detail", "Work-from-Home Commuter Share Status Detail"}}, MissingField.Error),
+					#"Typed Columns" = Table.TransformColumnTypes(#"Renamed Columns", {{"GEOID", type text}, {"State FIPS", type text}, {"County FIPS", type text}, {"Tract Code", type text}, {"Median Household Income", type number}, {"Median Household Income MOE", type number}, {"Median Household Income Status", type text}, {"Median Household Income Status Detail", type text}, {"Per Capita Income", type number}, {"Per Capita Income MOE", type number}, {"Per Capita Income Status", type text}, {"Per Capita Income Status Detail", type text}, {"Civilian Labor Force Share", type number}, {"Civilian Labor Force Share MOE", type number}, {"Civilian Labor Force Share Status", type text}, {"Civilian Labor Force Share Status Detail", type text}, {"Employment Rate", type number}, {"Employment Rate MOE", type number}, {"Employment Rate Status", type text}, {"Employment Rate Status Detail", type text}, {"Bachelor's Degree or Higher Share", type number}, {"Bachelor's Degree or Higher Share MOE", type number}, {"Bachelor's Degree or Higher Share Status", type text}, {"Bachelor's Degree or Higher Share Status Detail", type text}, {"Owner-Occupied Housing Share", type number}, {"Owner-Occupied Housing Share MOE", type number}, {"Owner-Occupied Housing Share Status", type text}, {"Owner-Occupied Housing Share Status Detail", type text}, {"Vacant Housing Unit Share", type number}, {"Vacant Housing Unit Share MOE", type number}, {"Vacant Housing Unit Share Status", type text}, {"Vacant Housing Unit Share Status Detail", type text}, {"Median Home Value", type number}, {"Median Home Value MOE", type number}, {"Median Home Value Status", type text}, {"Median Home Value Status Detail", type text}, {"Median Gross Rent", type number}, {"Median Gross Rent MOE", type number}, {"Median Gross Rent Status", type text}, {"Median Gross Rent Status Detail", type text}, {"Average Household Size", type number}, {"Average Household Size MOE", type number}, {"Average Household Size Status", type text}, {"Average Household Size Status Detail", type text}, {"No-Vehicle Household Share", type number}, {"No-Vehicle Household Share MOE", type number}, {"No-Vehicle Household Share Status", type text}, {"No-Vehicle Household Share Status Detail", type text}, {"Drive-Alone Commuter Share", type number}, {"Drive-Alone Commuter Share MOE", type number}, {"Drive-Alone Commuter Share Status", type text}, {"Drive-Alone Commuter Share Status Detail", type text}, {"Work-from-Home Commuter Share", type number}, {"Work-from-Home Commuter Share MOE", type number}, {"Work-from-Home Commuter Share Status", type text}, {"Work-from-Home Commuter Share Status Detail", type text}}, "en-US")
+				in
+					#"Typed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

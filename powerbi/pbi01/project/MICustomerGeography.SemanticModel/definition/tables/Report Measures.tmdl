@@ -1,11 +1,11 @@
-/// Light report presentation measures only; all analytical values remain MODEL-13 authoritative.
+/// Light PBI-02 presentation measures; all analytical values remain accepted upstream authority.
 table 'Report Measures'
-	lineageTag: 39a37780-bba8-54fe-9435-8778f10caf7e
+	lineageTag: f21d8a54-2c4f-5983-8a33-3291509a5a24
 
 	column Anchor
 		dataType: string
 		isHidden
-		lineageTag: c65668a4-7f01-51a9-b46a-3639863b2139
+		lineageTag: 0f8c8f41-6bf2-5d7b-b6d5-c596ac9e37e1
 		summarizeBy: none
 		sourceColumn: Anchor
 
@@ -31,24 +31,420 @@ table 'Report Measures'
 		formatString: #,0
 		lineageTag: 429bea4e-8f62-5bc1-848d-768412580b67
 
-	/// Presentation-only switch across distinct authoritative MODEL-13 fields.
+	/// DATA-04 public-context tract rows after report filters.
+	measure 'Public Context Rows' = COUNTROWS('Michigan Public Context')
+		formatString: #,0
+		lineageTag: 7f8845af-3236-59e6-be06-7d059d18a8a1
+
+	/// Reconciled public GEOID count.
+	measure 'Public Context Reconciled Keys' = COUNTROWS(INTERSECT(VALUES('Michigan Tracts'[GEOID]), VALUES('Michigan Public Context'[GEOID])))
+		formatString: #,0
+		lineageTag: 811b65cd-786d-5c9e-84b1-380a7bf8be88
+
+	/// Stable selected catalog key.
+	measure 'Selected Metric Key' = SELECTEDVALUE('Metric Selector'[Metric Key], "customer_fit_percentile")
+		lineageTag: a3378bd4-15d9-551b-a864-6ce369adf477
+
+	/// Operator selected map-layer label.
+	measure 'Selected Metric Label' = SELECTEDVALUE('Metric Selector'[Metric], "Customer Fit Percentile")
+		lineageTag: 86a8396d-ff55-54ea-a107-bae1d687cadc
+
+	measure 'Selected Metric Short Name' = SELECTEDVALUE('Metric Selector'[Short Name], "Customer Fit")
+		lineageTag: cb62c554-39d7-5952-8a81-070482286fc7
+
+	measure 'Selected Metric Unit' = SELECTEDVALUE('Metric Selector'[Unit], "statewide percentile")
+		lineageTag: af49d473-0c79-5327-b285-15a44360010b
+
+	measure 'Selected Metric Format Policy' = SELECTEDVALUE('Metric Selector'[Format Policy], "percentile_1")
+		lineageTag: ba8bdfdc-8be4-54d9-ab9f-d3e3134ea102
+
+	measure 'Selected Metric Definition' = SELECTEDVALUE('Metric Selector'[Definition], "Percentile position of the accepted customer-fit public-data proxy among computable Michigan tracts.")
+		lineageTag: c443c701-2e0e-5767-85f0-b953bddd15b6
+
+	measure 'Selected Metric Interpretation' = SELECTEDVALUE('Metric Selector'[Interpretation], "Use as relative statewide decision support. It is not Sprouts' proprietary customer model and is not a final site recommendation.")
+		lineageTag: 0091bee6-fdd0-5f26-8639-6b91298eff5e
+
+	measure 'Selected Metric Source' = SELECTEDVALUE('Metric Selector'[Source Label], "Accepted MODEL-13 Michigan public-data proxy output")
+		lineageTag: 63f28e05-67df-5a37-9182-4e7648939613
+
+	measure 'Selected Metric Vintage' = SELECTEDVALUE('Metric Selector'[Vintage Label], "2024 public-source inputs")
+		lineageTag: 3eb4620e-d496-51a6-ae99-0958d819e1c7
+
+	measure 'Selected Metric Scale Policy' = SELECTEDVALUE('Metric Selector'[Scale Policy], "fixed_0_100")
+		lineageTag: e3e1836d-778f-5896-a8b5-5a8c469335e9
+
+	measure 'Selected Metric Availability Category' = SELECTEDVALUE('Metric Selector'[Availability Category], "model13_computability")
+		lineageTag: ca668b8c-4626-56fc-ad57-11d6c69f048c
+
+	measure 'Selected Metric Warning Policy' = SELECTEDVALUE('Metric Selector'[Contextual Warning Policy], "model_noncomputability_and_relevant_support")
+		lineageTag: 87cbe764-d517-568f-9b5e-c35430579a36
+
+	/// Presentation-only switch across distinct authoritative fields.
 	measure 'Selected Metric Value' = ```
-		VAR MetricName = SELECTEDVALUE('Metric Selector'[Metric], "Customer Fit")
+		VAR MetricKey = [Selected Metric Key]
 		RETURN
 		    SWITCH(
-		        MetricName,
-		        "Customer Fit", AVERAGE('Michigan Tracts'[Customer Fit Percentile]),
-		        "Household Opportunity", AVERAGE('Michigan Tracts'[Household Opportunity]),
-		        "Modeled Target Mass", AVERAGE('Michigan Tracts'[Modeled Target Mass Percentile]),
-		        AVERAGE('Michigan Tracts'[Customer Fit Percentile])
+		        MetricKey,
+		        "customer_fit_percentile", MAX('Michigan Tracts'[Customer Fit Percentile]),
+		        "household_opportunity_5_mile", MAX('Michigan Tracts'[Household Opportunity]),
+		        "modeled_target_mass_percentile", MAX('Michigan Tracts'[Modeled Target Mass Percentile]),
+		        "median_household_income", MAX('Michigan Public Context'[Median Household Income]),
+		        "per_capita_income", MAX('Michigan Public Context'[Per Capita Income]),
+		        "civilian_labor_force_share", MAX('Michigan Public Context'[Civilian Labor Force Share]),
+		        "employment_rate", MAX('Michigan Public Context'[Employment Rate]),
+		        "bachelors_or_higher_share", MAX('Michigan Public Context'[Bachelor's Degree or Higher Share]),
+		        "owner_occupancy_share", MAX('Michigan Public Context'[Owner-Occupied Housing Share]),
+		        "vacancy_share", MAX('Michigan Public Context'[Vacant Housing Unit Share]),
+		        "median_home_value", MAX('Michigan Public Context'[Median Home Value]),
+		        "median_gross_rent", MAX('Michigan Public Context'[Median Gross Rent]),
+		        "average_household_size", MAX('Michigan Public Context'[Average Household Size]),
+		        "no_vehicle_household_share", MAX('Michigan Public Context'[No-Vehicle Household Share]),
+		        "drive_alone_commuter_share", MAX('Michigan Public Context'[Drive-Alone Commuter Share]),
+		        "work_from_home_commuter_share", MAX('Michigan Public Context'[Work-from-Home Commuter Share]),
+		        BLANK()
 		    )
 		```
 		formatString: 0.00
 		lineageTag: 5db80892-4fe9-5ec8-b5c8-34819a900ab7
 
-	/// Current map metric label.
-	measure 'Selected Metric Label' = SELECTEDVALUE('Metric Selector'[Metric], "Customer Fit")
-		lineageTag: 86a8396d-ff55-54ea-a107-bae1d687cadc
+	/// Selected source-specific availability status.
+	measure 'Selected Metric Status' = ```
+		VAR MetricKey = [Selected Metric Key]
+		RETURN
+		    SWITCH(
+		        MetricKey,
+		        "customer_fit_percentile", SELECTEDVALUE('Michigan Tracts'[Computability Status]),
+		        "household_opportunity_5_mile", IF(ISBLANK(MAX('Michigan Tracts'[Household Opportunity])), "missing", "valid"),
+		        "modeled_target_mass_percentile", SELECTEDVALUE('Michigan Tracts'[Computability Status]),
+		        "median_household_income", SELECTEDVALUE('Michigan Public Context'[Median Household Income Status]),
+		        "per_capita_income", SELECTEDVALUE('Michigan Public Context'[Per Capita Income Status]),
+		        "civilian_labor_force_share", SELECTEDVALUE('Michigan Public Context'[Civilian Labor Force Share Status]),
+		        "employment_rate", SELECTEDVALUE('Michigan Public Context'[Employment Rate Status]),
+		        "bachelors_or_higher_share", SELECTEDVALUE('Michigan Public Context'[Bachelor's Degree or Higher Share Status]),
+		        "owner_occupancy_share", SELECTEDVALUE('Michigan Public Context'[Owner-Occupied Housing Share Status]),
+		        "vacancy_share", SELECTEDVALUE('Michigan Public Context'[Vacant Housing Unit Share Status]),
+		        "median_home_value", SELECTEDVALUE('Michigan Public Context'[Median Home Value Status]),
+		        "median_gross_rent", SELECTEDVALUE('Michigan Public Context'[Median Gross Rent Status]),
+		        "average_household_size", SELECTEDVALUE('Michigan Public Context'[Average Household Size Status]),
+		        "no_vehicle_household_share", SELECTEDVALUE('Michigan Public Context'[No-Vehicle Household Share Status]),
+		        "drive_alone_commuter_share", SELECTEDVALUE('Michigan Public Context'[Drive-Alone Commuter Share Status]),
+		        "work_from_home_commuter_share", SELECTEDVALUE('Michigan Public Context'[Work-from-Home Commuter Share Status]),
+		        "missing"
+		    )
+		```
+		lineageTag: 07cc6f43-d01e-533e-a7b5-4ef50143e414
+
+	/// Selected DATA-04 margin of error when applicable.
+	measure 'Selected Metric MOE' = ```
+		VAR MetricKey = [Selected Metric Key]
+		RETURN
+		    SWITCH(
+		        MetricKey,
+		        "customer_fit_percentile", BLANK(),
+		        "household_opportunity_5_mile", BLANK(),
+		        "modeled_target_mass_percentile", BLANK(),
+		        "median_household_income", MAX('Michigan Public Context'[Median Household Income MOE]),
+		        "per_capita_income", MAX('Michigan Public Context'[Per Capita Income MOE]),
+		        "civilian_labor_force_share", MAX('Michigan Public Context'[Civilian Labor Force Share MOE]),
+		        "employment_rate", MAX('Michigan Public Context'[Employment Rate MOE]),
+		        "bachelors_or_higher_share", MAX('Michigan Public Context'[Bachelor's Degree or Higher Share MOE]),
+		        "owner_occupancy_share", MAX('Michigan Public Context'[Owner-Occupied Housing Share MOE]),
+		        "vacancy_share", MAX('Michigan Public Context'[Vacant Housing Unit Share MOE]),
+		        "median_home_value", MAX('Michigan Public Context'[Median Home Value MOE]),
+		        "median_gross_rent", MAX('Michigan Public Context'[Median Gross Rent MOE]),
+		        "average_household_size", MAX('Michigan Public Context'[Average Household Size MOE]),
+		        "no_vehicle_household_share", MAX('Michigan Public Context'[No-Vehicle Household Share MOE]),
+		        "drive_alone_commuter_share", MAX('Michigan Public Context'[Drive-Alone Commuter Share MOE]),
+		        "work_from_home_commuter_share", MAX('Michigan Public Context'[Work-from-Home Commuter Share MOE]),
+		        BLANK()
+		    )
+		```
+		formatString: 0.00
+		lineageTag: 40dba468-75d8-5a77-881a-98efb680ed1e
+
+	measure 'Selected Metric Status Detail' = ```
+		VAR MetricKey = [Selected Metric Key]
+		RETURN
+		    SWITCH(
+		        MetricKey,
+		        "customer_fit_percentile", SELECTEDVALUE('Michigan Tracts'[QA / Missingness Status]),
+		        "household_opportunity_5_mile", SELECTEDVALUE('Michigan Tracts'[QA / Missingness Status]),
+		        "modeled_target_mass_percentile", SELECTEDVALUE('Michigan Tracts'[QA / Missingness Status]),
+		        "median_household_income", SELECTEDVALUE('Michigan Public Context'[Median Household Income Status Detail]),
+		        "per_capita_income", SELECTEDVALUE('Michigan Public Context'[Per Capita Income Status Detail]),
+		        "civilian_labor_force_share", SELECTEDVALUE('Michigan Public Context'[Civilian Labor Force Share Status Detail]),
+		        "employment_rate", SELECTEDVALUE('Michigan Public Context'[Employment Rate Status Detail]),
+		        "bachelors_or_higher_share", SELECTEDVALUE('Michigan Public Context'[Bachelor's Degree or Higher Share Status Detail]),
+		        "owner_occupancy_share", SELECTEDVALUE('Michigan Public Context'[Owner-Occupied Housing Share Status Detail]),
+		        "vacancy_share", SELECTEDVALUE('Michigan Public Context'[Vacant Housing Unit Share Status Detail]),
+		        "median_home_value", SELECTEDVALUE('Michigan Public Context'[Median Home Value Status Detail]),
+		        "median_gross_rent", SELECTEDVALUE('Michigan Public Context'[Median Gross Rent Status Detail]),
+		        "average_household_size", SELECTEDVALUE('Michigan Public Context'[Average Household Size Status Detail]),
+		        "no_vehicle_household_share", SELECTEDVALUE('Michigan Public Context'[No-Vehicle Household Share Status Detail]),
+		        "drive_alone_commuter_share", SELECTEDVALUE('Michigan Public Context'[Drive-Alone Commuter Share Status Detail]),
+		        "work_from_home_commuter_share", SELECTEDVALUE('Michigan Public Context'[Work-from-Home Commuter Share Status Detail]),
+		        ""
+		    )
+		```
+		lineageTag: 789c7cb8-80fb-5203-840a-1720b7459c07
+
+	/// Explicit availability; missingness never becomes zero or favorable.
+	measure 'Selected Metric Available' = ```
+		VAR MetricKey = [Selected Metric Key]
+		VAR StatusValue = [Selected Metric Status]
+		VAR NumericValue = [Selected Metric Value]
+		RETURN
+		    IF(
+		        NOT ISBLANK(NumericValue)
+		            && IF(
+		                MetricKey IN {"customer_fit_percentile", "modeled_target_mass_percentile"},
+		                StatusValue = "MODEL_SCORE_COMPUTABLE",
+		                StatusValue = "valid"
+		            ),
+		        1,
+		        0
+		    )
+		```
+		formatString: 0
+		lineageTag: 5df72034-506c-5535-bc47-9c020b6afd2a
+
+	/// Refresh-stable scale lower bound.
+	measure 'Selected Metric Scale Low' = ```
+		VAR MetricKey = [Selected Metric Key]
+		RETURN CALCULATE(MAX('Presentation Scale'[Scale Low]), TREATAS({MetricKey}, 'Presentation Scale'[Metric Key]))
+		```
+		formatString: 0.00
+		lineageTag: b955a181-a53c-5e1d-9b6f-c67552ae2544
+
+	/// Refresh-stable scale upper bound.
+	measure 'Selected Metric Scale High' = ```
+		VAR MetricKey = [Selected Metric Key]
+		RETURN CALCULATE(MAX('Presentation Scale'[Scale High]), TREATAS({MetricKey}, 'Presentation Scale'[Metric Key]))
+		```
+		formatString: 0.00
+		lineageTag: c5aa19bf-cb74-565f-94c2-75a7f7204ba7
+
+	measure 'Selected Metric Scale Valid Count' = ```
+		VAR MetricKey = [Selected Metric Key]
+		RETURN CALCULATE(MAX('Presentation Scale'[Valid Value Count]), TREATAS({MetricKey}, 'Presentation Scale'[Metric Key]))
+		```
+		formatString: #,0
+		lineageTag: 5136d92c-8dc6-54a2-a44c-0777ee80d36e
+
+	/// Field-value color for Azure Maps reference polygons; sequential and neutral for unavailable values.
+	measure 'Selected Metric Color' = ```
+		VAR ValueToColor = [Selected Metric Value]
+		VAR LowValue = [Selected Metric Scale Low]
+		VAR HighValue = [Selected Metric Scale High]
+		VAR Span = HighValue - LowValue
+		VAR Position = DIVIDE(ValueToColor - LowValue, Span, 0)
+		RETURN
+		    IF(
+		        [Selected Metric Available] <> 1 || ISBLANK(ValueToColor) || ISBLANK(LowValue) || ISBLANK(HighValue),
+		        "#D7DEE4",
+		        SWITCH(
+		            TRUE(),
+		            Position <= 0.20, "#E5F2F0",
+		            Position <= 0.40, "#B9DED8",
+		            Position <= 0.60, "#7FC4BB",
+		            Position <= 0.80, "#3E9B91",
+		            "#12685F"
+		        )
+		    )
+		```
+		lineageTag: 68449347-a179-5fe2-8e8f-7c12515ca3bf
+
+	/// Exact selected metric value formatted by catalog policy.
+	measure 'Selected Metric Formatted Value' = ```
+		VAR ValueToFormat = [Selected Metric Value]
+		VAR Policy = [Selected Metric Format Policy]
+		RETURN
+		    IF(
+		        ISBLANK(ValueToFormat),
+		        "No Data / Unavailable",
+		        SWITCH(
+		            Policy,
+		            "percentile_1", FORMAT(ValueToFormat, "0.0") & " percentile",
+		            "count_0", FORMAT(ValueToFormat, "#,0") & " households",
+		            "currency_0", FORMAT(ValueToFormat, "$#,0"),
+		            "percent_1", FORMAT(ValueToFormat, "0.0") & " %",
+		            "decimal_2", FORMAT(ValueToFormat, "0.00"),
+		            FORMAT(ValueToFormat, "#,0.00")
+		        )
+		    )
+		```
+		lineageTag: fadfce68-37fd-53b0-86ee-f99f948ee6c7
+
+	measure 'Legend Step 1' = ```
+		VAR LowValue = [Selected Metric Scale Low]
+		VAR HighValue = [Selected Metric Scale High]
+		VAR PointValue = LowValue + ((HighValue - LowValue) * 0.0)
+		VAR Policy = [Selected Metric Format Policy]
+		VAR FormattedValue =
+		    SWITCH(
+		        Policy,
+		        "percentile_1", FORMAT(PointValue, "0.0"),
+		        "count_0", FORMAT(PointValue, "#,0"),
+		        "currency_0", FORMAT(PointValue, "$#,0"),
+		        "percent_1", FORMAT(PointValue, "0.0") & " %",
+		        "decimal_2", FORMAT(PointValue, "0.00"),
+		        FORMAT(PointValue, "#,0.00")
+		    )
+		RETURN "≤ " & FormattedValue
+		```
+		lineageTag: 3d7d5d1c-8f72-5a97-8b32-a2e338c292b0
+
+	measure 'Legend Step 2' = ```
+		VAR LowValue = [Selected Metric Scale Low]
+		VAR HighValue = [Selected Metric Scale High]
+		VAR PointValue = LowValue + ((HighValue - LowValue) * 0.25)
+		VAR Policy = [Selected Metric Format Policy]
+		VAR FormattedValue =
+		    SWITCH(
+		        Policy,
+		        "percentile_1", FORMAT(PointValue, "0.0"),
+		        "count_0", FORMAT(PointValue, "#,0"),
+		        "currency_0", FORMAT(PointValue, "$#,0"),
+		        "percent_1", FORMAT(PointValue, "0.0") & " %",
+		        "decimal_2", FORMAT(PointValue, "0.00"),
+		        FORMAT(PointValue, "#,0.00")
+		    )
+		RETURN "" & FormattedValue
+		```
+		lineageTag: 5a02e789-f97c-5050-90bd-af01418cfc68
+
+	measure 'Legend Step 3' = ```
+		VAR LowValue = [Selected Metric Scale Low]
+		VAR HighValue = [Selected Metric Scale High]
+		VAR PointValue = LowValue + ((HighValue - LowValue) * 0.5)
+		VAR Policy = [Selected Metric Format Policy]
+		VAR FormattedValue =
+		    SWITCH(
+		        Policy,
+		        "percentile_1", FORMAT(PointValue, "0.0"),
+		        "count_0", FORMAT(PointValue, "#,0"),
+		        "currency_0", FORMAT(PointValue, "$#,0"),
+		        "percent_1", FORMAT(PointValue, "0.0") & " %",
+		        "decimal_2", FORMAT(PointValue, "0.00"),
+		        FORMAT(PointValue, "#,0.00")
+		    )
+		RETURN "" & FormattedValue
+		```
+		lineageTag: 6cfa8861-b912-51a6-a63c-8a9a31323e9d
+
+	measure 'Legend Step 4' = ```
+		VAR LowValue = [Selected Metric Scale Low]
+		VAR HighValue = [Selected Metric Scale High]
+		VAR PointValue = LowValue + ((HighValue - LowValue) * 0.75)
+		VAR Policy = [Selected Metric Format Policy]
+		VAR FormattedValue =
+		    SWITCH(
+		        Policy,
+		        "percentile_1", FORMAT(PointValue, "0.0"),
+		        "count_0", FORMAT(PointValue, "#,0"),
+		        "currency_0", FORMAT(PointValue, "$#,0"),
+		        "percent_1", FORMAT(PointValue, "0.0") & " %",
+		        "decimal_2", FORMAT(PointValue, "0.00"),
+		        FORMAT(PointValue, "#,0.00")
+		    )
+		RETURN "" & FormattedValue
+		```
+		lineageTag: dc066c01-c608-5d91-910f-2880bd173bba
+
+	measure 'Legend Step 5' = ```
+		VAR LowValue = [Selected Metric Scale Low]
+		VAR HighValue = [Selected Metric Scale High]
+		VAR PointValue = LowValue + ((HighValue - LowValue) * 1.0)
+		VAR Policy = [Selected Metric Format Policy]
+		VAR FormattedValue =
+		    SWITCH(
+		        Policy,
+		        "percentile_1", FORMAT(PointValue, "0.0"),
+		        "count_0", FORMAT(PointValue, "#,0"),
+		        "currency_0", FORMAT(PointValue, "$#,0"),
+		        "percent_1", FORMAT(PointValue, "0.0") & " %",
+		        "decimal_2", FORMAT(PointValue, "0.00"),
+		        FORMAT(PointValue, "#,0.00")
+		    )
+		RETURN "≥ " & FormattedValue
+		```
+		lineageTag: e0c4e700-814f-5876-84f6-ed273597926c
+
+	measure 'Legend No Data' = "No Data / Unavailable"
+		lineageTag: 1c6a43fc-2058-54ea-a8e3-7c545396ed95
+
+	/// Operator-facing unit, source, vintage, definition, and interpretation.
+	measure 'Metric Help' = [Selected Metric Unit] & " · " & [Selected Metric Source] & " · " & [Selected Metric Vintage] & UNICHAR(10) & [Selected Metric Definition] & UNICHAR(10) & [Selected Metric Interpretation]
+		lineageTag: b62651bd-fd6d-579d-a94f-3c3f51e506ef
+
+	/// Dynamic five-step scale plus neutral unavailable state.
+	measure 'Five-Step Legend' = [Legend Step 1] & "   " & [Legend Step 2] & "   " & [Legend Step 3] & "   " & [Legend Step 4] & "   " & [Legend Step 5] & UNICHAR(10) & [Legend No Data]
+		lineageTag: 88fa95d5-3eaa-54ca-9285-56a1f38b4a24
+
+	/// Zero, one, or multiple selected GEOIDs.
+	measure 'Selected Tract Count' = IF(ISFILTERED('Michigan Tracts'[GEOID]), COUNTROWS(VALUES('Michigan Tracts'[GEOID])), 0)
+		formatString: #,0
+		lineageTag: 8e5d8ac1-1773-5cf9-a074-bb0395f272a3
+
+	/// Explicit empty, single, and multiple-selection state.
+	measure 'Inspector State' = ```
+		VAR SelectedCount = [Selected Tract Count]
+		RETURN SWITCH(TRUE(), SelectedCount = 0, "Select a tract", SelectedCount = 1, "Single tract selected", "Multiple tracts selected")
+		```
+		lineageTag: 924d04ac-c7c2-55d6-b3af-4934c3be5fbd
+
+	/// Public GEOID technical reference only.
+	measure 'Selected GEOID' = IF([Selected Tract Count] = 1, SELECTEDVALUE('Michigan Tracts'[GEOID]), BLANK())
+		lineageTag: 30405fca-1415-56c6-babf-baa6bf88e490
+
+	measure 'Inspector Heading' = ```
+		VAR SelectedCount = [Selected Tract Count]
+		RETURN SWITCH(TRUE(), SelectedCount = 0, "Select a tract", SelectedCount = 1, "TRACT " & [Selected GEOID], "Multiple tracts selected")
+		```
+		lineageTag: 517217da-5970-591c-ad77-8446cb269549
+
+	measure 'Inspector Selected Metric' = IF([Selected Tract Count] = 1, [Selected Metric Label], BLANK())
+		lineageTag: e810c39c-a1a5-5068-b034-19a46f8c6d91
+
+	measure 'Inspector Selected Value' = IF([Selected Tract Count] = 1, [Selected Metric Formatted Value], BLANK())
+		lineageTag: 6579b547-ffa2-5a17-beac-a1609db5548e
+
+	/// Metric-specific warning immediately below selected value.
+	measure 'Inspector Warning' = ```
+		VAR SelectedCount = [Selected Tract Count]
+		VAR Policy = [Selected Metric Warning Policy]
+		VAR StatusValue = [Selected Metric Status]
+		VAR DetailValue = [Selected Metric Status Detail]
+		RETURN
+		    IF(
+		        SelectedCount <> 1,
+		        BLANK(),
+		        SWITCH(
+		            Policy,
+		            "data04_measure_status_only",
+		                IF(StatusValue = "valid", BLANK(), [Selected Metric Label] & " unavailable: " & COALESCE(StatusValue, "missing") & IF(NOT ISBLANK(DetailValue), " — " & DetailValue, "")),
+		            "five_mile_support_truncation",
+		                IF(SELECTEDVALUE('Michigan Tracts'[Support Truncation 5 Mile], FALSE()), "Five-mile support is boundary-truncated; interpret household opportunity with caution.", BLANK()),
+		            "model_noncomputability_and_relevant_support",
+		                IF(
+		                    StatusValue <> "MODEL_SCORE_COMPUTABLE",
+		                    "MODEL-13 value unavailable: " & COALESCE(DetailValue, "noncomputable"),
+		                    IF(SELECTEDVALUE('Michigan Tracts'[Any Support Truncation], FALSE()), "One or more accepted model support radii are boundary-truncated; interpret the model proxy with caution.", BLANK())
+		                ),
+		            BLANK()
+		        )
+		    )
+		```
+		lineageTag: 9a987b1d-e41c-5a0d-a5f3-f5f4e6f1b90d
+
+	measure 'Map Tooltip Selected Metric' = [Selected Metric Label] & ": " & [Selected Metric Formatted Value]
+		lineageTag: ea6c5a62-4164-54bc-85a0-0ed63ecb7fd7
+
+	measure 'Map Tooltip GEOID' = SELECTEDVALUE('Michigan Tracts'[GEOID])
+		lineageTag: 1da9e554-5faa-5c4a-83e0-d8da9d8c756a
+
+	measure 'Map Tooltip Source Vintage' = [Selected Metric Source] & " · " & [Selected Metric Vintage]
+		lineageTag: 3d7e053b-4a9c-5303-ac14-6009adb1d0bc
 
 	/// Authoritative MODEL-13 customer-fit proxy.
 	measure 'Customer Fit' = AVERAGE('Michigan Tracts'[Customer Fit])
@@ -59,12 +455,12 @@ table 'Report Measures'
 		formatString: #,0
 		lineageTag: 36e3f03e-2ccd-5836-9c70-983a5521c0fb
 
-	measure 'Customer Fit Percentile' = AVERAGE('Michigan Tracts'[Customer Fit Percentile])
+	measure 'Customer Fit Percentile' = MAX('Michigan Tracts'[Customer Fit Percentile])
 		formatString: 0.0
 		lineageTag: 9c17f5cd-918b-5ed2-8800-48a78102b4c5
 
-	/// Authoritative MODEL-13 household opportunity.
-	measure 'Household Opportunity' = AVERAGE('Michigan Tracts'[Household Opportunity])
+	/// Authoritative MODEL-13 five-mile household opportunity.
+	measure 'Household Opportunity' = MAX('Michigan Tracts'[Household Opportunity])
 		formatString: #,0.00
 		lineageTag: 1e9e706f-ba09-5257-9018-ac7144970728
 
@@ -77,7 +473,7 @@ table 'Report Measures'
 		formatString: #,0
 		lineageTag: e5ca9025-a881-5e68-a410-92e9cedf4f42
 
-	measure 'Modeled Target Mass Percentile' = AVERAGE('Michigan Tracts'[Modeled Target Mass Percentile])
+	measure 'Modeled Target Mass Percentile' = MAX('Michigan Tracts'[Modeled Target Mass Percentile])
 		formatString: 0.0
 		lineageTag: 0068b24b-6e50-5cb3-b7d0-717fa2fecdb6
 
@@ -113,6 +509,165 @@ table 'Report Measures'
 
 	measure 'QA / Missingness Detail' = SELECTEDVALUE('Michigan Tracts'[QA / Missingness Status], "Multiple categories")
 		lineageTag: a50537d8-6278-5649-b647-bf6f0adc163c
+
+	/// Exact DATA-04 Median Household Income estimate.
+	measure 'Median Household Income' = MAX('Michigan Public Context'[Median Household Income])
+		formatString: 0.00
+		lineageTag: e756a649-a3cc-5eed-a784-29a28f607a1e
+
+	/// Exact DATA-04 Per Capita Income estimate.
+	measure 'Per Capita Income' = MAX('Michigan Public Context'[Per Capita Income])
+		formatString: 0.00
+		lineageTag: c8a65508-88fd-5721-a377-1068bf49b924
+
+	/// Exact DATA-04 Civilian Labor Force Share estimate.
+	measure 'Civilian Labor Force Share' = MAX('Michigan Public Context'[Civilian Labor Force Share])
+		formatString: 0.00
+		lineageTag: ab5ff0c7-2a88-56c8-9e71-aa5289cacd02
+
+	/// Exact DATA-04 Employment Rate estimate.
+	measure 'Employment Rate' = MAX('Michigan Public Context'[Employment Rate])
+		formatString: 0.00
+		lineageTag: 928234ca-c795-5e09-8c3d-d8fdfc664663
+
+	/// Exact DATA-04 Bachelor's Degree or Higher Share estimate.
+	measure 'Bachelor''s Degree or Higher Share' = MAX('Michigan Public Context'[Bachelor's Degree or Higher Share])
+		formatString: 0.00
+		lineageTag: 3ee2cf5d-93d5-56c9-a977-68a12814eadc
+
+	/// Exact DATA-04 Owner-Occupied Housing Share estimate.
+	measure 'Owner-Occupied Housing Share' = MAX('Michigan Public Context'[Owner-Occupied Housing Share])
+		formatString: 0.00
+		lineageTag: 1120b833-c716-5531-9414-1bb21f386e61
+
+	/// Exact DATA-04 Vacant Housing Unit Share estimate.
+	measure 'Vacant Housing Unit Share' = MAX('Michigan Public Context'[Vacant Housing Unit Share])
+		formatString: 0.00
+		lineageTag: 26eeaced-6218-5136-bed0-ce109b40944f
+
+	/// Exact DATA-04 Median Home Value estimate.
+	measure 'Median Home Value' = MAX('Michigan Public Context'[Median Home Value])
+		formatString: 0.00
+		lineageTag: cc6a4aa1-fa35-52f8-a5c9-609c43ae27b1
+
+	/// Exact DATA-04 Median Gross Rent estimate.
+	measure 'Median Gross Rent' = MAX('Michigan Public Context'[Median Gross Rent])
+		formatString: 0.00
+		lineageTag: 09680a4c-0e79-59e1-8f59-c42371cd19a0
+
+	/// Exact DATA-04 Average Household Size estimate.
+	measure 'Average Household Size' = MAX('Michigan Public Context'[Average Household Size])
+		formatString: 0.00
+		lineageTag: 3ab0a443-5cad-5eaa-a5c0-14c4f78cfcdd
+
+	/// Exact DATA-04 No-Vehicle Household Share estimate.
+	measure 'No-Vehicle Household Share' = MAX('Michigan Public Context'[No-Vehicle Household Share])
+		formatString: 0.00
+		lineageTag: af0f1025-2928-58a4-b9ee-b66950656f00
+
+	/// Exact DATA-04 Drive-Alone Commuter Share estimate.
+	measure 'Drive-Alone Commuter Share' = MAX('Michigan Public Context'[Drive-Alone Commuter Share])
+		formatString: 0.00
+		lineageTag: d70f00f1-a436-5a89-a82d-86cc387cfbc3
+
+	/// Exact DATA-04 Work-from-Home Commuter Share estimate.
+	measure 'Work-from-Home Commuter Share' = MAX('Michigan Public Context'[Work-from-Home Commuter Share])
+		formatString: 0.00
+		lineageTag: 61acd2c7-0494-5a6a-af9e-a6311115dafa
+
+	measure 'Customer Fit Percentile Display' = IF([Selected Tract Count] = 1 && NOT ISBLANK([Customer Fit Percentile]), FORMAT([Customer Fit Percentile], "0.0") & " percentile", "No Data / Unavailable")
+		lineageTag: 148fa093-f015-5374-ae2a-4f977ec3f05e
+
+	measure 'Household Opportunity Display' = IF([Selected Tract Count] = 1 && NOT ISBLANK([Household Opportunity]), FORMAT([Household Opportunity], "#,0") & " households", "No Data / Unavailable")
+		lineageTag: 6618c5a4-d8f1-5b18-81f6-1ed0af9cccf3
+
+	measure 'Median Household Income Display' = IF([Selected Tract Count] = 1 && SELECTEDVALUE('Michigan Public Context'[Median Household Income Status]) = "valid", FORMAT([Median Household Income], "$#,0"), "No Data / Unavailable")
+		lineageTag: ecb4c5c1-7c83-5e52-9681-431caae8f6d0
+
+	measure 'Owner-Occupied Housing Share Display' = IF([Selected Tract Count] = 1 && SELECTEDVALUE('Michigan Public Context'[Owner-Occupied Housing Share Status]) = "valid", FORMAT([Owner-Occupied Housing Share], "0.0") & " %", "No Data / Unavailable")
+		lineageTag: 2603f97f-39bb-5790-92f7-b3e34941c2d7
+
+	measure 'No-Vehicle Household Share Display' = IF([Selected Tract Count] = 1 && SELECTEDVALUE('Michigan Public Context'[No-Vehicle Household Share Status]) = "valid", FORMAT([No-Vehicle Household Share], "0.0") & " %", "No Data / Unavailable")
+		lineageTag: 15721269-7c61-5dd6-acb5-9257151a38fc
+
+	measure 'Per Capita Income Display' = IF([Selected Tract Count] = 1 && SELECTEDVALUE('Michigan Public Context'[Per Capita Income Status]) = "valid", FORMAT([Per Capita Income], "$#,0"), "No Data / Unavailable")
+		lineageTag: 23416004-4caf-52fa-8a4d-9d31184772c3
+
+	/// Suppress duplicate selected metric and substitute Per Capita Income.
+	measure 'Support Row 1 Label' = IF([Selected Metric Key] = "customer_fit_percentile", "Per Capita Income", "Customer Fit Percentile")
+		lineageTag: 1443f5ea-1bb6-5302-8cb6-66705a83db5d
+
+	measure 'Support Row 1 Value' = IF([Selected Metric Key] = "customer_fit_percentile", [Per Capita Income Display], [Customer Fit Percentile Display])
+		lineageTag: dc0406ad-bb1e-5c00-8be0-7c272607e37f
+
+	/// Suppress duplicate selected metric and substitute Per Capita Income.
+	measure 'Support Row 2 Label' = IF([Selected Metric Key] = "household_opportunity_5_mile", "Per Capita Income", "5-Mile Household Opportunity")
+		lineageTag: f122983f-414e-54c7-a2c1-a87e040d538f
+
+	measure 'Support Row 2 Value' = IF([Selected Metric Key] = "household_opportunity_5_mile", [Per Capita Income Display], [Household Opportunity Display])
+		lineageTag: f7fced5e-ff60-5198-b64e-f1fe43546cba
+
+	/// Suppress duplicate selected metric and substitute Per Capita Income.
+	measure 'Support Row 3 Label' = IF([Selected Metric Key] = "median_household_income", "Per Capita Income", "Median Household Income")
+		lineageTag: c2d370ba-09b9-5418-9a39-fe9f36b1e1ea
+
+	measure 'Support Row 3 Value' = IF([Selected Metric Key] = "median_household_income", [Per Capita Income Display], [Median Household Income Display])
+		lineageTag: 22de513c-3bdd-510a-b214-a3a12b7028aa
+
+	/// Suppress duplicate selected metric and substitute Per Capita Income.
+	measure 'Support Row 4 Label' = IF([Selected Metric Key] = "owner_occupancy_share", "Per Capita Income", "Owner-Occupied Housing Share")
+		lineageTag: f6995b3f-3450-5edc-a038-df70b762f623
+
+	measure 'Support Row 4 Value' = IF([Selected Metric Key] = "owner_occupancy_share", [Per Capita Income Display], [Owner-Occupied Housing Share Display])
+		lineageTag: 25bf1e4e-6a3f-5c3e-b27d-d6ca03bea19b
+
+	/// Suppress duplicate selected metric and substitute Per Capita Income.
+	measure 'Support Row 5 Label' = IF([Selected Metric Key] = "no_vehicle_household_share", "Per Capita Income", "No-Vehicle Household Share")
+		lineageTag: e382b4c6-3777-5209-96cc-3000c21c2af0
+
+	measure 'Support Row 5 Value' = IF([Selected Metric Key] = "no_vehicle_household_share", [Per Capita Income Display], [No-Vehicle Household Share Display])
+		lineageTag: 04f55093-f07b-5cd8-be04-5e2dced51184
+
+	measure 'Support Row 6 Label' = "GEOID"
+		lineageTag: 2c9c2f62-258a-5461-aef0-5034c96bd945
+
+	measure 'Support Row 6 Value' = IF([Selected Tract Count] = 1, [Selected GEOID], BLANK())
+		lineageTag: dc89370a-e037-51ba-a7f2-b4ea7aa74084
+
+	/// Duplicate-suppressed selected-tract context in governed display order.
+	measure 'Selected Tract Context' = IF([Selected Tract Count] = 1, [Support Row 1 Label] & ": " & [Support Row 1 Value] & UNICHAR(10) & [Support Row 2 Label] & ": " & [Support Row 2 Value] & UNICHAR(10) & [Support Row 3 Label] & ": " & [Support Row 3 Value] & UNICHAR(10) & [Support Row 4 Label] & ": " & [Support Row 4 Value] & UNICHAR(10) & [Support Row 5 Label] & ": " & [Support Row 5 Value] & UNICHAR(10) & [Support Row 6 Label] & ": " & [Support Row 6 Value], BLANK())
+		lineageTag: e979b857-cdb6-534c-a45d-9c6f94ae97eb
+
+	measure 'Selected Public Metric Status' = IF([Selected Metric Availability Category] = "data04_measure_status", [Selected Metric Status], "Not applicable")
+		lineageTag: 1f9ec6d9-fc9e-57f6-bba3-06e3bfc32964
+
+	measure 'Selected Public Metric MOE' = IF([Selected Metric Availability Category] = "data04_measure_status", [Selected Metric MOE], BLANK())
+		formatString: 0.00
+		lineageTag: f0387dd5-e31e-5f9b-b655-95a41fcce6ba
+
+	measure 'Selected Public Metric Status Detail' = IF([Selected Metric Availability Category] = "data04_measure_status", [Selected Metric Status Detail], "Not applicable")
+		lineageTag: 9fde3add-c6ea-53b7-80bb-c05baa722f62
+
+	measure 'Selected Public Metric Available Tracts' = VAR K=[Selected Metric Key] RETURN IF(K IN {"customer_fit_percentile","household_opportunity_5_mile","modeled_target_mass_percentile"}, BLANK(), SUMX(VALUES('Michigan Tracts'[GEOID]), [Selected Metric Available]))
+		formatString: #,0
+		lineageTag: 80562ddf-cca9-5711-bc71-8f1710c43b25
+
+	/// Missing, invalid, inapplicable, or otherwise unavailable selected public metric rows.
+	measure 'Selected Public Metric Unavailable Tracts' = IF(ISBLANK([Selected Public Metric Available Tracts]), BLANK(), [Public Context Rows] - [Selected Public Metric Available Tracts])
+		formatString: #,0
+		lineageTag: 81aeff36-5269-5c9d-abf0-92adf9f65441
+
+	/// Operator QA state for the public one-to-one relationship.
+	measure 'Public Context Relationship State' = IF([Public Context Rows] = 3017 && [Public Context Reconciled Keys] = 3017, "3,017 / 3,017 keys reconciled one-to-one", "FAIL CLOSED — public-context key reconciliation differs")
+		lineageTag: 4e2fc651-5e05-509d-a335-3745b8c2e4e4
+
+	/// Selected DATA-04 status, MOE, and status detail for QA.
+	measure 'Selected Public Metric QA' = "Status: " & [Selected Public Metric Status] & IF(NOT ISBLANK([Selected Public Metric MOE]), " · MOE: " & FORMAT([Selected Public Metric MOE], "#,0.00"), "") & UNICHAR(10) & [Selected Public Metric Status Detail]
+		lineageTag: 8c33c9e3-71e9-529a-9ea3-2ee5c6ed4d62
+
+	/// Compact report-page tooltip public context.
+	measure 'Tooltip Public Context' = [Customer Fit Percentile Display] & " · " & [Household Opportunity Display] & UNICHAR(10) & [Median Household Income Display] & " · " & [Owner-Occupied Housing Share Display] & " · " & [No-Vehicle Household Share Display]
+		lineageTag: 81597c3a-f745-52fc-ab66-f73908fd89d7
 
 	/// Accepted nonquarantined Michigan physical-location evidence rows.
 	measure 'Evidence Locations' = COUNTROWS('Seed Context')
@@ -155,7 +710,7 @@ table 'Report Measures'
 
 	partition 'Report Measures' = m
 		mode: import
-		source = #table(type table [Anchor = text], {{"PBI-01"}})
+		source = #table(type table [Anchor = text], {{"PBI-02"}})
 
 	annotation PBI_NavigationStepName = Navigation
 

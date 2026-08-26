@@ -92,6 +92,9 @@ def _assert_ignored(repository: Path, paths: list[str]) -> None:
 
 def main() -> int:
     repository = Path(__file__).resolve().parents[1]
+    pbi02_successor = (
+        repository / "governance/tasks/PBI-02.michigan-map-first-scouting-public-context-redesign.task.json"
+    ).is_file()
     sys.path.insert(0, str(repository / "src"))
     from sprouts_customer_geography.governance import load_and_validate_task_manifest
     from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tracked_paths
@@ -175,7 +178,8 @@ def main() -> int:
         raise SystemExit("PBI-01 presentation-geometry identity differs")
     if geometry_manifest.get("presentation_only") is not True or geometry_manifest.get("analytical_gis_logic_in_power_bi") is not False:
         raise SystemExit("PBI-01 presentation-geometry analytical boundary differs")
-    if geometry_manifest.get("output_byte_sha256") != sha256(geometry_bytes).hexdigest():
+    canonical_geometry_bytes = geometry_bytes.replace(b"\r\n", b"\n")
+    if geometry_manifest.get("output_byte_sha256") != sha256(canonical_geometry_bytes).hexdigest():
         raise SystemExit("PBI-01 presentation-geometry hash differs")
     geometry = json.loads(geometry_bytes)
     features = geometry.get("features", []) if isinstance(geometry, dict) else []
@@ -201,7 +205,12 @@ def main() -> int:
     pages_root = report_root / "definition/pages"
     page_order = _load(pages_root / "pages.json").get("pageOrder", [])
     pages = [_load(pages_root / page_id / "page.json") for page_id in page_order]
-    if [page.get("displayName") for page in pages] != EXPECTED_PAGES:
+    expected_pages = (
+        ["Michigan Opportunity Explorer", "Sprouts Evidence Context", "QA & Coverage", "Tract Tooltip"]
+        if pbi02_successor
+        else EXPECTED_PAGES
+    )
+    if [page.get("displayName") for page in pages] != expected_pages:
         raise SystemExit("PBI-01 report page inventory or order differs")
     visual_documents = [
         _load(path)
@@ -209,29 +218,41 @@ def main() -> int:
         for path in sorted((pages_root / page_id / "visuals").glob("*/visual.json"))
     ]
     visual_types = [document.get("visual", {}).get("visualType") for document in visual_documents]
-    if len(visual_types) != 33 or set(visual_types) != EXPECTED_VISUAL_TYPES:
-        raise SystemExit(f"PBI-01 built-in visual inventory differs: {len(visual_types)}, {sorted(set(visual_types))}")
-    if visual_types.count("shapeMap") != 2 or visual_types.count("scatterChart") != 1:
-        raise SystemExit("PBI-01 spatial visual inventory differs")
-    forbidden_visuals = {"azureMap", "map", "filledMap", "arcGisMap", "esriVisual"}
-    if forbidden_visuals.intersection(value for value in visual_types if isinstance(value, str)):
-        raise SystemExit("PBI-01 report depends on an external-service map visual")
-    for document in (item for item in visual_documents if item.get("visual", {}).get("visualType") == "shapeMap"):
-        visual = document["visual"]
-        if set(visual.get("query", {}).get("queryState", {})) != {"Category", "Value", "Tooltips"}:
-            raise SystemExit("PBI-01 Shape Map role binding differs")
-        resource = (
-            visual.get("objects", {})
-            .get("shape", [{}])[0]
-            .get("properties", {})
-            .get("map", {})
-            .get("geoJson", {})
-            .get("content", {})
-            .get("expr", {})
-            .get("ResourcePackageItem")
-        )
-        if resource != {"PackageName": "RegisteredResources", "PackageType": 1, "ItemName": geometry_path.name}:
-            raise SystemExit("PBI-01 Shape Map does not bind the deterministic registered geometry")
+    if pbi02_successor:
+        successor_types = {"textbox", "cardVisual", "slicer", "azureMap", "scatterChart", "tableEx"}
+        if len(visual_types) != 39 or set(visual_types) != successor_types:
+            raise SystemExit(
+                f"PBI-01 successor built-in visual inventory differs: {len(visual_types)}, {sorted(set(visual_types))}"
+            )
+        if visual_types.count("azureMap") != 1 or visual_types.count("shapeMap") != 0 or visual_types.count("scatterChart") != 1:
+            raise SystemExit("PBI-01 successor spatial visual inventory differs")
+        forbidden_visuals = {"map", "filledMap", "arcGisMap", "esriVisual"}
+        if forbidden_visuals.intersection(value for value in visual_types if isinstance(value, str)):
+            raise SystemExit("PBI-01 successor introduced an ungoverned map visual")
+    else:
+        if len(visual_types) != 33 or set(visual_types) != EXPECTED_VISUAL_TYPES:
+            raise SystemExit(f"PBI-01 built-in visual inventory differs: {len(visual_types)}, {sorted(set(visual_types))}")
+        if visual_types.count("shapeMap") != 2 or visual_types.count("scatterChart") != 1:
+            raise SystemExit("PBI-01 spatial visual inventory differs")
+        forbidden_visuals = {"azureMap", "map", "filledMap", "arcGisMap", "esriVisual"}
+        if forbidden_visuals.intersection(value for value in visual_types if isinstance(value, str)):
+            raise SystemExit("PBI-01 report depends on an external-service map visual")
+        for document in (item for item in visual_documents if item.get("visual", {}).get("visualType") == "shapeMap"):
+            visual = document["visual"]
+            if set(visual.get("query", {}).get("queryState", {})) != {"Category", "Value", "Tooltips"}:
+                raise SystemExit("PBI-01 Shape Map role binding differs")
+            resource = (
+                visual.get("objects", {})
+                .get("shape", [{}])[0]
+                .get("properties", {})
+                .get("map", {})
+                .get("geoJson", {})
+                .get("content", {})
+                .get("expr", {})
+                .get("ResourcePackageItem")
+            )
+            if resource != {"PackageName": "RegisteredResources", "PackageType": 1, "ItemName": geometry_path.name}:
+                raise SystemExit("PBI-01 Shape Map does not bind the deterministic registered geometry")
 
     table_root = model_root / "definition/tables"
     expected_tables = {
@@ -240,8 +261,11 @@ def main() -> int:
         "Report Measures.tmdl",
         "Seed Context.tmdl",
     }
-    if {path.name for path in table_root.glob("*.tmdl")} != expected_tables:
-        raise SystemExit("PBI-01 TMDL table inventory differs")
+    actual_tables = {path.name for path in table_root.glob("*.tmdl")}
+    if (pbi02_successor and not expected_tables.issubset(actual_tables)) or (
+        not pbi02_successor and actual_tables != expected_tables
+    ):
+        raise SystemExit("PBI-01 TMDL baseline table inventory differs")
     tract_tmdl = (table_root / "Michigan Tracts.tmdl").read_text(encoding="utf-8")
     seed_tmdl = (table_root / "Seed Context.tmdl").read_text(encoding="utf-8")
     model_text = "\n".join(path.read_text(encoding="utf-8") for path in sorted(model_root.rglob("*.tmdl")))
@@ -300,6 +324,7 @@ def main() -> int:
                 "page_count": len(pages),
                 "visual_count": len(visual_types),
                 "shape_map_count": visual_types.count("shapeMap"),
+                "pbi02_successor_active": pbi02_successor,
                 "seed_coordinate_view_count": visual_types.count("scatterChart"),
                 "presentation_geometry_geoid_count": len(geoids),
                 "protected_tracked_path_guard": "passed",

@@ -1,0 +1,964 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "51b64981f93d10aa119c",
+  "position": {
+    "x": 40,
+    "y": 682,
+    "z": 9000,
+    "height": 350,
+    "width": 1840,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "GEOID"
+                }
+              },
+              "queryRef": "Michigan Public Context.GEOID",
+              "nativeQueryRef": "GEOID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Household Income"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Household Income",
+              "nativeQueryRef": "Median Household Income"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Household Income MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Household Income MOE",
+              "nativeQueryRef": "Median Household Income MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Household Income Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Household Income Status",
+              "nativeQueryRef": "Median Household Income Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Household Income Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Household Income Status Detail",
+              "nativeQueryRef": "Median Household Income Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Per Capita Income"
+                }
+              },
+              "queryRef": "Michigan Public Context.Per Capita Income",
+              "nativeQueryRef": "Per Capita Income"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Per Capita Income MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Per Capita Income MOE",
+              "nativeQueryRef": "Per Capita Income MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Per Capita Income Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Per Capita Income Status",
+              "nativeQueryRef": "Per Capita Income Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Per Capita Income Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Per Capita Income Status Detail",
+              "nativeQueryRef": "Per Capita Income Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Civilian Labor Force Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.Civilian Labor Force Share",
+              "nativeQueryRef": "Civilian Labor Force Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Civilian Labor Force Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Civilian Labor Force Share MOE",
+              "nativeQueryRef": "Civilian Labor Force Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Civilian Labor Force Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Civilian Labor Force Share Status",
+              "nativeQueryRef": "Civilian Labor Force Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Civilian Labor Force Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Civilian Labor Force Share Status Detail",
+              "nativeQueryRef": "Civilian Labor Force Share Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Employment Rate"
+                }
+              },
+              "queryRef": "Michigan Public Context.Employment Rate",
+              "nativeQueryRef": "Employment Rate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Employment Rate MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Employment Rate MOE",
+              "nativeQueryRef": "Employment Rate MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Employment Rate Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Employment Rate Status",
+              "nativeQueryRef": "Employment Rate Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Employment Rate Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Employment Rate Status Detail",
+              "nativeQueryRef": "Employment Rate Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Bachelor's Degree or Higher Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.Bachelor's Degree or Higher Share",
+              "nativeQueryRef": "Bachelor's Degree or Higher Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Bachelor's Degree or Higher Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Bachelor's Degree or Higher Share MOE",
+              "nativeQueryRef": "Bachelor's Degree or Higher Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Bachelor's Degree or Higher Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Bachelor's Degree or Higher Share Status",
+              "nativeQueryRef": "Bachelor's Degree or Higher Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Bachelor's Degree or Higher Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Bachelor's Degree or Higher Share Status Detail",
+              "nativeQueryRef": "Bachelor's Degree or Higher Share Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Owner-Occupied Housing Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.Owner-Occupied Housing Share",
+              "nativeQueryRef": "Owner-Occupied Housing Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Owner-Occupied Housing Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Owner-Occupied Housing Share MOE",
+              "nativeQueryRef": "Owner-Occupied Housing Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Owner-Occupied Housing Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Owner-Occupied Housing Share Status",
+              "nativeQueryRef": "Owner-Occupied Housing Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Owner-Occupied Housing Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Owner-Occupied Housing Share Status Detail",
+              "nativeQueryRef": "Owner-Occupied Housing Share Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Vacant Housing Unit Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.Vacant Housing Unit Share",
+              "nativeQueryRef": "Vacant Housing Unit Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Vacant Housing Unit Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Vacant Housing Unit Share MOE",
+              "nativeQueryRef": "Vacant Housing Unit Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Vacant Housing Unit Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Vacant Housing Unit Share Status",
+              "nativeQueryRef": "Vacant Housing Unit Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Vacant Housing Unit Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Vacant Housing Unit Share Status Detail",
+              "nativeQueryRef": "Vacant Housing Unit Share Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Home Value"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Home Value",
+              "nativeQueryRef": "Median Home Value"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Home Value MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Home Value MOE",
+              "nativeQueryRef": "Median Home Value MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Home Value Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Home Value Status",
+              "nativeQueryRef": "Median Home Value Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Home Value Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Home Value Status Detail",
+              "nativeQueryRef": "Median Home Value Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Gross Rent"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Gross Rent",
+              "nativeQueryRef": "Median Gross Rent"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Gross Rent MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Gross Rent MOE",
+              "nativeQueryRef": "Median Gross Rent MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Gross Rent Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Gross Rent Status",
+              "nativeQueryRef": "Median Gross Rent Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Median Gross Rent Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Median Gross Rent Status Detail",
+              "nativeQueryRef": "Median Gross Rent Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Average Household Size"
+                }
+              },
+              "queryRef": "Michigan Public Context.Average Household Size",
+              "nativeQueryRef": "Average Household Size"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Average Household Size MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Average Household Size MOE",
+              "nativeQueryRef": "Average Household Size MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Average Household Size Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Average Household Size Status",
+              "nativeQueryRef": "Average Household Size Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Average Household Size Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Average Household Size Status Detail",
+              "nativeQueryRef": "Average Household Size Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "No-Vehicle Household Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.No-Vehicle Household Share",
+              "nativeQueryRef": "No-Vehicle Household Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "No-Vehicle Household Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.No-Vehicle Household Share MOE",
+              "nativeQueryRef": "No-Vehicle Household Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "No-Vehicle Household Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.No-Vehicle Household Share Status",
+              "nativeQueryRef": "No-Vehicle Household Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "No-Vehicle Household Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.No-Vehicle Household Share Status Detail",
+              "nativeQueryRef": "No-Vehicle Household Share Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Drive-Alone Commuter Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.Drive-Alone Commuter Share",
+              "nativeQueryRef": "Drive-Alone Commuter Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Drive-Alone Commuter Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Drive-Alone Commuter Share MOE",
+              "nativeQueryRef": "Drive-Alone Commuter Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Drive-Alone Commuter Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Drive-Alone Commuter Share Status",
+              "nativeQueryRef": "Drive-Alone Commuter Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Drive-Alone Commuter Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Drive-Alone Commuter Share Status Detail",
+              "nativeQueryRef": "Drive-Alone Commuter Share Status Detail"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Work-from-Home Commuter Share"
+                }
+              },
+              "queryRef": "Michigan Public Context.Work-from-Home Commuter Share",
+              "nativeQueryRef": "Work-from-Home Commuter Share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Work-from-Home Commuter Share MOE"
+                }
+              },
+              "queryRef": "Michigan Public Context.Work-from-Home Commuter Share MOE",
+              "nativeQueryRef": "Work-from-Home Commuter Share MOE"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Work-from-Home Commuter Share Status"
+                }
+              },
+              "queryRef": "Michigan Public Context.Work-from-Home Commuter Share Status",
+              "nativeQueryRef": "Work-from-Home Commuter Share Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Michigan Public Context"
+                    }
+                  },
+                  "Property": "Work-from-Home Commuter Share Status Detail"
+                }
+              },
+              "queryRef": "Michigan Public Context.Work-from-Home Commuter Share Status Detail",
+              "nativeQueryRef": "Work-from-Home Commuter Share Status Detail"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D6DEE8'"
+                    }
+                  }
+                }
+              }
+            },
+            "width": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Complete 3,017-key DATA-04 estimates, MOEs, statuses, and status details'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#16324F'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Complete 3,017-key DATA-04 estimates, MOEs, statuses, and status details'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
