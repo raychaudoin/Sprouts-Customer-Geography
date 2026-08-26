@@ -63,6 +63,12 @@ def _strict_bool(value: str, code: str) -> bool:
     return value == "True"
 
 
+def _optional_strict_bool(value: str, code: str) -> bool | None:
+    if value == "":
+        return None
+    return _strict_bool(value, code)
+
+
 def _optional_number(value: str, code: str) -> float | None:
     if value == "":
         return None
@@ -322,9 +328,15 @@ def resolve_model13(
 
     for row in tract_rows:
         require(GEOID_RE.fullmatch(row["geoid"]) is not None, "APP01_MODEL13_TRACT_INVALID", "MODEL-13 tract GEOID is malformed")
+        require(row["computability_status"] in {"MODEL_SCORE_COMPUTABLE", "MODEL_SCORE_NONCOMPUTABLE"}, "APP01_MODEL13_TRACT_INVALID", "MODEL-13 computability status is invalid")
         for field in ("household_opportunity", "customer_fit_statewide_percentile", "modeled_target_mass_statewide_percentile"):
             _optional_number(row[field], "APP01_MODEL13_TRACT_INVALID")
-        _strict_bool(row["support_truncation_5mi"], "APP01_MODEL13_TRACT_INVALID")
+        radius_support = tuple(
+            _optional_strict_bool(row[field], "APP01_MODEL13_TRACT_INVALID")
+            for field in ("support_truncation_3mi", "support_truncation_5mi", "support_truncation_7mi")
+        )
+        if row["computability_status"] == "MODEL_SCORE_COMPUTABLE":
+            require(all(value is not None for value in radius_support), "APP01_MODEL13_TRACT_INVALID", "a computable MODEL-13 tract lacks radius-specific support evidence")
         _strict_bool(row["any_support_truncation"], "APP01_MODEL13_TRACT_INVALID")
     require(tuple(row["geoid"] for row in tract_rows) == geometry.geoids, "APP01_MODEL13_GEOMETRY_RECONCILIATION_MISMATCH", "MODEL-13 and public geometry keys do not reconcile exactly")
 
@@ -336,7 +348,7 @@ def resolve_model13(
     for row in seed_rows:
         require(bool(row["protected_physical_location_id"]) and bool(row["qa_status"]), "APP01_MODEL13_SEED_INVALID", "Seed Context identity or QA is absent")
         parsed = {field: _optional_number(row[field], "APP01_MODEL13_SEED_INVALID") for field in numeric_seed_fields}
-        require(all(value is not None for value in parsed.values()), "APP01_MODEL13_SEED_INVALID", "Seed Context numeric presentation field is unavailable")
+        require(parsed["latitude"] is not None and parsed["longitude"] is not None, "APP01_MODEL13_SEED_INVALID", "Seed Context coordinate is unavailable")
         require(-90 <= parsed["latitude"] <= 90 and -180 <= parsed["longitude"] <= 180, "APP01_MODEL13_SEED_INVALID", "Seed Context coordinate is invalid")
         _strict_bool(row["support_truncation"], "APP01_MODEL13_SEED_INVALID")
 

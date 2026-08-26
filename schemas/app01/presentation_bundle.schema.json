@@ -113,7 +113,7 @@
         "statuses": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"enum": ["valid", "missing", "special", "inapplicable", "suppressed", "invalid", "noncomputable"]}},
         "status_details": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["string", "null"]}},
         "moes": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["number", "null"], "minimum": 0}},
-        "support_truncation": {"type": "boolean"},
+        "support_truncation": {"type": ["boolean", "null"]},
         "computability_status": {"enum": ["MODEL_SCORE_COMPUTABLE", "MODEL_SCORE_NONCOMPUTABLE"]}
       }
     }

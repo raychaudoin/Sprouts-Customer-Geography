@@ -352,6 +352,11 @@ function updateQaSelection() {
   const geoid = [...selectedGeoids][0];
   const row = rowByGeoid.get(geoid);
   const metric = metrics[activeMetricIndex];
+  const supportLabel = row.support_truncation === true
+    ? "Truncated"
+    : row.support_truncation === false
+      ? "Complete within accepted boundary evidence"
+      : "Unavailable for this noncomputable tract";
   const dl = element("dl", "metadata-list qa-tract-table");
   const values = [
     ["GEOID", geoid],
@@ -359,7 +364,7 @@ function updateQaSelection() {
     ["Value", formatValue(row.values[activeMetricIndex], metric)],
     ["MOE", row.moes[activeMetricIndex] === null ? "Not applicable" : `± ${formatValue(row.moes[activeMetricIndex], metric)}`],
     ["Status detail", row.status_details[activeMetricIndex] ? humanStatus(row.status_details[activeMetricIndex]) : "None"],
-    ["5-mile support", row.support_truncation ? "Truncated" : "Complete within accepted boundary evidence"],
+    ["5-mile support", supportLabel],
   ];
   values.forEach(([term, value]) => {
     const pair = element("div");
@@ -484,15 +489,16 @@ function renderEvidenceDetail(row) {
   const dl = element("dl", "metadata-list qa-tract-table");
   const currency = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", maximumFractionDigits: 0});
   const integer = new Intl.NumberFormat("en-US", {maximumFractionDigits: 0});
+  const available = (value, formatter) => value === null || value === undefined ? "Unavailable" : formatter(value);
   const entries = [
     ["Evidence ID", row.evidence_id],
-    ["Mean Isolated Sales", currency.format(row.isolated_sales)],
-    ["Frozen MODEL-12 prediction", currency.format(row.frozen_prediction)],
-    ["Successor OOF prediction", currency.format(row.successor_prediction)],
-    ["Absolute log error", Number(row.absolute_log_error).toFixed(3)],
-    ["Household opportunity", integer.format(row.household_opportunity)],
-    ["Customer-fit proxy", Number(row.customer_fit_proxy).toFixed(3)],
-    ["Modeled target mass", integer.format(row.modeled_target_mass)],
+    ["Mean Isolated Sales", available(row.isolated_sales, (value) => currency.format(value))],
+    ["Frozen MODEL-12 prediction", available(row.frozen_prediction, (value) => currency.format(value))],
+    ["Successor OOF prediction", available(row.successor_prediction, (value) => currency.format(value))],
+    ["Absolute log error", available(row.absolute_log_error, (value) => Number(value).toFixed(3))],
+    ["Household opportunity", available(row.household_opportunity, (value) => integer.format(value))],
+    ["Customer-fit proxy", available(row.customer_fit_proxy, (value) => Number(value).toFixed(3))],
+    ["Modeled target mass", available(row.modeled_target_mass, (value) => integer.format(value))],
     ["Support", row.support_truncation ? "Truncated" : "Not truncated"],
     ["QA status", humanStatus(row.qa_status)],
   ];
@@ -766,15 +772,18 @@ function initializeMap() {
         });
       }
     });
-    requestAnimationFrame(() => {
-      diagnostics.ready = true;
-      diagnostics.mapReadyMs = Math.round((performance.now() - startedAt) * 10) / 10;
-      byId("qa-map-ready").textContent = `${diagnostics.mapReadyMs.toLocaleString("en-US")} ms`;
-      byId("loading-card").hidden = true;
-      byId("runtime-status").textContent = "Ready";
-      byId("runtime-status").className = "runtime-status ready";
-      publishDiagnostics();
+    map.once("idle", () => {
+      requestAnimationFrame(() => {
+        diagnostics.ready = true;
+        diagnostics.mapReadyMs = Math.round((performance.now() - startedAt) * 10) / 10;
+        byId("qa-map-ready").textContent = `${diagnostics.mapReadyMs.toLocaleString("en-US")} ms`;
+        byId("loading-card").hidden = true;
+        byId("runtime-status").textContent = "Ready";
+        byId("runtime-status").className = "runtime-status ready";
+        publishDiagnostics();
+      });
     });
+    map.triggerRepaint();
   });
 }
 

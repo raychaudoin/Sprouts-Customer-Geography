@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 from hashlib import sha256
 import http.client
 import json
@@ -134,6 +135,55 @@ class App01InputAdapterTests(unittest.TestCase):
         self.assertEqual(resolved.preflight.support_truncation_count, 438)
         self.assertTrue(resolved.preflight.seed_context_ready)
 
+    def test_model13_adapter_preserves_unavailable_radius_support_for_noncomputable_tracts(self) -> None:
+        with _temporary_directory() as directory:
+            root = Path(directory)
+            paths = _write_synthetic_inputs(root)
+            with paths["tract"].open("r", encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+                columns = list(rows[0])
+            for row in rows[-44:]:
+                row["support_truncation_3mi"] = ""
+                row["support_truncation_5mi"] = ""
+                row["support_truncation_7mi"] = ""
+            with paths["tract"].open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=columns, lineterminator="\n")
+                writer.writeheader()
+                writer.writerows(rows)
+            metadata = json.loads(paths["metadata"].read_text(encoding="utf-8"))
+            metadata["tract_output"]["byte_sha256"] = sha256(paths["tract"].read_bytes()).hexdigest()
+            paths["metadata"].write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+            ready = json.loads(paths["ready"].read_text(encoding="utf-8"))
+            ready["tract_csv_sha256"] = metadata["tract_output"]["byte_sha256"]
+            ready["metadata_file_sha256"] = sha256(paths["metadata"].read_bytes()).hexdigest()
+            paths["ready"].write_text(json.dumps(ready, indent=2) + "\n", encoding="utf-8")
+            resolved = resolve_model13(REPOSITORY, self.geometry, [root])
+        self.assertEqual(resolved.preflight.noncomputable_count, 44)
+        self.assertTrue(all(row["support_truncation_5mi"] == "" for row in resolved.tract_rows[-44:]))
+
+    def test_model13_adapter_preserves_unavailable_seed_context_values(self) -> None:
+        with _temporary_directory() as directory:
+            root = Path(directory)
+            paths = _write_synthetic_inputs(root)
+            with paths["seed"].open("r", encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+                columns = list(rows[0])
+            for field in ("frozen_model12_prediction", "successor_oof_prediction", "successor_oof_absolute_log_error", "household_opportunity", "customer_fit_proxy", "modeled_target_mass"):
+                rows[0][field] = ""
+            with paths["seed"].open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=columns, lineterminator="\n")
+                writer.writeheader()
+                writer.writerows(rows)
+            metadata = json.loads(paths["metadata"].read_text(encoding="utf-8"))
+            metadata["seed_context_output"]["byte_sha256"] = sha256(paths["seed"].read_bytes()).hexdigest()
+            paths["metadata"].write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+            ready = json.loads(paths["ready"].read_text(encoding="utf-8"))
+            ready["seed_context_csv_sha256"] = metadata["seed_context_output"]["byte_sha256"]
+            ready["metadata_file_sha256"] = sha256(paths["metadata"].read_bytes()).hexdigest()
+            paths["ready"].write_text(json.dumps(ready, indent=2) + "\n", encoding="utf-8")
+            resolved = resolve_model13(REPOSITORY, self.geometry, [root])
+        self.assertEqual(resolved.seed_rows[0]["frozen_model12_prediction"], "")
+
     def test_model13_equivalent_candidates_use_deterministic_selection(self) -> None:
         with _temporary_directory() as first_directory, _temporary_directory() as second_directory:
             first = Path(first_directory)
@@ -196,6 +246,8 @@ class App01RuntimePolicyAndUiTests(unittest.TestCase):
             self.assertIn(token, app + html)
         for token in ("focus-visible", "prefers-reduced-motion", "aria-live", "aria-selected", "aria-label"):
             self.assertIn(token, app + html + (REPOSITORY / "presentation/app01/site/styles.css").read_text(encoding="utf-8"))
+        self.assertIn('map.once("idle"', app)
+        self.assertLess(app.index('map.once("idle"'), app.index('diagnostics.ready = true'))
         self.assertNotIn("Average Household Income", app + html)
         self.assertNotIn("Area Median Income", app + html)
 

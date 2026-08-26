@@ -313,7 +313,7 @@ def _production_rows(
             "statuses": statuses,
             "status_details": details,
             "moes": moes,
-            "support_truncation": model["support_truncation_5mi"] == "True",
+            "support_truncation": None if model["support_truncation_5mi"] == "" else model["support_truncation_5mi"] == "True",
             "computability_status": model["computability_status"],
         })
     return rows
