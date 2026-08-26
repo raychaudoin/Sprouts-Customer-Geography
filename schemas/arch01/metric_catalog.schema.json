@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/arch01/metric_catalog.schema.json",
+  "title": "ARCH-01 Michigan presentation metric catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "status", "expected_metric_count", "missing_value_policy", "metrics"],
+  "properties": {
+    "$schema": {"const": "../../schemas/arch01/metric_catalog.schema.json"},
+    "artifact_id": {"const": "ARCH01_MICHIGAN_PRESENTATION_METRIC_CATALOG_V1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "architecture_evidence_awaiting_acceptance"},
+    "expected_metric_count": {"const": 16},
+    "missing_value_policy": {"type": "string", "minLength": 1},
+    "metrics": {
+      "type": "array",
+      "minItems": 16,
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/metric"}
+    }
+  },
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metric_key", "display_name", "sort_order", "family", "unit", "format_policy",
+        "definition", "source_authority_id", "source_label", "scale_policy", "palette",
+        "availability_policy", "warning_policy", "input_binding", "synthetic_range"
+      ],
+      "properties": {
+        "metric_key": {"type": "string", "pattern": "^[a-z][a-z0-9_]+$"},
+        "display_name": {"type": "string", "minLength": 1},
+        "sort_order": {"type": "integer", "minimum": 1, "maximum": 16},
+        "family": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "format_policy": {"enum": ["percentile_1", "count_0", "currency_0", "percent_1", "decimal_2"]},
+        "definition": {"type": "string", "minLength": 1},
+        "source_authority_id": {"enum": ["MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1", "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1"]},
+        "source_label": {"type": "string", "minLength": 1},
+        "scale_policy": {"enum": ["fixed_0_100", "statewide_valid_p02_p98"]},
+        "palette": {"enum": ["model_proxy_sequential", "descriptive_sequential"]},
+        "availability_policy": {"type": "string", "minLength": 1},
+        "warning_policy": {"type": "string", "minLength": 1},
+        "input_binding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["logical_input"],
+          "properties": {
+            "logical_input": {"enum": ["model13_tract_output", "data04_candidate_measure"]},
+            "column": {"type": "string", "minLength": 1},
+            "measure_id": {"type": "string", "minLength": 1}
+          },
+          "oneOf": [
+            {"required": ["column"], "not": {"required": ["measure_id"]}, "properties": {"logical_input": {"const": "model13_tract_output"}}},
+            {"required": ["measure_id"], "not": {"required": ["column"]}, "properties": {"logical_input": {"const": "data04_candidate_measure"}}}
+          ]
+        },
+        "synthetic_range": {
+          "type": "array",
+          "prefixItems": [{"type": "number"}, {"type": "number"}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    }
+  }
+}

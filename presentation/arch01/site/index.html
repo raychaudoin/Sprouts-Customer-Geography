@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Michigan customer geography · architecture spike</title>
+    <link rel="stylesheet" href="/vendor/maplibre-gl/maplibre-gl.css">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ARCH-01 · local architecture evidence</p>
+          <h1>Michigan customer geography</h1>
+        </div>
+        <div class="scope-pill" aria-label="Data classification">Synthetic values · public geometry</div>
+      </header>
+
+      <section class="workspace" aria-label="Michigan tract exploration spike">
+        <aside class="control-panel">
+          <section class="panel-section">
+            <label for="metric-select">Metric</label>
+            <select id="metric-select" disabled></select>
+            <p id="metric-unit" class="metric-unit">Loading metric catalog…</p>
+          </section>
+
+          <section class="panel-section compact-grid">
+            <label for="basemap-select">Map context</label>
+            <select id="basemap-select" disabled>
+              <option value="usgs_topo">Streets / topo</option>
+              <option value="usgs_imagery_topo">Aerial + labels</option>
+              <option value="local_neutral">Local neutral</option>
+            </select>
+            <button id="clear-selection" type="button" class="secondary-button" disabled>Clear selection</button>
+            <div class="toggle-control">
+              <input id="additive-mode" type="checkbox">
+              <label for="additive-mode">Add to selection</label>
+            </div>
+          </section>
+
+          <section class="panel-section metric-context" aria-labelledby="context-heading">
+            <div class="section-heading-row">
+              <h2 id="context-heading">Metric context</h2>
+              <span id="metric-family" class="tag">—</span>
+            </div>
+            <p id="metric-definition">The selected metric’s accepted meaning will appear here.</p>
+            <dl class="context-list">
+              <div><dt>Source</dt><dd id="metric-source">—</dd></div>
+              <div><dt>Domain</dt><dd id="metric-domain">—</dd></div>
+            </dl>
+          </section>
+
+          <section class="panel-section selection-panel" aria-labelledby="selection-heading">
+            <div class="section-heading-row">
+              <h2 id="selection-heading">Selected tract</h2>
+              <span id="selection-count" class="tag">0</span>
+            </div>
+            <div id="selection-content" class="empty-state">
+              Select a tract. Hold Shift, Ctrl, or Command while selecting to compare several.
+            </div>
+          </section>
+
+          <section class="panel-section qa-panel" aria-labelledby="qa-heading">
+            <div class="section-heading-row">
+              <h2 id="qa-heading">Technical QA</h2>
+              <span id="runtime-state" class="status-dot loading">Loading</span>
+            </div>
+            <dl class="qa-grid">
+              <div><dt>Tracts</dt><dd id="qa-tracts">—</dd></div>
+              <div><dt>Metrics</dt><dd id="qa-metrics">—</dd></div>
+              <div><dt>Map ready</dt><dd id="qa-ready">—</dd></div>
+              <div><dt>External host</dt><dd id="qa-egress">None yet</dd></div>
+              <div><dt>Metric switch</dt><dd id="qa-switch">—</dd></div>
+              <div><dt>Selection</dt><dd id="qa-selection">—</dd></div>
+              <div><dt>Tile requests</dt><dd id="qa-requests">0</dd></div>
+              <div><dt>Canary hits</dt><dd id="qa-canary">0</dd></div>
+            </dl>
+          </section>
+        </aside>
+
+        <section class="map-stage" aria-label="Interactive Michigan tract choropleth">
+          <div id="map" role="application" aria-label="Michigan census tract map"></div>
+          <div id="loading-card" class="loading-card" role="status" aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>Preparing 3,017 public tract polygons…</span>
+          </div>
+          <div id="map-message" class="map-message" role="status" aria-live="polite" hidden></div>
+          <div class="legend" aria-label="Map legend">
+            <div class="legend-title-row">
+              <strong id="legend-title">Loading…</strong>
+              <span id="legend-unit"></span>
+            </div>
+            <div id="legend-ramp" class="legend-ramp"></div>
+            <div id="legend-labels" class="legend-labels"></div>
+            <div class="no-data-key"><span></span>No Data / Unavailable</div>
+          </div>
+        </section>
+      </section>
+
+      <footer>
+        Architecture evidence only. Values are deterministic synthetic test data and are not suitable for business decisions.
+      </footer>
+    </main>
+    <script type="module" src="/app.mjs"></script>
+  </body>
+</html>

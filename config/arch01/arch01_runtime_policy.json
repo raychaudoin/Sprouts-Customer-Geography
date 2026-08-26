@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schemas/arch01/runtime_policy.schema.json",
+  "artifact_id": "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1",
+  "version": "1.0.0",
+  "status": "architecture_evidence_awaiting_acceptance",
+  "topology": {
+    "architecture": "static_browser_application_with_minimal_loopback_server",
+    "operator_runtime": "Python 3.11 or later standard library plus a modern WebGL2 browser",
+    "default_bind_host": "127.0.0.1",
+    "default_port": 8766,
+    "non_loopback_binding_permitted": false,
+    "served_surface": "explicit application configuration public-geometry and selected-presentation-bundle allowlist",
+    "ui_framework": null,
+    "database": null,
+    "browser_query_engine": null,
+    "runtime_input_form": "prepared JSON presentation bundle keyed by GEOID plus separate public GeoJSON"
+  },
+  "renderer": {
+    "name": "MapLibre GL JS",
+    "version": "6.6.0",
+    "purpose": "WebGL2 map interaction raster-basemap composition and local GeoJSON choropleth rendering",
+    "license": "BSD-3-Clause with bundled third-party notices",
+    "cost": "none",
+    "telemetry": false,
+    "versioning_strategy": "Exact vendored minor version and file hashes; update deliberately after license security conformance and local performance review.",
+    "maintenance_posture": "Active community project using semantic versioning; replacement is isolated behind the presentation map adapter.",
+    "replacement_boundary": "presentation/arch01/site/app.mjs map initialization source layer style and interaction functions",
+    "source": "https://github.com/maplibre/maplibre-gl-js/releases/tag/v6.6.0",
+    "vendored_files": [
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl.mjs", "sha256": "d84cb65fa75f07a972616cb4ee1902829ca053beae28f7be9b0889131c497afd"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl-shared.mjs", "sha256": "34c2cb0330cec92e81c4fa7344e7008451442bbb9cca1da3465db4041a934073"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl-worker.mjs", "sha256": "b081c9b3d0691d9d85552b5624f2601f69f24ed37573959d279d322e98e4ee2f"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl.css", "sha256": "8e2dbbab312dc57656fbb76e9fa5308c75c9d7c7ba5808a7d55bcdb64cc813fa"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/LICENSE.txt", "sha256": "ee5fc05a0677eaf69601d2c7db0d9ecd6cc27c3abc1d0733bc9ed34707cf8ef2"}
+    ]
+  },
+  "basemaps": {
+    "default": "usgs_topo",
+    "fallback": "local_neutral",
+    "local_neutral": {
+      "label": "Local neutral",
+      "network_required": false,
+      "purpose": "Fail-safe tract interaction without external context.",
+      "attribution": "U.S. Census Bureau, 2024 TIGER/Line Shapefiles"
+    },
+    "usgs_topo": {
+      "label": "Streets / topo",
+      "purpose": "Required recognizable roads highways place labels water and geographic orientation.",
+      "tile_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+      "service_metadata_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer?f=pjson",
+      "terms_url": "https://www.usgs.gov/faqs/what-are-terms-uselicensing-map-services-and-data-national-map",
+      "privacy_url": "https://www.usgs.gov/office-of-the-director/privacy-policies",
+      "attribution": "Map services and data available from U.S. Geological Survey, National Geospatial Program.",
+      "license": "U.S. public domain map service; acknowledgment requested",
+      "api_key_required": false,
+      "recurring_cost": "none",
+      "sla": "none",
+      "maxzoom": 16
+    },
+    "usgs_imagery_topo": {
+      "label": "Aerial + labels",
+      "purpose": "Optional public-domain orthoimagery with US Topo reference context.",
+      "tile_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}",
+      "service_metadata_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer?f=pjson",
+      "terms_url": "https://www.usgs.gov/faqs/what-are-terms-uselicensing-map-services-and-data-national-map",
+      "privacy_url": "https://www.usgs.gov/office-of-the-director/privacy-policies",
+      "attribution": "USDA, USGS The National Map: Orthoimagery and US Topo.",
+      "license": "U.S. public domain map service for the conterminous United States; acknowledgment requested",
+      "api_key_required": false,
+      "recurring_cost": "none",
+      "sla": "none",
+      "maxzoom": 16
+    }
+  },
+  "network_egress": {
+    "allowed_external_hosts": ["basemap.nationalmap.gov"],
+    "allowed_methods": ["GET"],
+    "allowed_payload": "Viewport-derived public raster tile z row and column identifiers plus ordinary HTTPS request metadata.",
+    "provider_logging_posture": "USGS states that its sites automatically log domain IP address browser operating system time referrer approximate country/state pages and requested information for internal site management and security.",
+    "prohibited_payload": "Protected or synthetic-canary values identities coordinates Seed Context sales predictions errors lineage paths handles credentials and local bundle content.",
+    "geocoding": false,
+    "routing": false,
+    "traffic": false,
+    "analytics": false,
+    "crash_reporting": false,
+    "failure_behavior": "Retain local tract interaction and show explicit basemap-unavailable status using the local-neutral background."
+  },
+  "telemetry": {
+    "application_telemetry": false,
+    "analytics": false,
+    "crash_reporting": false,
+    "remote_logging": false,
+    "local_diagnostics_only": true
+  }
+}
