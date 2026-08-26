@@ -134,7 +134,7 @@ For a later authorized implementation, the local input adapter may read an accep
 
 PBI-02 was inspected only as non-authoritative implementation evidence. ARCH-01 carries forward the intended map-first product semantics—Michigan map dominance, exact 16-metric inventory, dynamic context, tract selection, QA, warnings, and robust-domain behavior—through newly written configuration and spike code grounded in the accepted predecessor contracts.
 
-No PBI-02 commit is an ARCH-01 base, merge parent, or cherry-pick. At investigation time its draft PR #35 remained open/unmerged and its branch head `b60d0e4f27026967bd1d3a50e81f91fda141b677` remained non-H. ARCH-01 does not close, rewrite, accept, or otherwise transition PBI-02.
+No PBI-02 commit is an ARCH-01 base, merge parent, or cherry-pick. At final pre-H verification its draft PR #35 remained open/unmerged and its independently advanced branch head `b7edf51093bfd210f2856771095dd8005557f577` remained non-H. ARCH-01 does not close, rewrite, accept, or otherwise transition PBI-02.
 
 ## Reconstruction and verification
 
