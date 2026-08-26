@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/app01/runtime_policy.schema.json",
+  "title": "APP-01 accepted local-first production runtime policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "accepted_predecessor", "topology", "renderer", "basemaps", "network_egress", "protected_boundary", "telemetry"],
+  "properties": {
+    "$schema": {"const": "../../schemas/app01/runtime_policy.schema.json"},
+    "artifact_id": {"const": "APP01_LOCAL_FIRST_RUNTIME_POLICY_V1"},
+    "version": {"const": "1.0.0"},
+    "accepted_predecessor": {"const": "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1"},
+    "topology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["architecture", "bind_host", "default_port", "non_loopback_binding_permitted", "read_only", "query_strings_permitted"],
+      "properties": {
+        "architecture": {"const": "static_browser_application_with_python_standard_library_loopback_server"},
+        "bind_host": {"const": "127.0.0.1"},
+        "default_port": {"type": "integer", "minimum": 1024, "maximum": 65535},
+        "non_loopback_binding_permitted": {"const": false},
+        "read_only": {"const": true},
+        "query_strings_permitted": {"const": false}
+      }
+    },
+    "renderer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "runtime_cdn", "telemetry", "vendored_files"],
+      "properties": {
+        "name": {"const": "MapLibre GL JS"},
+        "version": {"const": "6.6.0"},
+        "runtime_cdn": {"const": false},
+        "telemetry": {"const": false},
+        "vendored_files": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256"],
+            "properties": {
+              "path": {"type": "string", "pattern": "^presentation/arch01/site/vendor/maplibre-gl/"},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "basemaps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default", "fallback", "usgs_topo", "usgs_imagery_topo", "local_neutral"],
+      "properties": {
+        "default": {"const": "usgs_topo"},
+        "fallback": {"const": "local_neutral"},
+        "usgs_topo": {"$ref": "#/$defs/online_basemap"},
+        "usgs_imagery_topo": {"$ref": "#/$defs/online_basemap"},
+        "local_neutral": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label", "network_required", "attribution"],
+          "properties": {
+            "label": {"const": "Local neutral"},
+            "network_required": {"const": false},
+            "attribution": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "network_egress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed_external_hosts", "allowed_external_methods", "tile_path_pattern", "external_query_strings_permitted", "external_request_bodies_permitted", "external_application_headers_permitted", "geocoding", "routing", "traffic"],
+      "properties": {
+        "allowed_external_hosts": {"type": "array", "prefixItems": [{"const": "basemap.nationalmap.gov"}], "items": false, "minItems": 1, "maxItems": 1},
+        "allowed_external_methods": {"type": "array", "prefixItems": [{"const": "GET"}], "items": false, "minItems": 1, "maxItems": 1},
+        "tile_path_pattern": {"const": "^/arcgis/rest/services/(USGSTopo|USGSImageryTopo)/MapServer/tile/[0-9]+/[0-9]+/[0-9]+$"},
+        "external_query_strings_permitted": {"const": false},
+        "external_request_bodies_permitted": {"const": false},
+        "external_application_headers_permitted": {"const": false},
+        "geocoding": {"const": false},
+        "routing": {"const": false},
+        "traffic": {"const": false}
+      }
+    },
+    "protected_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_context_forces_local_neutral", "evidence_context_restores_public_camera_before_online_basemap", "production_bundle_written_to_disk", "protected_request_logging"],
+      "properties": {
+        "evidence_context_forces_local_neutral": {"const": true},
+        "evidence_context_restores_public_camera_before_online_basemap": {"const": true},
+        "production_bundle_written_to_disk": {"const": false},
+        "protected_request_logging": {"const": false}
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["application_telemetry", "analytics", "crash_reporting", "remote_logging"],
+      "properties": {
+        "application_telemetry": {"const": false},
+        "analytics": {"const": false},
+        "crash_reporting": {"const": false},
+        "remote_logging": {"const": false}
+      }
+    }
+  },
+  "$defs": {
+    "online_basemap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "tile_url", "maxzoom", "attribution"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "tile_url": {"type": "string", "pattern": "^https://basemap\\.nationalmap\\.gov/arcgis/rest/services/(USGSTopo|USGSImageryTopo)/MapServer/tile/\\{z\\}/\\{y\\}/\\{x\\}$"},
+        "maxzoom": {"type": "integer", "minimum": 0, "maximum": 22},
+        "attribution": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

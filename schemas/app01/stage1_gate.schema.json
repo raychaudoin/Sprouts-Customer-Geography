@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/app01/stage1_gate.schema.json",
+  "title": "APP-01 Stage-1 pre-Ultra gate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "task_id", "state", "substantive_h_exists", "gates", "exact_next_destination"],
+  "properties": {
+    "$schema": {"const": "../../schemas/app01/stage1_gate.schema.json"},
+    "artifact_id": {"const": "APP01_STAGE1_GATE_V1"},
+    "version": {"const": "1.0.0"},
+    "task_id": {"const": "APP-01"},
+    "state": {"enum": ["in_progress", "pre_ultra_ready"]},
+    "substantive_h_exists": {"const": false},
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["production_implementation", "synthetic_egress", "real_input_preflight", "real_operator_validation", "product_design_audit", "product_design_corrections", "corrected_flow_recheck", "full_local_validation", "protected_disclosure_review"],
+      "properties": {
+        "production_implementation": {"type": "boolean"},
+        "synthetic_egress": {"type": "boolean"},
+        "real_input_preflight": {"type": "boolean"},
+        "real_operator_validation": {"type": "boolean"},
+        "product_design_audit": {"type": "boolean"},
+        "product_design_corrections": {"type": "boolean"},
+        "corrected_flow_recheck": {"type": "boolean"},
+        "full_local_validation": {"type": "boolean"},
+        "protected_disclosure_review": {"type": "boolean"}
+      }
+    },
+    "exact_next_destination": {"const": "MASTER CONTROL ROOM: Sprouts Customer Geography"}
+  }
+}

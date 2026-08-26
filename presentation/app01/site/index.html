@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Sprouts Customer Geography · Michigan</title>
+    <link rel="stylesheet" href="/vendor/maplibre-gl/maplibre-gl.css">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <p class="eyebrow">Customer geography</p>
+          <h1>Michigan scouting</h1>
+        </div>
+        <div class="runtime-summary" aria-live="polite">
+          <span id="data-mode-badge" class="data-mode-badge loading">Preparing local data</span>
+          <span id="runtime-status" class="runtime-status">Starting</span>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <aside class="operator-rail" aria-label="Customer geography controls and details">
+          <nav class="view-tabs" aria-label="Dashboard views" role="tablist">
+            <button id="tab-explore" type="button" role="tab" aria-controls="view-explore" class="view-tab active" data-view="explore" aria-selected="true" tabindex="0">Explore</button>
+            <button id="tab-qa" type="button" role="tab" aria-controls="view-qa" class="view-tab" data-view="qa" aria-selected="false" tabindex="-1">QA &amp; Coverage</button>
+            <button id="tab-evidence" type="button" role="tab" aria-controls="view-evidence" class="view-tab" data-view="evidence" aria-selected="false" tabindex="-1">Sprouts Evidence Context</button>
+          </nav>
+
+          <section id="view-explore" class="rail-view active" role="tabpanel" aria-labelledby="explore-heading">
+            <h2 id="explore-heading" class="visually-hidden">Explore Michigan tracts</h2>
+
+            <section class="rail-section primary-control">
+              <label class="control-label" for="metric-select">Color tracts by</label>
+              <select id="metric-select" disabled aria-describedby="metric-helper"></select>
+              <p id="metric-helper" class="helper-text">Choose one accepted statewide metric.</p>
+            </section>
+
+            <section class="rail-section">
+              <fieldset id="basemap-controls" class="segmented-fieldset" disabled>
+                <legend>Map context</legend>
+                <div class="segmented-control">
+                  <input id="basemap-topo" name="basemap" type="radio" value="usgs_topo" checked>
+                  <label for="basemap-topo">Topo</label>
+                  <input id="basemap-imagery" name="basemap" type="radio" value="usgs_imagery_topo">
+                  <label for="basemap-imagery">Imagery + Labels</label>
+                  <input id="basemap-local" name="basemap" type="radio" value="local_neutral">
+                  <label for="basemap-local">Local neutral</label>
+                </div>
+              </fieldset>
+              <div class="selection-actions">
+                <label class="check-control" for="additive-mode">
+                  <input id="additive-mode" type="checkbox">
+                  <span>Add to selection</span>
+                </label>
+                <button id="clear-selection" type="button" class="quiet-button" disabled>Clear selection</button>
+              </div>
+            </section>
+
+            <section class="rail-section selection-section" aria-labelledby="selection-heading">
+              <div class="section-heading-row">
+                <div>
+                  <p class="section-kicker">Inspector</p>
+                  <h3 id="selection-heading">Select a tract</h3>
+                </div>
+                <span id="selection-count" class="count-badge" aria-label="Selected tract count">0</span>
+              </div>
+              <div id="selection-content" class="selection-content empty-state">
+                Click a tract to see its exact value and supporting context. Turn on Add to selection to compare several tracts.
+              </div>
+            </section>
+
+            <section class="rail-section metric-context" aria-labelledby="metric-context-heading">
+              <div class="section-heading-row">
+                <div>
+                  <p class="section-kicker">Current metric</p>
+                  <h3 id="metric-context-heading">Loading metric context</h3>
+                </div>
+                <span id="metric-family" class="family-badge">—</span>
+              </div>
+              <p id="metric-definition" class="definition">Accepted definition will appear here.</p>
+              <p id="metric-interpretation" class="interpretation">Interpretation will appear here.</p>
+              <dl class="metadata-list">
+                <div><dt>Unit</dt><dd id="metric-unit">—</dd></div>
+                <div><dt>Source / vintage</dt><dd id="metric-source">—</dd></div>
+                <div><dt>Presentation scale</dt><dd id="metric-domain">—</dd></div>
+              </dl>
+            </section>
+          </section>
+
+          <section id="view-qa" class="rail-view" role="tabpanel" aria-labelledby="qa-heading" hidden>
+            <section class="rail-section view-intro">
+              <p class="section-kicker">Technical verification</p>
+              <h2 id="qa-heading">QA &amp; Coverage</h2>
+              <p>Readiness, coverage, and selected-value evidence stay separate from ordinary scouting.</p>
+            </section>
+            <section class="rail-section">
+              <div class="qa-cards" aria-label="Statewide accounting">
+                <div><span>Total tracts</span><strong id="qa-total-tracts">—</strong></div>
+                <div><span>MODEL computable</span><strong id="qa-computable">—</strong></div>
+                <div><span>MODEL noncomputable</span><strong id="qa-noncomputable">—</strong></div>
+                <div><span>Support-truncated</span><strong id="qa-truncated">—</strong></div>
+              </div>
+            </section>
+            <section class="rail-section" aria-labelledby="qa-input-heading">
+              <h3 id="qa-input-heading">Input readiness</h3>
+              <dl class="metadata-list qa-readiness">
+                <div><dt>MODEL-13</dt><dd id="qa-model-ready">—</dd></div>
+                <div><dt>DATA-04</dt><dd id="qa-data-ready">—</dd></div>
+                <div><dt>Public geometry</dt><dd id="qa-geometry-ready">—</dd></div>
+                <div><dt>Key reconciliation</dt><dd id="qa-key-ready">—</dd></div>
+              </dl>
+            </section>
+            <section class="rail-section" aria-labelledby="qa-metric-heading">
+              <h3 id="qa-metric-heading">Selected public metric</h3>
+              <dl class="metadata-list">
+                <div><dt>Metric</dt><dd id="qa-metric-name">—</dd></div>
+                <div><dt>Available / unavailable</dt><dd id="qa-availability">—</dd></div>
+                <div><dt>Domain bounds</dt><dd id="qa-domain">—</dd></div>
+                <div><dt>Source / vintage</dt><dd id="qa-source">—</dd></div>
+              </dl>
+            </section>
+            <section class="rail-section" aria-labelledby="qa-tract-heading">
+              <h3 id="qa-tract-heading">Selected tract QA</h3>
+              <div id="qa-selected-tract" class="empty-state">Select one tract in Explore to inspect its status, margin of error, and status detail.</div>
+            </section>
+            <section class="rail-section runtime-diagnostics" aria-labelledby="qa-runtime-heading">
+              <h3 id="qa-runtime-heading">Local runtime</h3>
+              <dl class="metadata-list">
+                <div><dt>Map ready</dt><dd id="qa-map-ready">—</dd></div>
+                <div><dt>External tile host</dt><dd id="qa-external-host">None</dd></div>
+                <div><dt>Tile requests</dt><dd id="qa-request-count">0</dd></div>
+                <div><dt>Egress canary hits</dt><dd id="qa-canary-hits">0</dd></div>
+              </dl>
+            </section>
+          </section>
+
+          <section id="view-evidence" class="rail-view" role="tabpanel" aria-labelledby="evidence-heading" hidden>
+            <section class="rail-section evidence-intro">
+              <p class="section-kicker">Protected local view</p>
+              <h2 id="evidence-heading">Sprouts Evidence Context</h2>
+              <p>This view stays local. Online basemaps are removed before protected coordinates or evidence are placed on the map.</p>
+              <div class="local-only-notice" role="status">Local neutral enforced · no new external tile requests</div>
+            </section>
+            <section class="rail-section">
+              <dl class="metadata-list">
+                <div><dt>Evidence locations</dt><dd id="evidence-count">—</dd></div>
+                <div><dt>Data mode</dt><dd id="evidence-mode">—</dd></div>
+                <div><dt>External transmission</dt><dd>Prohibited</dd></div>
+              </dl>
+            </section>
+            <section class="rail-section" aria-labelledby="evidence-detail-heading">
+              <h3 id="evidence-detail-heading">Selected evidence location</h3>
+              <div id="evidence-detail" class="empty-state">Select a local evidence marker to inspect accepted context.</div>
+            </section>
+          </section>
+        </aside>
+
+        <section class="map-stage" aria-label="Michigan customer geography map">
+          <div id="map" role="application" aria-label="Interactive Michigan census tract map"></div>
+          <div class="map-title-card" aria-live="polite">
+            <span id="map-title-eyebrow">Coloring tracts by</span>
+            <strong id="map-metric-title">Preparing metric</strong>
+          </div>
+          <div id="loading-card" class="loading-card" role="status" aria-live="polite">Preparing 3,017 Michigan tracts…</div>
+          <div id="map-message" class="map-message" role="status" aria-live="polite" hidden></div>
+          <div id="map-hint" class="map-hint">Click to select · drag to pan · scroll to zoom · Esc clears selection</div>
+          <section id="map-legend" class="legend" aria-labelledby="legend-title">
+            <div class="legend-title-row">
+              <strong id="legend-title">Loading</strong>
+              <span id="legend-unit">—</span>
+            </div>
+            <div id="legend-ramp" class="legend-ramp" aria-hidden="true"></div>
+            <div id="legend-labels" class="legend-labels"></div>
+            <div class="no-data-key"><span aria-hidden="true"></span>No Data / Unavailable</div>
+          </section>
+        </section>
+      </div>
+
+      <footer class="app-footer">
+        Public-data decision support · not final site selection, a sales forecast, or Sprouts' proprietary customer model
+      </footer>
+    </main>
+    <script type="module" src="/app.mjs"></script>
+  </body>
+</html>

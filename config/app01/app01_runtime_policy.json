@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schemas/app01/runtime_policy.schema.json",
+  "artifact_id": "APP01_LOCAL_FIRST_RUNTIME_POLICY_V1",
+  "version": "1.0.0",
+  "accepted_predecessor": "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1",
+  "topology": {
+    "architecture": "static_browser_application_with_python_standard_library_loopback_server",
+    "bind_host": "127.0.0.1",
+    "default_port": 8767,
+    "non_loopback_binding_permitted": false,
+    "read_only": true,
+    "query_strings_permitted": false
+  },
+  "renderer": {
+    "name": "MapLibre GL JS",
+    "version": "6.6.0",
+    "runtime_cdn": false,
+    "telemetry": false,
+    "vendored_files": [
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl.mjs", "sha256": "d84cb65fa75f07a972616cb4ee1902829ca053beae28f7be9b0889131c497afd"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl-shared.mjs", "sha256": "34c2cb0330cec92e81c4fa7344e7008451442bbb9cca1da3465db4041a934073"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl-worker.mjs", "sha256": "b081c9b3d0691d9d85552b5624f2601f69f24ed37573959d279d322e98e4ee2f"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/maplibre-gl.css", "sha256": "8e2dbbab312dc57656fbb76e9fa5308c75c9d7c7ba5808a7d55bcdb64cc813fa"},
+      {"path": "presentation/arch01/site/vendor/maplibre-gl/LICENSE.txt", "sha256": "ee5fc05a0677eaf69601d2c7db0d9ecd6cc27c3abc1d0733bc9ed34707cf8ef2"}
+    ]
+  },
+  "basemaps": {
+    "default": "usgs_topo",
+    "fallback": "local_neutral",
+    "usgs_topo": {
+      "label": "Topo",
+      "tile_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",
+      "maxzoom": 16,
+      "attribution": "Map services and data available from U.S. Geological Survey, National Geospatial Program."
+    },
+    "usgs_imagery_topo": {
+      "label": "Imagery + Labels",
+      "tile_url": "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}",
+      "maxzoom": 16,
+      "attribution": "USDA, USGS The National Map: Orthoimagery and US Topo."
+    },
+    "local_neutral": {
+      "label": "Local neutral",
+      "network_required": false,
+      "attribution": "U.S. Census Bureau, 2024 TIGER/Line Shapefiles."
+    }
+  },
+  "network_egress": {
+    "allowed_external_hosts": ["basemap.nationalmap.gov"],
+    "allowed_external_methods": ["GET"],
+    "tile_path_pattern": "^/arcgis/rest/services/(USGSTopo|USGSImageryTopo)/MapServer/tile/[0-9]+/[0-9]+/[0-9]+$",
+    "external_query_strings_permitted": false,
+    "external_request_bodies_permitted": false,
+    "external_application_headers_permitted": false,
+    "geocoding": false,
+    "routing": false,
+    "traffic": false
+  },
+  "protected_boundary": {
+    "evidence_context_forces_local_neutral": true,
+    "evidence_context_restores_public_camera_before_online_basemap": true,
+    "production_bundle_written_to_disk": false,
+    "protected_request_logging": false
+  },
+  "telemetry": {
+    "application_telemetry": false,
+    "analytics": false,
+    "crash_reporting": false,
+    "remote_logging": false
+  }
+}
