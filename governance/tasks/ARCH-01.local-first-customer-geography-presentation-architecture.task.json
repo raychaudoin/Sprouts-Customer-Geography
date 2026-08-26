@@ -3,7 +3,7 @@
   "title": "Local-First Customer Geography Presentation Architecture",
   "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
   "authority_source": "Master Control Room authorized Lane B ARCH-01 from canonical main commit 499cd611605380a3f2abca1e3e1d2f27cc56301c to select and validate a local-first successor presentation architecture after the preserved non-H PBI-02 Power BI Desktop runtime exhausted local paging-file and system resources",
-  "state": "COMPLETED_AWAITING_ACCEPTANCE",
+  "state": "ACCEPTED_CLOSED",
   "scope": [
     "Select the smallest supportable local-first browser presentation architecture without changing accepted analytical geography source or scoring authority",
     "Evaluate static browser and minimal loopback-server topologies open mapping libraries plain JavaScript or TypeScript and prepared-file or local-query loading forms",
@@ -31,6 +31,7 @@
     "PROTECTED_DATA04_MICHIGAN_PUBLIC_MATERIALIZATION_V1"
   ],
   "implementation_branch": "task/arch-01-local-first-customer-geography-presentation-architecture",
+  "implementation_commit": "6347b05d1d126f6c63053eeea317dc7abfaa9b50",
   "completion_state": {
     "execution": "COMPLETED",
     "implementation_evidence": [
@@ -39,8 +40,14 @@
       "COMPLETION_REPORT",
       "FUTURE_PULL_REQUEST"
     ],
-    "capability_acceptance": "NOT_REVIEWED"
+    "capability_acceptance": "ACCEPTED"
   },
   "acceptance_destination": "ARCH: Presentation Architecture Decisions & Acceptance",
-  "exact_next_destination": "ARCH: Presentation Architecture Decisions & Acceptance"
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_by": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_on": "2026-08-26"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
 }

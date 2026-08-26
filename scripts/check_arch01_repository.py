@@ -10,8 +10,10 @@ import sys
 
 
 AUTHORIZATION_BASE = "499cd611605380a3f2abca1e3e1d2f27cc56301c"
+EXACT_H = "6347b05d1d126f6c63053eeea317dc7abfaa9b50"
 TASK_BRANCH = "task/arch-01-local-first-customer-geography-presentation-architecture"
 CAPABILITY_OWNER = "ARCH: Presentation Architecture Decisions & Acceptance"
+MCR_DESTINATION = "MASTER CONTROL ROOM: Sprouts Customer Geography"
 EXPECTED_GEOMETRY_SHA256 = "e0f32095d2e2307f5ad78c9545fc0d3c74fca2250bc866bea8db2368848786ad"
 EXPECTED_METRICS = [
     "Customer Fit Percentile",
@@ -114,10 +116,23 @@ def main() -> int:
     if posture not in {
         ("IN_PROGRESS", "IN_PROGRESS", "NOT_REVIEWED"),
         ("COMPLETED_AWAITING_ACCEPTANCE", "COMPLETED", "NOT_REVIEWED"),
+        ("ACCEPTED_CLOSED", "COMPLETED", "ACCEPTED"),
     }:
         raise SystemExit(f"ARCH-01 unauthorized task posture: {posture}")
-    if task["exact_next_destination"] != CAPABILITY_OWNER:
+    expected_next_destination = MCR_DESTINATION if posture[0] == "ACCEPTED_CLOSED" else CAPABILITY_OWNER
+    if task["exact_next_destination"] != expected_next_destination:
         raise SystemExit("ARCH-01 exact next destination differs")
+    if posture[0] == "ACCEPTED_CLOSED" and (
+        task.get("implementation_commit") != EXACT_H
+        or task.get("acceptance_disposition") != "ACCEPTED"
+        or task.get("acceptance_metadata")
+        != {
+            "capability_owner": CAPABILITY_OWNER,
+            "recorded_by": CAPABILITY_OWNER,
+            "recorded_on": "2026-08-26",
+        }
+    ):
+        raise SystemExit("ARCH-01 accepted exact-H record differs")
 
     catalog = _load(repository / "config/arch01/arch01_metric_catalog.json")
     metrics = catalog.get("metrics", [])
