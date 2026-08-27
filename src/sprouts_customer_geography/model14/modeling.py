@@ -15,7 +15,7 @@ from sprouts_customer_geography.model13.modeling import (
     fit_regularized,
     state_balanced_grouped_folds,
 )
-from sprouts_customer_geography.pipe01.errors import require
+from sprouts_customer_geography.pipe01.errors import ConformanceError, require
 
 
 def _finite(value: Any) -> bool:
@@ -162,18 +162,134 @@ def tune_parameters(
 ) -> dict[str, float]:
     scored: list[tuple[float, float, int, dict[str, float]]] = []
     for index, parameters in enumerate(_parameter_grid(alpha_grid, l1_ratio_grid)):
-        predictions, _ = grouped_oof_predictions(
-            rows,
-            candidate_id,
-            terms,
-            alpha=parameters["alpha"],
-            l1_ratio=parameters["l1_ratio"],
-            fold_count=fold_count,
-        )
+        try:
+            predictions, _ = grouped_oof_predictions(
+                rows,
+                candidate_id,
+                terms,
+                alpha=parameters["alpha"],
+                l1_ratio=parameters["l1_ratio"],
+                fold_count=fold_count,
+            )
+            # A grid point is eligible only if it also converges on the complete
+            # current training scope, not merely on every inner-fold subset.
+            fit_experimental_model(rows, candidate_id, terms, **parameters)
+        except ConformanceError as exc:
+            if exc.code == "MODEL13_ELASTIC_NET_DID_NOT_CONVERGE":
+                continue
+            raise
         metrics = grouped_metrics(list(rows), predictions)
         scored.append((-float(metrics["spearman"]), float(metrics["log_rmse"]), index, parameters))
+    require(scored, "MODEL14_NO_CONVERGENT_PARAMETER", "no bounded MODEL-14 elastic-net parameter converged across the training scope")
     scored.sort(key=lambda item: (item[0], item[1], item[2]))
     return scored[0][3]
+
+
+def _domain_metrics(
+    rows: Sequence[Mapping[str, Any]],
+    predictions: Sequence[float],
+    state: str | None = None,
+) -> dict[str, float]:
+    selected = [
+        (row, prediction)
+        for row, prediction in zip(rows, predictions)
+        if state is None or str(row["state"]) == state
+    ]
+    require(selected, "MODEL14_METRIC_DOMAIN_EMPTY", "one MODEL-14 metric domain is empty")
+    return grouped_metrics(
+        [row for row, _ in selected],
+        [prediction for _, prediction in selected],
+    )
+
+
+def _coefficient_stability(models: Sequence[FittedExperimentalModel]) -> dict[str, Any]:
+    require(
+        models and all(model.base.terms == models[0].base.terms for model in models),
+        "MODEL14_TERM_INSTABILITY",
+        "MODEL-14 fold model terms differ",
+    )
+    terms = models[0].base.terms
+    selection: dict[str, float] = {}
+    signs: dict[str, float] = {}
+    deviations: dict[str, float] = {}
+    for index, term in enumerate(terms):
+        values = [model.base.coefficients[index] for model in models]
+        nonzero = [value for value in values if abs(value) > 1e-8]
+        selection[term] = len(nonzero) / len(values)
+        if nonzero:
+            positive = sum(value > 0 for value in nonzero)
+            signs[term] = max(positive, len(nonzero) - positive) / len(nonzero)
+        else:
+            signs[term] = 0.0
+        mean = sum(values) / len(values)
+        deviations[term] = math.sqrt(sum((value - mean) ** 2 for value in values) / len(values))
+    active = [term for term in terms if selection[term] > 0]
+    score = 0.0 if not active else sum((selection[term] + signs[term]) / 2.0 for term in active) / len(active)
+    return {
+        "selection_frequency": selection,
+        "coefficient_sign_stability": signs,
+        "coefficient_standard_deviation": deviations,
+        "stability_score": score,
+    }
+
+
+def _family_stability(
+    stability: Mapping[str, Any],
+    terms: Sequence[str],
+    term_families: Mapping[str, str],
+) -> dict[str, Any]:
+    grouped: dict[str, list[str]] = {}
+    for term in terms:
+        grouped.setdefault(str(term_families.get(term, "unassigned")), []).append(term)
+    output: dict[str, Any] = {}
+    for family, family_terms in sorted(grouped.items()):
+        selection = [float(stability["selection_frequency"][term]) for term in family_terms]
+        signs = [float(stability["coefficient_sign_stability"][term]) for term in family_terms]
+        output[family] = {
+            "term_count": len(family_terms),
+            "selected_in_any_fold_count": sum(value > 0 for value in selection),
+            "selected_in_every_fold_count": sum(value >= 1.0 - 1e-12 for value in selection),
+            "mean_selection_frequency": sum(selection) / len(selection),
+            "mean_dominant_sign_agreement": sum(signs) / len(signs),
+        }
+    return output
+
+
+def _outlier_sensitivity(rows: Sequence[Mapping[str, Any]], predictions: Sequence[float]) -> dict[str, Any]:
+    grouped: dict[str, tuple[list[float], list[float]]] = {}
+    for row, prediction in zip(rows, predictions):
+        actual, predicted = grouped.setdefault(str(row[GROUP_FIELD]), ([], []))
+        actual.append(float(row["isolated_sales"]))
+        predicted.append(float(prediction))
+    require(len(grouped) >= 3, "MODEL14_OUTLIER_SUPPORT_INSUFFICIENT", "MODEL-14 outlier sensitivity lacks group support")
+    errors = {
+        group: abs(
+            math.log1p(sum(actual) / len(actual))
+            - math.log1p(max(0.0, sum(predicted) / len(predicted)))
+        )
+        for group, (actual, predicted) in grouped.items()
+    }
+    worst_group = max(errors, key=lambda group: (errors[group], group))
+    retained = [
+        (row, prediction)
+        for row, prediction in zip(rows, predictions)
+        if str(row[GROUP_FIELD]) != worst_group
+    ]
+    before = _domain_metrics(rows, predictions)
+    after = grouped_metrics(
+        [row for row, _ in retained],
+        [prediction for _, prediction in retained],
+    )
+    return {
+        "maximum_physical_location_absolute_log_error": errors[worst_group],
+        "excluded_physical_location_count": 1,
+        "retained_physical_location_count": len(grouped) - 1,
+        "pooled_metrics_without_max_error_location": after,
+        "pooled_metric_delta_without_max_error_location": {
+            metric: float(after[metric]) - float(before[metric]) for metric in before
+        },
+        "protected_location_identity_disclosed": False,
+    }
 
 
 def nested_grouped_oof(
@@ -185,12 +301,19 @@ def nested_grouped_oof(
     l1_ratio_grid: Sequence[float] = (0.25, 0.5, 0.75),
     outer_count: int = 5,
     inner_count: int = 4,
+    term_families: Mapping[str, str] | None = None,
 ) -> dict[str, Any]:
     rows = list(rows)
     assignment = state_balanced_grouped_folds(rows, outer_count)
     predictions: dict[str, float] = {}
     fold_audits: list[dict[str, Any]] = []
     selected_parameters: list[dict[str, float]] = []
+    fold_models: list[FittedExperimentalModel] = []
+    fold_domains: dict[str, list[dict[str, float]]] = {
+        "pooled": [],
+        "michigan": [],
+        "wisconsin": [],
+    }
     for fold in range(outer_count):
         train = [row for row in rows if assignment[str(row[GROUP_FIELD])] != fold]
         test = [row for row in rows if assignment[str(row[GROUP_FIELD])] == fold]
@@ -206,9 +329,14 @@ def nested_grouped_oof(
             fold_count=inner_count,
         )
         fitted = fit_experimental_model(train, candidate_id, terms, **parameters)
+        fold_models.append(fitted)
         selected_parameters.append(dict(parameters))
-        for row in test:
-            predictions[str(row["analytical_observation_id"])] = fitted.predict(row)
+        fold_predictions = [fitted.predict(row) for row in test]
+        fold_domains["pooled"].append(_domain_metrics(test, fold_predictions))
+        fold_domains["michigan"].append(_domain_metrics(test, fold_predictions, "MI"))
+        fold_domains["wisconsin"].append(_domain_metrics(test, fold_predictions, "WI"))
+        for row, prediction in zip(test, fold_predictions):
+            predictions[str(row["analytical_observation_id"])] = prediction
         fold_audits.append({
             "fold": fold,
             "training_group_count": len(train_groups),
@@ -219,16 +347,53 @@ def nested_grouped_oof(
         })
     require(len(predictions) == len(rows), "MODEL14_OOF_PREDICTION_INCOMPLETE", "MODEL-14 nested OOF predictions are incomplete")
     ordered = [predictions[str(row["analytical_observation_id"])] for row in rows]
-    domains: dict[str, Any] = {}
-    for label, state in (("pooled", None), ("michigan", "MI"), ("wisconsin", "WI")):
-        selected = [(row, prediction) for row, prediction in zip(rows, ordered) if state is None or row["state"] == state]
-        require(selected, "MODEL14_METRIC_DOMAIN_EMPTY", "one MODEL-14 metric domain is empty")
-        domains[label] = grouped_metrics([row for row, _ in selected], [prediction for _, prediction in selected])
+    domains = {
+        "pooled": _domain_metrics(rows, ordered),
+        "michigan": _domain_metrics(rows, ordered, "MI"),
+        "wisconsin": _domain_metrics(rows, ordered, "WI"),
+    }
+    metric_names = ("spearman", "kendall_tau_b", "log_rmse", "level_mae")
+    ranges = {
+        domain: {
+            metric: {
+                "minimum": min(fold[metric] for fold in values),
+                "maximum": max(fold[metric] for fold in values),
+            }
+            for metric in metric_names
+        }
+        for domain, values in fold_domains.items()
+    }
+    stability = _coefficient_stability(fold_models)
+    families = {str(term): "unassigned" for term in terms}
+    if term_families is not None:
+        families.update({str(term): str(family) for term, family in term_families.items()})
+    final_parameters = tune_parameters(
+        rows,
+        candidate_id,
+        terms,
+        alpha_grid=alpha_grid,
+        l1_ratio_grid=l1_ratio_grid,
+        fold_count=inner_count,
+    )
+    final_model = fit_experimental_model(rows, candidate_id, terms, **final_parameters)
+    degrees = [model.base.effective_degrees_of_freedom() for model in fold_models]
     return {
         "candidate_id": candidate_id,
         "terms": list(terms),
         "aggregate_oof": domains,
+        "outer_fold_metric_ranges": ranges,
         "outer_selected_parameters": selected_parameters,
         "fold_audits": fold_audits,
+        "stability": stability,
+        "feature_family_stability": _family_stability(stability, terms, families),
+        "mean_outer_effective_degrees_of_freedom": sum(degrees) / len(degrees),
+        "outer_effective_degrees_of_freedom_range": [min(degrees), max(degrees)],
+        "outlier_sensitivity": _outlier_sensitivity(rows, ordered),
+        "final_parameters": dict(final_parameters),
+        "final_standardized_coefficients": {
+            term: coefficient
+            for term, coefficient in zip(final_model.base.terms, final_model.base.coefficients)
+        },
+        "final_effective_degrees_of_freedom": final_model.base.effective_degrees_of_freedom(),
         "predictions": ordered,
     }

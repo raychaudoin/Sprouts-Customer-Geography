@@ -27,6 +27,7 @@ EXPECTED_CHANGED = {
     "src/sprouts_customer_geography/model14/__init__.py",
     "src/sprouts_customer_geography/model14/__main__.py",
     "src/sprouts_customer_geography/model14/cli.py",
+    "src/sprouts_customer_geography/model14/experiment.py",
     "src/sprouts_customer_geography/model14/modeling.py",
     "src/sprouts_customer_geography/model14/public.py",
     "tests/test_model14_public_features.py",
@@ -63,6 +64,7 @@ def main() -> int:
         "governance/tasks/MODEL-14.public-feature-expansion-successor-experiment.task.json",
         "docs/work_orders/MODEL_14_PUBLIC_FEATURE_EXPANSION_SUCCESSOR_EXPERIMENT.md",
         "src/sprouts_customer_geography/model14/public.py",
+        "src/sprouts_customer_geography/model14/experiment.py",
         "src/sprouts_customer_geography/model14/cli.py",
         "tests/test_model14_public_features.py",
     }
@@ -138,9 +140,10 @@ def main() -> int:
         raise SystemExit("MODEL-14 repository checker is absent from Repository Validation")
     report = (repository / REPORT_PATH).read_text(encoding="utf-8")
     for required_text in (
-        "failed closed before development-target access",
-        "recovered reference values, not a MODEL-14 rerun",
-        "No credible MODEL-14 model improvement has been established",
+        "Baseline reproduction: **MATCH**",
+        "Evidence disposition: **no credible improvement**",
+        "No sealed, prospective Milwaukee, Madison, future-vintage, validation-only, or otherwise unconsumed target was opened",
+        "MODEL-13 remains accepted and unchanged",
         "MASTER CONTROL ROOM: Sprouts Customer Geography",
     ):
         if required_text not in report:
@@ -187,7 +190,8 @@ def main() -> int:
         "candidate_feature_count": len(FEATURE_IDS),
         "tract_count": matrix["row_count"],
         "target_values_accessed_before_freeze": chronology["target_values_accessed"],
-        "evaluation_state": "blocked_fail_closed_before_target_access",
+        "evaluation_state": "complete_pre_h_no_credible_improvement",
+        "baseline_reproduction": "MATCH",
         "protected_tracked_path_guard": "passed",
     }, sort_keys=True))
     return 0

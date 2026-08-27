@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 from typing import Sequence
 
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
+from .experiment import execute_protected_experiment
 from .public import compare_public_freezes, load_contract, materialize_public_freeze
 
 
@@ -26,6 +28,11 @@ def _parser() -> argparse.ArgumentParser:
     compare = subparsers.add_parser("compare-public", help="require byte-identical independent public freezes")
     compare.add_argument("first", type=Path)
     compare.add_argument("second", type=Path)
+
+    protected = subparsers.add_parser("protected-experiment", help="evaluate the frozen candidates through exact accepted MODEL-13 authority")
+    protected.add_argument("--public-freeze", type=Path, required=True)
+    protected.add_argument("--verification-freeze", type=Path, required=True)
+    protected.add_argument("--output", type=Path, required=True)
     return parser
 
 
@@ -53,16 +60,41 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "candidate_feature_count": freeze.report["candidate_feature_count"],
                 "target_values_accessed": freeze.report["chronology"]["target_values_accessed"],
             }
-        else:
+        elif arguments.command == "compare-public":
             comparison = compare_public_freezes(_resolve(root, arguments.first), _resolve(root, arguments.second))
             result = {
                 "state": comparison["state"],
                 "file_count": comparison["file_count"],
                 "target_values_accessed": comparison["target_values_accessed"],
             }
+        else:
+            registry = os.environ.get("MODEL13_AUTHORITY_REGISTRY")
+            if not registry:
+                raise ConformanceError("AUTHORITATIVE_ACCESS_REGISTRY_UNRESOLVED", "no MODEL-13 registry is configured for this executor")
+            safe = execute_protected_experiment(
+                repository_root=root,
+                registry_path=Path(registry),
+                public_freeze_dir=_resolve(root, arguments.public_freeze),
+                verification_freeze_dir=_resolve(root, arguments.verification_freeze),
+                output_dir=_resolve(root, arguments.output),
+            )
+            strongest = safe["strongest_expanded_candidate_id"]
+            result = {
+                "state": safe["state"],
+                "baseline_reproduction": safe["accepted_predecessor"]["baseline_reproduction"]["state"],
+                "strongest_expanded_candidate_id": strongest,
+                "evidence_disposition": safe["evidence_disposition"],
+                "pooled_spearman": safe["candidate_matrix"][strongest]["aggregate_oof"]["pooled"]["spearman"],
+                "michigan_spearman": safe["candidate_matrix"][strongest]["aggregate_oof"]["michigan"]["spearman"],
+                "wisconsin_spearman": safe["candidate_matrix"][strongest]["aggregate_oof"]["wisconsin"]["spearman"],
+                "protected_details_disclosed": False,
+            }
     except ConformanceError as exc:
         print(json.dumps({"state": "failed_closed", "code": exc.code}, sort_keys=True))
         return 2
+    except Exception:
+        print(json.dumps({"state": "failed_closed", "code": "MODEL14_UNEXPECTED_FAILURE"}, sort_keys=True))
+        return 3
     print(json.dumps(result, sort_keys=True))
     return 0
 

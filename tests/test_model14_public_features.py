@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import copy
+from contextlib import redirect_stdout
+import io
 import json
 import math
+import os
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from sprouts_customer_geography.model14.public import (
     ACS_COMPONENTS,
@@ -19,7 +23,14 @@ from sprouts_customer_geography.model14.modeling import (
     fit_training_fold_preprocessor,
     grouped_oof_predictions,
     nested_grouped_oof,
+    tune_parameters,
 )
+from sprouts_customer_geography.model14.experiment import (
+    MODEL13_ACCEPTED_ROUNDED,
+    _verify_baseline_reproduction,
+    build_disclosure_safe_result,
+)
+from sprouts_customer_geography.model14.cli import main as model14_main
 from sprouts_customer_geography.model13.modeling import SPATIAL_TERMS, _cv_predictions
 from sprouts_customer_geography.pipe01.canonical import content_digest
 from sprouts_customer_geography.pipe01.errors import ConformanceError
@@ -211,6 +222,113 @@ class Model14ModelingTests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(ConformanceError, "MODEL14_WITHIN_GROUP_FEATURE_MISMATCH"):
             fit_training_fold_preprocessor(rows, ["fictional"])
+
+    def test_nonconvergent_grid_point_is_ineligible_not_silently_retained(self) -> None:
+        rows = _synthetic_model_rows()
+        predictions = [float(row["isolated_sales"]) for row in rows]
+        with patch(
+            "sprouts_customer_geography.model14.modeling.grouped_oof_predictions",
+            side_effect=[
+                ConformanceError("MODEL13_ELASTIC_NET_DID_NOT_CONVERGE", "fictional nonconvergence"),
+                (predictions, []),
+            ],
+        ), patch("sprouts_customer_geography.model14.modeling.fit_experimental_model"):
+            selected = tune_parameters(
+                rows,
+                "fictional",
+                [*SPATIAL_TERMS, "fictional_public_expansion"],
+                alpha_grid=(0.01, 0.1),
+                l1_ratio_grid=(0.5,),
+                fold_count=2,
+            )
+        self.assertEqual(selected, {"alpha": 0.1, "l1_ratio": 0.5})
+
+    def test_exact_accepted_baseline_rounding_is_required(self) -> None:
+        result = {"aggregate_oof": copy.deepcopy(MODEL13_ACCEPTED_ROUNDED)}
+        reproduced = _verify_baseline_reproduction(result)
+        self.assertEqual(reproduced["state"], "MATCH")
+        changed = copy.deepcopy(result)
+        changed["aggregate_oof"]["pooled"]["spearman"] = 0.6200
+        with self.assertRaisesRegex(ConformanceError, "MODEL14_BASELINE_REPRODUCTION_FAILED"):
+            _verify_baseline_reproduction(changed)
+
+    def test_disclosure_safe_result_omits_rows_targets_paths_and_identifiers(self) -> None:
+        rows = _synthetic_model_rows()
+        for row in rows:
+            row["features"]["lodes_log_workplace_jobs_5mi"] = row["features"].pop("fictional_public_expansion")
+        baseline = nested_grouped_oof(
+            rows,
+            "A_model13_reproduced",
+            list(SPATIAL_TERMS),
+            alpha_grid=(0.1,),
+            l1_ratio_grid=(0.5,),
+            outer_count=3,
+            inner_count=2,
+            term_families={term: "model13_accepted" for term in SPATIAL_TERMS},
+        )
+        expanded = nested_grouped_oof(
+            rows,
+            "B_model13_plus_lodes",
+            [*SPATIAL_TERMS, "lodes_log_workplace_jobs_5mi"],
+            alpha_grid=(0.1,),
+            l1_ratio_grid=(0.5,),
+            outer_count=3,
+            inner_count=2,
+            term_families={
+                **{term: "model13_accepted" for term in SPATIAL_TERMS},
+                "lodes_log_workplace_jobs_5mi": "lodes",
+            },
+        )
+        zero_delta = {
+            domain: {metric: 0.0 for metric in ("spearman", "kendall_tau_b", "log_rmse", "level_mae")}
+            for domain in ("pooled", "michigan", "wisconsin")
+        }
+        protected = {
+            "baseline_terms": list(SPATIAL_TERMS),
+            "baseline_reproduction": {"state": "MATCH"},
+            "public_feature_families": {
+                "lodes": {"status": "evaluation-ready", "candidate_feature_count": 14},
+            },
+            "development_anchor_coverage": {},
+            "candidates": {"A_model13_reproduced": baseline, "B_model13_plus_lodes": expanded},
+            "strongest_expanded_candidate_id": "B_model13_plus_lodes",
+            "ablations": {
+                "lodes": {
+                    "removed_feature_count": 14,
+                    "reused_primary_matrix_candidate": True,
+                    "aggregate_oof": baseline["aggregate_oof"],
+                    "strongest_minus_ablation_metric_delta": zero_delta,
+                    "stability_score": baseline["stability"]["stability_score"],
+                }
+            },
+            "evidence_disposition": "no credible improvement",
+            "disposition_evidence": ["synthetic disclosure fixture"],
+        }
+        safe = build_disclosure_safe_result(protected)
+        serialized = json.dumps(safe, sort_keys=True)
+        self.assertEqual(safe["state"], "PRE_H_EXPERIMENT_COMPLETE")
+        for token in ("successor_physical_location_id", "isolated_sales", "predictions", "canonical_latitude", "C:\\Users\\"):
+            self.assertNotIn(token, serialized)
+
+    def test_cli_unexpected_failure_is_opaque_and_path_free(self) -> None:
+        output = io.StringIO()
+        with patch.dict(os.environ, {"MODEL13_AUTHORITY_REGISTRY": "fictional-registry"}), patch(
+            "sprouts_customer_geography.model14.cli.execute_protected_experiment",
+            side_effect=RuntimeError("C:\\protected\\must-not-disclose.json"),
+        ), redirect_stdout(output):
+            status = model14_main([
+                "--repository-root", str(REPOSITORY),
+                "protected-experiment",
+                "--public-freeze", "outputs/fictional-public",
+                "--verification-freeze", "outputs/fictional-verification",
+                "--output", "outputs/fictional-experiment",
+            ])
+        self.assertEqual(status, 3)
+        self.assertEqual(
+            json.loads(output.getvalue()),
+            {"state": "failed_closed", "code": "MODEL14_UNEXPECTED_FAILURE"},
+        )
+        self.assertNotIn("protected", output.getvalue().lower())
 
 
 if __name__ == "__main__":
