@@ -296,6 +296,42 @@ def _safe_result_fixture() -> dict[str, object]:
 
 
 class Model14OvertureGeneration2ExperimentTests(unittest.TestCase):
+    def test_pre_h_report_records_exact_safe_generation2_result(self) -> None:
+        repository_root = Path(__file__).resolve().parents[1]
+        report = (
+            repository_root
+            / "docs"
+            / "experiments"
+            / "MODEL_14_OVERTURE_GENERATION2_PRE_H_REPORT.md"
+        ).read_text(encoding="utf-8")
+
+        for required in (
+            "2026-07-22.0",
+            "v1.18.0",
+            "Baseline reproduction: **MATCH**",
+            "Evidence disposition: **possible improvement**",
+            "0.6599",
+            "0.5297",
+            "0.7548",
+            "0.4793",
+            "0.1010",
+            "22,540.35",
+            "MASTER CONTROL ROOM: Sprouts Customer Geography",
+        ):
+            self.assertIn(required, report)
+
+        report_lower = report.lower()
+        for forbidden in (
+            "successor_physical_location_id",
+            "analytical_observation_id",
+            "isolated_sales",
+            "canonical_latitude",
+            "canonical_longitude",
+            "model13_authority_registry",
+            "protected_content_sha256",
+        ):
+            self.assertNotIn(forbidden, report_lower)
+
     def test_exact_accepted_development_cohort_is_required(self) -> None:
         rows = _accepted_cohort_fixture()
         generation2._verify_development_cohort(rows)
