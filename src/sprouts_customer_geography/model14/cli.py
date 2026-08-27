@@ -11,6 +11,7 @@ from typing import Sequence
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
 from .experiment import execute_protected_experiment
+from .generation2_experiment import execute_generation2_protected_experiment
 from .overture_generation2 import (
     compare_generation2_public_freezes,
     extract_generation2_source,
@@ -74,6 +75,21 @@ def _parser() -> argparse.ArgumentParser:
     protected.add_argument("--public-freeze", type=Path, required=True)
     protected.add_argument("--verification-freeze", type=Path, required=True)
     protected.add_argument("--output", type=Path, required=True)
+
+    protected_generation2 = subparsers.add_parser(
+        "protected-overture-generation2-experiment",
+        help=(
+            "evaluate only the separately frozen exploratory Overture "
+            "Generation-2 candidates through exact accepted MODEL-13 authority"
+        ),
+    )
+    protected_generation2.add_argument("--public-freeze", type=Path, required=True)
+    protected_generation2.add_argument(
+        "--verification-freeze",
+        type=Path,
+        required=True,
+    )
+    protected_generation2.add_argument("--output", type=Path, required=True)
     return parser
 
 
@@ -174,6 +190,45 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "pooled_spearman": safe["candidate_matrix"][strongest]["aggregate_oof"]["pooled"]["spearman"],
                 "michigan_spearman": safe["candidate_matrix"][strongest]["aggregate_oof"]["michigan"]["spearman"],
                 "wisconsin_spearman": safe["candidate_matrix"][strongest]["aggregate_oof"]["wisconsin"]["spearman"],
+                "protected_details_disclosed": False,
+            }
+        elif arguments.command == "protected-overture-generation2-experiment":
+            registry = os.environ.get("MODEL13_AUTHORITY_REGISTRY")
+            if not registry:
+                raise ConformanceError(
+                    "AUTHORITATIVE_ACCESS_REGISTRY_UNRESOLVED",
+                    "no MODEL-13 registry is configured for this executor",
+                )
+            safe = execute_generation2_protected_experiment(
+                repository_root=root,
+                registry_path=Path(registry),
+                public_freeze_dir=_resolve(root, arguments.public_freeze),
+                verification_freeze_dir=_resolve(
+                    root,
+                    arguments.verification_freeze,
+                ),
+                output_dir=_resolve(root, arguments.output),
+            )
+            strongest = safe["strongest_expanded_candidate_id"]
+            result = {
+                "state": safe["state"],
+                "generation": 2,
+                "exploratory": True,
+                "confirmatory": False,
+                "baseline_reproduction": safe["accepted_predecessor"][
+                    "baseline_reproduction"
+                ]["state"],
+                "strongest_expanded_candidate_id": strongest,
+                "evidence_disposition": safe["evidence_disposition"],
+                "pooled_spearman": safe["candidate_matrix"][strongest][
+                    "aggregate_oof"
+                ]["pooled"]["spearman"],
+                "michigan_spearman": safe["candidate_matrix"][strongest][
+                    "aggregate_oof"
+                ]["michigan"]["spearman"],
+                "wisconsin_spearman": safe["candidate_matrix"][strongest][
+                    "aggregate_oof"
+                ]["wisconsin"]["spearman"],
                 "protected_details_disclosed": False,
             }
         else:  # pragma: no cover - argparse constrains this branch
