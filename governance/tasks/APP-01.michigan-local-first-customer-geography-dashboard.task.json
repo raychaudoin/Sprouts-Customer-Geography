@@ -1,0 +1,57 @@
+{
+  "task_id": "APP-01",
+  "title": "Michigan Local-First Customer Geography Dashboard",
+  "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized Lane B APP-01 from canonical main commit b29be0c1c4faf173fc95f402446ddfd92f73f92c and continued the same task from pre-H checkpoint cbbec075603d44586d3cafdcfa005653fab3dcc2 for the targeted final Product Design and Ultra high-severity-only review, final validation, and exact-H preparation",
+  "state": "ACCEPTED_CLOSED",
+  "scope": [
+    "Implement the accepted ARCH-01 local-first browser architecture as the real Michigan operator application over accepted prepared presentation inputs",
+    "Implement fail-closed MODEL-13 and DATA-04 local input resolution validation deterministic bundle preparation and exact public geometry reconciliation",
+    "Provide the exact 16-metric map-first scouting workflow inspector contextual warnings QA and Coverage and separate Sprouts Evidence Context views",
+    "Preserve loopback-only serving explicit route and host allowlists restrictive security headers reviewed USGS tile egress and network-free Local neutral operation",
+    "Run the production synthetic canary egress gate before real protected input use and validate the accepted real 3017-tract runtime without protected disclosure",
+    "Provide one normal Windows launcher actionable failure diagnostics clean restart and disclosure-safe performance stability and accessibility evidence",
+    "Audit the complete running application with the installed Product Design capability correct material in-scope findings and recheck affected flows",
+    "Complete the targeted final Product Design and Ultra review, correct only high-severity in-scope findings, perform final validation, create exact substantive H, and stop for ARCH acceptance"
+  ],
+  "exclusions": [
+    "No change recomputation reinterpretation refit rescore normalization replacement or reopening of MODEL-13 DATA-04 DATA-03 GEO-05 accepted Michigan TIGER PBI-01 or ARCH-01 authority",
+    "No merge cherry-pick acceptance transition rewrite or promotion of PBI-02 and no APP-01 base on the PBI-02 branch",
+    "No new metric analytical semantics geography source external service paid dependency framework package manager database browser query engine account telemetry analytics crash reporting or remote logging",
+    "No real MODEL-13 tract rows Seed Context identities locations sales predictions errors parameters local handles or generated production bundle in Git GitHub external requests or committed screenshots",
+    "No non-loopback binding LAN exposure file upload arbitrary browsing write API remote-control API deployment hosting or publication",
+    "No capability acceptance acceptance-record-only A merge deployment hosting publication PBI-02 transition model or data expansion redesign or follow-on task at H"
+  ],
+  "accepted_input_artifacts": [
+    "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1",
+    "ARCH01_MICHIGAN_PRESENTATION_METRIC_CATALOG_V1",
+    "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1",
+    "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+    "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1",
+    "PBI01_MICHIGAN_2024_TIGER_TRACT_PRESENTATION_GEOMETRY_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL13_OUTPUT_ROOT_V1",
+    "PROTECTED_DATA04_MICHIGAN_PUBLIC_MATERIALIZATION_V1"
+  ],
+  "implementation_branch": "task/app-01-michigan-local-first-customer-geography-dashboard",
+  "implementation_commit": "9aa8853f3fa78cad62d9e4e384bae6ef107f3e4f",
+  "completion_state": {
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
+    "capability_acceptance": "ACCEPTED"
+  },
+  "acceptance_destination": "ARCH: Presentation Architecture Decisions & Acceptance",
+  "acceptance_disposition": "ACCEPTED",
+  "acceptance_metadata": {
+    "capability_owner": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_by": "ARCH: Presentation Architecture Decisions & Acceptance",
+    "recorded_on": "2026-08-26"
+  },
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}

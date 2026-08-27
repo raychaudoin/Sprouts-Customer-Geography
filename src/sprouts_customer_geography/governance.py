@@ -12,11 +12,11 @@ from .pipe01.errors import ConformanceError, require
 
 
 TASK_ID_RE = re.compile(
-    r"^(?:GOV|DATA|MODEL|GEO|BI|PBI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE|ARCH)-[0-9]{2}[A-Z]?$"
+    r"^(?:GOV|DATA|MODEL|GEO|BI|PBI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE|ARCH|APP)-[0-9]{2}[A-Z]?$"
 )
 BRANCH_RE = re.compile(r"^task/[a-z]+-[0-9]{2}[a-z]?(?:-[a-z0-9]+)+$")
-COMMIT_RE = re.compile(r"^(?:GOV|DATA|MODEL|GEO|BI|PBI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE|ARCH)-[0-9]{2}[A-Z]?: [a-z].+$")
-PR_TITLE_RE = re.compile(r"^(?:GOV|DATA|MODEL|GEO|BI|PBI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE|ARCH)-[0-9]{2}[A-Z]?: \S.*$")
+COMMIT_RE = re.compile(r"^(?:GOV|DATA|MODEL|GEO|BI|PBI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE|ARCH|APP)-[0-9]{2}[A-Z]?: [a-z].+$")
+PR_TITLE_RE = re.compile(r"^(?:GOV|DATA|MODEL|GEO|BI|PBI|PIPE|STORE|MARKETS|INTEGRATION|DEPLOY|VALIDATE|ARCH|APP)-[0-9]{2}[A-Z]?: \S.*$")
 LOGICAL_ARTIFACT_RE = re.compile(r"^[A-Z]+[0-9]{2}[A-Z]?_[A-Z0-9_]+_V[1-9][0-9]*$")
 PROTECTED_LOGICAL_ID_RE = re.compile(r"^PROTECTED_[A-Z0-9_]+(?:_V[1-9][0-9]*)?$")
 ABSOLUTE_PATH_RE = re.compile(r"^(?:[A-Za-z]:[\\/]|\\\\|/|~[\\/])")

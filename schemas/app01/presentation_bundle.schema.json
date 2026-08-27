@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sprouts-customer-geography.local/schemas/app01/presentation_bundle.schema.json",
+  "title": "APP-01 deterministic Michigan presentation bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "artifact_id", "version", "data_mode", "classification", "notice", "egress_canary", "source_bindings", "tract_count", "metric_count", "metrics", "domains", "availability", "qa", "audit_states", "rows"],
+  "properties": {
+    "$schema": {"const": "app01-presentation-bundle-v1"},
+    "artifact_id": {"const": "APP01_MICHIGAN_PRESENTATION_BUNDLE_V1"},
+    "version": {"const": "1.0.0"},
+    "data_mode": {"enum": ["synthetic_validation", "accepted_real"]},
+    "classification": {"enum": ["synthetic_public", "protected_local"]},
+    "notice": {"type": "string", "minLength": 1},
+    "egress_canary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["active", "tokens", "external_transmission_permitted"],
+      "properties": {
+        "active": {"type": "boolean"},
+        "tokens": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "external_transmission_permitted": {"const": false}
+      }
+    },
+    "source_bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["architecture", "metric_catalog", "model13_contract", "data04_contract", "geometry", "geometry_sha256"],
+      "properties": {
+        "architecture": {"const": "ARCH01_LOCAL_FIRST_PRESENTATION_RUNTIME_POLICY_V1"},
+        "metric_catalog": {"const": "ARCH01_MICHIGAN_PRESENTATION_METRIC_CATALOG_V1"},
+        "model13_contract": {"const": "MODEL13_MICHIGAN_POWER_BI_OUTPUT_CONTRACT_V1"},
+        "data04_contract": {"const": "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1"},
+        "geometry": {"const": "PBI01_MICHIGAN_2024_TIGER_TRACT_PRESENTATION_GEOMETRY_V1"},
+        "geometry_sha256": {"const": "e0f32095d2e2307f5ad78c9545fc0d3c74fca2250bc866bea8db2368848786ad"}
+      }
+    },
+    "tract_count": {"const": 3017},
+    "metric_count": {"const": 16},
+    "metrics": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"$ref": "#/$defs/metric"}},
+    "domains": {"$ref": "#/$defs/metric_map_domain"},
+    "availability": {"$ref": "#/$defs/metric_map_availability"},
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model13", "data04", "geometry", "model_computable_count", "model_noncomputable_count", "support_truncated_count"],
+      "properties": {
+        "model13": {"type": "object"},
+        "data04": {"type": "object"},
+        "geometry": {"type": "object"},
+        "model_computable_count": {"const": 2973},
+        "model_noncomputable_count": {"const": 44},
+        "support_truncated_count": {"const": 438}
+      }
+    },
+    "audit_states": {"type": ["object", "null"]},
+    "rows": {"type": "array", "minItems": 3017, "maxItems": 3017, "items": {"$ref": "#/$defs/row"}}
+  },
+  "$defs": {
+    "metric_key": {"enum": ["customer_fit_percentile", "household_opportunity_5_mile", "modeled_target_mass_percentile", "median_household_income", "per_capita_income", "civilian_labor_force_share", "employment_rate", "bachelors_or_higher_share", "owner_occupancy_share", "vacancy_share", "median_home_value", "median_gross_rent", "average_household_size", "no_vehicle_household_share", "drive_alone_commuter_share", "work_from_home_commuter_share"]},
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["metric_key", "display_name", "sort_order", "family", "unit", "format_policy", "definition", "source_authority_id", "source_label", "scale_policy", "palette", "availability_policy", "warning_policy", "input_binding", "interpretation", "source_vintage"],
+      "properties": {
+        "metric_key": {"$ref": "#/$defs/metric_key"},
+        "display_name": {"type": "string", "minLength": 1},
+        "sort_order": {"type": "integer", "minimum": 1, "maximum": 16},
+        "family": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1},
+        "format_policy": {"enum": ["percentile_1", "count_0", "currency_0", "percent_1", "decimal_2"]},
+        "definition": {"type": "string", "minLength": 1},
+        "source_authority_id": {"type": "string", "minLength": 1},
+        "source_label": {"type": "string", "minLength": 1},
+        "scale_policy": {"enum": ["fixed_0_100", "statewide_valid_p02_p98"]},
+        "palette": {"enum": ["model_proxy_sequential", "descriptive_sequential"]},
+        "availability_policy": {"type": "string", "minLength": 1},
+        "warning_policy": {"type": "string", "minLength": 1},
+        "input_binding": {"type": "object"},
+        "interpretation": {"type": "string", "minLength": 1},
+        "source_vintage": {"type": "string", "minLength": 1}
+      }
+    },
+    "domain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minimum", "maximum", "policy", "valid_value_count"],
+      "properties": {
+        "minimum": {"type": "number"},
+        "maximum": {"type": "number"},
+        "policy": {"enum": ["fixed_0_100", "statewide_valid_p02_p98"]},
+        "valid_value_count": {"type": "integer", "minimum": 1, "maximum": 3017}
+      }
+    },
+    "availability_value": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "unavailable"],
+      "properties": {
+        "available": {"type": "integer", "minimum": 0, "maximum": 3017},
+        "unavailable": {"type": "integer", "minimum": 0, "maximum": 3017}
+      }
+    },
+    "metric_map_domain": {"type": "object", "minProperties": 16, "maxProperties": 16, "propertyNames": {"$ref": "#/$defs/metric_key"}, "additionalProperties": {"$ref": "#/$defs/domain"}},
+    "metric_map_availability": {"type": "object", "minProperties": 16, "maxProperties": 16, "propertyNames": {"$ref": "#/$defs/metric_key"}, "additionalProperties": {"$ref": "#/$defs/availability_value"}},
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["geoid", "values", "statuses", "status_details", "moes", "support_truncation", "computability_status"],
+      "properties": {
+        "geoid": {"type": "string", "pattern": "^26[0-9]{9}$"},
+        "values": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["number", "null"]}},
+        "statuses": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"enum": ["valid", "missing", "special", "inapplicable", "suppressed", "invalid", "noncomputable"]}},
+        "status_details": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["string", "null"]}},
+        "moes": {"type": "array", "minItems": 16, "maxItems": 16, "items": {"type": ["number", "null"], "minimum": 0}},
+        "support_truncation": {"type": ["boolean", "null"]},
+        "computability_status": {"enum": ["MODEL_SCORE_COMPUTABLE", "MODEL_SCORE_NONCOMPUTABLE"]}
+      }
+    }
+  }
+}

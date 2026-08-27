@@ -1,0 +1,9 @@
+{
+  "model13_registry": "REPLACE_WITH_ABSOLUTE_PATH_OUTSIDE_REPOSITORY",
+  "model13_candidates": [
+    "powerbi/pbi01/local/model13"
+  ],
+  "data04_candidates": [
+    "outputs/data04-run-1"
+  ]
+}

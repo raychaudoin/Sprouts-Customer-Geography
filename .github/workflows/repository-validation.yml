@@ -36,6 +36,7 @@ jobs:
       - run: python scripts/check_model13_repository.py
       - run: python scripts/check_pbi01_repository.py
       - run: python scripts/check_arch01_repository.py
+      - run: python scripts/check_app01_repository.py
       - run: python -m unittest discover -s tests -v
         env:
           PIPE01_TEST_TEMP_ROOT: ${{ runner.temp }}
@@ -47,3 +48,4 @@ jobs:
           MODEL12_TEST_TEMP_ROOT: ${{ runner.temp }}
           MODEL13_TEST_TEMP_ROOT: ${{ runner.temp }}
           PBI01_TEST_TEMP_ROOT: ${{ runner.temp }}
+          APP01_TEST_TEMP_ROOT: ${{ runner.temp }}

@@ -68,6 +68,7 @@ class GovernanceTests(unittest.TestCase):
         self.assertTrue(task_id_is_valid("PIPE-01B"))
         self.assertTrue(task_id_is_valid("INTEGRATION-14"))
         self.assertTrue(task_id_is_valid("ARCH-01"))
+        self.assertTrue(task_id_is_valid("APP-01"))
         for invalid in ("GOV2", "UNKNOWN-02", "GOV-2", "GOV-02-RETRY"):
             self.assertFalse(task_id_is_valid(invalid))
 
@@ -84,10 +85,12 @@ class GovernanceTests(unittest.TestCase):
         self.assertTrue(task_commit_message_is_valid("GOV-02: implement repository workflow governance", "GOV-02"))
         self.assertTrue(task_commit_message_is_valid("PBI-01: bootstrap governed Power BI workspace", "PBI-01"))
         self.assertTrue(task_commit_message_is_valid("ARCH-01: select local presentation architecture", "ARCH-01"))
+        self.assertTrue(task_commit_message_is_valid("APP-01: implement local dashboard", "APP-01"))
         self.assertFalse(task_commit_message_is_valid("GOV-02 implement workflow", "GOV-02"))
         self.assertTrue(future_pr_title_is_valid("GOV-02: GitHub Workflow & Execution Governance", "GOV-02"))
         self.assertTrue(future_pr_title_is_valid("PBI-01: Michigan Customer Geography Power BI MVP", "PBI-01"))
         self.assertTrue(future_pr_title_is_valid("ARCH-01: Local-First Customer Geography Presentation Architecture", "ARCH-01"))
+        self.assertTrue(future_pr_title_is_valid("APP-01: Michigan Local-First Customer Geography Dashboard", "APP-01"))
 
     def test_05_rejects_protected_paths_values_and_fields(self):
         cases = [

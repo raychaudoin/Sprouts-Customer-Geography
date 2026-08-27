@@ -103,6 +103,9 @@ powerbi/pbi01/runtime/
 powerbi/pbi01/**/*.pbix
 powerbi/pbi01/**/*.pbit
 
+# APP-01 protected/local settings and generated runtime evidence
+presentation/app01/local/
+
 # Machine-specific editor settings
 .idea/
 .vscode/
