@@ -12,6 +12,11 @@ dependencies = [
     "shapely>=2.1,<3",
 ]
 
+[project.optional-dependencies]
+model14-overture = [
+    "duckdb==1.5.5",
+]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
@@ -37,3 +42,4 @@ pipe05-bind = "sprouts_customer_geography.pipe05.cli:main"
 pipe05-bootstrap-registry = "sprouts_customer_geography.pipe05.registry_bootstrap:main"
 model13-run = "sprouts_customer_geography.model13.cli:main"
 model13-bootstrap-registry = "sprouts_customer_geography.model13.registry_bootstrap:main"
+model14-experiment = "sprouts_customer_geography.model14.cli:main"

@@ -1,0 +1,89 @@
+{
+  "artifact_id": "MODEL14_TARGET_BLIND_PUBLIC_FEATURE_COMMITMENT_V1",
+  "version": "1.0.0",
+  "state": "TARGET_BLIND_PUBLIC_FEATURES_FROZEN",
+  "controlling_task": "MODEL-14",
+  "production_source_authority": false,
+  "contract": {
+    "artifact_id": "MODEL14_EXPERIMENTAL_PUBLIC_FEATURE_CONTRACT_V1",
+    "content_sha256": "f426bd5a99d2d1c4e2d0063cd3fd42db58c67efe1ef9c91dca4e5b3ad3c3cad6"
+  },
+  "chronology": {
+    "feature_definitions_frozen_before_target_access": true,
+    "full_public_tract_matrix_frozen_before_target_access": true,
+    "target_values_accessed": 0,
+    "protected_anchor_rows_accessed": 0,
+    "sealed_or_prospective_evidence_accessed": false,
+    "next_permitted_step": "recover only the exact already-consumed MODEL-13 development evidence through accepted protected authority"
+  },
+  "public_matrix_commitment": {
+    "outside_tracked_git": true,
+    "matrix_byte_sha256": "dfdeefc356d93aab99595ce358f9618523fa6c624d113cb2ef5f5737a111f267",
+    "freeze_file_byte_sha256": "940a7baf1ce935c308e9995e6f3b107c0f6ceba2951425c3728e11a390468d9f",
+    "freeze_semantic_content_sha256": "ad0fc72895f667ca265201660bbfa74b015161ea89ee05ba09fe8cabf49e748c",
+    "row_count": 4559,
+    "michigan_row_count": 3017,
+    "wisconsin_row_count": 1542,
+    "tract_row_dropping": false,
+    "missing_to_zero": false,
+    "accepted_tract_key_reconciliation": true,
+    "independent_materialization_count": 2,
+    "determinism_state": "DETERMINISTIC_BYTE_IDENTICAL"
+  },
+  "source_families": {
+    "lodes": {
+      "status": "evaluation-ready",
+      "candidate_feature_count": 14,
+      "source": "U.S. Census Bureau LEHD Origin-Destination Employment Statistics release format 8.4",
+      "data_year": 2021,
+      "crosswalk_geography": "2024 TIGER",
+      "michigan_tract_count": 3017,
+      "wisconsin_tract_count": 1542,
+      "wac_od_total_difference_by_state": {"MI": 0, "WI": 0},
+      "maximum_missing_tract_count_by_state": {"MI": 43, "WI": 14},
+      "missingness_reason": "undefined ratios in five-mile contexts with zero denominator; all tract rows retained"
+    },
+    "business_context": {
+      "status": "partially-evaluation-ready",
+      "candidate_feature_count": 0,
+      "reason": "No tract-level candidate was admitted without an additional frozen Overture taxonomy/spatial-join authority or an unapproved ZIP-to-tract allocation."
+    },
+    "traffic_accessibility": {
+      "status": "evaluation-ready",
+      "candidate_feature_count": 2,
+      "source": "2024 TIGER/Line Primary and Secondary Roads state-based shapefiles",
+      "michigan_tract_count": 3017,
+      "wisconsin_tract_count": 1542,
+      "missing_tract_count_by_state": {"MI": 0, "WI": 0},
+      "aadt_claimed": false
+    },
+    "richer_acs": {
+      "status": "evaluation-ready",
+      "candidate_feature_count": 11,
+      "source": "2020-2024 ACS 5-Year Detailed Tables",
+      "new_tables": ["B01003", "B08303", "B11001", "B17001", "B19001", "B25024", "B25070"],
+      "accepted_tables_reused": ["B08201", "B08301"],
+      "michigan_tract_count": 3017,
+      "wisconsin_tract_count": 1542,
+      "maximum_missing_tract_count_by_state": {"MI": 42, "WI": 14},
+      "missingness_reason": "source special values or undefined ratios; all tract rows retained"
+    }
+  },
+  "protected_characteristic_policy": {
+    "race_used": false,
+    "ethnicity_used": false,
+    "sex_used": false,
+    "religion_used": false,
+    "age_composition_used": false,
+    "other_protected_class_feature_used": false,
+    "lodes_protected_columns_read_for_features": false
+  },
+  "scope_boundaries": {
+    "accepted_model13_changed": false,
+    "app01_changed": false,
+    "pbi02_changed": false,
+    "production_promotion_performed": false,
+    "experimental_sources_accepted": false
+  },
+  "content_sha256": "3c899bae5e4104441e10924268baf99002426b249e51c820dcafc4394e7723ff"
+}

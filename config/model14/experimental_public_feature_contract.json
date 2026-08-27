@@ -1,0 +1,170 @@
+{
+  "artifact_id": "MODEL14_EXPERIMENTAL_PUBLIC_FEATURE_CONTRACT_V1",
+  "version": "1.0.0",
+  "status": "EXPERIMENTAL_TARGET_BLIND_DEFINITIONS_FROZEN",
+  "controlling_task": "MODEL-14",
+  "production_source_authority": false,
+  "target_blind": true,
+  "target_access_before_public_freeze_permitted": false,
+  "geography_authority": {
+    "vintage": "2024",
+    "level": "tract",
+    "states": [
+      {"state": "MI", "state_fips": "26", "accepted_tract_count": 3017, "tiger_manifest_id": "DATA04_TIGER2024_MI_TRACT_SOURCE_MANIFEST_V1"},
+      {"state": "WI", "state_fips": "55", "accepted_tract_count": 1542, "tiger_manifest_id": "DATA02_TIGER2024_WI_TRACT_SOURCE_MANIFEST_V1"}
+    ],
+    "source_crs": "EPSG:4269",
+    "target_crs": "EPSG:5070",
+    "operation_id": "GEO03_EPSG4269_TO_EPSG5070_DIRECT_NAD83_CONUS_ALBERS_V1",
+    "anchor": "accepted 2024 TIGER internal point",
+    "model_context_radius_m": 8046.72,
+    "membership_rule_changed": false
+  },
+  "source_families": {
+    "lodes": {
+      "status": "evaluation-ready",
+      "publisher": "U.S. Census Bureau, Longitudinal Employer-Household Dynamics",
+      "product": "LEHD Origin-Destination Employment Statistics",
+      "release_format_version": "8.4",
+      "release_data_vintage": "20251202_1657",
+      "data_year": 2021,
+      "mutual_vintage_reason": "LODES 8.4 adds 2023, but official release notes state that 2023 omits Michigan workers and the 8.3 release states that 2022 omits Michigan; 2021 is the most recent mutually supportable Michigan and Wisconsin year.",
+      "geography_crosswalk": "LODES 8.4 current crosswalk using 2024 TIGER geography",
+      "job_type": "JT00 all jobs",
+      "segment": "S000 all workers/jobs",
+      "official_directory": "https://lehd.ces.census.gov/data/lodes/LODES8/",
+      "technical_document": "https://lehd.ces.census.gov/data/lodes/LODES8/LODESTechDoc8.4.pdf",
+      "files": [
+        {"state": "MI", "role": "crosswalk", "filename": "mi_xwalk.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/mi/mi_xwalk.csv.gz", "byte_length": 4509241, "gzip_sha256": "e3a6a1ed60868a0eea04695b9fde0a0941ba18fddc8e65c58a621a710bdf60e2", "official_csv_sha256": "20e2ea5f5fd34dffb2abbfafa114c0090d199ae2e07d59f0317203321b819b61"},
+        {"state": "MI", "role": "wac", "filename": "mi_wac_S000_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/mi/wac/mi_wac_S000_JT00_2021.csv.gz", "byte_length": 1522770, "gzip_sha256": "f74fa8dd8b89ba67da78702ba4fc5a48de2c331f04307917785cee9fb8c9a71d", "official_csv_sha256": "778d97d82f4646b9acbde43b03d0d784653f170b8bd562acf850763a0fec0209"},
+        {"state": "MI", "role": "rac", "filename": "mi_rac_S000_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/mi/rac/mi_rac_S000_JT00_2021.csv.gz", "byte_length": 4660331, "gzip_sha256": "ed9a493296f95e17e54692ad069dae1f082386a98169b179b1c949a3fe204c11", "official_csv_sha256": "db167f3c321fee084e4ac61e27b9c329533596b0770b4fabd49c7b9b5f47fcdd"},
+        {"state": "MI", "role": "od_main", "filename": "mi_od_main_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/mi/od/mi_od_main_JT00_2021.csv.gz", "byte_length": 21432744, "gzip_sha256": "0b2250e40c4ded82b3f5a7595519498068a41ab318cc2778ce902dc9d91425ae", "official_csv_sha256": "02fa23a0255417b5d290708465964a2ef5c17793000a05383d08d74152a2226c"},
+        {"state": "MI", "role": "od_aux", "filename": "mi_od_aux_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/mi/od/mi_od_aux_JT00_2021.csv.gz", "byte_length": 614917, "gzip_sha256": "456a72aea14aec768d6ef11ea56d26747bbb629da57a5a9c81f21dd024a543f4", "official_csv_sha256": "bd3692f98d8a86cb7d34b5c516bbd82851b82757d6bc9900347d639c0344f71b"},
+        {"state": "WI", "role": "crosswalk", "filename": "wi_xwalk.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/wi/wi_xwalk.csv.gz", "byte_length": 3573750, "gzip_sha256": "d84a214235dae6d001391f6928771cc260dcc1787aaf594f4f17f8dde22f55e7", "official_csv_sha256": "bd0541bef794e5981d0e99b0c7ddfbb491a38f7eb33ebf5096e5e171c074500d"},
+        {"state": "WI", "role": "wac", "filename": "wi_wac_S000_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/wi/wac/wi_wac_S000_JT00_2021.csv.gz", "byte_length": 1222261, "gzip_sha256": "6f82d328f3a6ea5b7d94a9459ebe4de4d40fc0ecc75397465b429e365cb0116e", "official_csv_sha256": "86c8d3829c345fd8e79e802a9551e367391142480c8e0b8c8fa63d5b2de0169a"},
+        {"state": "WI", "role": "rac", "filename": "wi_rac_S000_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/wi/rac/wi_rac_S000_JT00_2021.csv.gz", "byte_length": 3321828, "gzip_sha256": "559122583cdc2621bbe67d75f9f71d029ab9a8175f78a299f043afa91b241ce3", "official_csv_sha256": "da6f91942e2287fcb16a5b3989d3106ce32087e284bb48ab718f29d4d28db346"},
+        {"state": "WI", "role": "od_main", "filename": "wi_od_main_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/wi/od/wi_od_main_JT00_2021.csv.gz", "byte_length": 14341493, "gzip_sha256": "3110281e6f78ac0402a19b40cedfc24f56af25b1e53c73f36e39a1d0536003b0", "official_csv_sha256": "4c315b72ce05d155b3a07fc951c091ca4e25bfcf52e11dce57d5f3a3056f05f4"},
+        {"state": "WI", "role": "od_aux", "filename": "wi_od_aux_JT00_2021.csv.gz", "url": "https://lehd.ces.census.gov/data/lodes/LODES8/wi/od/wi_od_aux_JT00_2021.csv.gz", "byte_length": 852727, "gzip_sha256": "bbc1559cb22c5e2800b857d72ad0c7af454986282564bd3e88b9ff692a374885", "official_csv_sha256": "90afc05bd151d0611c2a934812c4416256e062d35d67bf21a9f71bf397528d26"}
+      ]
+    },
+    "business_context": {
+      "status": "partially-evaluation-ready",
+      "candidate_sources_investigated": ["Overture Maps Places July 2026", "OpenStreetMap", "Census County Business Patterns and ZIP Code Business Patterns 2023"],
+      "feature_count": 0,
+      "reason": "CBP and ZBP do not publish tract geography, Census API access requires a key, and an overnight ZIP-to-tract allocation would add unapproved allocation semantics. Overture is reproducible and permissively licensed but requires a new GeoParquet cloud-query dependency plus a frozen category-taxonomy decision; the July 2026 taxonomy is in transition. No arbitrary or nonreproducible allocation is admitted.",
+      "future_candidate_not_authorized": "A later DATA task could freeze one Overture release, a small taxonomy, license attribution, confidence rule, and tract spatial join before model use."
+    },
+    "traffic_accessibility": {
+      "status": "evaluation-ready",
+      "publisher": "U.S. Census Bureau, Geography Division",
+      "product": "2024 TIGER/Line Primary and Secondary Roads state-based shapefiles",
+      "release_date": "2024-09-25",
+      "official_documentation": "https://www2.census.gov/geo/pdfs/maps-data/data/tiger/tgrshp2024/TGRSHP2024_TechDoc.pdf",
+      "semantics": {"S1100": "primary road", "S1200": "secondary road"},
+      "aadt_available": false,
+      "files": [
+        {"state": "MI", "filename": "tl_2024_26_prisecroads.zip", "url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECROADS/tl_2024_26_prisecroads.zip", "byte_length": 3298759, "sha256": "e075527eb79eac76846ff43295cd414f10b65a561c6dfb4631bce8ab955763a0"},
+        {"state": "WI", "filename": "tl_2024_55_prisecroads.zip", "url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECROADS/tl_2024_55_prisecroads.zip", "byte_length": 5130781, "sha256": "21ca3c63ba8219a3e3a2f50e865e04198e53ce2b0fff953d0d05413d8fff6d0e"}
+      ]
+    },
+    "richer_acs": {
+      "status": "evaluation-ready",
+      "publisher": "U.S. Census Bureau",
+      "product": "2020-2024 ACS 5-Year Detailed Tables",
+      "vintage": "2024",
+      "official_base_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData",
+      "accepted_tables_reused": ["B08201", "B08301"],
+      "new_tables": ["B01003", "B08303", "B11001", "B17001", "B19001", "B25024", "B25070"],
+      "raw_file_sha256": {
+        "B01003": "38d1a992bb058d184009b10b9b34987279aee575e4323165cfb5706c69b6ca90",
+        "B08303": "1b9b9243afe6656fa8d760830b0b760e7de759752b49510175fd1853e1c016de",
+        "B11001": "77200c3d9c0d99773bc7f78208bc96f25170e5d4d175a5de320620b478ceaff5",
+        "B17001": "707adda8aaff136382f4fe0858617d09062da48b1a3d2ab2e9a1047def09b531",
+        "B19001": "1af421b3b9d0f85dbd938cd518ad5d01c693fa2870f24e1089552ea5c1e6683f",
+        "B25024": "26ff26c645d1abc55c3b47998931cea45af40600a6e8d36228d3ed7493add2ef",
+        "B25070": "862ccc17d913305d11e6f802ce4518d76b30585ea0b05b251cd8cf21f8661386"
+      },
+      "metadata_sha256": {
+        "B01003": "f692fa121bf007948893c312945d86abc83c6bae6420540ccf4c66891467b904",
+        "B08303": "1a572162cf241cf11995ed582eff9620c77b85b343aea608e880045a28fb3e7e",
+        "B11001": "80d6ba84fbcb3142f0bb430f59ea918780b938540903b2d3d7d3e938e91fd321",
+        "B17001": "3554588a3334d9e4359d82508e7abb7f16b3bc52da9ff4b406d4e93375e146e5",
+        "B19001": "6278e8d350cb70c6556ed59cb121540c5e912eeea4ce1c546d55724c22466e99",
+        "B25024": "cca3eba14b48c355f8cf844385a76ff907768be6d074466f971bda3eae3fedde",
+        "B25070": "81516d5733ff2931eab994443db33bcf9057fdb39263336cf3768bcb2d848638"
+      },
+      "missingness": "Negative Census special values are missing, never observed zero. Tracts remain present. Estimate and MOE component pairs are retained in the outside-Git freeze."
+    }
+  },
+  "feature_catalog": [
+    {"feature_id": "lodes_log_workplace_jobs_5mi", "family": "lodes", "mechanism": "daytime workplace activity", "aggregation": "log1p sum WAC C000 over accepted five-mile members"},
+    {"feature_id": "lodes_log_resident_workers_5mi", "family": "lodes", "mechanism": "resident worker mass", "aggregation": "log1p sum RAC C000 over accepted five-mile members"},
+    {"feature_id": "lodes_log_jobs_to_resident_worker_ratio_5mi", "family": "lodes", "mechanism": "workplace versus resident-worker imbalance", "aggregation": "log((sum WAC C000 + 1) / (sum RAC C000 + 1))"},
+    {"feature_id": "lodes_net_job_worker_imbalance_share_5mi", "family": "lodes", "mechanism": "net worker inflow proxy, not directly observed daytime population", "aggregation": "(workplace jobs - resident workers) / (workplace jobs + resident workers)"},
+    {"feature_id": "lodes_same_tract_live_work_share_5mi", "family": "lodes", "mechanism": "local home-to-work flow intensity", "aggregation": "sum main OD flows with matching home/work tract divided by all work-destination flows"},
+    {"feature_id": "lodes_out_of_state_inflow_share_5mi", "family": "lodes", "mechanism": "cross-state workplace inflow", "aggregation": "sum auxiliary OD flows divided by all work-destination flows"},
+    {"feature_id": "lodes_high_earnings_job_share_5mi", "family": "lodes", "mechanism": "higher-earnings workplace mix", "aggregation": "sum WAC CE03 divided by WAC C000"},
+    {"feature_id": "lodes_retail_trade_job_share_5mi", "family": "lodes", "mechanism": "retail employment context", "aggregation": "sum WAC CNS07 divided by WAC C000"},
+    {"feature_id": "lodes_accommodation_food_job_share_5mi", "family": "lodes", "mechanism": "food-service and accommodation employment context", "aggregation": "sum WAC CNS18 divided by WAC C000"},
+    {"feature_id": "lodes_education_health_job_share_5mi", "family": "lodes", "mechanism": "education and health-service workplace context", "aggregation": "sum WAC CNS15 plus CNS16 divided by WAC C000"},
+    {"feature_id": "lodes_goods_producing_job_share_5mi", "family": "lodes", "mechanism": "goods-producing workplace mix", "aggregation": "sum WAC CNS01, CNS02, CNS04, and CNS05 divided by WAC C000"},
+    {"feature_id": "lodes_workplace_block_hhi_5mi", "family": "lodes", "mechanism": "within-area workplace concentration", "aggregation": "sum squared block workplace jobs divided by squared total workplace jobs"},
+    {"feature_id": "lodes_flow_weighted_origin_hhi_5mi", "family": "lodes", "mechanism": "worker-origin concentration", "aggregation": "flow-weighted mean of workplace-tract same-state origin-tract HHI; cross-state origins excluded from this HHI and separately represented"},
+    {"feature_id": "lodes_log_active_workplace_blocks_5mi", "family": "lodes", "mechanism": "spatial breadth of workplace activity", "aggregation": "log1p count blocks with positive WAC C000"},
+    {"feature_id": "acs_two_plus_vehicle_household_share_5mi", "family": "richer_acs", "mechanism": "household vehicle availability", "aggregation": "B08201 2, 3, and 4+ vehicle households divided by total households"},
+    {"feature_id": "acs_public_transit_commuter_share_5mi", "family": "richer_acs", "mechanism": "commuting-mode structure", "aggregation": "B08301 public transportation divided by commuters"},
+    {"feature_id": "acs_active_commuter_share_5mi", "family": "richer_acs", "mechanism": "walk and bicycle commuting structure", "aggregation": "B08301 bicycle plus walked divided by commuters"},
+    {"feature_id": "acs_long_commute_45plus_share_5mi", "family": "richer_acs", "mechanism": "commute-time burden", "aggregation": "B08303 45-59, 60-89, and 90+ minutes divided by commuters with travel time"},
+    {"feature_id": "acs_nonfamily_household_share_5mi", "family": "richer_acs", "mechanism": "household structure", "aggregation": "B11001 nonfamily households divided by total households"},
+    {"feature_id": "acs_poverty_share_5mi", "family": "richer_acs", "mechanism": "economic stress", "aggregation": "B17001 population below poverty divided by population with determined poverty status"},
+    {"feature_id": "acs_low_income_under_35k_household_share_5mi", "family": "richer_acs", "mechanism": "lower household economic capacity", "aggregation": "B19001 income bands below $35,000 divided by households"},
+    {"feature_id": "acs_high_income_100k_plus_household_share_5mi", "family": "richer_acs", "mechanism": "higher household economic capacity", "aggregation": "B19001 income bands $100,000+ divided by households"},
+    {"feature_id": "acs_multiunit_housing_share_5mi", "family": "richer_acs", "mechanism": "urban housing form", "aggregation": "B25024 structures with 2+ units divided by housing units"},
+    {"feature_id": "acs_rent_burden_30plus_share_5mi", "family": "richer_acs", "mechanism": "renter housing-cost burden", "aggregation": "B25070 computed categories at 30%+ divided by all computed categories"},
+    {"feature_id": "acs_log_population_density_5mi", "family": "richer_acs", "mechanism": "residential intensity", "aggregation": "log1p B01003 population divided by accepted TIGER land square miles"},
+    {"feature_id": "traffic_log_distance_primary_road_m", "family": "traffic_accessibility", "mechanism": "primary-highway proximity", "aggregation": "log1p distance from accepted anchor tract internal point to nearest S1100 feature"},
+    {"feature_id": "traffic_log_distance_primary_secondary_road_m", "family": "traffic_accessibility", "mechanism": "major-road proximity", "aggregation": "log1p distance from accepted anchor tract internal point to nearest S1100 or S1200 feature"}
+  ],
+  "feature_family_order": ["lodes", "business_context", "traffic_accessibility", "richer_acs"],
+  "model_feature_count_by_family": {"lodes": 14, "business_context": 0, "traffic_accessibility": 2, "richer_acs": 11},
+  "protected_characteristic_policy": {
+    "race_used": false,
+    "ethnicity_used": false,
+    "sex_used": false,
+    "religion_used": false,
+    "age_composition_used": false,
+    "other_protected_class_feature_used": false,
+    "lodes_protected_columns_read_for_features": false
+  },
+  "missingness_policy": {
+    "tract_row_dropping": false,
+    "missing_to_zero": false,
+    "observed_source_absence_for_additive_count": "zero only when the source universe and complete crosswalk establish no observed record",
+    "undefined_ratio": null,
+    "learned_imputation": "training fold median only during evaluation; imputation indicators are excluded to keep the universe bounded"
+  },
+  "evaluation_policy": {
+    "baseline_candidate_id": "model13_reproduced_combined_multivariate_elastic_net",
+    "architecture": "elastic_net",
+    "outer_grouped_folds": 5,
+    "inner_grouped_folds": 4,
+    "group_field": "state-qualified accepted physical-location identity",
+    "preprocessing_scope": "training fold only",
+    "alpha_grid": [0.01, 0.1, 1.0, 10.0],
+    "l1_ratio_grid": [0.25, 0.5, 0.75],
+    "target_transform": "log1p",
+    "estimation_weighting": "inverse physical-location observation count",
+    "broad_automl": false
+  },
+  "freeze_policy": {
+    "full_tract_matrix_before_target_access": true,
+    "expected_matrix_row_count": 4559,
+    "expected_michigan_row_count": 3017,
+    "expected_wisconsin_row_count": 1542,
+    "outside_tracked_git": true,
+    "immutable_output": true,
+    "ready_marker_last": true,
+    "semantic_commitment_tracked_after_materialization": true
+  },
+  "content_sha256": "f426bd5a99d2d1c4e2d0063cd3fd42db58c67efe1ef9c91dca4e5b3ad3c3cad6"
+}
