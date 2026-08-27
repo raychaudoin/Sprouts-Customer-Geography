@@ -1,0 +1,45 @@
+{
+  "task_id": "MODEL-14",
+  "title": "Public Feature Expansion Successor Experiment",
+  "capability_owner": "MODEL: Customer-Fit Proxy Decisions & Acceptance",
+  "authority_source": "Master Control Room authorized MODEL-14 Public Feature Expansion Successor Experiment from canonical main e464d5ea2453d7387102d64154bb52f410b12670",
+  "state": "IN_PROGRESS",
+  "scope": [
+    "Acquire and engineer a bounded target-blind menu of free public Michigan and Wisconsin tract features prioritized across LODES employment flows, interpretable business context, cross-state traffic or accessibility, and richer non-protected ACS",
+    "Freeze and nondisclosingly commit the candidate feature definitions and complete accepted-tract matrix before any access to already-consumed MODEL-13 development targets",
+    "Reproduce the accepted MODEL-13 combined multivariate elastic-net baseline on the same computability-qualified 196-observation 123-physical-location development cohort and grouping semantics",
+    "Compare bounded family additions and an all-evaluation-ready candidate under training-fold-only preprocessing and deterministic physical-location-grouped evaluation",
+    "Produce disclosure-safe aggregate feature coverage, missingness, coefficient, ablation, fold-stability, outlier-sensitivity, and MI versus WI transportability evidence",
+    "Commit and push a clean pre-H experimental checkpoint and stop for Master Control Room review before any source formalization or production promotion"
+  ],
+  "exclusions": [
+    "No sealed prospective Milwaukee Madison future-vintage validation-only held-out or otherwise unconsumed target access and no weakening of any target registry or sealing mechanism",
+    "No Impacted Sales other outcome field new target source proprietary retailer evidence paid API scraped proprietary location database or protected-characteristic scoring feature",
+    "No target-conditioned feature definition transformation radius taxonomy missingness rule or eligibility rule and no iterative target peeking",
+    "No change to accepted tract inventory CRS anchor membership radius support or public-source authority in DATA-03 DATA-04 or GEO-05",
+    "No large public download generated matrix protected row location identity coordinate target coefficient path registry digest or reconstructable protected lineage in Git or GitHub",
+    "No broad AutoML neural network opaque high-capacity ensemble arbitrary combination search or unbounded tuning",
+    "No accepted MODEL-13 replacement source acceptance production scoring promotion APP-01 change PBI-02 change Power BI change merge self-acceptance substantive H or follow-on task"
+  ],
+  "accepted_input_artifacts": [
+    "MODEL13_MICHIGAN_BENCHMARK_POOLED_SUCCESSOR_STATEWIDE_SCORING_CONTRACT_V1",
+    "MODEL13_EXECUTION_COMMITMENT_V1",
+    "DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE_CONTRACT_V1",
+    "DATA04_MICHIGAN_PUBLIC_DATA_PARITY_SOURCE_CONTRACT_V1",
+    "GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_SPEC_V1"
+  ],
+  "protected_dependency_logical_ids": [
+    "PROTECTED_MODEL13_OUTPUT_ROOT_V1",
+    "PROTECTED_DATA04_MICHIGAN_PUBLIC_MATERIALIZATION_V1",
+    "PROTECTED_GEO05_MICHIGAN_STATEWIDE_SPATIAL_SUPPORT_PACKAGE_V1",
+    "PROTECTED_MODEL14_OUTPUT_ROOT_V1"
+  ],
+  "implementation_branch": "task/model-14-public-feature-expansion-successor-experiment",
+  "completion_state": {
+    "execution": "IN_PROGRESS",
+    "implementation_evidence": [],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+  "exact_next_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography"
+}
