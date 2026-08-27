@@ -152,7 +152,14 @@ def main() -> int:
     if forbidden_stageable:
         raise SystemExit(f"MODEL-14 raw, generated, or protected paths became stageable: {forbidden_stageable}")
     changed = set(_git(repository, "diff", "--name-only", AUTHORIZATION_BASE, "--"))
-    changed.update(_git(repository, "ls-files", "--others", "--exclude-standard"))
+    untracked = _git(repository, "ls-files", "--others", "--exclude-standard")
+    # Repository Validation installs the package before conformance checks, which
+    # creates standard untracked setuptools outputs that are not task changes.
+    changed.update(
+        path
+        for path in untracked
+        if not path.replace("\\", "/").startswith(("build/", "src/sprouts_customer_geography.egg-info/"))
+    )
     if changed != EXPECTED_CHANGED:
         raise SystemExit(f"MODEL-14 changed-file boundary differs: unexpected={sorted(changed - EXPECTED_CHANGED)}, absent={sorted(EXPECTED_CHANGED - changed)}")
     forbidden_predecessor_prefixes = (
