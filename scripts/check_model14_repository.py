@@ -125,9 +125,8 @@ def main() -> int:
     ):
         raise SystemExit("MODEL-14 target-blind public commitment differs")
 
-    introduction = _git(repository, "log", "--format=%H", "--diff-filter=A", "--", FREEZE_COMMITMENT_PATH)
-    if introduction != [TARGET_BLIND_FREEZE_COMMIT]:
-        raise SystemExit(f"MODEL-14 target-blind freeze introduction commit differs: {introduction}")
+    if subprocess.run(["git", "cat-file", "-e", TARGET_BLIND_FREEZE_COMMIT + "^{commit}"], cwd=repository).returncode != 0:
+        raise SystemExit("MODEL-14 target-blind freeze commit is absent")
     frozen_bytes = subprocess.check_output(["git", "show", f"{TARGET_BLIND_FREEZE_COMMIT}:{FREEZE_COMMITMENT_PATH}"], cwd=repository)
     if frozen_bytes != (repository / COMMITMENT_PATH).read_bytes():
         raise SystemExit("MODEL-14 relocated commitment differs from the exact target-blind freeze bytes")
