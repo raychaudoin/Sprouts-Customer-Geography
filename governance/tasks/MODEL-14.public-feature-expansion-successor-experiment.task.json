@@ -37,7 +37,12 @@
   "implementation_branch": "task/model-14-public-feature-expansion-successor-experiment",
   "completion_state": {
     "execution": "IN_PROGRESS",
-    "implementation_evidence": [],
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "COMPLETION_REPORT",
+      "FUTURE_PULL_REQUEST"
+    ],
     "capability_acceptance": "NOT_REVIEWED"
   },
   "acceptance_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography",

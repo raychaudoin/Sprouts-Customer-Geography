@@ -8,6 +8,7 @@ from .public import (
     load_public_freeze,
     materialize_public_freeze,
 )
+from .modeling import fit_training_fold_preprocessor, grouped_oof_predictions, nested_grouped_oof
 
 __all__ = [
     "FEATURE_IDS",
@@ -16,4 +17,7 @@ __all__ = [
     "compare_public_freezes",
     "load_public_freeze",
     "materialize_public_freeze",
+    "fit_training_fold_preprocessor",
+    "grouped_oof_predictions",
+    "nested_grouped_oof",
 ]

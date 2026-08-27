@@ -202,7 +202,7 @@ def _json_object(path: Path, code: str) -> dict[str, Any]:
 
 
 def load_contract(repository_root: Path) -> dict[str, Any]:
-    contract = _json_object(repository_root / "config/model/model14_experimental_public_feature_contract.json", "MODEL14_CONTRACT_MISSING")
+    contract = _json_object(repository_root / "config/model14/experimental_public_feature_contract.json", "MODEL14_CONTRACT_MISSING")
     semantic = copy.deepcopy(contract)
     recorded = semantic.pop("content_sha256", None)
     require(

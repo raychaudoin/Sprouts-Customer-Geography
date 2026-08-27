@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import math
 from pathlib import Path
@@ -14,6 +15,12 @@ from sprouts_customer_geography.model14.public import (
     aggregate_context_features,
     load_contract,
 )
+from sprouts_customer_geography.model14.modeling import (
+    fit_training_fold_preprocessor,
+    grouped_oof_predictions,
+    nested_grouped_oof,
+)
+from sprouts_customer_geography.model13.modeling import SPATIAL_TERMS, _cv_predictions
 from sprouts_customer_geography.pipe01.canonical import content_digest
 from sprouts_customer_geography.pipe01.errors import ConformanceError
 
@@ -54,6 +61,35 @@ def _public_component_row(state: str = "MI") -> dict[str, object]:
     return row
 
 
+def _synthetic_model_rows() -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for state_index, state in enumerate(("MI", "WI")):
+        for group_index in range(8):
+            x_value = float(group_index + 1 + state_index * 0.35)
+            features = {
+                "log_households_5mi": math.log1p(10_000.0 + 700.0 * x_value),
+                "inner_household_share_3mi_of_7mi": 0.20 + 0.014 * x_value,
+                "log_inner_outer_household_density_gradient": -0.4 + 0.05 * x_value,
+                "fictional_public_expansion": math.log1p(100.0 + 9.0 * x_value),
+            }
+            target = math.expm1(
+                9.6
+                + 0.22 * features["log_households_5mi"]
+                + 0.35 * features["log_inner_outer_household_density_gradient"]
+                + 0.08 * features["fictional_public_expansion"]
+            )
+            group = f"{state}:fictional-{group_index:02d}"
+            for repeat in range(1 + group_index % 2):
+                rows.append({
+                    "analytical_observation_id": f"{group}:{repeat}",
+                    "successor_physical_location_id": group,
+                    "state": state,
+                    "features": dict(features),
+                    "isolated_sales": target * (1.0 + 0.001 * repeat),
+                })
+    return rows
+
+
 class Model14PublicAuthorityTests(unittest.TestCase):
     def test_exactly_one_manifest_and_work_order_and_pre_h_posture(self) -> None:
         manifests = list((REPOSITORY / "governance/tasks").glob("MODEL-14*.json"))
@@ -78,7 +114,7 @@ class Model14PublicAuthorityTests(unittest.TestCase):
         self.assertTrue(all(value is False for value in contract["protected_characteristic_policy"].values()))
 
     def test_public_freeze_commitment_binds_zero_target_access_and_determinism(self) -> None:
-        commitment = json.loads((REPOSITORY / "config/model/model14_target_blind_public_feature_commitment.json").read_text(encoding="utf-8"))
+        commitment = json.loads((REPOSITORY / "config/model14/target_blind_public_feature_commitment.json").read_text(encoding="utf-8"))
         semantic = dict(commitment)
         recorded = semantic.pop("content_sha256")
         self.assertEqual(recorded, content_digest(semantic))
@@ -123,6 +159,58 @@ class Model14PublicFeatureTests(unittest.TestCase):
             aggregate_context_features(rows, ["26001000100", "26001000100"], "26001000100")
         with self.assertRaisesRegex(ConformanceError, "MODEL14_CONTEXT_STATE_MISMATCH"):
             aggregate_context_features(rows, ["26001000100", "55001000100"], "26001000100")
+
+
+class Model14ModelingTests(unittest.TestCase):
+    def test_complete_feature_baseline_is_mechanically_equivalent_to_model13_oof(self) -> None:
+        rows = _synthetic_model_rows()
+        terms = [*SPATIAL_TERMS, "fictional_public_expansion"]
+        candidate = {"candidate_id": "fictional_baseline", "architecture": "elastic_net"}
+        parameters = {"alpha": 0.1, "l1_ratio": 0.5}
+        accepted_engine = _cv_predictions(rows, candidate, terms, parameters, 3)
+        experimental_engine, audits = grouped_oof_predictions(rows, "fictional_baseline", terms, fold_count=3, **parameters)
+        self.assertEqual(len(audits), 3)
+        self.assertTrue(all(audit["group_overlap_count"] == 0 for audit in audits))
+        for left, right in zip(accepted_engine, experimental_engine):
+            self.assertAlmostEqual(left, right, places=9)
+
+    def test_training_median_uses_distinct_training_groups_only(self) -> None:
+        rows = []
+        for group, value, repeats in (("MI:a", 1.0, 7), ("MI:b", 3.0, 1), ("MI:c", 100.0, 1)):
+            for repeat in range(repeats):
+                rows.append({"successor_physical_location_id": group, "features": {"fictional": value}, "analytical_observation_id": f"{group}:{repeat}", "state": "MI", "isolated_sales": 1.0})
+        fitted = fit_training_fold_preprocessor(rows, ["fictional"])
+        self.assertEqual(fitted.training_group_count, 3)
+        self.assertEqual(fitted.medians["fictional"], 3.0)
+        self.assertEqual(fitted.transform_features({"fictional": None})["fictional"], 3.0)
+
+    def test_nested_grouped_evaluation_imputes_inside_folds_and_keeps_groups_whole(self) -> None:
+        rows = _synthetic_model_rows()
+        missing = copy.deepcopy(rows)
+        for row in missing:
+            if str(row["successor_physical_location_id"]).endswith(("02", "05")):
+                row["features"]["fictional_public_expansion"] = None
+        result = nested_grouped_oof(
+            missing,
+            "fictional_expanded",
+            [*SPATIAL_TERMS, "fictional_public_expansion"],
+            alpha_grid=(0.1,),
+            l1_ratio_grid=(0.5,),
+            outer_count=3,
+            inner_count=2,
+        )
+        self.assertEqual(set(result["aggregate_oof"]), {"pooled", "michigan", "wisconsin"})
+        self.assertEqual(len(result["predictions"]), len(missing))
+        self.assertTrue(all(math.isfinite(value) and value >= 0 for value in result["predictions"]))
+        self.assertTrue(all(audit["group_overlap_count"] == 0 and audit["preprocessing_fit_scope"] == "outer_training_groups_only" for audit in result["fold_audits"]))
+
+    def test_inconsistent_repeated_group_feature_fails_closed(self) -> None:
+        rows = [
+            {"successor_physical_location_id": "MI:a", "features": {"fictional": 1.0}},
+            {"successor_physical_location_id": "MI:a", "features": {"fictional": 2.0}},
+        ]
+        with self.assertRaisesRegex(ConformanceError, "MODEL14_WITHIN_GROUP_FEATURE_MISMATCH"):
+            fit_training_fold_preprocessor(rows, ["fictional"])
 
 
 if __name__ == "__main__":
