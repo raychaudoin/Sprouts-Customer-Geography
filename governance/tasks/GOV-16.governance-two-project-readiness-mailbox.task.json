@@ -1,0 +1,30 @@
+{
+  "task_id": "GOV-16",
+  "title": "Governance Replacement and Two-Project Readiness Mailbox",
+  "capability_owner": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+  "authority_source": "Ray authorized wholesale governance replacement in Brainstorming on 2026-08-30; GitHub Initiative Brief #44 records the approved intent",
+  "state": "AUTHORIZED",
+  "scope": [
+    "Preserve current MODEL-14 and MODEL-15 work without resuming protected analytics",
+    "Replace the current governance operating wrapper with the approved Brainstorming-GitHub-Development workflow",
+    "Implement a repository-safe Development Readiness Mailbox published from local Development state to GitHub",
+    "Implement one durable protected-local project profile and evidence ledger so Development can recover state without Ray restoring paths",
+    "Retain the technical confidentiality analytical-integrity provenance validation reproducibility PR CI and protected-main safeguards that protect real risk",
+    "Prepare coordinated cutover artifacts including replacement Brainstorming and Development Project instructions and stop for independent clean-room fidelity review"
+  ],
+  "exclusions": [
+    "No MODEL-13 MODEL-14 or MODEL-15 analytical model change during GOV-16",
+    "No MODEL-14 promotion or further experiment generation",
+    "No MODEL-15 protected source reconciliation model rerun or fresh-target access",
+    "No protected values paths source-row identities addresses coordinates registries or reconstructable lineage in Git or GitHub",
+    "No final cutover merge before Ray decision following clean-room review"
+  ],
+  "implementation_branch": "task/gov-16-governance-two-project-readiness-mailbox",
+  "completion_state": {
+    "execution": "AUTHORIZED",
+    "implementation_evidence": ["LOCAL_AND_GITHUB_PREFLIGHT", "TEST_PASS", "PULL_REQUEST", "CLEAN_ROOM_REVIEW"],
+    "capability_acceptance": "NOT_REVIEWED"
+  },
+  "acceptance_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography",
+  "exact_next_destination": "Sprouts-Customer-Geography-Development"
+}
