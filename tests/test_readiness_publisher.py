@@ -121,6 +121,8 @@ class ReadinessPublisherTests(unittest.TestCase):
     def test_07_actual_checker_rejects_prior_runtime_drift_under_snapshot_head(self):
         store, _ = self._registered_store()
         snapshot = self.mailbox / "development-readiness.json"
+        checker_environment = os.environ.copy()
+        checker_environment.pop("GITHUB_REF_NAME", None)
         publish_readiness(self.source, snapshot, state_root=store.state_root)
         self._git(self.mailbox, "add", "development-readiness.json")
         self._git(self.mailbox, "commit", "-m", "synthetic mailbox refresh")
@@ -130,6 +132,7 @@ class ReadinessPublisherTests(unittest.TestCase):
             check=False,
             capture_output=True,
             text=True,
+            env=checker_environment,
         )
         self.assertEqual(checker.returncode, 0, checker.stderr)
 
@@ -148,6 +151,7 @@ class ReadinessPublisherTests(unittest.TestCase):
             check=False,
             capture_output=True,
             text=True,
+            env=checker_environment,
         )
         self.assertNotEqual(checker.returncode, 0)
         self.assertIn("READINESS_MAILBOX_ENFORCEMENT_STALE", checker.stderr)
