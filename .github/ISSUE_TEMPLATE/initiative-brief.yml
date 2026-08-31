@@ -1,0 +1,120 @@
+name: Initiative Brief
+description: Repository-safe objective and prepared runway for meaningful Development work.
+title: "<INITIATIVE-ID>: <Concise Objective>"
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Brainstorming creates one concise Initiative Brief after reading current GitHub and the Development Readiness Mailbox and preparing the complete runway with Ray.
+        This Issue authorizes only its stated repository-safe objective. It is not a synchronized status cockpit and does not itself disclose protected-local state.
+        Never include protected paths or revealing filenames, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable protected lineage.
+
+  - type: input
+    id: initiative_id
+    attributes:
+      label: Initiative ID
+      placeholder: GOV-16
+    validations:
+      required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Business objective
+      description: State the decision-support outcome in concise, repository-safe language.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_now
+    attributes:
+      label: Why now
+      description: Explain the current opportunity, constraint, or dependency without publishing protected facts.
+    validations:
+      required: true
+
+  - type: textarea
+    id: prepared_pathway
+    attributes:
+      label: Prepared pathway and prerequisites
+      description: Identify the repository-safe pathway Brainstorming has prepared and every prerequisite Development may rely on.
+    validations:
+      required: true
+
+  - type: textarea
+    id: permitted_evidence
+    attributes:
+      label: Permitted evidence and access
+      description: State bounded evidence/access authority using safe logical references only. Do not include protected paths or contents.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: State what Development is authorized to implement.
+    validations:
+      required: true
+
+  - type: textarea
+    id: exclusions
+    attributes:
+      label: Exclusions and stop conditions
+      description: State what is not authorized and where Development must fail closed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: success
+    attributes:
+      label: Success criteria and validation
+      description: Describe observable repository-safe completion and exact-version review expectations.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reserved_decisions
+    attributes:
+      label: Decisions reserved for Ray
+      description: List consequential decisions that Development must not infer.
+    validations:
+      required: true
+
+  - type: input
+    id: work_order
+    attributes:
+      label: Detailed Work Order
+      description: Repository path to the self-contained Development authorization.
+      placeholder: docs/work_orders/GOV_16_EXAMPLE.md
+    validations:
+      required: true
+
+  - type: input
+    id: branch
+    attributes:
+      label: Development branch
+      placeholder: task/gov-16-example
+    validations:
+      required: true
+
+  - type: textarea
+    id: return_point
+    attributes:
+      label: Development return point
+      description: State the authorized PR/CI/merge stop point and required mailbox refresh.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Brainstorming confirmations
+      options:
+        - label: I read current GitHub state and the latest Development Readiness Mailbox, including its timestamp and verified baseline.
+          required: true
+        - label: Incomplete prerequisites have been prepared, separately bounded, or expressly deferred; they are not silently delegated to Development.
+          required: true
+        - label: This Issue contains no protected or reconstructable protected information.
+          required: true

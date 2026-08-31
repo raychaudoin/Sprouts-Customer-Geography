@@ -3,7 +3,7 @@
   "title": "Governance Replacement and Two-Project Readiness Mailbox",
   "capability_owner": "MASTER CONTROL ROOM: Sprouts Customer Geography",
   "authority_source": "Ray authorized wholesale governance replacement in Brainstorming on 2026-08-30; GitHub Initiative Brief #44 records the approved intent",
-  "state": "AUTHORIZED",
+  "state": "COMPLETED_AWAITING_ACCEPTANCE",
   "scope": [
     "Preserve current MODEL-14 and MODEL-15 work without resuming protected analytics",
     "Replace the current governance operating wrapper with the approved Brainstorming-GitHub-Development workflow",
@@ -19,12 +19,18 @@
     "No protected values paths source-row identities addresses coordinates registries or reconstructable lineage in Git or GitHub",
     "No final cutover merge before Ray decision following clean-room review"
   ],
+  "accepted_input_artifacts": [],
+  "protected_dependency_logical_ids": [],
   "implementation_branch": "task/gov-16-governance-two-project-readiness-mailbox",
   "completion_state": {
-    "execution": "AUTHORIZED",
-    "implementation_evidence": ["LOCAL_AND_GITHUB_PREFLIGHT", "TEST_PASS", "PULL_REQUEST", "CLEAN_ROOM_REVIEW"],
+    "execution": "COMPLETED",
+    "implementation_evidence": [
+      "LOCAL_COMMIT",
+      "TEST_PASS",
+      "FUTURE_PULL_REQUEST"
+    ],
     "capability_acceptance": "NOT_REVIEWED"
   },
   "acceptance_destination": "MASTER CONTROL ROOM: Sprouts Customer Geography",
-  "exact_next_destination": "Sprouts-Customer-Geography-Development"
+  "exact_next_destination": "Independent clean-room fidelity review and Ray cutover decision"
 }

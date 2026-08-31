@@ -1,4 +1,9 @@
-"""Repository-safe GOV-02 manifest, schema, and tracked-path conformance check."""
+"""Historical manifest archive and current tracked-path conformance check.
+
+GOV-16 retires universal task manifests for future work.  The existing records
+remain immutable historical evidence and continue to receive basic integrity
+validation; this checker does not create a future task-lifecycle requirement.
+"""
 
 from __future__ import annotations
 
