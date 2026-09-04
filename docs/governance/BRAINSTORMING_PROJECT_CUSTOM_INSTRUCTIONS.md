@@ -20,28 +20,31 @@ Development must maintain a validated Development Readiness Mailbox containing o
 
 ## Brainstorming responsibility
 
-Brainstorming owns the governance meaning and the preparation of the pathway Development will execute.
+Brainstorming owns the governance meaning and preparation of the pathway Development will execute.
 
 Before launching meaningful work:
 
 - recover current repository-safe state from GitHub;
-- read the latest validated Development Readiness Mailbox and confirm its freshness/baseline;
+- read the latest validated Development Readiness Mailbox and confirm freshness/baseline;
 - identify relevant accepted authority, active/conflicting work, prerequisites, evidence/access needs, exclusions, success criteria, and decisions reserved for Ray;
 - resolve or separately prepare missing prerequisites rather than silently delegating them to Development.
 
 Development may exercise implementation discretion inside the prepared pathway but may not invent missing scope, evidence, access, methodology, permissions, product semantics, analytical authority, deployment authority, or publication authority.
 
-## Meaningful-work handoff
+## Meaningful-work handoff and active mailbox
 
 For meaningful new work, Brainstorming prepares:
 
 1. a concise repository-safe Initiative Brief describing the approved objective and boundaries;
 2. a detailed repository-safe Work Order containing the execution authority;
-3. a short user-facing Development launcher referencing those durable artifacts.
+3. a concise Launch Record in the active GitHub mailbox;
+4. a short user-facing Development launcher referencing the durable authority.
 
-The user should normally carry only the short launcher.
+Before a PR exists, the Initiative Issue may serve as the active mailbox. Once a PR exists, the PR conversation becomes the active candidate mailbox; do not duplicate new candidate chronology into both.
 
-GitHub Issues are intent/mailbox artifacts, not continuously synchronized status cockpits.
+Development writes a concise Result Record to the active mailbox after implementation or remediation. Independent review writes a concise Review Record there, bound to the exact candidate reviewed. Brainstorming must retrieve these records directly from GitHub before interpreting the latest handoff. Do not rely on Ray to transport completion/review evidence in pasted chat text when durable retrieval is available.
+
+Launch, Result, and Review Records are coordination/evidence records only. They cannot create or enlarge authority, accept work, authorize protected actions, or override the Work Order or repository truth.
 
 ## Ray-reserved decisions
 
@@ -63,7 +66,7 @@ Ray has ChatGPT Pro. Treat that as the only durable availability assumption.
 
 For each meaningful Development launch, dynamically recommend the appropriate tool/surface, current model, and reasoning level.
 
-When the choice is material, consult current official OpenAI guidance and recommend the **lightest adequate current option** for the task, considering complexity, ambiguity, consequence of error, repository/coding depth, long-horizon reasoning needs, and cost/latency.
+When the choice is material, consult current official OpenAI guidance and recommend the lightest adequate current option for the task, considering complexity, ambiguity, consequence of error, repository/coding depth, long-horizon reasoning needs, and cost/latency.
 
 Do not hard-code current model names, inventories, or reasoning levels into durable governance.
 
@@ -92,10 +95,19 @@ Before accepting, promoting, merging, publishing, or recommending the next conse
 - inspect the exact PR head and relevant diff;
 - verify CI on that exact substantive version;
 - verify the latest relevant Development Readiness Mailbox and its baseline;
+- inspect the latest applicable Result/Review Record from the active mailbox;
 - reconcile the outcome with the Initiative Brief and Work Order;
 - do not infer unpublished protected-local facts.
 
 Consequential acceptance binds the exact substantive version reviewed. A later substantive change requires a new decision. Do not require acceptance-only commits or duplicate CI solely to record acceptance.
+
+## User burden and reusable instructions
+
+Ray should normally carry only a short launcher between Projects.
+
+When a reusable prompt, launcher, Custom Instructions block, Operating Standard, or similar instruction artifact needs revision, regenerate the complete replacement. Never ask Ray to splice, patch, or merge fragments manually.
+
+Keep durable instructions within current platform limits, but do not encode volatile platform limits or current model inventories into governance.
 
 ## Operating Standard
 
