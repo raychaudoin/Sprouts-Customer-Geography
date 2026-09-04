@@ -4,122 +4,200 @@
 
 This document defines the governance semantics Brainstorming has approved for repository implementation.
 
-Development may make technical, editorial, structural, and testing choices necessary to integrate these requirements cleanly into the actual repository.
+Development may make technical, editorial, structural, and testing choices necessary to integrate these requirements cleanly into the repository. Development may not change their meaning.
 
-Development may not alter their meaning.
+This document is operative GOV-16 correction authority together with the current GOV-16 remediation Work Order. GitHub comments, PR descriptions, checks, labels, and mailbox records are coordination/evidence only unless the operative authority expressly incorporates them.
 
-This document is operative GOV-16 correction authority together with `docs/governance/GOV_16_POST_REVIEW_CORRECTION_SPEC.md` and the GOV-16 Work Order. GitHub Issue comments are mailbox/evidence only unless one of those operative authority surfaces expressly incorporates them.
-
-## Authority architecture
-
-The durable instruction architecture is:
+## Durable instruction architecture
 
 ### Brainstorming side
 
 - Brainstorming Project Custom Instructions = constitutional layer.
-- Brainstorming Operating Standard = practical playbook.
+- Brainstorming Operating Standard = detailed practical playbook.
 
 ### Development side
 
 - `AGENTS.md` = repository constitutional executor layer.
-- Development Operating Standard = practical repository-execution playbook.
+- Development Operating Standard = detailed repository-execution playbook.
 
-The Development Project itself has no ChatGPT Project Custom Instructions.
+The Development Project has no ChatGPT Project Custom Instructions.
 
-The constitutional layer controls when there is conflict with its corresponding Operating Standard.
+Operating Standards elaborate but do not override their constitutional layer.
 
-Operating Standards elaborate but do not override constitutional rules.
+None of the four durable instruction surfaces may contain volatile project state such as current SHAs, PR/Issue numbers, task status, temporary branch names, live mailbox status, temporary blockers, current model inventory, or current reasoning-menu labels.
 
-None of these four durable instruction surfaces may contain volatile project state such as current SHAs, PR/Issue numbers, task status, temporary branch names, live mailbox status, temporary blockers, or current model availability.
+## Exact approved Brainstorming texts
 
-## Approved Brainstorming texts
-
-The exact approved Brainstorming-side texts are:
+The approved Brainstorming-side texts are:
 
 - `docs/governance/BRAINSTORMING_PROJECT_CUSTOM_INSTRUCTIONS.md`
 - `docs/governance/BRAINSTORMING_OPERATING_STANDARD.md`
 
-These are the semantic source for Development’s repository-side reconciliation. Development may update repository references or formatting around them but must not change their governance meaning.
+They are the semantic source for Development's repository-side reconciliation. Development may improve repository organization and surrounding references but must preserve their governance meaning.
 
-## Roles
+## Role boundaries
 
-### Brainstorming
-
-Brainstorming owns:
+### Brainstorming owns
 
 - product/model decision support with Ray;
 - governance semantics;
-- runway preparation;
-- prerequisite identification;
+- runway and prerequisite preparation;
 - authority/evidence boundaries;
 - Initiative Brief and Work Order authoring;
-- short Development launch generation;
+- active-mailbox Launch Records;
+- short user launch generation;
 - dynamic tool/model/reasoning recommendation;
-- review of repository-safe results;
-- recommendations for acceptance, promotion, remediation, and next work.
+- retrieval and interpretation of durable Result/Review evidence;
+- recommendations for remediation, acceptance, promotion, publication, and next work.
 
-### Development
+### Development owns
 
-Development owns:
-
-- technical repository implementation;
-- local/GitHub reconciliation;
-- local-work preservation;
-- implementation choices within the approved pathway;
+- repository-connected technical implementation;
+- local/GitHub reconciliation and local-work preservation;
+- implementation choices within approved authority;
 - tests and CI;
 - protected-local recovery when authorized;
 - evidence-event recording;
 - readiness-mailbox refresh/validation;
 - commits/pushes/PR maintenance within supplied authority;
-- repository-safe completion evidence.
+- concise Result Records in the active GitHub mailbox.
 
 Development does not invent missing governance authority.
 
-If completion requires new evidence, access, methodology, scope, permissions, product semantics, analytical authority, deployment, publication, or destructive action not supplied by the operative authority, Development returns the precise gap.
+If completion requires new evidence, access, methodology, scope, permissions, product semantics, analytical authority, deployment, publication, destructive action, or another substantive decision not supplied by operative authority, Development stops the dependent stage and reports the precise gap.
 
-## GitHub handoff
+## Source-of-truth and evidence separation
 
-GitHub is the repository-safe intermediary between Brainstorming and Development.
+Give each artifact one job:
 
-For meaningful work:
+- repository source/config/tests/Git history = implemented technical truth;
+- operative Work Order = canonical current execution authority;
+- Initiative Brief = concise approved objective/boundaries/prerequisites;
+- Development Readiness Mailbox = safe local/repository readiness evidence;
+- active Issue/PR mailbox = chronological Launch/Result/Review coordination evidence;
+- PR branch/head SHA = exact candidate identity;
+- CI/tests/checks = validation evidence;
+- labels/status metadata = informational unless operative authority explicitly gives them meaning.
 
-1. Brainstorming reads current GitHub and the validated Development Readiness Mailbox.
-2. Brainstorming/Ray decide the objective.
-3. Brainstorming prepares prerequisites and authority.
-4. Brainstorming records approved intent in an Initiative Brief and detailed authority in the designated operative Work Order/decision record.
-5. Ray receives a short launcher.
-6. Development reads the durable authority, validates it against GitHub/local reality, and executes.
-7. Development records repository-safe implementation evidence in the PR.
-8. Development refreshes/validates the Readiness Mailbox.
-9. Brainstorming reads those results before the next decision.
+No GitHub comment, Issue body, PR description, check, label, or mailbox record may by itself create/enlarge authority, accept work, authorize merge/protected action, or override the Work Order or repository truth.
 
-A GitHub comment does not become operative authority merely because it contains instructions. Repository implementation must preserve a clear designated authority surface.
+## Two-mailbox model
 
-## Development Readiness Mailbox
+### Development Readiness Mailbox
 
-Retain the GOV-16 readiness-mailbox design.
+Retain the existing machine-generated, closed-schema, disclosure-safe readiness mailbox. It answers what local/repository capabilities and prerequisites are safely known to be ready.
 
-The mailbox must:
+It must continue to:
 
-- publish only allowlisted repository-safe readiness facts;
-- expose freshness and source-baseline binding;
-- be machine-generated through the approved publisher;
+- publish only allowlisted repository-safe facts;
+- expose generation time and verified source baseline;
+- be generated through the approved publisher;
 - reject unknown/disallowed fields and protected disclosure classes;
 - avoid protected paths, revealing filenames, addresses, coordinates, target values, row identities, registry contents, credentials, or reconstructable protected lineage.
 
-Brainstorming relies only on mailbox state that has passed the appropriate validator and is appropriately bound to the relevant source baseline.
+It is not task authority and not task chronology.
 
-The mailbox exists to let Brainstorming prepare future runways proactively.
+### Active initiative/candidate mailbox
 
-## Protected-local durable state
+Use the GitHub Issue/PR conversation for concise chronological coordination/evidence:
 
-Retain the durable local project profile/ledger design.
+- before a PR exists, the Initiative Issue may serve as active mailbox;
+- once a PR exists, the PR conversation becomes the active candidate mailbox;
+- do not mirror new candidate chronology into both Issue and PR.
 
-It must support recovery of authorized project state without routine Ray path restoration and without arbitrary recursive inspection of protected candidate files.
+Use three concise record types:
 
-It must support evidence units and events sufficient to determine which protected evidence influenced which model lineage.
+- `LAUNCH` — Brainstorming records the prepared launch and points to controlling authority;
+- `RESULT` — Development records the exact resulting candidate and execution evidence;
+- `REVIEW` — independent review records its exact-candidate disposition and material findings.
 
-Preserve distinct semantics for:
+The user should not normally transport long implementation/review reports between Projects when GitHub retrieval is available.
+
+## Minimum Launch/Result/Review semantics
+
+### LAUNCH
+
+Must make clear:
+
+- initiative/current action;
+- controlling Work Order;
+- destination role/surface;
+- PR and exact candidate head when applicable;
+- requested action and material exclusions;
+- task-specific execution profile when relevant;
+- expected next control point.
+
+### RESULT
+
+Must make clear:
+
+- initiative/action performed;
+- exact resulting PR/head candidate;
+- concise summary of what changed;
+- validation/CI performed or pending;
+- material safeguards/exclusions preserved;
+- unresolved gap/deviation if any;
+- next control point.
+
+### REVIEW
+
+Must make clear:
+
+- review role/surface;
+- exact PR/base/head reviewed;
+- disposition such as `PASS` or `REWORK REQUIRED`;
+- material findings/deviations;
+- safety/evidence concerns;
+- next control point.
+
+Repository implementation may choose concise Markdown templates or conventions as long as these semantics remain unambiguous and records do not become lengthy status documents.
+
+## Runway-preparation invariant
+
+Before meaningful work, Brainstorming must recover:
+
+- canonical repository orientation;
+- Initiative Brief and operative Work Order;
+- latest applicable Launch/Result/Review records from the active mailbox;
+- exact PR candidate and CI when applicable;
+- latest validated Development Readiness Mailbox and its freshness/baseline;
+- active/conflicting initiatives and safely reported preserved work.
+
+Brainstorming then prepares prerequisites, permitted evidence/access, scope, exclusions, success criteria, routine execution authority, stop point, Ray-reserved decisions, and the task-specific execution profile.
+
+Incomplete prerequisites are Brainstorming runway-preparation problems. Development may solve technical implementation problems within supplied authority but may not broaden governance authority to fill missing prerequisites.
+
+## Dynamic execution-profile policy
+
+Brainstorming dynamically recommends tool/surface, model, and reasoning level for each meaningful Development launch.
+
+Ray's ChatGPT Pro membership is the only durable availability assumption.
+
+When material, Brainstorming consults current official OpenAI guidance and recommends the lightest adequate current option for the task, considering complexity, ambiguity, consequence of error, repository/coding depth, long-horizon reasoning needs, and cost/latency.
+
+Durable governance must not hard-code current model names, inventories, or reasoning-level menus.
+
+Task-specific Work Orders, Launch Records, and user launchers may contain the current recommendation and concise rationale.
+
+Model selection does not expand Development authority.
+
+## User-burden and regeneration rules
+
+Ray should normally carry only a short launcher between Projects/surfaces.
+
+Development writes Result Records and independent review writes Review Records to the active mailbox before returning control so Brainstorming can recover the result directly.
+
+If durable retrieval is available, Brainstorming should not require Ray to paste full completion/review reports.
+
+When a reusable prompt, launcher, Custom Instructions block, Operating Standard, or similar instruction artifact needs revision, regenerate the complete replacement. Never ask Ray to splice, patch, or merge fragments manually.
+
+Durable governance should stay within current platform limits without hard-coding volatile limits.
+
+## Protected-local durable state and evidence semantics
+
+Retain the durable local project profile/ledger design. It must support trusted recovery without routine Ray path restoration or arbitrary recursive inspection of protected files.
+
+Preserve distinct evidence-event semantics for:
 
 - located;
 - identity-read;
@@ -130,52 +208,46 @@ Preserve distinct semantics for:
 - development-used;
 - disclosed.
 
-Do not automatically promote one event into another.
+One event must not automatically imply another.
 
-## Runway-preparation invariant
+The ledger must support exact model-to-evidence membership sufficient to determine which protected evidence influenced which model lineage.
 
-Missing prerequisites should normally be discovered by Brainstorming through GitHub + readiness evidence before the main Development launch.
+## Initiative and Work Order behavior
 
-An incomplete prerequisite is not delegated to Development as open-ended problem solving.
+Retain Initiative Briefs for meaningful objectives. Do not turn them into synchronized status cockpits.
 
-Development may solve technical implementation problems within supplied authority.
+Retain detailed Work Orders as the execution authority for meaningful work.
 
-Development may not solve missing governance authority by expanding the pathway.
+Do not require a universal manifest/state machine for routine work. Historical manifests/work orders may remain historical evidence.
 
-## Initiative / Work Order behavior
+Once a PR exists, keep candidate chronology in the PR conversation rather than mirroring it into the Initiative Issue.
 
-Retain Initiative Briefs for meaningful objectives.
+## Failure and remediation handling
 
-Do not turn them into synchronized status cockpits.
+Development should recover technical execution failures clearly within supplied authority, including ordinary test/CI retries, transient tool/network issues, bounded implementation corrections, and safe branch/worktree reconciliation.
 
-Retain detailed Work Orders for meaningful execution where durable detailed authority is needed.
+Development must stop the dependent stage for missing governance authority, fresh evidence not authorized, material methodology/product-semantic changes, unresolved substantive evidence conflicts, destructive/publication/deployment authority, or genuine risk of losing user work.
 
-Do not require a universal manifest/state-machine for routine work.
+Review findings inside the approved objective normally remain in the same initiative and PR. Brainstorming authorizes bounded remediation, writes a new Launch Record, Development writes a new Result Record bound to the remediation head, and independent review writes a new Review Record bound to that head.
 
-Historical manifests/work orders remain historical evidence and do not need rewriting.
+Do not create a new initiative solely because review found an in-scope defect.
 
-## Dynamic execution-profile policy
+## Consequential exact-version model
 
-Brainstorming must recommend tool/surface, model, and reasoning level dynamically for each meaningful Development launch.
+Preserve this lifecycle:
 
-The only durable availability assumption is that Ray has ChatGPT Pro.
+1. final substantive candidate;
+2. validation/CI on that exact version;
+3. required independent review on that exact version;
+4. Ray or explicitly delegated decision owner accepts/rejects that exact version;
+5. any later substantive change invalidates the acceptance/review as applicable;
+6. unchanged accepted version may merge when authorized.
 
-When selection is material, Brainstorming should consult current official OpenAI guidance and recommend the **lightest adequate current option** for the specific task.
+Acceptance belongs in the project's designated authoritative decision/Work Order mechanism, not merely a mailbox comment.
 
-The recommendation should consider:
+No acceptance-only A commit.
 
-- task complexity;
-- ambiguity;
-- consequence of error;
-- repository/coding depth;
-- long-horizon reasoning requirements;
-- cost/latency.
-
-Durable repository governance must not hard-code current model names, inventories, or reasoning levels.
-
-The launcher should carry the current recommendation and concise rationale.
-
-Development does not substitute a different execution profile merely because it prefers one, unless the selected option is unavailable; if unavailable, it should use an explicitly permitted fallback or report the availability gap.
+No duplicate full CI solely for acceptance metadata.
 
 ## Safeguards that must remain
 
@@ -193,62 +265,24 @@ Do not weaken:
 - exact-final-version review for consequential decisions;
 - Git safety against destructive loss of user work.
 
-## Failure handling
-
-Development should recover technical execution failures that are clearly within supplied authority.
-
-Examples include:
-
-- test retries;
-- CI retries;
-- transient network/tool issues;
-- ordinary branch/worktree reconciliation;
-- bounded implementation corrections;
-- recoverable registered-asset relocation where trusted recovery rules already authorize it.
-
-Development should stop the dependent stage and return a precise gap for:
-
-- missing evidence authority;
-- missing protected access authority;
-- unresolved substantive evidence conflict;
-- methodology/product-semantic change;
-- unprepared prerequisite;
-- fresh evidence not authorized;
-- destructive/publication/deployment authority;
-- genuine risk of losing user work.
-
-Do not convert a governance gap into broad executor discretion.
-
-## Consequential exact-version model
-
-Preserve this lifecycle:
-
-1. final substantive version;
-2. validation/CI on that exact version;
-3. exact-version acceptance by Ray or named reviewer;
-4. any substantive change invalidates that acceptance;
-5. unchanged accepted version may merge when authorized.
-
-No acceptance-only A commit.
-
-No duplicate full CI solely for acceptance metadata.
-
-Ordinary reversible work may have merge authority pre-authorized by the operative Work Order.
-
 ## Repository implementation requirements
 
 Development should:
 
+- keep the repository copies of Brainstorming Custom Instructions and Brainstorming Operating Standard aligned to the approved texts;
 - make `AGENTS.md` concise and constitutional;
-- create a Development Operating Standard with detailed execution procedures;
-- implement/reference the approved Brainstorming Custom Instructions and Operating Standard as repository-safe governance artifacts;
-- update operating-model/readiness/protected-evidence documentation for consistency;
-- remove or clearly supersede the mistaken Development Project Custom Instructions artifact;
+- create the Development Operating Standard as the detailed execution playbook;
+- delete or clearly supersede the mistaken Development Project Custom Instructions artifact;
+- update operating-model/readiness/protected-evidence documentation for the two-mailbox distinction;
+- add concise Launch/Result/Review record guidance/templates/conventions appropriate to the repository;
+- require Development to write Result Records and independent review to write Review Records to the active mailbox;
+- ensure candidate chronology moves to the PR once a PR exists;
+- ensure Brainstorming retrieves durable Result/Review evidence rather than relying on Ray as routine evidence courier;
 - preserve the readiness mailbox and protected-local mechanics;
-- update validators/tests to enforce meaningfully testable invariants;
+- update validators/tests for meaningfully testable invariants;
 - avoid tests whose only purpose is recreating retired lifecycle ceremony.
 
-Development may improve organization and wording so long as the semantics above remain unchanged.
+Development may improve organization and wording as long as the semantics above remain unchanged.
 
 ## Independent review acceptance criteria
 
@@ -256,31 +290,33 @@ Independent review must verify both:
 
 ### Fidelity
 
-- Brainstorming remains responsible for runway preparation.
-- Development cannot invent missing governance authority.
-- the constitutional/playbook split is implemented correctly;
+- Brainstorming remains responsible for runway preparation;
+- Development cannot invent missing governance authority;
+- the four-surface constitutional/playbook architecture is correct;
+- the two mailbox functions are clearly separated;
+- Launch/Result/Review records are concise evidence/coordination rather than alternate authority;
+- candidate chronology moves from Issue to PR once a PR exists;
+- Ray is not required to transport long completion/review evidence when GitHub retrieval is available;
 - no volatile state appears in durable instruction surfaces;
-- dynamic model/reasoning policy is present without hard-coded model inventory;
-- GitHub is an intermediary/evidence bridge, not accidental authority;
+- dynamic model/reasoning policy exists without hard-coded model inventory;
 - retired governance machinery has not quietly returned.
 
 ### Technical soundness
 
-- readiness mailbox safety and validation remain effective;
+- readiness mailbox safety/validation remain effective;
 - fresh-session local recovery remains effective;
 - protected-state controls remain safe;
 - repository validation passes;
-- analytical/product behavior excluded from GOV-16 remains unchanged.
+- excluded analytical/product behavior remains unchanged.
 
 ## Cutover condition
-
-Do not cut over merely because documentation exists.
 
 Cutover is ready only when:
 
 - repository implementation matches this approved target;
-- required CI passes on the revised exact substantive version;
-- mailbox is regenerated and validated against that version;
-- independent review passes;
-- Brainstorming Custom Instructions and Brainstorming Operating Standard are ready to activate together;
+- required CI passes on the revised exact substantive candidate;
+- Development Readiness Mailbox is regenerated and validated against that candidate;
+- Development has written a valid concise Result Record to the active PR mailbox;
+- focused independent review of that exact candidate writes a `PASS` Review Record to the PR mailbox;
+- Brainstorming's active Custom Instructions and Operating Standard remain aligned with the repository copies;
 - no excluded analytical work was resumed.
