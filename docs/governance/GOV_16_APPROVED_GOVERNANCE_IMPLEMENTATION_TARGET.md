@@ -6,7 +6,7 @@ This document defines the governance semantics Brainstorming has approved for re
 
 Development may make technical, editorial, structural, and testing choices necessary to integrate these requirements cleanly into the repository. Development may not change their meaning.
 
-This document is operative GOV-16 correction authority together with the current GOV-16 remediation Work Order. GitHub comments, PR descriptions, checks, labels, and mailbox records are coordination/evidence only unless the operative authority expressly incorporates them.
+This document is operative GOV-16 correction authority together with the current GOV-16 remediation Work Order. It supersedes any narrower or earlier execution-profile language in prior GOV-16 correction material. GitHub comments, PR descriptions, checks, labels, and mailbox records are coordination/evidence only unless the operative authority expressly incorporates them.
 
 ## Durable instruction architecture
 
@@ -46,7 +46,7 @@ They are the semantic source for Development's repository-side reconciliation. D
 - Initiative Brief and Work Order authoring;
 - active-mailbox Launch Records;
 - short user launch generation;
-- dynamic tool/model/reasoning recommendation;
+- full-suite dynamic tool/model/reasoning recommendation;
 - retrieval and interpretation of durable Result/Review evidence;
 - recommendations for remediation, acceptance, promotion, publication, and next work.
 
@@ -167,17 +167,21 @@ Brainstorming then prepares prerequisites, permitted evidence/access, scope, exc
 
 Incomplete prerequisites are Brainstorming runway-preparation problems. Development may solve technical implementation problems within supplied authority but may not broaden governance authority to fill missing prerequisites.
 
-## Dynamic execution-profile policy
-
-Brainstorming dynamically recommends tool/surface, model, and reasoning level for each meaningful Development launch.
+## Full-suite dynamic execution-profile policy
 
 Ray's ChatGPT Pro membership is the only durable availability assumption.
 
-When material, Brainstorming consults current official OpenAI guidance and recommends the lightest adequate current option for the task, considering complexity, ambiguity, consequence of error, repository/coding depth, long-horizon reasoning needs, and cost/latency.
+For every meaningful Development or independent-review launch, Brainstorming must first identify the intended surface and recover the complete current Pro-eligible model and reasoning-option set for that surface from current official OpenAI guidance and authoritative availability evidence when needed.
 
-Durable governance must not hard-code current model names, inventories, or reasoning-level menus.
+The candidate set must include every currently eligible model, including newly released options. Brainstorming must not start from a preferred family, a platform default, the prior task's model, or a familiar model.
 
-Task-specific Work Orders, Launch Records, and user launchers may contain the current recommendation and concise rationale.
+Brainstorming then evaluates all plausibly suitable candidates against the actual task, including complexity, ambiguity, consequence of error, repository/coding depth, research/synthesis burden, tool/computer-use needs, reasoning horizon, expected duration, speed/iteration needs, cost/usage efficiency, and reliability requirements. A candidate may be eliminated only for a task-relevant reason such as insufficient capability, unnecessary capability/cost, unsuitable latency, surface incompatibility, unavailable reasoning controls, or rollout unavailability.
+
+Only after that comparison may Brainstorming recommend the lightest adequate current option. “Lightest adequate” must not become a shortcut for preferring a cheaper, faster, familiar, or previously successful model when a stronger model or higher reasoning level materially reduces consequential risk.
+
+If current availability is uncertain because of rollout, product differences, account state, or documentation lag, Brainstorming states the uncertainty and provides the best supported choice and fallback when useful.
+
+Durable governance must not hard-code current model names, inventories, reasoning menus, or temporary availability. Task-specific Work Orders, Launch Records, and user launchers may contain the current recommendation and concise rationale.
 
 Model selection does not expand Development authority.
 
@@ -278,6 +282,7 @@ Development should:
 - require Development to write Result Records and independent review to write Review Records to the active mailbox;
 - ensure candidate chronology moves to the PR once a PR exists;
 - ensure Brainstorming retrieves durable Result/Review evidence rather than relying on Ray as routine evidence courier;
+- implement the full-suite execution-profile policy without embedding a current model inventory in durable instructions;
 - preserve the readiness mailbox and protected-local mechanics;
 - update validators/tests for meaningfully testable invariants;
 - avoid tests whose only purpose is recreating retired lifecycle ceremony.
@@ -298,7 +303,7 @@ Independent review must verify both:
 - candidate chronology moves from Issue to PR once a PR exists;
 - Ray is not required to transport long completion/review evidence when GitHub retrieval is available;
 - no volatile state appears in durable instruction surfaces;
-- dynamic model/reasoning policy exists without hard-coded model inventory;
+- the full-suite model/reasoning policy is present without a hard-coded model inventory;
 - retired governance machinery has not quietly returned.
 
 ### Technical soundness
