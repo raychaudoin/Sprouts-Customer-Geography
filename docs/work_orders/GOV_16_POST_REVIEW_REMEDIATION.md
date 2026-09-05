@@ -17,6 +17,8 @@ The two Brainstorming documents are the exact approved Brainstorming-side texts.
 
 Development may make technical/editorial implementation choices that preserve those semantics. It may not redesign or enlarge them.
 
+The Approved Governance Implementation Target and this Work Order supersede any narrower or earlier execution-profile language in prior GOV-16 correction material.
+
 GitHub comments, PR descriptions, checks, labels, and Launch/Result/Review Records are coordination/evidence only. They cannot enlarge this Work Order or override repository truth.
 
 ## Objective
@@ -26,21 +28,29 @@ Implement the complete approved GOV-16 correction so the repository faithfully a
 - the four durable instruction surfaces;
 - the Development Readiness Mailbox for safe readiness evidence;
 - the Issue/PR active mailbox for concise Launch/Result/Review chronology;
-- Brainstorming-owned runway preparation and dynamic execution-profile selection;
+- Brainstorming-owned runway preparation and full-suite dynamic execution-profile selection;
 - Development execution without invention of missing governance authority;
 - short user handoffs with durable GitHub evidence retrieval.
 
 ## Current execution profile
 
-For this remediation launch, Brainstorming recommends:
+Intended surface: **Codex** in the repository-connected Development Project.
 
-- Tool/surface: Codex in the repository-connected Development Project
-- Model: GPT-5.6 Sol
-- Reasoning: High
+Brainstorming performed a fresh full-suite evaluation using current official OpenAI availability/guidance for ChatGPT Pro on Codex. The currently documented candidate set is GPT-5.6 Luna, GPT-5.6 Terra, GPT-5.6 Sol, and GPT-6 Astra as Astra rolls out to eligible Pro users.
 
-Rationale: this is a bounded but consequential multi-file repository reconciliation involving governance semantics, templates, validators/tests, PR evidence, and mailbox mechanics. Current official OpenAI guidance positions GPT-5.6 Sol for complex coding/professional work and High as extended reasoning; a Pro-class model or maximum reasoning is not required for the prepared scope.
+For this remediation Brainstorming recommends:
 
-If the named option is unavailable at execution time, use the closest current Codex flagship equivalent with High reasoning only when its equivalence is clear in the current UI/docs; otherwise report an availability gap without changing scope.
+- Model: **GPT-5.6 Sol**
+- Reasoning: **High**
+
+Task-specific comparison:
+
+- **Luna:** optimized for cost-sensitive/high-volume workloads; too light for this consequential multi-file governance/repository reconciliation.
+- **Terra:** balances intelligence and cost; useful for routine everyday work, but this task has enough cross-file semantic and validation risk to justify a stronger model.
+- **Sol:** flagship for complex professional/coding work; High reasoning is appropriate for the bounded but consequential repository reconciliation now fully specified.
+- **Astra:** most capable option for the hardest end-to-end work and explicitly considered. Its extra capability is not materially necessary for this already-prepared, bounded implementation, so Sol High is the lightest adequate current choice.
+
+Astra availability is still subject to rollout differences across accounts/surfaces. If the recommended option is unavailable or the current Codex model set materially changes before execution, stop and let Brainstorming refresh the recommendation; Development must not infer an equivalent model on its own.
 
 Model choice does not expand authority.
 
@@ -156,7 +166,7 @@ In particular:
 - Development return behavior must post the Result Record to the active PR mailbox before control returns;
 - independent review instructions/templates must post Review Records to the same PR mailbox;
 - Brainstorming-side documentation must require retrieval of those records rather than routine pasted-chat transport;
-- dynamic model/reasoning selection must remain Brainstorming-owned without hard-coded current model inventory in durable instructions;
+- full-suite dynamic model/reasoning selection must remain Brainstorming-owned without hard-coded current model inventory in durable instructions;
 - reusable instruction artifacts must be regenerated in full rather than requiring Ray to splice fragments.
 
 Do not reintroduce lanes, universal state machines/manifests, synchronized status cockpits, permanent routing chats, exact-next-destination choreography, acceptance-only commits, duplicate acceptance-metadata CI, or routine path-restoration burden.
@@ -202,7 +212,7 @@ At minimum:
 - verify Launch/Result/Review semantics exist and do not grant authority;
 - verify Result/Review records are directed to the active PR mailbox after a PR exists;
 - verify no Issue/PR chronology mirroring is required;
-- verify dynamic execution-profile policy is present without durable model inventory;
+- verify the full-suite execution-profile policy is present without durable model inventory;
 - preserve mailbox disclosure-safety tests;
 - preserve fresh-session recovery behavior;
 - run relevant regression/confidentiality checks showing excluded analytical/product behavior did not change;
@@ -215,7 +225,7 @@ Keep the same initiative, branch, and PR.
 
 The PR conversation is now the active candidate mailbox.
 
-Update the PR description so it no longer describes the superseded earlier candidate as final and instead reflects the final substantive candidate and current validation evidence.
+Update the PR description so it no longer describes a superseded candidate as final and instead reflects the final substantive candidate and current validation evidence.
 
 Before returning control to Brainstorming, post a concise `RESULT` Record to the PR conversation containing the exact final candidate, validation/CI state, safeguards/exclusions, deviations/gaps if any, and next control point.
 
