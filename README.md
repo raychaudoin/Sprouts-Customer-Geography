@@ -26,21 +26,23 @@ MODEL-07 ended `TEMPORAL_VALIDATION_INCONCLUSIVE`: two eligible repeated physica
 
 The real target-blind PIPE-01 freeze and bounded PIPE-02 validation-access binding later completed and were accepted. Their protected packages, registries, targets, and identities remain outside Git; completion did not make sealed targets repository-visible or authorize broader access. The PBI-01 project is a local decision-support MVP, not a deployed operator application. Additional independent Wisconsin evidence is the principal analytical bottleneck. The accepted [MODEL-08 Wisconsin-first evidence-expansion strategy](docs/work_orders/MODEL_08_WISCONSIN_EVIDENCE_EXPANSION_STRATEGY.md) governs future evidence-generation intake, but does not itself authorize acquisition, validation execution, or target access.
 
-Repository coordination uses the [two-Project operating model](docs/governance/TWO_PROJECT_OPERATING_MODEL.md). Brainstorming prepares a complete runway in one Initiative Brief Issue and detailed Work Order; repository-connected Development verifies local readiness, executes only that authority, and returns a final PR/CI plus a validated [Development Readiness Mailbox](docs/governance/DEVELOPMENT_READINESS_MAILBOX.md). Consequential model/product decisions require acceptance of the exact final substantive commit; no acceptance-only commit or duplicate metadata CI is required. Because this is a public repository, treat all tracked and GitHub material as public disclosure. See [GitHub workflow governance](docs/GITHUB_WORKFLOW_GOVERNANCE.md) for the detailed lifecycle.
+Repository coordination uses the [two-Project operating model](docs/governance/TWO_PROJECT_OPERATING_MODEL.md). Brainstorming prepares a complete runway in one Initiative Brief Issue and detailed Work Order; repository-connected Development verifies local readiness and executes only that authority. The machine-generated [Development Readiness Mailbox](docs/governance/DEVELOPMENT_READINESS_MAILBOX.md) publishes safe capability evidence, while the active Issue/PR mailbox carries concise [Launch, Result, and Review Records](docs/governance/ACTIVE_MAILBOX_RECORDS.md). Once a PR exists, new candidate chronology belongs only in the PR conversation. Consequential model/product decisions require acceptance of the exact final substantive commit; no acceptance-only commit or duplicate metadata CI is required. Because this is a public repository, treat all tracked and GitHub material as public disclosure. See [GitHub workflow governance](docs/GITHUB_WORKFLOW_GOVERNANCE.md) for the detailed lifecycle.
 
 > **Confidentiality:** Do not commit live seed points, candidate sites, proprietary or internal data, credentials, contacts, confidential exports, protected package details, or revealing screenshots. Use synthetic fixtures and ignored local overlays only as authorized.
 
 ## Durable reading order
 
-Read the exact Initiative Brief and detailed Work Order first. Then recover this orientation and the [agent contract](AGENTS.md), referenced accepted `config/` and `schemas/` authority, relevant GitHub PR/commit/CI/ruleset evidence, and the current Development Readiness Mailbox. Historical task manifests remain evidence when referenced by current authority; they are not a universal prerequisite for future routine work.
+Read the exact Initiative Brief, operative Work Order, and latest applicable active-mailbox record first. Then recover this orientation, the [agent contract](AGENTS.md), [Development Operating Standard](docs/governance/DEVELOPMENT_OPERATING_STANDARD.md), referenced accepted `config/` and `schemas/` authority, relevant GitHub PR/commit/CI/ruleset evidence, and the current Development Readiness Mailbox. Historical task manifests remain evidence when referenced by current authority; they are not a universal prerequisite for future routine work.
 
 ## Key references
 
 - [GitHub workflow governance](docs/GITHUB_WORKFLOW_GOVERNANCE.md)
 - [Two-Project operating model](docs/governance/TWO_PROJECT_OPERATING_MODEL.md)
 - [Development Readiness Mailbox runbook](docs/governance/DEVELOPMENT_READINESS_MAILBOX.md)
+- [Active Mailbox Record guide](docs/governance/ACTIVE_MAILBOX_RECORDS.md)
 - [Brainstorming Project custom instructions](docs/governance/BRAINSTORMING_PROJECT_CUSTOM_INSTRUCTIONS.md)
-- [Development Project custom instructions](docs/governance/DEVELOPMENT_PROJECT_CUSTOM_INSTRUCTIONS.md)
+- [Brainstorming Operating Standard](docs/governance/BRAINSTORMING_OPERATING_STANDARD.md)
+- [Development Operating Standard](docs/governance/DEVELOPMENT_OPERATING_STANDARD.md)
 - [Data source contract](config/data/data01_validation_source_contract.json)
 - [DATA-03 multivariate ACS source contract](config/data/data03_wisconsin_multivariate_acs_feature_source_contract.json)
 - [DATA-03 materialization guide](docs/DATA03_WISCONSIN_MULTIVARIATE_ACS_FEATURE_SOURCE.md)

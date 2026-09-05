@@ -8,6 +8,7 @@ body:
       value: |
         Brainstorming creates one concise Initiative Brief after reading current GitHub and the Development Readiness Mailbox and preparing the complete runway with Ray.
         This Issue authorizes only its stated repository-safe objective. It is not a synchronized status cockpit and does not itself disclose protected-local state.
+        Before a PR exists, this Issue may carry concise Launch/Result/Review chronology. Once a PR exists, write new candidate chronology only to the PR conversation; do not mirror it here.
         Never include protected paths or revealing filenames, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable protected lineage.
 
   - type: input
@@ -117,4 +118,6 @@ body:
         - label: Incomplete prerequisites have been prepared, separately bounded, or expressly deferred; they are not silently delegated to Development.
           required: true
         - label: This Issue contains no protected or reconstructable protected information.
+          required: true
+        - label: I will write a concise Launch Record before meaningful Development/review work and move new candidate chronology to the PR conversation once a PR exists.
           required: true

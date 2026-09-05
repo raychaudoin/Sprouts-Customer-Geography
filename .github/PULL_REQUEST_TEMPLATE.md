@@ -16,6 +16,14 @@
 - Safe local recovery/preservation summary:
 - Material deviation from the Initiative Brief or Work Order: None / describe
 
+## Active candidate mailbox
+
+- Latest applicable Launch Record:
+- Result Record for the final substantive head:
+- Review Record for the final substantive head, when required: Pending / link
+- [ ] New candidate chronology is in this PR conversation only and is not mirrored to the Initiative Issue.
+- [ ] Launch/Result/Review records are concise evidence only and do not create authority, acceptance, or merge permission.
+
 ## Protected-state confirmation
 
 - [ ] The diff, logs, PR, Issue, checks, and mailbox contain no protected paths or revealing filenames, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable protected lineage.
@@ -31,9 +39,9 @@
 
 - Review path: Consequential exact-final-version acceptance / Pre-authorized reversible merge after CI / Stop at PR
 - Exact-version reviewer (when required):
-- Acceptance disposition and accepted commit (when decided):
+- Review disposition and reviewed commit (when available):
 - Merge posture: Not authorized / Authorized by Initiative / Awaiting exact-version decision
 
 ## Governance notice
 
-Passing CI, a mailbox refresh, or this PR does not itself create a consequential model/product decision or authorize a merge outside the Initiative Brief and Work Order. Any substantive change after exact-version acceptance invalidates that decision. Do not create an acceptance-record-only commit or duplicate CI solely for acceptance metadata.
+Passing CI, a readiness-mailbox refresh, a Result/Review Record, or this PR does not itself create a consequential model/product decision or authorize a merge outside the Initiative Brief and Work Order. Any substantive change after exact-version review or acceptance invalidates that evidence or decision as applicable. Do not create an acceptance-record-only commit or duplicate CI solely for acceptance metadata.

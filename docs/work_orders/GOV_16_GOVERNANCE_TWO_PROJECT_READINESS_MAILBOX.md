@@ -1,5 +1,7 @@
 # GOV-16 — Governance Replacement and Two-Project Readiness Mailbox
 
+> **Historical GOV-16 execution record.** The operative post-review authority is `docs/work_orders/GOV_16_POST_REVIEW_REMEDIATION.md` together with the approved governance implementation target. Where this earlier record assumes Development Project Custom Instructions or conflicts with the four-surface/two-mailbox model, the later authority controls; the Development Custom Instructions artifact is not an active surface.
+
 ## Purpose
 
 Replace the current task-heavy operating wrapper with the owner-approved two-Project workflow and add a repository-safe Development Readiness Mailbox so Brainstorming can prepare future work against current local readiness without accessing the desktop repository or protected data.

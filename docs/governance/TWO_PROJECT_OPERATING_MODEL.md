@@ -2,79 +2,95 @@
 
 ## Outcome
 
-Sprouts Customer Geography uses two Projects with GitHub as a repository-safe mailbox between them. The model separates decision/runway preparation from local implementation while keeping Ray as the business decision-maker.
+Sprouts Customer Geography separates decision/runway preparation from repository-connected implementation while keeping Ray as the business decision-maker. GitHub carries repository-safe authority and evidence between Brainstorming and Development.
 
 ```text
 Ray + Brainstorming
-  decide objective and prepare complete runway
-            |
-            v
-GitHub Initiative Brief + detailed Work Order
-            |
-            v
-Development
-  verifies local pathway, preserves work, implements, validates
-            |
-            v
-PR + CI + refreshed Development Readiness Mailbox
-            |
-            v
-Ray + Brainstorming
-  review exact result and prepare any future runway
+  decide objective, prepare runway, write Work Order + LAUNCH
+                         |
+                         v
+     Initiative Issue until a PR exists
+                         |
+                         v
+Development ----> PR conversation: RESULT ----> Independent review: REVIEW
+     |                   ^
+     |                   |  candidate chronology stays here
+     v
+Development Readiness Mailbox
+  separate closed-schema capability snapshot
 ```
+
+The two GitHub mailbox functions are deliberately separate. Neither is an alternate authority system.
+
+## Four durable instruction surfaces
+
+Brainstorming uses:
+
+1. Brainstorming Project Custom Instructions as its constitutional layer; and
+2. the Brainstorming Operating Standard as its detailed playbook.
+
+Development uses:
+
+1. `AGENTS.md` as its repository constitutional executor contract; and
+2. the Development Operating Standard as its detailed repository-execution playbook.
+
+The Development Project has no ChatGPT Project Custom Instructions. Each Operating Standard may elaborate but cannot override its constitutional layer. Durable instruction surfaces exclude volatile commits, PR/Issue numbers, task state, branch names, blockers, mailbox state, and current model/reasoning inventory.
 
 ## Brainstorming
 
-The cloud Project `Sprouts Customer Geography` owns:
+The cloud Project owns product/model decisions with Ray, governance meaning, runway preparation, authority/evidence boundaries, Initiative Brief and Work Order authoring, Launch Records, short user launchers, dynamic execution-profile recommendations, and interpretation of durable Result/Review evidence.
 
-- deciding the next substantive product/model objective with Ray;
-- inspecting GitHub and the latest mailbox before authoring meaningful work;
-- preparing prerequisites, permitted evidence/access, scope, exclusions, success criteria, and Ray-reserved decisions;
-- writing one concise Initiative Brief Issue and one detailed repository-safe Work Order;
-- sending a short launcher that points Development to those artifacts; and
-- reviewing the PR, CI, refreshed mailbox, and short safe local summary.
+Before meaningful work, Brainstorming reads current repository/GitHub evidence, the active mailbox chronology, and the latest validated readiness snapshot. It prepares prerequisites, permitted evidence/access, scope, exclusions, success criteria, routine implementation authority, stop point, Ray-reserved decisions, and a task-specific execution profile.
 
-Brainstorming cannot access the desktop repository or protected-local data. A missing prerequisite is its runway-preparation problem: authorize a bounded prerequisite, supply missing repository-safe authority, request a safe mailbox refresh, or defer the objective. Do not send Development an incomplete pathway and imply authority to fill it in.
+Brainstorming cannot access the desktop repository or protected-local data. A missing prerequisite is its runway-preparation problem. It must prepare or separately authorize the prerequisite, obtain Ray's decision, or defer the dependent objective rather than imply authority for Development to invent a workaround.
 
 ## Development
 
-The repository-connected Project `Sprouts-Customer-Geography-Development` owns:
+The repository-connected Project reads the Initiative Brief, operative Work Order, and latest applicable Launch Record first. It then inspects GitHub and local state, preserves active work, reconciles referenced accepted authority, verifies the prepared pathway, implements within scope, runs tests and CI, maintains the existing branch/PR, refreshes readiness, and writes a Result Record.
 
-- reading the Initiative Brief and Work Order first;
-- inspecting current GitHub and local repository state;
-- preserving active and uncommitted local work;
-- verifying that the prepared pathway exists locally;
-- recovering registered protected state when expressly permitted;
-- implementing the exact objective with broad in-pathway discretion;
-- tests, bounded corrections, commits, pushes, and PR maintenance; and
-- returning safe results plus a validated mailbox refresh.
+Development has broad technical discretion inside the supplied pathway. It does not invent missing evidence, access, methodology, scope, permissions, product semantics, analytical authority, dependencies, deployment, publication, or destructive-action authority. It stops only the dependent stage when such a gap is real and reports the precise gap through the active mailbox.
 
-Development does not invent missing evidence, access, methodology, scope, permissions, or product semantics. It stops the dependent stage and reports the exact runway gap.
+## Development Readiness Mailbox
 
-## GitHub handoff
+The Development Readiness Mailbox answers: “What repository/local capabilities and prerequisites are safely known to be ready?”
 
-Brainstorming sends authority through an Initiative Brief Issue and detailed Work Order. Development returns implementation evidence through a PR/CI, the standing mailbox, and a short non-protected local summary.
+It is a standing machine-generated, closed-schema snapshot on its dedicated branch. It exposes only allowlisted bounded facts, generation time, and verified source baseline. It is not task authority and not candidate chronology. Development refreshes it through the approved publisher and validator after meaningful local work and before final return.
 
-The Issue is a concise authority brief, not a synchronized task-status cockpit. The mailbox is a readiness snapshot, not an initiative registry. Historical manifests and lifecycle records remain historical evidence, but future routine work does not require a universal manifest or status mutation.
+See the [Development Readiness Mailbox runbook](DEVELOPMENT_READINESS_MAILBOX.md).
 
-## Readiness refresh
+## Active initiative/candidate mailbox
 
-After meaningful local work and before Development returns control, it must generate and validate the mailbox with the allowlisted publisher. Free-form AI disclosure and manual snapshot editing are prohibited. The snapshot exposes only schema-approved bounded statuses and safe initiative IDs, with refresh time and verified baseline so staleness is visible.
+The active mailbox answers: “What happened most recently, by which role, against which candidate, and what control point comes next?”
 
-See the [mailbox runbook](DEVELOPMENT_READINESS_MAILBOX.md) for the publication and recovery contract.
+Before a PR exists, the Initiative Issue may carry concise chronology. Once a PR exists, the PR conversation becomes the active candidate mailbox; new candidate chronology is not mirrored to the Issue.
 
-## Final-version review
+- Brainstorming writes `LAUNCH` before meaningful Development or review work.
+- Development writes `RESULT` after meaningful implementation or remediation and before returning control.
+- Independent review writes `REVIEW` against the exact candidate reviewed.
 
-For consequential model or product decisions:
+These concise records are evidence and coordination only. They cannot create or enlarge authority, accept work, authorize merge or protected action, or override the Work Order or repository truth. See the [Active Mailbox Record Guide](ACTIVE_MAILBOX_RECORDS.md).
+
+## Dynamic execution profile
+
+Brainstorming performs a fresh, full-suite comparison of the current Pro-eligible options for the intended surface before each meaningful Development or review launch. It recommends the lightest adequate current tool/model/reasoning profile only after considering task complexity, ambiguity, error consequence, coding depth, research/tool burden, reasoning horizon, duration, latency, cost, and reliability.
+
+Durable governance contains no current model inventory or reasoning menu. Task-specific Work Orders, Launch Records, and launchers carry the current recommendation and rationale. Model choice never enlarges authority.
+
+## Exact-final-version review
+
+Consequential model, methodology, and product decisions follow this sequence:
 
 1. Development produces the final substantive commit.
-2. CI passes on that exact commit.
-3. Ray or the named reviewer accepts or rejects that exact commit.
-4. Any substantive change invalidates the decision.
-5. The unchanged accepted commit may merge through protected `main`.
+2. Required validation and CI pass on that exact commit.
+3. Independent review evaluates that exact commit when required.
+4. Ray or an explicitly delegated decision owner accepts or rejects that exact version.
+5. A substantive change invalidates prior review or acceptance as applicable.
+6. Only the unchanged accepted version may merge when authorized.
 
-No acceptance-only commit or duplicate metadata CI is required. Ordinary reversible implementation may merge after CI only when Brainstorming expressly pre-authorized it.
+There is no acceptance-only commit and no duplicate full CI solely for acceptance metadata. Passing CI, a mailbox snapshot, or a favorable Result/Review Record is not acceptance or merge authority.
 
 ## Safeguards retained
 
-The simpler wrapper does not weaken the public/protected boundary; source/vintage/schema/transformation provenance; explicit missingness; target-blind feature/evaluation freezes; physical-location-grouped validation; deterministic runs; protected-field allowlists and egress controls; protected-characteristic restrictions; branch/PR/CI/protected-main controls; or exact-final-version acceptance for consequential decisions.
+The operating model preserves the public/protected boundary; source/vintage/schema/transformation provenance; explicit missingness; target-blind feature/evaluation freezes; physical-location-grouped validation; deterministic reproduction; protected-field allowlists and egress controls; protected-characteristic restrictions; independent evidence-event semantics; exact model-to-evidence membership; branch/PR/CI/protected-main controls; and Git safety against loss of user work.
+
+It does not reintroduce lanes, universal routine manifests or state machines, synchronized Issue cockpits, permanent routing chats, exact-next-destination choreography, acceptance-only commits, duplicate acceptance-metadata CI, or routine per-session path restoration.

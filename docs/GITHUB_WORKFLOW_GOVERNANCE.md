@@ -10,15 +10,15 @@ Historical Work Orders, manifests, acceptance records, Issues, and chat referenc
 
 Ray remains the business decision-maker.
 
-The Brainstorming Project, `Sprouts Customer Geography`, owns objective selection with Ray, GitHub inspection, prerequisite and runway preparation, Initiative Brief and Work Order authoring, launch, and post-implementation review. It cannot inspect the desktop repository or protected-local data.
+The Brainstorming Project, `Sprouts Customer Geography`, owns objective selection with Ray, GitHub inspection, prerequisite and runway preparation, Initiative Brief and Work Order authoring, Launch Records, dynamic execution-profile recommendations, and post-implementation review. It cannot inspect the desktop repository or protected-local data.
 
-The Development Project, `Sprouts-Customer-Geography-Development`, owns repository/local inspection, preservation of existing work, implementation within prepared authority, testing, bounded correction, branch/PR maintenance, and publication of repository-safe results and readiness. Development does not invent missing authority.
+The Development Project, `Sprouts-Customer-Geography-Development`, owns repository/local inspection, preservation of existing work, implementation within prepared authority, testing, bounded correction, branch/PR maintenance, Result Records, and publication of repository-safe readiness. Development does not invent missing authority. Its durable instruction surfaces are `AGENTS.md` and the [Development Operating Standard](governance/DEVELOPMENT_OPERATING_STANDARD.md); the Development Project has no ChatGPT Project Custom Instructions.
 
 GitHub carries repository-safe authority and evidence between Projects. Repository contents control over derivative summaries. GitHub must not be used to infer protected-local facts, and local facts must not be published outside the readiness allowlist.
 
 ## Brainstorming-to-Development runway
 
-Before preparing meaningful new work, Brainstorming must read current GitHub state and the latest Development Readiness Mailbox. The mailbox timestamp and verified baseline are part of the decision: a stale snapshot is not current readiness.
+Before preparing meaningful new work, Brainstorming must read current GitHub state, the latest applicable record chronology from the active mailbox, and the latest Development Readiness Mailbox. The mailbox timestamp and verified baseline are part of the decision: a stale snapshot is not current readiness.
 
 If a required source, permission, protected asset registration, evidence inventory, methodology decision, or other prerequisite is incomplete, Brainstorming must prepare that runway with Ray. It may authorize a bounded prerequisite initiative, supply the missing repository-safe authority, or defer the objective. It must not silently delegate an incomplete pathway to Development.
 
@@ -27,13 +27,13 @@ Meaningful work uses two durable artifacts:
 1. **Initiative Brief Issue.** One concise Issue states the business objective, why it is timely, prepared pathway and prerequisites, permitted evidence/access, scope, exclusions, success criteria, decisions reserved for Ray, Work Order path, and protected-disclosure warning. It is authority for the stated initiative, not a synchronized task-status cockpit.
 2. **Detailed Work Order.** One repository-safe Work Order supplies the exact implementation authorization, inputs, method constraints, validation, branch/PR expectations, stop point, and safe completion evidence. It must contain enough context for Development to execute without a chat transcript or permanent routing conversation.
 
-The launcher sent to Development is intentionally short: initiative ID/title, Issue, branch, Work Order, and the exact stop point. Detailed authority remains in the durable artifacts.
+Before meaningful Development or review work begins, Brainstorming writes a concise `LAUNCH` Record to the active mailbox. The launcher sent to Development is intentionally short: initiative ID/title, Issue or PR, branch, Work Order, execution profile, and exact stop point. Detailed authority remains in the durable artifacts, and the Launch Record cannot enlarge it.
 
 Routine, reversible maintenance may use existing durable authority when Brainstorming expressly pre-authorizes that path. A universal JSON task manifest or lifecycle-state mutation is not required. Meaningful or sensitive work requires explicit prepared authority. Exact-final-version review is mandatory for consequential model/product decisions; other implementation follows the review and merge disposition expressly stated by its Initiative Brief and Work Order.
 
 ## Development preflight
 
-Development must read the Initiative Brief and Work Order first, then inspect current GitHub and local repository state before changing anything. It must:
+Development must read the Initiative Brief, operative Work Order, and latest applicable Launch Record first, then inspect current GitHub and local repository state before changing anything. It must:
 
 - verify branch/Issue/PR continuity and the current protected-`main` baseline;
 - inspect and preserve unrelated local branches, worktrees, uncommitted work, and unpushed repository-safe work;
@@ -49,10 +49,11 @@ Development may resolve ordinary in-scope implementation friction directly. If a
 2. Implement only the prepared objective. Use synthetic fixtures before authorized protected-local inputs.
 3. Run focused validation, disclosure/confidentiality checks, relevant regression coverage, and normal CI. Apply bounded corrections on the same branch and PR while authority is unchanged.
 4. Commit and push concise substantive changes; open or maintain one implementation PR linked to the Initiative Brief Issue.
-5. After meaningful local work and before returning control to Brainstorming, generate the Development Readiness Mailbox with the allowlisted publisher and validate it. Never hand-edit a readiness snapshot or use free-form AI prose as a substitute.
-6. Stop at the Work Order's exact endpoint. Unless merge is expressly authorized, the normal return is one final substantive PR head with passing CI.
+5. After meaningful implementation or remediation, write a concise `RESULT` Record to the active mailbox. Once a PR exists, post it to the PR conversation only.
+6. Before returning control to Brainstorming, generate the Development Readiness Mailbox with the allowlisted publisher and validate it against the exact source commit. Never hand-edit a readiness snapshot or use free-form AI prose as a substitute.
+7. Stop at the Work Order's exact endpoint. Unless merge is expressly authorized, the normal return is one final substantive PR head with passing CI.
 
-PRs use the Initiative identifier and an imperative summary. The PR body states the authorized objective/exclusions, exact final commit, validation, readiness publication, safe protected-state confirmation, and review/merge posture. It does not contain lane fields, a routine manifest requirement, an acceptance-only commit, or exact-destination choreography.
+PRs use the Initiative identifier and an imperative summary. The PR body states the authorized objective/exclusions, exact final commit, validation, readiness publication, safe protected-state confirmation, active-mailbox evidence, and review/merge posture. It does not contain lane fields, a routine manifest requirement, an acceptance-only commit, or exact-destination choreography.
 
 ## Development-to-Brainstorming return
 
@@ -60,9 +61,9 @@ Development returns three repository-safe evidence surfaces:
 
 - the implementation PR, exact commit, and CI evidence;
 - the refreshed Development Readiness Mailbox on its stable mailbox surface; and
-- a short completion summary for decision-relevant local facts that the schema intentionally cannot publish.
+- a concise Result Record in the active PR mailbox, including any decision-relevant safe local facts the schema intentionally cannot publish.
 
-The completion summary must remain non-protected. It may say that an authorized asset was recoverable, a stage was blocked by an absent registration, or prior local work was preserved. It must not include protected paths, filenames when revealing, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable lineage.
+The Result Record must remain non-protected. It may say that an authorized asset was recoverable, a stage was blocked by an absent registration, or prior local work was preserved. It must not include protected paths, filenames when revealing, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable lineage. Brainstorming retrieves it directly from GitHub when available; Ray should not routinely carry it between Projects.
 
 Brainstorming reads all three before deciding review, cutover, prerequisite preparation, or a future initiative. Development does not begin the next initiative on its own.
 
@@ -73,6 +74,18 @@ The mailbox is a standing capability/readiness snapshot, not an initiative statu
 Only strict, versioned, allowlisted fields and bounded enum/identifier values may be published. Unknown fields and prohibited disclosure classes fail closed. Every snapshot records its generation time and verified repository/local baseline so staleness is obvious.
 
 The mailbox publisher may read Git metadata plus approved profile/ledger readiness facts, but it must sanitize all output before publication. Raw worktree paths, filenames, Git status lines, database rows, exception contents, and protected artifact metadata must never flow directly into the snapshot.
+
+## Active initiative/candidate mailbox
+
+The active Issue/PR mailbox carries concise chronological evidence, not readiness state or execution authority. Before a PR exists, the Initiative Issue may serve as the active mailbox. Once a PR exists, the PR conversation becomes the active candidate mailbox; do not mirror new candidate chronology into the Issue.
+
+Use three typed records:
+
+- `LAUNCH`: Brainstorming identifies the initiative/action, controlling Work Order, destination role/surface, exact candidate when applicable, bounded request and exclusions, task-specific execution profile when relevant, and next control point.
+- `RESULT`: Development identifies the action performed, exact resulting PR/head, concise changed scope, validation/CI state, preserved safeguards/exclusions, any safe gap/deviation, and next control point.
+- `REVIEW`: independent review identifies its role/surface, exact PR/base/head, `PASS` or `REWORK REQUIRED`, material findings/deviations, safety/evidence concerns, and next control point.
+
+Records remain concise and link durable authority/evidence rather than reproducing long reports. They cannot create or enlarge authority, accept work, authorize merge or protected action, or override the Work Order or repository truth. See the [Active Mailbox Record Guide](governance/ACTIVE_MAILBOX_RECORDS.md).
 
 ## Protected-local recovery
 
@@ -88,11 +101,12 @@ Consequential model and product decisions use this lifecycle:
 
 1. Development produces the final substantive commit.
 2. Required CI succeeds on that exact commit.
-3. Ray or the named reviewer accepts or rejects that exact commit.
-4. Any later substantive change invalidates the decision and requires review of the revised commit.
-5. The unchanged accepted commit may merge through protected `main`.
+3. Required independent review evaluates that exact commit and writes a Review Record when applicable.
+4. Ray or the named reviewer accepts or rejects that exact commit.
+5. Any later substantive change invalidates the decision and requires review of the revised commit.
+6. The unchanged accepted commit may merge through protected `main`.
 
-There is no acceptance-record-only commit and no duplicate CI run solely for metadata. Acceptance may be recorded on the Initiative/PR or another repository-safe review surface without changing the accepted tree. A passing check, mailbox refresh, PR state, merge, or historical lifecycle field does not create acceptance.
+There is no acceptance-record-only commit and no duplicate CI run solely for metadata. Acceptance is recorded through the designated authoritative decision/Work Order mechanism without changing the accepted tree. A favorable Result/Review Record, passing check, mailbox refresh, PR state, merge, or historical lifecycle field does not create acceptance.
 
 Ordinary reversible implementation may merge after required CI without a separate Ray acceptance transition only when the Initiative Brief/Work Order expressly pre-authorizes that disposition. Otherwise, stop at the final PR for review.
 

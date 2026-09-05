@@ -2,7 +2,9 @@
 
 ## Purpose and public surface
 
-The Development Readiness Mailbox gives Brainstorming a bounded view of current local capability without granting desktop-repository or protected-data access. It is a standing readiness snapshot, not an initiative status cockpit and not a substitute for the Initiative Brief, Work Order, PR, CI, or a short safe completion summary.
+The Development Readiness Mailbox gives Brainstorming a bounded view of current local capability without granting desktop-repository or protected-data access. It is a standing readiness snapshot, not an initiative status cockpit, task chronology, or a substitute for the Initiative Brief, Work Order, PR, CI, or active-mailbox records.
+
+This readiness surface is separate from the [active Initiative/PR mailbox](ACTIVE_MAILBOX_RECORDS.md). Before a PR exists, the Initiative Issue may carry concise Launch/Result/Review chronology; once a PR exists, new candidate chronology belongs only in the PR conversation. The active mailbox is evidence/coordination, while this mailbox is closed-schema readiness evidence. Neither creates or enlarges authority.
 
 The stable public surface is the root file `development-readiness.json` on the dedicated `readiness-mailbox` branch:
 
@@ -135,7 +137,7 @@ Refresh after any meaningful local work and again immediately before returning c
 4. Inspect the mailbox-worktree diff. It must change only `development-readiness.json`, contain exactly the schema allowlist, and name the intended source commit and refresh time.
 5. Commit that one generated regular file on `readiness-mailbox` with a concise mailbox-refresh message. From that worktree, run `python scripts/check_readiness_mailbox.py`; it validates the actual raw file, exact `100644` Git mode, exact root location, source-commit existence, enforcement-runtime binding, and single-file refresh commit.
 6. Push the branch. The `Readiness Mailbox Validation` workflow repeats the actual-file and commit-scope checks on every mailbox push. If the push is not fast-forward, preserve both states, inspect the remote refresh, and retry without reset or force-push.
-7. Read the stable raw URL and confirm that GitHub serves the new `generated_at_utc` and `verified_commit`. Link that surface and the passing mailbox check from the completion report.
+7. Read the stable raw URL and confirm that GitHub serves the new `generated_at_utc` and `verified_commit`. Link that surface and the passing mailbox check from the Result Record in the active PR mailbox.
 
 The publisher can safely produce repository readiness when protected-local state is missing or invalid; affected protected fields and prerequisites become bounded missing/unresolved/needs-runway states. Do not fabricate `READY` values to make a launch proceed.
 
