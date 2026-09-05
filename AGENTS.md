@@ -1,115 +1,68 @@
 # Repository Agent Contract
 
-This file is the canonical repository-level instruction contract for Sprouts Customer Geography. Follow higher-priority system, developer, administrator, platform, and explicit user instructions first. When authority is ambiguous or an action could destroy or expose protected state, fail closed and request direction.
+This file is the constitutional executor contract for repository-connected Development work on Sprouts Customer Geography. Follow higher-priority system, platform, and explicit user instructions first. The [Development Operating Standard](docs/governance/DEVELOPMENT_OPERATING_STANDARD.md) is the required detailed playbook for consequential or authority-bearing execution; it may elaborate this contract but may not contradict or override it.
 
-## Product and business boundary
+Neither durable Development instruction surface may contain volatile project state. Recover current commits, branches, Issues, pull requests, task status, mailbox status, blockers, model availability, and reasoning menus from current evidence instead.
 
-Sprouts Customer Geography is a public-data proxy and decision-support capability for understanding likely Sprouts-oriented household geography, including demographic fit, target-household mass, pocket continuity, seed surroundings, directional change, candidate displacement, and market context. Milwaukee is the first pilot; later markets must use configuration rather than copied applications or repositories.
+## Product boundary
 
-The product is not a final site-selection engine, a substitute for human judgment, an extension of the existing Sprouts Site Scanner, or a reproduction of Sprouts' proprietary customer model.
+Sprouts Customer Geography is public-data decision support for likely Sprouts-oriented household geography, opportunity, fit, continuity, surroundings, directional change, displacement, and market context. It is not a final site-selection engine, Sprouts' proprietary customer model, Site Scanner, or a substitute for human judgment. New markets must extend configuration and source adapters rather than create copied applications or repositories.
 
-## Authority and workflow
+## Authority and roles
 
-- Ray's explicit instructions and authorizations control within applicable higher-level instructions.
-- Ray remains the business decision-maker and manual transition point.
-- The Brainstorming Project's Master Control Room controls roadmap, sequencing, exact task authorization, lane assignment, acceptance for routine Lane A work, and merge authorization. The named Capability Decisions & Acceptance owner controls methodology/business acceptance for Lane B work.
-- Treat Work as read-only assessment or research unless explicitly granted other capabilities. Treat Codex as bounded implementation.
-- Codex performs bounded implementation and only explicitly authorized Git/GitHub writes. Work and Codex may recommend but may not self-authorize, self-accept, promote, or begin follow-on work.
-- Lane A is permitted only for exact implementation of already accepted authority or preservation of existing behavior when there is no new interpretation, protected evidence, target access, or unresolved question. Analytical, source/provenance, geography, protected-evidence, product-semantics, production-sensitive, destructive, CI-policy, legal/compliance, or ambiguous work is Lane B.
-- Both lanes require explicit acceptance of exact substantive commit H before canonical merge. Lane A acceptance belongs to Master Control Room; Lane B acceptance belongs to the named capability owner, after which Master Control Room controls the acceptance-record continuation and merge authorization. Any substantive post-H change invalidates acceptance.
-- Acceptance-record-only commit A records H and repository-safe acceptance metadata. Required CI runs on H and A, and canonical `main` lands already accepted; no post-merge acceptance-only publication loop is used.
-- Unless expressly excluded, an authorized governed task includes the non-destructive same-task repository and connected-GitHub operations needed to complete its exact scope, including recovery, readiness checks, manifest/Issue/branch/PR maintenance, scoped edits, commits, pushes, approved validation and CI, retries, bounded mechanical corrections, derivative posture updates, and exact-H preparation. Routine in-envelope actions do not require repeated Ray authorization.
-- Before asking Ray for permission, evidence, information, or action, recover relevant repository/GitHub state and determine whether the need is already authorized or durably answered. Treat ordinary in-scope friction as a recoverable execution blocker and resolve it directly; for a genuine external access blocker request only the minimum user-side restoration; for an authority blocker stop and route the minimum new decision to the correct owner. Ray remains the decision-maker for genuine authority transitions.
-- Repository authority controls over derivative GitHub evidence, and local-only facts must be verified locally rather than inferred from GitHub.
-- Stay within the execution prompt. Embed any inaccessible context needed for execution in that prompt.
-- Ask only questions that materially change safe execution; otherwise make and label reasonable assumptions.
+Ray is the business decision-maker. Brainstorming owns product/model decisions with Ray, governance meaning, runway preparation, Initiative Brief and Work Order authoring, Launch Records, dynamic execution-profile recommendations, and interpretation of durable Result/Review evidence.
 
-## Successor recovery and durable state
+Development owns repository-connected implementation: local and GitHub reconciliation, preservation of existing work, technical choices inside supplied authority, tests and CI, protected-local recovery when expressly permitted, evidence recording, readiness-mailbox refresh, bounded commits/pushes/PR maintenance, and Result Records.
 
-Use this reading order to recover current controlling state: (1) README current orientation; (2) this AGENTS authority and boundary contract; (3) exactly matching task manifest(s); (4) detailed work order where needed; (5) accepted `config/` and `schemas/` authority; and (6) relevant GitHub PR, commit, CI, and ruleset evidence. Repository authority remains controlling over derivative GitHub coordination evidence. Material conflict, missing authority, stale detail, inaccessible evidence, or ambiguous retrieval must fail closed. Because this repository is PUBLIC, treat all tracked repository material as public disclosure.
+For meaningful work, the operative Work Order is canonical current execution authority. The Initiative Brief states the approved objective and boundaries. Repository source/config/tests and Git history are implemented technical truth. GitHub comments, PR descriptions, checks, labels, and mailbox records are evidence or coordination only; none can create or enlarge authority, accept work, authorize merge or protected action, or override repository truth or the Work Order.
 
-Every future material repository/GitHub execution or other acceptance-bearing durable implementation must use exactly one governed task manifest. Pure read-only exploratory Work does not require a manifest merely because it occurred. If a read-only result becomes accepted controlling state, reconcile it into an existing durable authority artifact or a justified work-order/current-state record; do not create a second registry.
+Development has broad implementation discretion inside the prepared pathway. It must not invent missing scope, evidence, access, methodology, permissions, product semantics, analytical authority, dependencies, deployment, publication, or destructive-action authority. Stop only the affected stage when a required authority or prerequisite is genuinely missing, and report the precise gap through the active mailbox.
 
-When public disclosure is safe, use one disclosure-safe GitHub Issue as the task cockpit for posture, the current decision, the next manual transition, and links to repository evidence. The Issue is derivative and non-authoritative. Do not create one when even an opaque public posture would reveal protected information, and do not create Issue synchronization or mirrored authority.
+## Recovery and preservation
 
-## Scope control
+Before meaningful execution:
 
-Favor the smallest useful increment. Distinguish prerequisites from housekeeping. Avoid broad cleanup, unnecessary rewrites, speculative frameworks, and market-specific forks. Record unrelated discoveries as bounded backlog recommendations. Never promise background or future completion, and never begin a recommended follow-on task without authorization.
+1. read the exact Initiative Brief, operative Work Order, and latest applicable Launch/Result/Review records;
+2. read the repository orientation, this contract, and the Development Operating Standard;
+3. reconcile referenced accepted configuration, schemas, methods, and source authority;
+4. inspect the exact GitHub branch, PR, commits, CI, and protected-main posture;
+5. inspect the latest validated Development Readiness Mailbox and its freshness/baseline; and
+6. only when expressly authorized, recover the durable protected-local profile and ledger through their trusted interface.
 
-## Architecture boundary
+Preserve unrelated branches, worktrees, uncommitted work, and unpushed repository-safe work. Use the authorized task branch or an isolated worktree. Do not force-push, destructively reset, delete user work, rebase, squash, merge, cherry-pick, promote, deploy, publish, or begin another initiative without explicit authority.
 
-- Perform reproducible public-data preparation and complex spatial analysis upstream; expose stable presentation-output contracts.
-- Power BI is the intended MVP presentation layer, not the owner of complex GIS calculations. Do not build a custom HTML or JavaScript map unless later authorized.
-- Use market configuration, replaceable public-source adapters, and an extension boundary for future proprietary adapters.
-- Do not prematurely introduce cloud services, databases, APIs, orchestration frameworks, or dependencies. Dependency selection requires an authorized implementation task.
-- Treat this architecture as a starting guardrail, not an implemented or irrevocable production design. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Repository authority controls over derivative GitHub summaries. Verify local-only facts locally; never infer them from GitHub. Ask Ray only when an answer cannot be recovered and would materially change safe execution.
 
-## Confidentiality and protected information
+## Public and protected boundary
 
-Treat the repository as if it may later be viewed beyond the immediate user. Unless explicitly authorized, never commit real Sprouts seed points; internal Sprouts direction; live-pursuit candidate addresses or coordinates; owner or broker contacts; GBT, API, or vendor credentials; proprietary demographic data; live Site Scanner databases; emails; internal documents; production exports with confidential fields; or screenshots exposing confidential information.
+Treat every tracked file, Issue, PR, comment, check output, and mailbox value as public disclosure. Unless explicitly authorized, never commit or publish real Sprouts seed points, live pursuits, internal direction, contacts, credentials, proprietary data, Site Scanner data, internal correspondence, confidential exports, protected paths or revealing filenames, identities, targets, parameters, registries, hashes, lineage, or screenshots exposing protected information.
 
-Use synthetic or clearly fictional fixtures and ignored local overlays for confidential data. Document environment-variable handling. Keep secrets out of logs, fixtures, notebooks, screenshots, and reports. If protected material is discovered, stop, isolate it without copying or deleting it, and report it. See [docs/DATA_GOVERNANCE.md](docs/DATA_GOVERNANCE.md).
+Use small synthetic or clearly fictional fixtures before any authorized protected input. Original protected sources remain immutable. Resolve protected assets only through registered logical IDs beneath authorized roots; do not recursively inspect arbitrary files or directories. Keep secrets and protected values out of logs, exceptions, fixtures, reports, screenshots, and command output. If protected material reaches a publishable surface, stop, preserve it without copying or deleting it, and report the risk.
 
-## Public-data provenance
+Protected evidence events remain independent and auditable: located, identity-read, machine-target-read, visible, analytically used, validation-used, development-used, and disclosed. One event must not imply another. Machine decoding alone does not create visibility, analytical use, or development consumption. Preserve exact model-to-evidence membership.
 
-Each accepted source needs a manifest or equivalent record, as applicable, with source name, official location, access method, dataset and schema versions, release/vintage, retrieval date, geography vintage, license/terms, attribution, query/extraction parameters, practical checksums, known omissions, transformation lineage, refresh expectations, and fallback behavior.
+## Analytical and architecture safeguards
 
-Keep raw downloads and large caches outside Git unless a specific small, legal fixture is authorized. Preserve reconstructability through manifests, scripts, configuration, documentation, synthetic fixtures, and tests—not copied downloaded environments.
+Any authorized analytical implementation must preserve source/vintage/schema/transformation provenance, explicit missingness without silent zero-fill, target-blind feature and evaluation freezes, physical-location-grouped validation, deterministic reproduction, uncertainty and quality flags, protected-field allowlists and egress controls, and protected-characteristic restrictions. Distinguish demographic fit from household mass and descriptive measures from modeled conclusions. Describe results as public-data proxies, never proprietary-model equivalence.
 
-## Analytical and scoring guardrails
+Perform reproducible data preparation and complex spatial analysis upstream of presentation. Keep protected adapters and inputs outside tracked source. Do not introduce cloud services, databases, APIs, orchestration frameworks, dependencies, deployment, or publishing rights without authority.
 
-No customer-fit weights or scoring authority currently exists. Any later authorized implementation must:
+## Two mailbox functions
 
-- distinguish demographic fit from household mass and descriptive measures from modeled conclusions;
-- retain components, source vintages, uncertainty, and quality flags;
-- never silently convert missing values to neutral or favorable values, and fail closed when missing inputs would mislead;
-- document normalization, transformations, weights, and calibration;
-- exclude protected characteristics from scoring inputs absent explicit review and authorization;
-- describe outputs as public-data proxies, never Sprouts' proprietary model; and
-- use seed points as evidence, not automatic ground truth.
+The Development Readiness Mailbox is a machine-generated, closed-schema, disclosure-safe capability snapshot. It is neither task authority nor chronology. After meaningful local work and before returning control, refresh it through the allowlisted publisher, validate it, and bind it to the exact source commit. Never hand-edit or replace it with free-form prose.
 
-## Power BI guardrails
+The active Initiative/PR mailbox carries concise chronological records. Before a PR exists, the Initiative Issue may be active. Once a PR exists, write new candidate chronology only to the PR conversation—do not mirror it to the Issue. Brainstorming writes `LAUNCH`; Development writes `RESULT`; independent review writes `REVIEW`. Use the [Active Mailbox Record Guide](docs/governance/ACTIVE_MAILBOX_RECORDS.md).
 
-Future authorized Power BI work must prefer a source-control-compatible project representation when available, supportable, and approved. Document the report, semantic-model, data-contract, refresh, and any binary fallback sources of truth. Avoid unapproved custom visuals and hidden spatial logic in DAX or Power Query when upstream computation is more testable. Separate confidential local data from committed definitions; document licensing, organizational, and publishing assumptions; preserve a functional local MVP without assuming Fabric, Power BI Service, premium capacity, ArcGIS access, or enterprise publishing rights; retain reconstruction metadata; and avoid coupling the report to one proprietary source.
+Development must post a Result Record after meaningful implementation or remediation and before returning control. Independent review must post a Review Record against the exact candidate when review is requested. Records remain concise evidence and coordination; they never become an authority engine or status cockpit.
 
-## Handoff and prompt formatting
+## Validation, exact versions, and stop posture
 
-Every handoff artifact has two distinct parts:
+Use tests proportionate to risk. As relevant, cover schemas, geography, join keys, reproducibility, missing and invalid inputs, stale sources, interruption and reruns, registered-asset containment, disclosure rejection, fresh-session recovery, and fail-closed behavior.
 
-1. **Ray's routing wrapper**, outside the copyable prompt, may state the step, destination Project, create/continue choice, exact title, tool/surface, model, reasoning, selection reason, fallback, and where Ray should manually carry the result.
-2. **Recipient-only prompt**, for the already-open chat or thread, begins with the exact title, directs work in the current chat/thread, states whether new-thread creation or delegation is prohibited, and includes complete authorization and self-contained context.
+Before completion, inspect status and the complete diff for unrelated changes, large data, secrets, protected material, and accidental output. Required CI must pass on the exact final substantive commit. Consequential model, methodology, and product decisions also require independent review and acceptance of that exact version; any later substantive change invalidates the prior review or acceptance as applicable. Do not create acceptance-only commits or duplicate CI solely for metadata.
 
-The recipient-only prompt must not contain `SEND TO`, `PASTE/DO THIS`, `WHEN COMPLETE, RETURN TO`, `THEN`, instructions for Ray to open another thread, or instructions for the recipient to delegate to another thread. No automatic handoff occurs unless Ray explicitly requests one.
+Stop at the endpoint in the operative Work Order. Never infer acceptance, merge permission, protected access, or follow-on authority from a green check, mailbox refresh, Result/Review Record, PR state, or historical lifecycle field.
 
-Where durable detailed authority already exists, continuation/resumption normally uses a short launcher containing only task ID, exact thread title, tool/surface, model, reasoning, and exact current step identity. The repository-connected receiver must recover the controlling state in the order above, including exactly one matching manifest, exactly one required detailed work order, referenced accepted config/schema authority, and relevant GitHub evidence. Fail closed for no or multiple controlling task records, non-executable manifest state, missing/stale/superseded required work order, conflicting authority, inaccessible evidence, or ambiguous retrieval. Do not use a short launcher for first execution of a new task without durable detailed execution authority; a full self-contained Master Control Room prompt remains the default and fallback. Ray remains the manual decision/transition point, not the routine carrier of recoverable state.
+## Retired machinery
 
-## Systematic problem-solving
-
-Identify the business problem, failure family, shared invariant, root cause, adjacent variants, boundaries, invalid and missing inputs, retry and interruption behavior, generalization limit, and residual risk. Prefer one bounded general rule or validation contract over record-specific exceptions.
-
-## Testing and validation
-
-Use meaningful tests appropriate to the authorized task. As relevant, cover source schemas, geography, join keys, reproducibility, synthetic spatial fixtures, boundary direction, missing data, uncertainty, quality flags, stable output schemas, duplicates, stale sources, interruption, reruns, fail-closed behavior, and full corrected-stage validation. Do not create meaningless tests merely to report a passing suite.
-
-## Git safety
-
-- Work on a task-specific branch or isolated worktree; do not edit the default branch unless explicitly authorized.
-- For governed execution, maintain the repository-safe task manifest and apply the task, lane, branch, exact-H acceptance, acceptance-record-only A, protected-boundary, and merge rules in [docs/GITHUB_WORKFLOW_GOVERNANCE.md](docs/GITHUB_WORKFLOW_GOVERNANCE.md). Do not infer `ACCEPTED_CLOSED` from implementation evidence, CI, a PR, or a merge.
-- Do not force-push, destructively reset, delete user work, rebase, squash, merge, cherry-pick, or promote without explicit authorization.
-- Use concise task-specific commits. Before completion, review repository status and the complete diff; check for accidental large data, secrets, confidential inputs, and unrelated changes.
-- Report the actual branch/worktree, commit, push result, and promotion readiness.
-
-## Completion reports
-
-Report only evidence material to the task and its acceptance or next decision. As applicable, include:
-
-- outcome;
-- validation;
-- confidentiality and protected-state preservation;
-- blockers;
-- branch, commit, pull-request, and CI state;
-- exact destination.
-
-Do not repeat evidence already directly recoverable from the repository or GitHub unless needed to explain a discrepancy, limitation, or decision.
-
-Current Project and chat instructions control prose style, tone, section structure, and whether a summary section is used. Do not require a formulaic Business Takeaway or other generic closing boilerplate.
+Do not reintroduce mandatory lanes, universal routine task manifests or state machines, synchronized Issue cockpits, permanent routing chats, exact-next-destination choreography, acceptance-only commits, duplicate acceptance-metadata CI, or routine per-session path restoration. Historical artifacts remain evidence only when current authority references them.

@@ -1,4 +1,9 @@
-"""Repository-safe GOV-02 manifest, schema, and tracked-path conformance check."""
+"""Historical manifest archive and current tracked-path conformance check.
+
+GOV-16 retires universal task manifests for future work.  The existing records
+remain immutable historical evidence and continue to receive basic integrity
+validation; this checker does not create a future task-lifecycle requirement.
+"""
 
 from __future__ import annotations
 
@@ -12,6 +17,7 @@ def main() -> int:
     repository = Path(__file__).resolve().parents[1]
     sys.path.insert(0, str(repository / "src"))
     from sprouts_customer_geography.governance import load_and_validate_task_manifest
+    from sprouts_customer_geography.governance_surfaces import validate_governance_surfaces
     from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tracked_paths
 
     schema = repository / "schemas" / "governance" / "task_manifest.schema.json"
@@ -27,7 +33,18 @@ def main() -> int:
         text=True,
     ).stdout.splitlines()
     assert_no_protected_tracked_paths(stageable)
-    print(json.dumps({"state": "passed", "task_ids": [document["task_id"] for document in documents], "tracked_path_safeguard": "passed"}, sort_keys=True))
+    surface_result = validate_governance_surfaces(repository)
+    print(
+        json.dumps(
+            {
+                **surface_result,
+                "state": "passed",
+                "task_ids": [document["task_id"] for document in documents],
+                "tracked_path_safeguard": "passed",
+            },
+            sort_keys=True,
+        )
+    )
     return 0
 
 

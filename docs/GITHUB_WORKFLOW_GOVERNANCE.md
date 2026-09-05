@@ -1,105 +1,137 @@
-# GitHub Workflow & Execution Governance
+# GitHub Workflow and Execution Governance
 
-## Purpose and boundary
+## Purpose
 
-This document is the detailed lifecycle authority for repository-safe execution. It preserves immutable task identity, task states, confidentiality boundaries, task-branch continuity, and pre-merge acceptance. GitHub Issues, branches, pull requests, commits, CI, comments, and rulesets are implementation or coordination evidence only; they do not become business or capability authority.
+This document defines the repository-safe handoff and implementation lifecycle for the owner-approved two-Project workflow. It replaces lanes, universal routine task manifests, Issue status cockpits, permanent capability-routing chats, acceptance-only commits, duplicate metadata CI, and exact-next-destination choreography for future work.
 
-Each authorized task has one JSON manifest under `governance/tasks/`, validated against `schemas/governance/task_manifest.schema.json`. It is a compact durable authority record, not a chat transcript or protected-local registry. Every future material repository/GitHub execution or other acceptance-bearing durable implementation uses exactly one governed task manifest. Pure read-only exploratory Work does not require one merely because it occurred; an accepted controlling result must later be reconciled into an existing durable authority artifact or a justified work-order/current-state record.
+Historical Work Orders, manifests, acceptance records, Issues, and chat references remain evidence of the authority that existed when those changes were made. Do not rewrite them merely to match this model, and do not treat their legacy lifecycle fields as current execution requirements.
 
-## Authority and lane classification
+## Authority and roles
 
-- Ray remains the business decision-maker and manual transition point.
-- Master Control Room (MCR) owns task authorization, lane assignment, sequencing, Lane A acceptance, and merge authorization.
-- The named Capability Decisions & Acceptance owner accepts or rejects Lane B methodology/business changes at exact substantive commit H.
-- Work remains read-only unless separately authorized. Codex performs bounded implementation and explicitly authorized Git/GitHub writes.
-- Repository authority controls over all derivative GitHub evidence.
+Ray remains the business decision-maker.
 
-Lane A is routine technical work. It is permitted only when work exactly implements already accepted authority or preserves existing behavior, adds no business or analytical interpretation, needs no protected evidence or target access, is reproducible from repository-safe evidence, and has no unresolved interpretation question. Lane A does not require a separate capability chat, but MCR must explicitly accept exact H before canonical merge.
+The Brainstorming Project, `Sprouts Customer Geography`, owns objective selection with Ray, GitHub inspection, prerequisite and runway preparation, Initiative Brief and Work Order authoring, Launch Records, dynamic execution-profile recommendations, and post-implementation review. It cannot inspect the desktop repository or protected-local data.
 
-Lane B is capability-sensitive work. It includes any analytical methodology, model, feature, weight, threshold, transformation, normalization, validation, scoring, ranking, or customer-fit change; source authority, vintage, provenance, licensing, or missingness-policy change; geography inventory, CRS, membership, boundary, or aggregation-rule change; protected evidence or target-access authority; material product behavior, output semantics, eligibility logic, or decision rule; production-sensitive architecture, dependency, security, confidentiality, deployment, or external publication; destructive migration, history rewrite, force push, visibility, ruleset, branch-protection, or CI-policy change; legal, contractual, or compliance consequence; and any ambiguity over whether behavior is unchanged. The named capability owner accepts or rejects exact H, after which MCR may authorize only the accepted-record continuation and merge.
+The Development Project, `Sprouts-Customer-Geography-Development`, owns repository/local inspection, preservation of existing work, implementation within prepared authority, testing, bounded correction, branch/PR maintenance, Result Records, and publication of repository-safe readiness. Development does not invent missing authority. Its durable instruction surfaces are `AGENTS.md` and the [Development Operating Standard](governance/DEVELOPMENT_OPERATING_STANDARD.md); the Development Project has no ChatGPT Project Custom Instructions.
 
-When classification is uncertain, use Lane B. Lane choice never weakens confidentiality, testing, branch protection, or explicit-authorization requirements.
+GitHub carries repository-safe authority and evidence between Projects. Repository contents control over derivative summaries. GitHub must not be used to infer protected-local facts, and local facts must not be published outside the readiness allowlist.
 
-## Execution permission envelope and blocker semantics
+## Brainstorming-to-Development runway
 
-Unless an authorization expressly excludes an operation, an authorized governed task implicitly authorizes the non-destructive same-task execution operations needed to complete its exact scope. The default envelope includes:
+Before preparing meaningful new work, Brainstorming must read current GitHub state, the latest applicable record chronology from the active mailbox, and the latest Development Readiness Mailbox. The mailbox timestamp and verified baseline are part of the decision: a stale snapshot is not current readiness.
 
-- repository and connected-GitHub recovery plus exact-task access/readiness preflight;
-- creation and maintenance of the authorized manifest and one disclosure-safe Issue when public posture is safe;
-- creation and use of the task branch or worktree;
-- task-scoped repository edits, commits, pushes, and authorized PR creation or maintenance;
-- approved repository-safe tests and checks, required CI, retries of approved tests or CI, and environment-only retries;
-- bounded mechanical corrections that do not alter authority, substantive behavior, protected access, or scope;
-- derivative Issue/PR posture updates; and
-- exact-H verification and preparation for the correct acceptance owner.
+If a required source, permission, protected asset registration, evidence inventory, methodology decision, or other prerequisite is incomplete, Brainstorming must prepare that runway with Ray. It may authorize a bounded prerequisite initiative, supply the missing repository-safe authority, or defer the objective. It must not silently delegate an incomplete pathway to Development.
 
-Separate tools or Git/GitHub actions within this envelope do not create additional Ray permission transitions. The envelope does not authorize scope expansion, lane change, new business/methodology/analytical/product behavior, protected evidence or target access, destructive Git operations, history rewrite, force push, direct unprotected publication, unscoped dependencies, new integrations/plugins/bots/webhooks/Projects/dispatch/synchronization, substantive post-H changes, deployment, publication beyond the authorized normal repository merge, or follow-on work.
+Meaningful work uses two durable artifacts:
 
-Executors must classify execution blockers as exactly one of the following:
+1. **Initiative Brief Issue.** One concise Issue states the business objective, why it is timely, prepared pathway and prerequisites, permitted evidence/access, scope, exclusions, success criteria, decisions reserved for Ray, Work Order path, and protected-disclosure warning. It is authority for the stated initiative, not a synchronized task-status cockpit.
+2. **Detailed Work Order.** One repository-safe Work Order supplies the exact implementation authorization, inputs, method constraints, validation, branch/PR expectations, stop point, and safe completion evidence. It must contain enough context for Development to execute without a chat transcript or permanent routing conversation.
 
-1. **Recoverable execution blocker.** Resolution remains wholly inside current task authority and the default envelope, such as an in-scope test or CI failure, formatting/lint/schema correction, transient network/tool failure, environment retry, non-destructive worktree/temporary-directory correction, repository/GitHub refresh, or authority-preserving mechanical correction. Recover or retry directly on the same task, Issue, branch, and PR; record material retry/correction evidence in derivative posture when useful. Ray involvement is not required unless recovery reveals an access or authority blocker.
-2. **Access blocker.** A required authentication, account, connector, repository permission, user-side permission, or other external access dependency is unavailable and cannot be restored within existing executor capability. First verify the access cause and check repository/connected-GitHub evidence for an allowed existing path. Then request only the minimum user-side action needed to restore the exact blocked capability, without broadening scope. Resume the same task identity and current step after restoration unless authority changed.
-3. **Authority blocker.** Resolution requires a decision or permission outside the task envelope, including scope or lane change; methodology, business, analytical, product, source, geography, or scoring authority; protected evidence or target access; destructive action; a new dependency or integration; deployment; publication outside the authorized merge; substantive post-H modification; or follow-on work. Stop, recover and cite the conflicting/current authority, and route only the minimum decision to the correct owner. Do not continue through a workaround or create a new task without MCR authorization.
+Before meaningful Development or review work begins, Brainstorming writes a concise `LAUNCH` Record to the active mailbox. The launcher sent to Development is intentionally short: initiative ID/title, Issue or PR, branch, Work Order, execution profile, and exact stop point. Detailed authority remains in the durable artifacts, and the Launch Record cannot enlarge it.
 
-Before asking Ray for permission, information, evidence, or action, determine whether the action is already in the task envelope, whether repository/GitHub recovery already provides the information, whether the blocker is mechanically recoverable, and whether a genuine access or authority blocker remains. Uncertainty and ordinary execution friction are not by themselves Ray transitions.
+Routine, reversible maintenance may use existing durable authority when Brainstorming expressly pre-authorizes that path. A universal JSON task manifest or lifecycle-state mutation is not required. Meaningful or sensitive work requires explicit prepared authority. Exact-final-version review is mandatory for consequential model/product decisions; other implementation follows the review and merge disposition expressly stated by its Initiative Brief and Work Order.
 
-Repository-first recovery precedes recommending, authorizing, accepting, sequencing, resuming, or escalating governed work whenever relevant repository/GitHub access is available. Recover current orientation; inspect the exact task authority and relevant accepted config/schema/work-order authority; inspect active task, Issue, branch, PR, CI, and blocker state; and identify conflicting active tasks, settled decisions, protected or sealed stages, unmet prerequisites, and already-durable evidence. Repository authority controls over derivative GitHub posture. If required evidence is inaccessible, stale, ambiguous, or conflicting, fail closed rather than guessing or asking Ray to transport accessible evidence. GitHub must not be used to infer local-only state.
+## Development preflight
 
-## Immutable identities, branches, and states
+Development must read the Initiative Brief, operative Work Order, and latest applicable Launch Record first, then inspect current GitHub and local repository state before changing anything. It must:
 
-- Task IDs, corrections, retries, and bounded rework retain the same identity while authority is unchanged.
-- Branches are `task/<task-id-lowercase>-<short-slug>`; one authorized task uses one branch while its authority is unchanged.
-- Commits and PR titles are `<TASK-ID>: <imperative summary>`.
-- The only task states are `AUTHORIZED`, `IN_PROGRESS`, `BLOCKED_FAIL_CLOSED`, `COMPLETED_AWAITING_ACCEPTANCE`, `ACCEPTED_CLOSED`, and `REJECTED_OR_REWORK_REQUIRED`.
-- A task is `ACCEPTED_CLOSED` only with explicit, repository-safe capability acceptance metadata from its owner. Execution completion, a commit, test, PR, or merge never self-accepts a capability.
+- verify branch/Issue/PR continuity and the current protected-`main` baseline;
+- inspect and preserve unrelated local branches, worktrees, uncommitted work, and unpushed repository-safe work;
+- read the latest mailbox and, when authorized, recover the durable protected-local profile/ledger through trusted registration;
+- confirm that every prerequisite for the first implementation stage exists; and
+- reconcile current authority with referenced config, schemas, method documents, prior accepted commits, and relevant CI.
 
-Corrections, retries, interruptions, and bounded rework remain under the same task identity while authority is unchanged. Before H acceptance they continue on the same branch and PR. After H acceptance, any substantive change invalidates acceptance and returns exact revised H to the correct owner. A changed scope or authority requires MCR direction and may require a new task; Codex must not infer that decision.
+Development may resolve ordinary in-scope implementation friction directly. If an external account or repository permission is missing, request only the minimum access restoration. If completion requires missing scope, methodology, evidence, protected access, product semantics, destructive action, dependency, deployment, or publication authority, stop the dependent stage and report that precise runway gap to Brainstorming.
 
-## Common H/A lifecycle
+## Implementation lifecycle
 
-The current governed integration path is:
+1. Preserve local work and use the authorized task-specific branch or isolated worktree.
+2. Implement only the prepared objective. Use synthetic fixtures before authorized protected-local inputs.
+3. Run focused validation, disclosure/confidentiality checks, relevant regression coverage, and normal CI. Apply bounded corrections on the same branch and PR while authority is unchanged.
+4. Commit and push concise substantive changes; open or maintain one implementation PR linked to the Initiative Brief Issue.
+5. After meaningful implementation or remediation, write a concise `RESULT` Record to the active mailbox. Once a PR exists, post it to the PR conversation only.
+6. Before returning control to Brainstorming, generate the Development Readiness Mailbox with the allowlisted publisher and validate it against the exact source commit. Never hand-edit a readiness snapshot or use free-form AI prose as a substitute.
+7. Stop at the Work Order's exact endpoint. Unless merge is expressly authorized, the normal return is one final substantive PR head with passing CI.
 
-`MCR authorization and lane → one manifest/Issue/branch/PR → substantive H → CI on H → exact-H acceptance → acceptance-record-only A → CI on A → MCR-authorized protected merge → accepted canonical main`
+PRs use the Initiative identifier and an imperative summary. The PR body states the authorized objective/exclusions, exact final commit, validation, readiness publication, safe protected-state confirmation, active-mailbox evidence, and review/merge posture. It does not contain lane fields, a routine manifest requirement, an acceptance-only commit, or exact-destination choreography.
 
-1. MCR authorizes the exact task and assigns Lane A or Lane B.
-2. Create one repository-safe manifest, one task branch, and one PR. When public posture is safe, create or reuse one exact-identity disclosure-safe Issue cockpit.
-3. Complete substantive implementation at exact commit H. At H the manifest is `COMPLETED_AWAITING_ACCEPTANCE`, execution is `COMPLETED`, capability acceptance is `NOT_REVIEWED`, and H does not fabricate its own SHA.
-4. Required `repository-validation` succeeds on the exact H at the PR head.
-5. The correct acceptance owner explicitly accepts or rejects exact H: MCR for Lane A, or the named capability owner for Lane B. A passing check, PR, merge, Issue, or comment never creates acceptance.
-6. No substantive change is permitted after accepted H without reacceptance. MCR controls authorization to continue with the acceptance record and merge.
-7. Codex may create acceptance-record-only commit A only when authorized. A records `implementation_commit = H`, sets the current task manifest to `ACCEPTED_CLOSED` with capability acceptance `ACCEPTED`, and records the repository-safe acceptance disposition, owner/source, date, and next destination. The H..A diff may touch only explicitly authorized acceptance/closure surfaces for the current task; it must not change substantive implementation.
-8. Required `repository-validation` reruns and succeeds on A. Verify H..A before merge.
-9. MCR authorizes or executes normal protected merge as applicable. Canonical `main` lands already accepted. Do not use auto-merge unless separately authorized.
-10. Close the Issue with the canonical merge and next destination. There is no post-merge acceptance-only commit or publication loop.
+## Development-to-Brainstorming return
 
-## A/merge continuation permission envelope
+Development returns three repository-safe evidence surfaces:
 
-After the correct owner accepts exact H, one MCR authorization to proceed with the A/merge continuation covers creation of acceptance-record-only A; recording `implementation_commit = H` and repository-safe acceptance metadata; derivative Issue/PR acceptance updates; local validation and required CI on A; retries of approved CI or environment failures that do not change substantive H; H..A allowed-diff verification; normal protected merge when every accepted gate passes; verification of canonical `main`; and Issue closure with derivative closure posture. Do not ask Ray separately for these mechanical operations.
+- the implementation PR, exact commit, and CI evidence;
+- the refreshed Development Readiness Mailbox on its stable mailbox surface; and
+- a concise Result Record in the active PR mailbox, including any decision-relevant safe local facts the schema intentionally cannot publish.
 
-This continuation applies only while H remains the accepted substantive commit, A changes only explicitly authorized acceptance/closure surfaces, required checks pass, and the continuation authorizes normal protected merge. Any substantive post-H change invalidates acceptance and is an authority blocker requiring revised-H acceptance.
+The Result Record must remain non-protected. It may say that an authorized asset was recoverable, a stage was blocked by an absent registration, or prior local work was preserved. It must not include protected paths, filenames when revealing, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable lineage. Brainstorming retrieves it directly from GitHub when available; Ray should not routinely carry it between Projects.
 
-## Main integration and validation policy
+Brainstorming reads all three before deciding review, cutover, prerequisite preparation, or a future initiative. Development does not begin the next initiative on its own.
 
-`main` is protected by the `main-integration` ruleset (ID `21113123`). Pull requests are required; approvals are `0`; the bypass list is empty; force pushes and deletion are blocked; and `repository-validation` is required with strict, up-to-date behavior. Do not bypass these protections or change rulesets/CI without separate authorization.
+## Development Readiness Mailbox
 
-The `repository-validation` workflow policy remains unchanged. It installs the repository package and runs the governance check, PIPE-01 check, PIPE-02 check, and full unit-test discovery for pull requests targeting `main`.
+The mailbox is a standing capability/readiness snapshot, not an initiative status registry. Its schema, tracked snapshot location, publication surface, local publisher, validation rules, and recovery procedure are defined in the [Development Readiness Mailbox runbook](governance/DEVELOPMENT_READINESS_MAILBOX.md).
 
-## Disclosure-safe Issue cockpit
+Only strict, versioned, allowlisted fields and bounded enum/identifier values may be published. Unknown fields and prohibited disclosure classes fail closed. Every snapshot records its generation time and verified repository/local baseline so staleness is obvious.
 
-When public disclosure is safe, one GitHub Issue is the normal derivative cockpit for a governed task. Search open and closed Issues for the exact task ID/title before creation, create at most one, and update it idempotently. Record only the task ID/title, lane, concise objective, current posture, current decision, exact next manual transition, manifest path, branch, PR/CI links, H and accepted A/merge references when appropriate, last-updated source/date, and an explicit public-disclosure/non-authority warning. Use comments only for material transitions. Do not paste full reports or protected information.
+The mailbox publisher may read Git metadata plus approved profile/ledger readiness facts, but it must sanitize all output before publication. Raw worktree paths, filenames, Git status lines, database rows, exception contents, and protected artifact metadata must never flow directly into the snapshot.
 
-An Issue is not required when even an opaque public posture would reveal protected information. Do not create one in that case. An Issue never authorizes work or acceptance, overrides repository authority, or becomes a synchronized or mirrored registry. No bot, hook, or synchronization mechanism is authorized.
+## Active initiative/candidate mailbox
 
-## Short-launch recovery
+The active Issue/PR mailbox carries concise chronological evidence, not readiness state or execution authority. Before a PR exists, the Initiative Issue may serve as the active mailbox. Once a PR exists, the PR conversation becomes the active candidate mailbox; do not mirror new candidate chronology into the Issue.
 
-Where durable detailed authority already exists, continuation/resumption normally uses a short launcher containing only task ID, exact thread title, tool/surface, model, reasoning, and exact current step identity. Resolve the repository recovery order in `AGENTS.md`, exactly one matching manifest, exactly one detailed work order when required, referenced accepted config/schema authority, and relevant GitHub evidence. Fail closed when a record is missing, multiple controlling records match, the manifest is not executable, a required work order is missing/stale/superseded, authority conflicts, evidence is inaccessible, or retrieval is ambiguous. Use a full self-contained MCR prompt for genuinely new work or when durable authority is insufficient. Ray remains the manual decision/transition point, not the routine carrier of recoverable task state.
+Use three typed records:
 
-## Operating measurements and access readiness
+- `LAUNCH`: Brainstorming identifies the initiative/action, controlling Work Order, destination role/surface, exact candidate when applicable, bounded request and exclusions, task-specific execution profile when relevant, and next control point.
+- `RESULT`: Development identifies the action performed, exact resulting PR/head, concise changed scope, validation/CI state, preserved safeguards/exclusions, any safe gap/deviation, and next control point.
+- `REVIEW`: independent review identifies its role/surface, exact PR/base/head, `PASS` or `REWORK REQUIRED`, material findings/deviations, safety/evidence concerns, and next control point.
 
-Ordinary Lane A work normally targets no more than two Ray transitions: initial authorization and accepted-record/merge continuation after exact-H acceptance. Count infrastructure or access interruptions separately, but still include them in total transitions. A one-time access restoration is an interruption; recurring restoration is evidence of workflow failure, not a normal lifecycle stage.
+Records remain concise and link durable authority/evidence rather than reproducing long reports. They cannot create or enlarge authority, accept work, authorize merge or protected action, or override the Work Order or repository truth. See the [Active Mailbox Record Guide](governance/ACTIVE_MAILBOX_RECORDS.md).
 
-Before repository edits, verify authenticated repository access, repository visibility to the GitHub integration, exact-identity Issue/branch/PR absence or continuity, and required Issue/PR write capability. If required access is unavailable, fail closed before making repository changes.
+## Protected-local recovery
 
-## Repository-safe manifest boundary
+The durable project profile and evidence ledger live outside Git worktrees. The normal recovery path uses a deterministic machine-local state location; relocation uses an explicit override rather than arbitrary discovery. Registered assets resolve by stable logical ID beneath allowlisted roots. Path traversal and outside-root resolution fail closed.
 
-Manifests may record only repository-safe authority, scope, opaque dependency IDs, branch, completion evidence, and acceptance metadata. They must never contain protected paths, targets, forecasts, identities tied to locations, coordinates, nonces, protected digests, workbook details, protected registries/packages, or reconstructable protected lineage. Existing tracked-path safeguards remain independent defenses.
+Do not recursively open arbitrary JSON, spreadsheets, directories, or protected outputs to discover project state. Original protected sources remain immutable, and the ledger should store lineage and events without raw target values unless a separately authorized technical requirement demands them.
+
+Evidence events remain independent and auditable: located; identity-read; machine-target-read; visible; analytically-used; validation-used; development-used; and disclosed. No event auto-promotes another. In particular, machine-target-read does not imply visibility, analytical use, or development use.
+
+## Exact-final-version acceptance
+
+Consequential model and product decisions use this lifecycle:
+
+1. Development produces the final substantive commit.
+2. Required CI succeeds on that exact commit.
+3. Required independent review evaluates that exact commit and writes a Review Record when applicable.
+4. Ray or the named reviewer accepts or rejects that exact commit.
+5. Any later substantive change invalidates the decision and requires review of the revised commit.
+6. The unchanged accepted commit may merge through protected `main`.
+
+There is no acceptance-record-only commit and no duplicate CI run solely for metadata. Acceptance is recorded through the designated authoritative decision/Work Order mechanism without changing the accepted tree. A favorable Result/Review Record, passing check, mailbox refresh, PR state, merge, or historical lifecycle field does not create acceptance.
+
+Ordinary reversible implementation may merge after required CI without a separate Ray acceptance transition only when the Initiative Brief/Work Order expressly pre-authorizes that disposition. Otherwise, stop at the final PR for review.
+
+## Branch protection and Git safety
+
+`main` remains protected: pull requests and required `repository-validation` are mandatory; strict up-to-date behavior applies; force pushes and deletion are blocked; and no bypass is authorized. Do not change rulesets or CI policy without explicit authority.
+
+- Branches normally use `task/<initiative-id-lowercase>-<short-slug>`.
+- Commits and PR titles use `<INITIATIVE-ID>: <imperative summary>`.
+- Corrections and retries remain on the same branch and PR while objective and authority are unchanged.
+- Do not force-push, destructively reset, delete user work, rebase, squash, merge, cherry-pick, or publish beyond the authorized boundary.
+- Before final return, inspect status and the full diff for unrelated work, large generated data, secrets, protected material, and unexpected files.
+
+## Retired machinery and transition
+
+For future work, do not require or recreate:
+
+- Lane A or Lane B classification;
+- universal routine task manifests or lifecycle-only status updates;
+- Issues synchronized as task-status cockpits;
+- permanent capability-acceptance or routing chats;
+- exact-next-destination handoff choreography;
+- substantive H plus acceptance-only A commits;
+- duplicate CI after acceptance metadata only;
+- checkers whose sole purpose is moving task lifecycle fields; or
+- per-worktree/session protected registry-pointer restoration as normal operation.
+
+These retirements do not weaken protected/public boundaries, provenance, explicit missingness, deterministic reproduction, target-blind freezes, grouped validation, protected-field allowlists, egress controls, protected-characteristic restrictions, branch/PR/CI controls, or exact-final-version acceptance for consequential decisions.

@@ -1,4 +1,4 @@
-"""Repository-safe governance manifest validation for authorized tasks."""
+"""Compatibility validation for the historical governed-task archive."""
 
 from __future__ import annotations
 
