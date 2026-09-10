@@ -19,6 +19,7 @@ from sprouts_customer_geography.readiness.disclosure import validate_development
 from sprouts_customer_geography.readiness.mailbox_contract import MAILBOX_ENFORCEMENT_PATHS
 from sprouts_customer_geography.readiness.publisher import build_readiness_document, publish_readiness
 from sprouts_customer_geography.readiness.store import initialize_project_state
+from tests.readiness_legacy import downgrade_synthetic_ledger_to_v1
 
 
 class ReadinessPublisherTests(unittest.TestCase):
@@ -106,6 +107,7 @@ class ReadinessPublisherTests(unittest.TestCase):
         store, _ = self._registered_store()
         with store._connect() as connection:
             connection.execute("DELETE FROM session_recoveries")
+            connection.execute("DELETE FROM ledger_write_order WHERE record_kind = 'session_recovery'")
         document = build_readiness_document(self.source, state_root=store.state_root)
         self.assertEqual(document["recovery"]["fresh_session"], "NOT_VERIFIED")
 
@@ -155,6 +157,32 @@ class ReadinessPublisherTests(unittest.TestCase):
         )
         self.assertNotEqual(checker.returncode, 0)
         self.assertIn("READINESS_MAILBOX_ENFORCEMENT_STALE", checker.stderr)
+
+    def test_08_ambiguous_legacy_recovery_cannot_publish_ready(self):
+        store, _ = self._registered_store()
+        with store._connect() as connection:
+            connection.execute("DELETE FROM session_recoveries")
+            connection.execute("DELETE FROM ledger_write_order WHERE record_kind = 'session_recovery'")
+        timestamp = "2026-09-05T06:00:00Z"
+        store.record_recovery(
+            self.source_commit,
+            "passed",
+            fresh_session=True,
+            recovery_id="FRESH_SESSION_A",
+            recovered_at=timestamp,
+        )
+        store.record_recovery(
+            self.source_commit,
+            "failed",
+            fresh_session=True,
+            recovery_id="FRESH_SESSION_Z",
+            recovered_at=timestamp,
+        )
+        downgrade_synthetic_ledger_to_v1(store)
+        document = build_readiness_document(self.source, state_root=store.state_root)
+        self.assertEqual(document["recovery"]["fresh_session"], "NOT_VERIFIED")
+        prerequisites = {item["code"]: item["status"] for item in document["prerequisites"]}
+        self.assertEqual(prerequisites["FRESH_SESSION_RECOVERY"], "NEEDS_RUNWAY")
 
 
 if __name__ == "__main__":

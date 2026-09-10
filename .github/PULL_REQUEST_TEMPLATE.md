@@ -1,10 +1,10 @@
 # <INITIATIVE-ID>: <Imperative Summary>
 
-## Initiative authority
+## Initiative and execution authority
 
-- Initiative Brief Issue:
-- Detailed Work Order:
-- Authorized objective:
+- Initiative Brief Issue (approved objective and boundaries):
+- Operative Work Order (canonical current execution authority):
+- Work Order objective:
 - Explicit exclusions / stop conditions:
 
 ## Final implementation evidence
@@ -14,7 +14,7 @@
 - Required CI on that exact commit:
 - Development Readiness Mailbox location and refresh baseline:
 - Safe local recovery/preservation summary:
-- Material deviation from the Initiative Brief or Work Order: None / describe
+- Material deviation from the Work Order or approved Initiative Brief boundaries: None / describe
 
 ## Active candidate mailbox
 
@@ -33,15 +33,15 @@
 ## Final-version posture
 
 - [ ] The stated commit is the complete final substantive version and required CI applies to that exact commit.
-- [ ] Scope and exclusions remain unchanged from the Initiative Brief and Work Order.
+- [ ] Scope and exclusions remain within the operative Work Order and approved Initiative Brief boundaries.
 - [ ] The mailbox was generated through the allowlisted publisher, validated, and not hand-edited or replaced by a free-form readiness summary.
 - [ ] No substantive change has occurred after any exact-version acceptance recorded below.
 
-- Review path: Consequential exact-final-version acceptance / Pre-authorized reversible merge after CI / Stop at PR
+- Review path: Consequential exact-final-version acceptance / Reversible merge pre-authorized by the operative Work Order or designated authoritative mechanism / Stop at PR
 - Exact-version reviewer (when required):
 - Review disposition and reviewed commit (when available):
-- Merge posture: Not authorized / Authorized by Initiative / Awaiting exact-version decision
+- Merge posture: Not authorized / Pre-authorized by operative Work Order or designated authoritative mechanism / Awaiting exact-version decision
 
 ## Governance notice
 
-Passing CI, a readiness-mailbox refresh, a Result/Review Record, or this PR does not itself create a consequential model/product decision or authorize a merge outside the Initiative Brief and Work Order. Any substantive change after exact-version review or acceptance invalidates that evidence or decision as applicable. Do not create an acceptance-record-only commit or duplicate CI solely for acceptance metadata.
+Passing CI, a readiness-mailbox refresh, a Result/Review Record, or this PR does not itself create a consequential model/product decision or authorize a merge. Merge authority must come from the operative Work Order or another explicitly designated authoritative decision mechanism. Any substantive change after exact-version review or acceptance invalidates that evidence or decision as applicable. Do not create an acceptance-record-only commit or duplicate CI solely for acceptance metadata.

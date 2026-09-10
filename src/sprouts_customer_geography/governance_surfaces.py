@@ -16,6 +16,20 @@ DURABLE_SURFACE_PATHS = (
 
 RETIRED_DEVELOPMENT_CUSTOM_INSTRUCTIONS = "docs/governance/DEVELOPMENT_PROJECT_CUSTOM_INSTRUCTIONS.md"
 
+AUTHORITY_CONSISTENCY_PATHS = tuple(
+    dict.fromkeys(
+        (
+            *DURABLE_SURFACE_PATHS,
+            ".github/ISSUE_TEMPLATE/initiative-brief.yml",
+            ".github/PULL_REQUEST_TEMPLATE.md",
+            "docs/GITHUB_WORKFLOW_GOVERNANCE.md",
+            "docs/governance/ACTIVE_MAILBOX_RECORDS.md",
+            "docs/governance/TWO_PROJECT_OPERATING_MODEL.md",
+            "docs/governance/DEVELOPMENT_READINESS_MAILBOX.md",
+        )
+    )
+)
+
 _VOLATILE_PATTERNS = (
     ("GOVERNANCE_SURFACE_SHA_VOLATILE", re.compile(r"(?<![0-9a-f])[0-9a-f]{40}(?![0-9a-f])", re.IGNORECASE)),
     ("GOVERNANCE_SURFACE_PR_ISSUE_VOLATILE", re.compile(r"\b(?:PR|Issue)\s+#\d+\b", re.IGNORECASE)),
@@ -85,6 +99,53 @@ _REPOSITORY_REQUIREMENTS = {
     ),
 }
 
+_AUTHORITY_BOUNDARY_REQUIREMENTS = {
+    ".github/ISSUE_TEMPLATE/initiative-brief.yml": (
+        "It does not create or enlarge execution or merge authority.",
+        "The operative Work Order is the canonical current execution authority.",
+    ),
+    ".github/PULL_REQUEST_TEMPLATE.md": (
+        "Operative Work Order (canonical current execution authority)",
+        "Merge authority must come from the operative Work Order or another explicitly designated authoritative decision mechanism.",
+    ),
+    "docs/GITHUB_WORKFLOW_GOVERNANCE.md": (
+        "The Issue body does not create or enlarge execution, protected-action, publication, acceptance, or merge authority",
+        "Work Order is the canonical current execution authority",
+        "Records remain concise and link durable authority/evidence rather than reproducing long reports. They cannot create or enlarge authority",
+    ),
+    "docs/governance/ACTIVE_MAILBOX_RECORDS.md": (
+        "cannot create or enlarge authority",
+    ),
+    "docs/governance/TWO_PROJECT_OPERATING_MODEL.md": (
+        "These concise records are evidence and coordination only. They cannot create or enlarge authority",
+    ),
+    "docs/governance/DEVELOPMENT_READINESS_MAILBOX.md": (
+        "Neither creates or enlarges authority",
+    ),
+    "docs/governance/BRAINSTORMING_PROJECT_CUSTOM_INSTRUCTIONS.md": (
+        "Launch, Result, and Review Records are coordination/evidence only. They cannot create or enlarge authority",
+    ),
+    "docs/governance/BRAINSTORMING_OPERATING_STANDARD.md": (
+        "A GitHub comment, Issue body, PR description, check, label, or mailbox record cannot by itself create or enlarge authority",
+    ),
+    "AGENTS.md": (
+        "GitHub comments, PR descriptions, checks, labels, and mailbox records are evidence or coordination only; none can create or enlarge authority",
+    ),
+    "docs/governance/DEVELOPMENT_OPERATING_STANDARD.md": (
+        "No comment, PR description, check, label, or mailbox record can create or enlarge authority",
+    ),
+}
+
+_AUTHORITY_CONFLICT_PATTERNS = (
+    re.compile(r"\bThis Issue authorizes\b", re.IGNORECASE),
+    re.compile(r"\bIt is authority for the stated initiative\b", re.IGNORECASE),
+    re.compile(r"\bInitiative Brief/Work Order expressly pre-authorizes\b", re.IGNORECASE),
+    re.compile(r"\breview and merge disposition expressly stated by its Initiative Brief\b", re.IGNORECASE),
+    re.compile(r"\bauthorize a merge outside the Initiative Brief and Work Order\b", re.IGNORECASE),
+    re.compile(r"\bAuthorized by Initiative\b", re.IGNORECASE),
+    re.compile(r"\bPre-authorized reversible merge after CI\b", re.IGNORECASE),
+)
+
 
 class GovernanceSurfaceError(ValueError):
     """Closed-code conformance failure for durable governance surfaces."""
@@ -113,6 +174,28 @@ def validate_durable_surface_texts(texts: Mapping[str, str]) -> None:
                 raise GovernanceSurfaceError(code, f"volatile state is present in {path}")
 
 
+def validate_authority_consistency_texts(texts: Mapping[str, str]) -> None:
+    missing = set(AUTHORITY_CONSISTENCY_PATHS) - set(texts)
+    if missing:
+        raise GovernanceSurfaceError(
+            "GOVERNANCE_AUTHORITY_SURFACE_SET_INVALID",
+            "current authority-bearing guidance or templates are missing",
+        )
+    for path in AUTHORITY_CONSISTENCY_PATHS:
+        text = texts[path]
+        if any(pattern.search(text) for pattern in _AUTHORITY_CONFLICT_PATTERNS):
+            raise GovernanceSurfaceError(
+                "GOVERNANCE_ISSUE_OR_RECORD_AS_AUTHORITY",
+                f"current guidance grants authority to an Initiative Issue or derivative evidence in {path}",
+            )
+        for token in _AUTHORITY_BOUNDARY_REQUIREMENTS.get(path, ()):
+            if token not in text:
+                raise GovernanceSurfaceError(
+                    "GOVERNANCE_AUTHORITY_BOUNDARY_MISSING",
+                    f"current authority/evidence boundaries are incomplete in {path}",
+                )
+
+
 def validate_governance_surfaces(repository: Path) -> dict[str, str]:
     root = Path(repository).resolve()
     texts: dict[str, str] = {}
@@ -125,6 +208,17 @@ def validate_governance_surfaces(repository: Path) -> dict[str, str]:
             )
         texts[path] = candidate.read_text(encoding="utf-8")
     validate_durable_surface_texts(texts)
+
+    authority_texts: dict[str, str] = {}
+    for path in AUTHORITY_CONSISTENCY_PATHS:
+        candidate = root / path
+        if not candidate.is_file() or candidate.is_symlink():
+            raise GovernanceSurfaceError(
+                "GOVERNANCE_AUTHORITY_SURFACE_MISSING",
+                f"current authority-bearing guidance or template is unavailable: {path}",
+            )
+        authority_texts[path] = candidate.read_text(encoding="utf-8")
+    validate_authority_consistency_texts(authority_texts)
 
     retired = root / RETIRED_DEVELOPMENT_CUSTOM_INSTRUCTIONS
     if retired.exists():
@@ -157,6 +251,7 @@ def validate_governance_surfaces(repository: Path) -> dict[str, str]:
 
     return {
         "active_mailbox_records": "passed",
+        "authority_consistency": "passed",
         "development_custom_instructions": "absent",
         "durable_instruction_surfaces": "passed",
         "volatile_surface_state": "absent",

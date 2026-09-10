@@ -7,7 +7,8 @@ body:
     attributes:
       value: |
         Brainstorming creates one concise Initiative Brief after reading current GitHub and the Development Readiness Mailbox and preparing the complete runway with Ray.
-        This Issue authorizes only its stated repository-safe objective. It is not a synchronized status cockpit and does not itself disclose protected-local state.
+        This Issue records the approved repository-safe objective, boundaries, prerequisites, and Work Order pointer. It does not create or enlarge execution or merge authority. The operative Work Order is the canonical current execution authority.
+        It is not a synchronized status cockpit and does not itself disclose protected-local state.
         Before a PR exists, this Issue may carry concise Launch/Result/Review chronology. Once a PR exists, write new candidate chronology only to the PR conversation; do not mirror it here.
         Never include protected paths or revealing filenames, addresses, coordinates, row identities, target values, registry contents, credentials, revealing hashes, or reconstructable protected lineage.
 
@@ -47,7 +48,7 @@ body:
     id: permitted_evidence
     attributes:
       label: Permitted evidence and access
-      description: State bounded evidence/access authority using safe logical references only. Do not include protected paths or contents.
+      description: Summarize the bounded evidence/access permitted by the operative Work Order using safe logical references only. Do not include protected paths or contents.
     validations:
       required: true
 
@@ -55,7 +56,7 @@ body:
     id: scope
     attributes:
       label: Scope
-      description: State what Development is authorized to implement.
+      description: Summarize the implementation scope supplied by the operative Work Order.
     validations:
       required: true
 
@@ -87,7 +88,7 @@ body:
     id: work_order
     attributes:
       label: Detailed Work Order
-      description: Repository path to the self-contained Development authorization.
+      description: Repository path to the self-contained canonical current execution authority.
       placeholder: docs/work_orders/GOV_16_EXAMPLE.md
     validations:
       required: true
@@ -104,7 +105,7 @@ body:
     id: return_point
     attributes:
       label: Development return point
-      description: State the authorized PR/CI/merge stop point and required mailbox refresh.
+      description: Summarize the operative Work Order's PR/CI/merge stop point and required mailbox refresh.
     validations:
       required: true
 

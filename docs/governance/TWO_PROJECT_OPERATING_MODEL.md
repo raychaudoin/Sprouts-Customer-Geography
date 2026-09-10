@@ -2,7 +2,7 @@
 
 ## Outcome
 
-Sprouts Customer Geography separates decision/runway preparation from repository-connected implementation while keeping Ray as the business decision-maker. GitHub carries repository-safe authority and evidence between Brainstorming and Development.
+Sprouts Customer Geography separates decision/runway preparation from repository-connected implementation while keeping Ray as the business decision-maker. GitHub carries repository-safe durable authority artifacts and evidence between Brainstorming and Development.
 
 ```text
 Ray + Brainstorming

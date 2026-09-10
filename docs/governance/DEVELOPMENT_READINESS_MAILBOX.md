@@ -70,7 +70,7 @@ The profile has a fixed project identity and points to the colocated versioned S
 
 Original protected sources remain immutable. Registered assets resolve only by stable logical ID and an exact relative location beneath an authorized root. Absolute asset paths, traversal, outside-root resolution, and unresolved `ready` registrations fail closed. Discovery must never recursively scan arbitrary JSON, spreadsheets, directories, or outputs.
 
-`READY` for original-source inventory or evidence-ledger completeness requires an explicit durable completeness posture as well as valid registered rows. Mere non-emptiness never promotes a partial inventory to ready. Existing ledger versions and table shapes are verified as-is; initialization never relabels or repairs an unknown schema without an authorized migration.
+`READY` for original-source inventory or evidence-ledger completeness requires an explicit durable completeness posture as well as valid registered rows. Mere non-emptiness never promotes a partial inventory to ready. Ledger schema version 2 adds a durable monotonic write ordinal for evidence events and session recoveries. The authorized version-1-to-version-2 migration is transactional, preserves every historical row and recorded field, and leaves legacy rows unordered rather than inventing chronology. Unknown versions and unexpected table shapes still fail closed without relabeling or repair.
 
 ## One-time trusted bootstrap and normal recovery
 
@@ -112,6 +112,8 @@ The ledger recognizes independent event types:
 - `disclosed`.
 
 Each event records `true`, `false`, or `uncertain` plus a bounded detail code. Recording one event never auto-creates another. In particular, machine decoding alone does not imply human/model visibility, analytical use, validation use, development use, or disclosure. Model-to-evidence membership is explicit and queryable by logical model and evidence-unit IDs.
+
+New evidence-event and session-recovery writes receive an immutable durable write ordinal in the same transaction as the record. For equal semantic timestamps, the later ordinal wins; logical IDs never decide recency. Migrated version-1 rows keep a null ordinal because their original write order was not durably recorded. If the latest legacy timestamp contains conflicting states, evidence resolves to `uncertain` and fresh-session recovery resolves to `NOT_VERIFIED` until a later unambiguous record exists. Agreeing legacy ties may return their shared state.
 
 ## Refresh and publish procedure
 

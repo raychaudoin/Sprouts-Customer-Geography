@@ -8,6 +8,7 @@ import stat
 import sys
 import tempfile
 import unittest
+from contextlib import closing
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,12 +20,14 @@ from sprouts_customer_geography.pipe01.errors import ConformanceError
 from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tracked_paths
 from sprouts_customer_geography.readiness.repository import probe_repository
 from sprouts_customer_geography.readiness.store import (
+    LEDGER_SCHEMA_VERSION,
     bootstrap_from_app01_settings,
     default_state_root,
     initialize_project_state,
     migrate_model15_parser_incident,
     recover_project_state,
 )
+from tests.readiness_legacy import downgrade_synthetic_ledger_to_v1
 
 
 class ReadinessStoreTests(unittest.TestCase):
@@ -162,12 +165,12 @@ class ReadinessStoreTests(unittest.TestCase):
         with self.assertRaisesRegex(ConformanceError, "PROJECT_STATE_SOURCE_IMMUTABILITY_REQUIRED"):
             store.register_source("MUTABLE_SOURCE", "MUTABLE_SOURCE_ASSET", "VINTAGE_2026", "SYNTHETIC_MEASURE", "ready")
 
-    def test_11_existing_ledger_version_and_shape_are_never_rewritten(self):
+    def test_11_unknown_ledger_version_and_shape_are_never_rewritten(self):
         store = initialize_project_state(self.state_root, repository_root=self.repository_root)
         connection = sqlite3.connect(store.ledger_path)
         try:
-            connection.execute("UPDATE metadata SET value = '2' WHERE key = 'schema_version'")
-            connection.execute("PRAGMA user_version = 2")
+            connection.execute("UPDATE metadata SET value = '99' WHERE key = 'schema_version'")
+            connection.execute("PRAGMA user_version = 99")
             connection.commit()
         finally:
             connection.close()
@@ -175,8 +178,8 @@ class ReadinessStoreTests(unittest.TestCase):
             initialize_project_state(self.state_root, repository_root=self.repository_root)
         connection = sqlite3.connect(store.ledger_path)
         try:
-            self.assertEqual(connection.execute("SELECT value FROM metadata WHERE key = 'schema_version'").fetchone()[0], "2")
-            self.assertEqual(connection.execute("PRAGMA user_version").fetchone()[0], 2)
+            self.assertEqual(connection.execute("SELECT value FROM metadata WHERE key = 'schema_version'").fetchone()[0], "99")
+            self.assertEqual(connection.execute("PRAGMA user_version").fetchone()[0], 99)
         finally:
             connection.close()
 
@@ -297,6 +300,202 @@ class ReadinessStoreTests(unittest.TestCase):
         self.assertEqual(marker.read_text(encoding="utf-8"), "synthetic unrelated content")
         self.assertFalse((override / "scg_project_profile.json").exists())
         self.assertFalse((override / "evidence.sqlite3").exists())
+
+    def test_21_same_second_new_writes_use_durable_chronology_not_ids(self):
+        store = initialize_project_state(self.state_root, repository_root=self.repository_root)
+        timestamp = "2026-09-05T06:00:00Z"
+        store.record_event(
+            "EVIDENCE_UNIT", "TRUE_WINS", "development_used", "false", "SYNTHETIC_TEST",
+            event_id="EVENT_Z_FIRST", occurred_at=timestamp,
+        )
+        store.record_event(
+            "EVIDENCE_UNIT", "TRUE_WINS", "development_used", "true", "SYNTHETIC_TEST",
+            event_id="EVENT_A_SECOND", occurred_at=timestamp,
+        )
+        store.record_event(
+            "EVIDENCE_UNIT", "FALSE_WINS", "development_used", "true", "SYNTHETIC_TEST",
+            event_id="EVENT_A_FIRST", occurred_at=timestamp,
+        )
+        store.record_event(
+            "EVIDENCE_UNIT", "FALSE_WINS", "development_used", "false", "SYNTHETIC_TEST",
+            event_id="EVENT_Z_SECOND", occurred_at=timestamp,
+        )
+        self.assertEqual(store.event_states("TRUE_WINS")["development_used"], "true")
+        self.assertEqual(store.event_states("FALSE_WINS")["development_used"], "false")
+
+        passed_commit = "a" * 40
+        failed_commit = "b" * 40
+        store.record_recovery(
+            passed_commit, "failed", fresh_session=True,
+            recovery_id="FRESH_SESSION_Z_FIRST", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            passed_commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_A_SECOND", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            failed_commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_A_FIRST", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            failed_commit, "failed", fresh_session=True,
+            recovery_id="FRESH_SESSION_Z_SECOND", recovered_at=timestamp,
+        )
+        self.assertEqual(store.fresh_session_recovery_status(passed_commit), "passed")
+        self.assertEqual(store.fresh_session_recovery_status(failed_commit), "failed")
+
+    def test_22_v1_migration_preserves_history_and_fails_closed_on_legacy_ties(self):
+        store = initialize_project_state(self.state_root, repository_root=self.repository_root)
+        timestamp = "2026-09-05T06:00:00Z"
+        store.record_event(
+            "EVIDENCE_UNIT", "AMBIGUOUS_EVENT", "development_used", "true", "SYNTHETIC_TRUE",
+            event_id="EVENT_A", occurred_at=timestamp,
+        )
+        store.record_event(
+            "EVIDENCE_UNIT", "AMBIGUOUS_EVENT", "development_used", "false", "SYNTHETIC_FALSE",
+            event_id="EVENT_Z", occurred_at=timestamp,
+        )
+        store.record_event(
+            "EVIDENCE_UNIT", "AGREEING_EVENT", "development_used", "false", "SYNTHETIC_FALSE",
+            event_id="EVENT_SHARED_A", occurred_at=timestamp,
+        )
+        store.record_event(
+            "EVIDENCE_UNIT", "AGREEING_EVENT", "development_used", "false", "SYNTHETIC_FALSE",
+            event_id="EVENT_SHARED_Z", occurred_at=timestamp,
+        )
+        ambiguous_commit = "c" * 40
+        agreeing_commit = "d" * 40
+        store.record_recovery(
+            ambiguous_commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_A", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            ambiguous_commit, "failed", fresh_session=True,
+            recovery_id="FRESH_SESSION_Z", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            agreeing_commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_SHARED_A", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            agreeing_commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_SHARED_Z", recovered_at=timestamp,
+        )
+        with closing(sqlite3.connect(store.ledger_path)) as connection:
+            original_events = connection.execute(
+                """SELECT event_id, subject_kind, subject_id, event_type,
+                          event_state, occurred_at, detail_code
+                   FROM evidence_events ORDER BY event_id"""
+            ).fetchall()
+            original_recoveries = connection.execute(
+                """SELECT recovery_id, recovered_at, repository_commit, status
+                   FROM session_recoveries ORDER BY recovery_id"""
+            ).fetchall()
+
+        downgrade_synthetic_ledger_to_v1(store)
+        migrated = recover_project_state(self.state_root, repository_root=self.repository_root)
+        with closing(sqlite3.connect(migrated.ledger_path)) as connection:
+            self.assertEqual(
+                connection.execute("SELECT value FROM metadata WHERE key = 'schema_version'").fetchone()[0],
+                str(LEDGER_SCHEMA_VERSION),
+            )
+            self.assertEqual(connection.execute("PRAGMA user_version").fetchone()[0], LEDGER_SCHEMA_VERSION)
+            self.assertEqual(
+                connection.execute(
+                    """SELECT event_id, subject_kind, subject_id, event_type,
+                              event_state, occurred_at, detail_code
+                       FROM evidence_events ORDER BY event_id"""
+                ).fetchall(),
+                original_events,
+            )
+            self.assertEqual(
+                connection.execute(
+                    """SELECT recovery_id, recovered_at, repository_commit, status
+                       FROM session_recoveries ORDER BY recovery_id"""
+                ).fetchall(),
+                original_recoveries,
+            )
+            self.assertEqual(connection.execute("SELECT COUNT(*) FROM ledger_write_order").fetchone()[0], 0)
+            self.assertEqual(connection.execute("SELECT COUNT(*) FROM evidence_events WHERE write_ordinal IS NOT NULL").fetchone()[0], 0)
+            self.assertEqual(connection.execute("SELECT COUNT(*) FROM session_recoveries WHERE write_ordinal IS NOT NULL").fetchone()[0], 0)
+        self.assertEqual(migrated.event_states("AMBIGUOUS_EVENT")["development_used"], "uncertain")
+        self.assertEqual(migrated.event_states("AGREEING_EVENT")["development_used"], "false")
+        self.assertIsNone(migrated.fresh_session_recovery_status(ambiguous_commit))
+        self.assertEqual(migrated.fresh_session_recovery_status(agreeing_commit), "passed")
+
+    def test_23_post_migration_write_supersedes_ambiguous_legacy_tie(self):
+        store = initialize_project_state(self.state_root, repository_root=self.repository_root)
+        timestamp = "2026-09-05T06:00:00Z"
+        for event_id, state in (("EVENT_A", "true"), ("EVENT_Z", "false")):
+            store.record_event(
+                "EVIDENCE_UNIT", "AMBIGUOUS_EVENT", "development_used", state, "SYNTHETIC_TEST",
+                event_id=event_id, occurred_at=timestamp,
+            )
+        commit = "e" * 40
+        store.record_recovery(
+            commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_A", recovered_at=timestamp,
+        )
+        store.record_recovery(
+            commit, "failed", fresh_session=True,
+            recovery_id="FRESH_SESSION_Z", recovered_at=timestamp,
+        )
+        downgrade_synthetic_ledger_to_v1(store)
+        migrated = recover_project_state(self.state_root, repository_root=self.repository_root)
+        self.assertEqual(migrated.event_states("AMBIGUOUS_EVENT")["development_used"], "uncertain")
+        self.assertIsNone(migrated.fresh_session_recovery_status(commit))
+
+        migrated.record_event(
+            "EVIDENCE_UNIT", "AMBIGUOUS_EVENT", "development_used", "true", "SYNTHETIC_LATER",
+            event_id="EVENT_LATER", occurred_at=timestamp,
+        )
+        migrated.record_recovery(
+            commit, "passed", fresh_session=True,
+            recovery_id="FRESH_SESSION_LATER", recovered_at=timestamp,
+        )
+        self.assertEqual(migrated.event_states("AMBIGUOUS_EVENT")["development_used"], "true")
+        self.assertEqual(migrated.fresh_session_recovery_status(commit), "passed")
+
+    def test_24_v2_requires_immutable_durable_order_and_v1_shape_fails_closed(self):
+        store = initialize_project_state(self.state_root, repository_root=self.repository_root)
+        with closing(sqlite3.connect(store.ledger_path)) as connection:
+            with self.assertRaises(sqlite3.IntegrityError):
+                connection.execute(
+                    """INSERT INTO evidence_events(
+                           event_id, subject_kind, subject_id, event_type,
+                           event_state, occurred_at, detail_code
+                       ) VALUES ('EVENT_DIRECT', 'EVIDENCE_UNIT', 'DIRECT',
+                                 'development_used', 'false',
+                                 '2026-09-05T06:00:00Z', 'SYNTHETIC_TEST')"""
+                )
+        store.record_event(
+            "EVIDENCE_UNIT", "ORDERED", "development_used", "false", "SYNTHETIC_TEST",
+            event_id="EVENT_ORDERED", occurred_at="2026-09-05T06:00:00Z",
+        )
+        with closing(sqlite3.connect(store.ledger_path)) as connection:
+            ordinal = connection.execute(
+                "SELECT write_ordinal FROM evidence_events WHERE event_id = 'EVENT_ORDERED'"
+            ).fetchone()[0]
+            with self.assertRaises(sqlite3.IntegrityError):
+                connection.execute(
+                    "UPDATE evidence_events SET write_ordinal = ? WHERE event_id = 'EVENT_ORDERED'",
+                    (ordinal + 1,),
+                )
+
+        downgrade_synthetic_ledger_to_v1(store)
+        with closing(sqlite3.connect(store.ledger_path)) as connection:
+            connection.execute("ALTER TABLE evidence_events DROP COLUMN detail_code")
+            connection.commit()
+        with self.assertRaisesRegex(ConformanceError, "PROJECT_STATE_LEDGER_SCHEMA_INVALID"):
+            recover_project_state(self.state_root, repository_root=self.repository_root)
+        with closing(sqlite3.connect(store.ledger_path)) as connection:
+            self.assertEqual(connection.execute("PRAGMA user_version").fetchone()[0], 1)
+            self.assertEqual(connection.execute("SELECT value FROM metadata WHERE key = 'schema_version'").fetchone()[0], "1")
+            self.assertIsNone(
+                connection.execute(
+                    "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'ledger_write_order'"
+                ).fetchone()
+            )
 
 
 if __name__ == "__main__":

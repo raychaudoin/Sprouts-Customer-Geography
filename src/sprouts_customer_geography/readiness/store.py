@@ -22,7 +22,8 @@ from sprouts_customer_geography.pipe01.errors import ConformanceError, require
 
 
 PROFILE_VERSION = "1.0.0"
-LEDGER_SCHEMA_VERSION = 1
+LEDGER_SCHEMA_VERSION = 2
+LEGACY_LEDGER_SCHEMA_VERSION = 1
 PROJECT_ID = "sprouts-customer-geography"
 PROFILE_FILENAME = "scg_project_profile.json"
 LEDGER_FILENAME = "evidence.sqlite3"
@@ -192,6 +193,12 @@ CREATE TABLE IF NOT EXISTS metadata (
     value TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS ledger_write_order (
+    write_ordinal INTEGER PRIMARY KEY AUTOINCREMENT,
+    record_kind TEXT NOT NULL CHECK (record_kind IN ('evidence_event', 'session_recovery')),
+    logical_id TEXT NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS protected_roots (
     root_id TEXT PRIMARY KEY,
     absolute_path TEXT NOT NULL,
@@ -252,7 +259,8 @@ CREATE TABLE IF NOT EXISTS evidence_events (
     event_type TEXT NOT NULL CHECK (event_type IN ('asset_located', 'identity_read', 'machine_target_read', 'visible', 'analytically_used', 'validation_used', 'development_used', 'disclosed')),
     event_state TEXT NOT NULL CHECK (event_state IN ('true', 'false', 'uncertain')),
     occurred_at TEXT NOT NULL,
-    detail_code TEXT NOT NULL
+    detail_code TEXT NOT NULL,
+    write_ordinal INTEGER REFERENCES ledger_write_order(write_ordinal)
 );
 
 CREATE TABLE IF NOT EXISTS model_candidates (
@@ -303,26 +311,79 @@ CREATE TABLE IF NOT EXISTS session_recoveries (
     recovery_id TEXT PRIMARY KEY,
     recovered_at TEXT NOT NULL,
     repository_commit TEXT NOT NULL,
-    status TEXT NOT NULL CHECK (status IN ('passed', 'failed'))
+    status TEXT NOT NULL CHECK (status IN ('passed', 'failed')),
+    write_ordinal INTEGER REFERENCES ledger_write_order(write_ordinal)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS evidence_events_write_ordinal_unique
+    ON evidence_events(write_ordinal) WHERE write_ordinal IS NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS session_recoveries_write_ordinal_unique
+    ON session_recoveries(write_ordinal) WHERE write_ordinal IS NOT NULL;
+
+CREATE TRIGGER IF NOT EXISTS evidence_events_write_ordinal_required
+BEFORE INSERT ON evidence_events
+WHEN NEW.write_ordinal IS NULL
+BEGIN
+    SELECT RAISE(ABORT, 'evidence event write ordinal is required');
+END;
+
+CREATE TRIGGER IF NOT EXISTS evidence_events_write_ordinal_immutable
+BEFORE UPDATE OF write_ordinal ON evidence_events
+WHEN NEW.write_ordinal IS NOT OLD.write_ordinal
+BEGIN
+    SELECT RAISE(ABORT, 'evidence event write ordinal is immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS session_recoveries_write_ordinal_required
+BEFORE INSERT ON session_recoveries
+WHEN NEW.write_ordinal IS NULL
+BEGIN
+    SELECT RAISE(ABORT, 'session recovery write ordinal is required');
+END;
+
+CREATE TRIGGER IF NOT EXISTS session_recoveries_write_ordinal_immutable
+BEFORE UPDATE OF write_ordinal ON session_recoveries
+WHEN NEW.write_ordinal IS NOT OLD.write_ordinal
+BEGIN
+    SELECT RAISE(ABORT, 'session recovery write ordinal is immutable');
+END;
 """
 
 REQUIRED_TABLE_COLUMNS = {
     "metadata": {"key", "value"},
+    "ledger_write_order": {"write_ordinal", "record_kind", "logical_id"},
     "protected_roots": {"root_id", "absolute_path", "status", "registered_at", "updated_at"},
     "assets": {"asset_id", "root_id", "relative_path", "asset_kind", "status", "immutable_original", "registered_at", "updated_at"},
     "source_inventory": {"source_id", "asset_id", "forecast_vintage", "target_definition", "status", "registered_at"},
     "physical_locations": {"location_id", "reconciliation_status", "registered_at"},
     "evidence_units": {"evidence_unit_id", "physical_location_id", "forecast_vintage", "target_definition", "status", "registered_at"},
     "source_row_aliases": {"alias_id", "evidence_unit_id", "source_id", "source_row_reference", "revision_parent_alias_id", "registered_at"},
-    "evidence_events": {"event_id", "subject_kind", "subject_id", "event_type", "event_state", "occurred_at", "detail_code"},
+    "evidence_events": {"event_id", "subject_kind", "subject_id", "event_type", "event_state", "occurred_at", "detail_code", "write_ordinal"},
     "model_candidates": {"model_id", "parent_model_id", "status", "registered_at"},
     "model_evidence_membership": {"model_id", "evidence_unit_id", "usage_role", "registered_at"},
     "protected_artifacts": {"artifact_id", "asset_id", "artifact_kind", "status", "registered_at"},
     "incidents": {"incident_id", "incident_kind", "status", "summary_code", "recorded_at"},
     "backup_state": {"backup_id", "status", "verified_at"},
     "preservation_state": {"initiative_id", "status", "reference_commit", "verified_at"},
-    "session_recoveries": {"recovery_id", "recovered_at", "repository_commit", "status"},
+    "session_recoveries": {"recovery_id", "recovered_at", "repository_commit", "status", "write_ordinal"},
+}
+
+LEGACY_REQUIRED_TABLE_COLUMNS = {
+    table: columns - ({"write_ordinal"} if table in {"evidence_events", "session_recoveries"} else set())
+    for table, columns in REQUIRED_TABLE_COLUMNS.items()
+    if table != "ledger_write_order"
+}
+
+REQUIRED_LEDGER_INDEXES = {
+    "evidence_events_write_ordinal_unique",
+    "session_recoveries_write_ordinal_unique",
+}
+
+REQUIRED_LEDGER_TRIGGERS = {
+    "evidence_events_write_ordinal_required",
+    "evidence_events_write_ordinal_immutable",
+    "session_recoveries_write_ordinal_required",
+    "session_recoveries_write_ordinal_immutable",
 }
 
 
@@ -334,6 +395,165 @@ class _ClosingConnection(sqlite3.Connection):
             return bool(super().__exit__(exc_type, exc_value, traceback))
         finally:
             self.close()
+
+
+def _ledger_schema_version(connection: sqlite3.Connection) -> int:
+    version = connection.execute("SELECT value FROM metadata WHERE key = 'schema_version'").fetchone()
+    user_version = connection.execute("PRAGMA user_version").fetchone()
+    require(
+        version is not None
+        and user_version is not None
+        and str(version[0]).isdigit()
+        and int(version[0]) == int(user_version[0]),
+        "PROJECT_STATE_LEDGER_VERSION_MISMATCH",
+        "the protected-local evidence ledger version differs",
+    )
+    return int(version[0])
+
+
+def _require_ledger_structure(
+    connection: sqlite3.Connection,
+    required_columns: Mapping[str, set[str]],
+    *,
+    require_chronology_controls: bool,
+) -> None:
+    integrity = connection.execute("PRAGMA integrity_check").fetchone()
+    foreign_key_violations = connection.execute("PRAGMA foreign_key_check").fetchall()
+    tables = {
+        row[0]
+        for row in connection.execute("SELECT name FROM sqlite_master WHERE type = 'table'").fetchall()
+        if not row[0].startswith("sqlite_")
+    }
+    column_sets = {
+        table: {row[1] for row in connection.execute(f'PRAGMA table_info("{table}")').fetchall()}
+        for table in required_columns
+        if table in tables
+    }
+    require(integrity is not None and integrity[0] == "ok", "PROJECT_STATE_LEDGER_INVALID", "the protected-local evidence ledger integrity check failed")
+    require(not foreign_key_violations, "PROJECT_STATE_LEDGER_FOREIGN_KEY_INVALID", "the protected-local evidence ledger contains broken references")
+    require(set(required_columns) <= tables, "PROJECT_STATE_LEDGER_SCHEMA_INVALID", "the protected-local evidence ledger schema is incomplete")
+    require(
+        all(column_sets.get(table) == columns for table, columns in required_columns.items()),
+        "PROJECT_STATE_LEDGER_SCHEMA_INVALID",
+        "the protected-local evidence ledger schema differs",
+    )
+    if not require_chronology_controls:
+        return
+    indexes = {
+        row[0]
+        for row in connection.execute("SELECT name FROM sqlite_master WHERE type = 'index'").fetchall()
+    }
+    triggers = {
+        row[0]
+        for row in connection.execute("SELECT name FROM sqlite_master WHERE type = 'trigger'").fetchall()
+    }
+    require(REQUIRED_LEDGER_INDEXES <= indexes, "PROJECT_STATE_LEDGER_SCHEMA_INVALID", "the protected-local evidence ledger chronology indexes are incomplete")
+    require(REQUIRED_LEDGER_TRIGGERS <= triggers, "PROJECT_STATE_LEDGER_SCHEMA_INVALID", "the protected-local evidence ledger chronology controls are incomplete")
+    invalid_chronology = connection.execute(
+        """SELECT COUNT(*) FROM ledger_write_order AS ordering
+           LEFT JOIN evidence_events AS event ON event.write_ordinal = ordering.write_ordinal
+           LEFT JOIN session_recoveries AS recovery ON recovery.write_ordinal = ordering.write_ordinal
+           WHERE (ordering.record_kind = 'evidence_event' AND
+                  (event.write_ordinal IS NULL OR event.event_id != ordering.logical_id OR recovery.write_ordinal IS NOT NULL))
+              OR (ordering.record_kind = 'session_recovery' AND
+                  (recovery.write_ordinal IS NULL OR recovery.recovery_id != ordering.logical_id OR event.write_ordinal IS NOT NULL))"""
+    ).fetchone()
+    require(
+        invalid_chronology is not None and invalid_chronology[0] == 0,
+        "PROJECT_STATE_LEDGER_CHRONOLOGY_INVALID",
+        "the protected-local evidence ledger chronology is inconsistent",
+    )
+
+
+def _migrate_ledger(ledger_path: Path) -> None:
+    """Transactionally migrate the exact v1 ledger without inventing legacy order."""
+
+    try:
+        with sqlite3.connect(ledger_path, factory=_ClosingConnection) as connection:
+            connection.execute("PRAGMA foreign_keys = ON")
+            connection.execute("BEGIN IMMEDIATE")
+            version = _ledger_schema_version(connection)
+            if version == LEDGER_SCHEMA_VERSION:
+                connection.rollback()
+                return
+            require(
+                version == LEGACY_LEDGER_SCHEMA_VERSION,
+                "PROJECT_STATE_LEDGER_VERSION_MISMATCH",
+                "the protected-local evidence ledger version differs",
+            )
+            _require_ledger_structure(
+                connection,
+                LEGACY_REQUIRED_TABLE_COLUMNS,
+                require_chronology_controls=False,
+            )
+            connection.execute(
+                """CREATE TABLE ledger_write_order (
+                       write_ordinal INTEGER PRIMARY KEY AUTOINCREMENT,
+                       record_kind TEXT NOT NULL CHECK (record_kind IN ('evidence_event', 'session_recovery')),
+                       logical_id TEXT NOT NULL UNIQUE
+                   )"""
+            )
+            connection.execute(
+                "ALTER TABLE evidence_events ADD COLUMN write_ordinal INTEGER REFERENCES ledger_write_order(write_ordinal)"
+            )
+            connection.execute(
+                "ALTER TABLE session_recoveries ADD COLUMN write_ordinal INTEGER REFERENCES ledger_write_order(write_ordinal)"
+            )
+            connection.execute(
+                "CREATE UNIQUE INDEX evidence_events_write_ordinal_unique ON evidence_events(write_ordinal) WHERE write_ordinal IS NOT NULL"
+            )
+            connection.execute(
+                "CREATE UNIQUE INDEX session_recoveries_write_ordinal_unique ON session_recoveries(write_ordinal) WHERE write_ordinal IS NOT NULL"
+            )
+            connection.execute(
+                """CREATE TRIGGER evidence_events_write_ordinal_required
+                   BEFORE INSERT ON evidence_events WHEN NEW.write_ordinal IS NULL
+                   BEGIN SELECT RAISE(ABORT, 'evidence event write ordinal is required'); END"""
+            )
+            connection.execute(
+                """CREATE TRIGGER evidence_events_write_ordinal_immutable
+                   BEFORE UPDATE OF write_ordinal ON evidence_events
+                   WHEN NEW.write_ordinal IS NOT OLD.write_ordinal
+                   BEGIN SELECT RAISE(ABORT, 'evidence event write ordinal is immutable'); END"""
+            )
+            connection.execute(
+                """CREATE TRIGGER session_recoveries_write_ordinal_required
+                   BEFORE INSERT ON session_recoveries WHEN NEW.write_ordinal IS NULL
+                   BEGIN SELECT RAISE(ABORT, 'session recovery write ordinal is required'); END"""
+            )
+            connection.execute(
+                """CREATE TRIGGER session_recoveries_write_ordinal_immutable
+                   BEFORE UPDATE OF write_ordinal ON session_recoveries
+                   WHEN NEW.write_ordinal IS NOT OLD.write_ordinal
+                   BEGIN SELECT RAISE(ABORT, 'session recovery write ordinal is immutable'); END"""
+            )
+            updated = connection.execute(
+                "UPDATE metadata SET value = ? WHERE key = 'schema_version'",
+                (str(LEDGER_SCHEMA_VERSION),),
+            )
+            require(updated.rowcount == 1, "PROJECT_STATE_LEDGER_SCHEMA_INVALID", "the protected-local evidence ledger metadata is incomplete")
+            connection.execute(f"PRAGMA user_version = {LEDGER_SCHEMA_VERSION}")
+            connection.commit()
+    except ConformanceError:
+        raise
+    except sqlite3.Error as exc:
+        raise ConformanceError(
+            "PROJECT_STATE_LEDGER_MIGRATION_FAILED",
+            "the protected-local evidence ledger migration failed closed",
+        ) from exc
+
+
+def _allocate_write_ordinal(
+    connection: sqlite3.Connection,
+    record_kind: str,
+    logical_id: str,
+) -> int:
+    cursor = connection.execute(
+        "INSERT INTO ledger_write_order(record_kind, logical_id) VALUES (?, ?)",
+        (record_kind, logical_id),
+    )
+    require(cursor.lastrowid is not None, "PROJECT_STATE_LEDGER_CHRONOLOGY_INVALID", "the protected-local evidence ledger chronology could not be recorded")
+    return int(cursor.lastrowid)
 
 
 @dataclass(frozen=True)
@@ -359,32 +579,15 @@ class ProjectState:
     def verify(self) -> None:
         try:
             with self._connect() as connection:
-                version = connection.execute("SELECT value FROM metadata WHERE key = 'schema_version'").fetchone()
-                user_version = connection.execute("PRAGMA user_version").fetchone()
-                integrity = connection.execute("PRAGMA integrity_check").fetchone()
-                foreign_key_violations = connection.execute("PRAGMA foreign_key_check").fetchall()
-                tables = {
-                    row[0]
-                    for row in connection.execute("SELECT name FROM sqlite_master WHERE type = 'table'").fetchall()
-                    if not row[0].startswith("sqlite_")
-                }
-                column_sets = {
-                    table: {row[1] for row in connection.execute(f'PRAGMA table_info("{table}")').fetchall()}
-                    for table in REQUIRED_TABLE_COLUMNS
-                    if table in tables
-                }
+                version = _ledger_schema_version(connection)
+                _require_ledger_structure(
+                    connection,
+                    REQUIRED_TABLE_COLUMNS,
+                    require_chronology_controls=True,
+                )
         except sqlite3.Error as exc:
             raise ConformanceError("PROJECT_STATE_LEDGER_INVALID", "the protected-local evidence ledger could not be verified") from exc
-        require(version is not None and version[0] == str(LEDGER_SCHEMA_VERSION), "PROJECT_STATE_LEDGER_VERSION_MISMATCH", "the protected-local evidence ledger version differs")
-        require(user_version is not None and user_version[0] == LEDGER_SCHEMA_VERSION, "PROJECT_STATE_LEDGER_VERSION_MISMATCH", "the protected-local evidence ledger version differs")
-        require(integrity is not None and integrity[0] == "ok", "PROJECT_STATE_LEDGER_INVALID", "the protected-local evidence ledger integrity check failed")
-        require(not foreign_key_violations, "PROJECT_STATE_LEDGER_FOREIGN_KEY_INVALID", "the protected-local evidence ledger contains broken references")
-        require(set(REQUIRED_TABLE_COLUMNS) <= tables, "PROJECT_STATE_LEDGER_SCHEMA_INVALID", "the protected-local evidence ledger schema is incomplete")
-        require(
-            all(column_sets.get(table) == columns for table, columns in REQUIRED_TABLE_COLUMNS.items()),
-            "PROJECT_STATE_LEDGER_SCHEMA_INVALID",
-            "the protected-local evidence ledger schema differs",
-        )
+        require(version == LEDGER_SCHEMA_VERSION, "PROJECT_STATE_LEDGER_VERSION_MISMATCH", "the protected-local evidence ledger version differs")
 
     def set_profile_status(self, status: str) -> None:
         require(status in {"ready", "stale"}, "PROJECT_STATE_PROFILE_STATUS_INVALID", "project-profile status is invalid")
@@ -606,11 +809,31 @@ class ProjectState:
         require(event_state in EVENT_STATES, "PROJECT_STATE_EVENT_STATE_INVALID", "evidence event state is invalid")
         chosen_id = event_id or f"EVENT_{uuid.uuid4().hex.upper()}"
         _safe_id(chosen_id, "PROJECT_STATE_EVENT_ID_INVALID")
-        verb = "INSERT OR IGNORE" if ignore_existing else "INSERT"
         with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            if ignore_existing:
+                existing = connection.execute(
+                    "SELECT 1 FROM evidence_events WHERE event_id = ?",
+                    (chosen_id,),
+                ).fetchone()
+                if existing is not None:
+                    return chosen_id
+            write_ordinal = _allocate_write_ordinal(connection, "evidence_event", chosen_id)
             connection.execute(
-                f"{verb} INTO evidence_events(event_id, subject_kind, subject_id, event_type, event_state, occurred_at, detail_code) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (chosen_id, subject_kind, subject_id, event_type, event_state, occurred_at or utc_now(), detail_code),
+                """INSERT INTO evidence_events(
+                       event_id, subject_kind, subject_id, event_type, event_state,
+                       occurred_at, detail_code, write_ordinal
+                   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                (
+                    chosen_id,
+                    subject_kind,
+                    subject_id,
+                    event_type,
+                    event_state,
+                    occurred_at or utc_now(),
+                    detail_code,
+                    write_ordinal,
+                ),
             )
         return chosen_id
 
@@ -642,8 +865,26 @@ class ProjectState:
     def event_states(self, subject_id: str) -> Mapping[str, str]:
         _safe_id(subject_id, "PROJECT_STATE_SUBJECT_ID_INVALID")
         with self._connect() as connection:
-            rows = connection.execute("SELECT event_type, event_state FROM evidence_events WHERE subject_id = ? ORDER BY occurred_at, event_id", (subject_id,)).fetchall()
-        return {row["event_type"]: row["event_state"] for row in rows}
+            rows = connection.execute(
+                """SELECT event_type, event_state, occurred_at, write_ordinal
+                   FROM evidence_events WHERE subject_id = ?""",
+                (subject_id,),
+            ).fetchall()
+        grouped: dict[str, list[sqlite3.Row]] = {}
+        for row in rows:
+            grouped.setdefault(str(row["event_type"]), []).append(row)
+        states: dict[str, str] = {}
+        for event_type, event_rows in grouped.items():
+            latest_timestamp = max(str(row["occurred_at"]) for row in event_rows)
+            tied = [row for row in event_rows if str(row["occurred_at"]) == latest_timestamp]
+            ordered = [row for row in tied if row["write_ordinal"] is not None]
+            if ordered:
+                latest = max(ordered, key=lambda row: int(row["write_ordinal"]))
+                states[event_type] = str(latest["event_state"])
+                continue
+            legacy_states = {str(row["event_state"]) for row in tied}
+            states[event_type] = next(iter(legacy_states)) if len(legacy_states) == 1 else "uncertain"
+        return states
 
     def set_preservation(self, initiative_id: str, status: str, reference_commit: str | None = None) -> None:
         require(re.fullmatch(r"[A-Z]+-[0-9]{2,4}[A-Z]?", initiative_id) is not None, "PROJECT_STATE_INITIATIVE_ID_INVALID", "preservation state requires a safe initiative identifier")
@@ -696,26 +937,49 @@ class ProjectState:
                 (backup_id, status, utc_now()),
             )
 
-    def record_recovery(self, repository_commit: str, status: str = "passed", *, fresh_session: bool = False) -> None:
+    def record_recovery(
+        self,
+        repository_commit: str,
+        status: str = "passed",
+        *,
+        fresh_session: bool = False,
+        recovery_id: str | None = None,
+        recovered_at: str | None = None,
+    ) -> None:
         require(COMMIT_RE.fullmatch(repository_commit) is not None, "PROJECT_STATE_COMMIT_INVALID", "recovery state requires a full lowercase Git object ID")
         require(status in {"passed", "failed"}, "PROJECT_STATE_RECOVERY_STATUS_INVALID", "session recovery status is invalid")
         prefix = "FRESH_SESSION" if fresh_session else "RECOVERY"
+        chosen_id = recovery_id or f"{prefix}_{uuid.uuid4().hex.upper()}"
+        _safe_id(chosen_id, "PROJECT_STATE_RECOVERY_ID_INVALID")
+        require(chosen_id.startswith(f"{prefix}_"), "PROJECT_STATE_RECOVERY_ID_INVALID", "session recovery identifier type differs")
         with self._connect() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            write_ordinal = _allocate_write_ordinal(connection, "session_recovery", chosen_id)
             connection.execute(
-                "INSERT INTO session_recoveries(recovery_id, recovered_at, repository_commit, status) VALUES (?, ?, ?, ?)",
-                (f"{prefix}_{uuid.uuid4().hex.upper()}", utc_now(), repository_commit, status),
+                """INSERT INTO session_recoveries(
+                       recovery_id, recovered_at, repository_commit, status, write_ordinal
+                   ) VALUES (?, ?, ?, ?, ?)""",
+                (chosen_id, recovered_at or utc_now(), repository_commit, status, write_ordinal),
             )
 
     def fresh_session_recovery_status(self, repository_commit: str) -> str | None:
         require(COMMIT_RE.fullmatch(repository_commit) is not None, "PROJECT_STATE_COMMIT_INVALID", "recovery state requires a full lowercase Git object ID")
         with self._connect() as connection:
-            row = connection.execute(
-                """SELECT status FROM session_recoveries
-                   WHERE recovery_id GLOB 'FRESH_SESSION_*' AND repository_commit = ?
-                   ORDER BY recovered_at DESC, recovery_id DESC LIMIT 1""",
+            rows = connection.execute(
+                """SELECT status, recovered_at, write_ordinal FROM session_recoveries
+                   WHERE recovery_id GLOB 'FRESH_SESSION_*' AND repository_commit = ?""",
                 (repository_commit,),
-            ).fetchone()
-        return None if row is None else str(row["status"])
+            ).fetchall()
+        if not rows:
+            return None
+        latest_timestamp = max(str(row["recovered_at"]) for row in rows)
+        tied = [row for row in rows if str(row["recovered_at"]) == latest_timestamp]
+        ordered = [row for row in tied if row["write_ordinal"] is not None]
+        if ordered:
+            latest = max(ordered, key=lambda row: int(row["write_ordinal"]))
+            return str(latest["status"])
+        legacy_states = {str(row["status"]) for row in tied}
+        return next(iter(legacy_states)) if len(legacy_states) == 1 else None
 
     def readiness_facts(self) -> Mapping[str, str]:
         facts: dict[str, str] = {}
@@ -817,6 +1081,8 @@ def initialize_project_state(state_root: Path | None = None, *, repository_root:
         except sqlite3.Error as exc:
             raise ConformanceError("PROJECT_STATE_LEDGER_INVALID", "the protected-local evidence ledger could not be initialized") from exc
     _secure_file(ledger_path)
+    if ledger_exists:
+        _migrate_ledger(ledger_path)
     store = ProjectState(root, profile_path, ledger_path)
     store.verify()
     return store
@@ -841,6 +1107,7 @@ def recover_project_state(state_root: Path | None = None, *, repository_root: Pa
     _secure_directory(root)
     _secure_file(profile_path)
     _secure_file(ledger_path)
+    _migrate_ledger(ledger_path)
     store = ProjectState(root, profile_path, ledger_path)
     store.verify()
     return store

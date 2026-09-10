@@ -14,7 +14,7 @@ The Brainstorming Project, `Sprouts Customer Geography`, owns objective selectio
 
 The Development Project, `Sprouts-Customer-Geography-Development`, owns repository/local inspection, preservation of existing work, implementation within prepared authority, testing, bounded correction, branch/PR maintenance, Result Records, and publication of repository-safe readiness. Development does not invent missing authority. Its durable instruction surfaces are `AGENTS.md` and the [Development Operating Standard](governance/DEVELOPMENT_OPERATING_STANDARD.md); the Development Project has no ChatGPT Project Custom Instructions.
 
-GitHub carries repository-safe authority and evidence between Projects. Repository contents control over derivative summaries. GitHub must not be used to infer protected-local facts, and local facts must not be published outside the readiness allowlist.
+GitHub carries repository-safe durable authority artifacts and evidence between Projects. Repository contents control over derivative summaries. GitHub must not be used to infer protected-local facts, and local facts must not be published outside the readiness allowlist.
 
 ## Brainstorming-to-Development runway
 
@@ -24,12 +24,12 @@ If a required source, permission, protected asset registration, evidence invento
 
 Meaningful work uses two durable artifacts:
 
-1. **Initiative Brief Issue.** One concise Issue states the business objective, why it is timely, prepared pathway and prerequisites, permitted evidence/access, scope, exclusions, success criteria, decisions reserved for Ray, Work Order path, and protected-disclosure warning. It is authority for the stated initiative, not a synchronized task-status cockpit.
-2. **Detailed Work Order.** One repository-safe Work Order supplies the exact implementation authorization, inputs, method constraints, validation, branch/PR expectations, stop point, and safe completion evidence. It must contain enough context for Development to execute without a chat transcript or permanent routing conversation.
+1. **Initiative Brief Issue.** One concise Issue records the approved business objective, why it is timely, prepared pathway and prerequisites, permitted evidence/access, scope, exclusions, success criteria, decisions reserved for Ray, Work Order path, and protected-disclosure warning. The Issue body does not create or enlarge execution, protected-action, publication, acceptance, or merge authority; it is not a synchronized task-status cockpit.
+2. **Detailed Work Order.** One repository-safe Work Order is the canonical current execution authority and supplies the exact implementation authorization, inputs, method constraints, validation, branch/PR expectations, stop point, and safe completion evidence. It must contain enough context for Development to execute without a chat transcript or permanent routing conversation.
 
 Before meaningful Development or review work begins, Brainstorming writes a concise `LAUNCH` Record to the active mailbox. The launcher sent to Development is intentionally short: initiative ID/title, Issue or PR, branch, Work Order, execution profile, and exact stop point. Detailed authority remains in the durable artifacts, and the Launch Record cannot enlarge it.
 
-Routine, reversible maintenance may use existing durable authority when Brainstorming expressly pre-authorizes that path. A universal JSON task manifest or lifecycle-state mutation is not required. Meaningful or sensitive work requires explicit prepared authority. Exact-final-version review is mandatory for consequential model/product decisions; other implementation follows the review and merge disposition expressly stated by its Initiative Brief and Work Order.
+Routine, reversible maintenance may use existing durable authority when the operative Work Order or another explicitly designated authoritative decision mechanism pre-authorizes that path. A universal JSON task manifest or lifecycle-state mutation is not required. Meaningful or sensitive work requires explicit prepared authority. Exact-final-version review is mandatory for consequential model/product decisions; other implementation follows the review and merge disposition expressly stated by that authoritative mechanism.
 
 ## Development preflight
 
@@ -108,7 +108,7 @@ Consequential model and product decisions use this lifecycle:
 
 There is no acceptance-record-only commit and no duplicate CI run solely for metadata. Acceptance is recorded through the designated authoritative decision/Work Order mechanism without changing the accepted tree. A favorable Result/Review Record, passing check, mailbox refresh, PR state, merge, or historical lifecycle field does not create acceptance.
 
-Ordinary reversible implementation may merge after required CI without a separate Ray acceptance transition only when the Initiative Brief/Work Order expressly pre-authorizes that disposition. Otherwise, stop at the final PR for review.
+Ordinary reversible implementation may merge after required CI without a separate Ray acceptance transition only when the operative Work Order or another explicitly designated authoritative decision mechanism expressly pre-authorizes that disposition. Otherwise, stop at the final PR for review.
 
 ## Branch protection and Git safety
 
