@@ -12,7 +12,7 @@ It operates under the existing GOV-16 Initiative Brief and PR and must be read t
 - `docs/governance/GOV_16_APPROVED_GOVERNANCE_IMPLEMENTATION_TARGET.md`
 - `docs/governance/BRAINSTORMING_PROJECT_CUSTOM_INSTRUCTIONS.md`
 - `docs/governance/BRAINSTORMING_OPERATING_STANDARD.md`
-- the latest exact-candidate `REVIEW` Record in PR #45
+- the latest exact-candidate `REVIEW` and `RESULT` Records in PR #45
 
 The two Brainstorming documents are the exact approved Brainstorming-side texts. The Approved Governance Implementation Target defines the semantics Development must preserve when reconciling repository-side `AGENTS.md`, the Development Operating Standard, references, validators/tests, active-mailbox mechanics, and supporting repository implementation.
 
@@ -22,40 +22,46 @@ GitHub comments, PR descriptions, checks, labels, and Launch/Result/Review Recor
 
 ## Objective
 
-Remediate only the two findings from the focused independent review of exact candidate `264a43bc4bf5eb2809bbb9b5153a7d1615c8a20c`:
+Complete the bounded GOV-16 remediation already implemented at candidate `4ecda62bcb772ac3febc22434ea4e3e56ffc7ae7` and restore deterministic exact-head validation after an unrelated CI dependency float.
+
+The two reviewed defects remain the only substantive remediation objective:
 
 1. make evidence-event and fresh-session-recovery recency deterministic and safe when timestamps tie; and
 2. remove current repository guidance that implies the Initiative Issue itself grants execution or merge authority.
 
-Preserve all other approved GOV-16 behavior and safeguards.
+The remediation implementation at `4ecda62bcb772ac3febc22434ea4e3e56ffc7ae7` is reported complete and its focused tests pass. Exact-head Repository Validation is blocked because the CI environment floated from `pyproj 3.7.2`, which passed the previous full suite, to `pyproj 3.8.0`, which triggers six pre-existing GEO-03 operation-selection failures.
+
+A narrowly scoped CI-only pin to `pyproj 3.7.2` is now expressly authorized under the validation-environment authority below. Preserve all other approved GOV-16 behavior and safeguards.
 
 ## Current execution profile
 
 Intended surface: **Codex** in the repository-connected Development Project.
 
-Brainstorming performed a fresh full-suite evaluation using current official OpenAI guidance for ChatGPT Pro on Codex. The current Pro-relevant Codex candidate set is GPT-5.6 Luna, GPT-5.6 Terra, GPT-5.6 Sol, and GPT-6 Astra as Astra rolls out.
+Brainstorming performed a fresh full-suite evaluation using current official OpenAI guidance for ChatGPT Pro on Codex. Current Pro-eligible candidates include GPT-5.6 Luna, GPT-5.6 Terra, GPT-5.6 Sol, and GPT-6 Astra as Astra rolls out.
 
-For this remediation Brainstorming recommends:
+For this CI-only continuation Brainstorming recommends:
 
-- Model: **GPT-5.6 Sol**
-- Reasoning: **Extra High**
+- Model: **GPT-5.6 Terra**
+- Reasoning: **High**
 
 Task-specific comparison:
 
-- **Luna:** too light for a correctness-sensitive protected-readiness ledger migration and authority-consistency repair.
-- **Terra:** suitable for routine engineering but below the reliability margin warranted by this evidence-ordering defect.
-- **Sol:** designed for complex coding/professional work. Extra High is warranted because the prior candidate passed CI yet still contained a subtle recency defect that could misstate protected evidence consumption or readiness.
-- **Astra:** strongest option and explicitly considered. The remediation is now narrowly specified with exact failing invariants and required tests; Astra's additional end-to-end capability is not necessary enough to displace Sol Extra High as the lightest adequate option. If Astra is the only stronger option available because Sol/Extra High is unavailable, return to Brainstorming rather than inferring a substitute.
+- **Luna:** likely capable of the single-file edit, but the task also requires disciplined exact-head validation, mailbox refresh, and fail-closed scope control; Terra provides a more appropriate reliability margin.
+- **Terra:** balances intelligence and efficiency and is adequate for this tightly specified workflow-only correction plus validation follow-through. High reasoning provides sufficient checking without carrying forward the heavier profile used for the ledger migration.
+- **Sol:** stronger for complex professional/coding work, but unnecessary for this now-mechanical CI-environment repair.
+- **Astra:** strongest and explicitly considered, but materially more capability than this single-variable validation correction requires.
 
-If model availability materially changes before execution, stop and let Brainstorming refresh the recommendation. Model choice does not expand authority.
+If the recommended option is unavailable or the available Codex model set materially changes before execution, use no inferred substitute; return to Brainstorming for a refreshed recommendation.
+
+Model choice does not expand authority.
 
 ## Finding 1 — deterministic ledger recency
 
 ### Problem
 
-The reviewed candidate orders evidence events by `(occurred_at, event_id)` and fresh-session recovery by `(recovered_at, recovery_id)`. Timestamps have one-second resolution while generated IDs are random UUID-derived strings. Therefore same-second writes can be returned in an order unrelated to the actual write chronology.
+The reviewed candidate ordered evidence events by `(occurred_at, event_id)` and fresh-session recovery by `(recovered_at, recovery_id)`. Timestamps had one-second resolution while generated IDs were random UUID-derived strings. Therefore same-second writes could be returned in an order unrelated to actual write chronology.
 
-This can misstate:
+This could misstate:
 
 - the current state of evidence events such as `development_used`; and
 - the current fresh-session recovery status used by readiness publication.
@@ -89,7 +95,7 @@ New writes after migration must always receive sufficient durable ordering metad
 
 ### Regression coverage
 
-At minimum add tests proving:
+At minimum tests must prove:
 
 - later same-second `development_used=true` supersedes earlier same-second `false`;
 - later same-second `development_used=false` supersedes earlier same-second `true`;
@@ -116,7 +122,7 @@ The operative Work Order is the canonical current execution authority. Consequen
 
 ### Required repository reconciliation
 
-Correct the current Initiative Brief template and current workflow/governance documentation so they do not say or imply that an Issue itself “authorizes” the initiative or is execution authority.
+Correct current Initiative Brief templates and current workflow/governance documentation so they do not say or imply that an Issue itself “authorizes” the initiative or is execution authority.
 
 At minimum reconcile:
 
@@ -131,9 +137,56 @@ Do not rewrite historical Issues, historical Work Orders, historical acceptance 
 
 ### Focused consistency validation
 
-Add or extend a focused repository check/test so current active governance/template surfaces cannot regress to wording that makes an Issue, PR description, comment, Result/Review Record, check, or label an independent authority source.
+A focused repository check/test must prevent current active governance/template surfaces from regressing to wording that makes an Issue, PR description, comment, Result/Review Record, check, or label an independent authority source.
 
 The check must be targeted enough not to treat historical evidence as current governance or to ban ordinary descriptive use of the word `authority` where the hierarchy is clear.
+
+## Bounded validation-environment authority — `pyproj 3.7.2`
+
+### Basis
+
+The blocked Result Record for candidate `4ecda62bcb772ac3febc22434ea4e3e56ffc7ae7` reports that all focused GOV-16 remediation checks pass but required Repository Validation fails only in six pre-existing GEO-03-dependent tests after CI resolved `pyproj 3.8.0` under the repository's broad `pyproj>=3.7,<4` package range.
+
+GitHub CI evidence confirms:
+
+- the failing exact-head run installed `pyproj 3.8.0` through the existing `python -m pip install .` workflow step;
+- the same six failures are `GEO03_RUNTIME_OPERATION_MISMATCH` failures in pre-existing GEO-03-dependent tests;
+- the GOV-16 governance/readiness checkers and the new ledger/migration tests pass under that run; and
+- the previous passing full Repository Validation resolved `pyproj 3.7.2` under the same package metadata.
+
+This is treated as a validation-environment reproducibility correction, not a GEO-03 methodology or product change.
+
+### Authorized change
+
+Development is authorized to modify **only** `.github/workflows/repository-validation.yml` as needed to make Repository Validation deterministically install/use **`pyproj==3.7.2`**.
+
+The implementation may adjust the existing installation command and may add a minimal workflow-level version assertion/logging step if useful to prove the resolved version. Keep the change as small as practical.
+
+This authorization does **not** permit:
+
+- changing `pyproject.toml` or the package/runtime dependency range;
+- changing GEO-03 authority, transformation semantics, accepted operation fingerprints, runtime selection logic, or compatibility behavior;
+- changing analytical/model/product code or tests to accommodate `pyproj 3.8.0`;
+- weakening, skipping, xfail-marking, deleting, or rewriting the six failing tests;
+- changing unrelated dependencies or workflow behavior;
+- broad dependency modernization or lockfile work;
+- using the pin as evidence that `pyproj 3.8.0` is analytically equivalent or acceptable.
+
+### Required validation and hard stop
+
+After the CI-only pin:
+
+1. commit/push the minimal workflow-only change on the existing GOV-16 branch;
+2. run required Repository Validation on that exact new PR head;
+3. confirm the workflow actually resolved `pyproj 3.7.2`;
+4. require the entire Repository Validation suite to pass without test suppression or GEO-03 behavior changes;
+5. if and only if exact-head Repository Validation passes, perform the normal fresh-session/readiness steps and regenerate/validate the Development Readiness Mailbox against that exact head;
+6. update the PR body to the new final candidate and current CI/mailbox evidence; and
+7. post a new concise `RESULT` Record to PR #45 bound to that exact head, with next control point focused independent re-review.
+
+If the pin alone does **not** restore the full suite, stop. Post a blocked `RESULT` Record describing the remaining safe gap. Do not broaden into GEO-03 compatibility work, dependency-range changes, test changes, or analytical remediation without new Brainstorming authority.
+
+The CI-only pin becomes part of the exact final candidate reviewed for GOV-16 cutover. It does not itself constitute acceptance of any analytical/runtime dependency policy beyond this bounded validation environment.
 
 ## Preserved GOV-16 architecture
 
@@ -153,12 +206,14 @@ Do not change the approved:
 
 ## Local-state and readiness handling
 
-Before changing the durable ledger, inspect and preserve current local state using the trusted project profile/ledger interface and preserve unrelated work.
+Before changing durable ledger state, inspect and preserve current local state using the trusted project profile/ledger interface and preserve unrelated work.
 
-The existing readiness snapshot is valid evidence for the reviewed candidate but becomes stale once this remediation changes the source head. After final remediation:
+The existing readiness snapshot remains evidence for the earlier validated candidate and is intentionally stale relative to the current remediation head until exact-head Repository Validation passes.
+
+After final remediation and the authorized CI-only correction:
 
 1. establish one final substantive source commit;
-2. run the required exact-head repository validation;
+2. run the required exact-head Repository Validation;
 3. run fresh-session recovery as required by the readiness contract;
 4. regenerate the Development Readiness Mailbox from that exact final source head;
 5. validate and push the mailbox refresh; and
@@ -176,6 +231,8 @@ Do not:
 - alter MODEL-13, APP-01, or PBI-02 analytical/product behavior;
 - infer or repair source-evidence chronology beyond the ordering defect authorized above;
 - reopen original protected sources;
+- change GEO-03 behavior or compatibility as part of the CI-only correction;
+- alter project dependency metadata as part of the CI-only correction;
 - merge PR #45;
 - begin any follow-on initiative;
 - turn active-mailbox records into authority or a workflow state machine.
@@ -184,13 +241,14 @@ Do not:
 
 At minimum:
 
-- run focused ledger recency/migration tests described above;
-- run focused governance-authority consistency checks;
-- run readiness/disclosure/fresh-session recovery tests affected by the ledger change;
+- retain passing focused ledger recency/migration tests;
+- retain passing governance-authority consistency checks;
+- retain readiness/disclosure/fresh-session recovery tests affected by the ledger change;
 - preserve all existing confidentiality and path-containment tests;
-- run relevant regression checks demonstrating excluded analytical/product behavior is unchanged;
+- preserve relevant regression checks demonstrating excluded analytical/product behavior is unchanged;
 - inspect the complete diff for protected or unrelated material;
-- run required full Repository Validation on the final substantive PR head;
+- confirm Repository Validation runs with `pyproj 3.7.2` after the authorized workflow-only pin;
+- require the full Repository Validation suite to pass on the final substantive PR head; and
 - regenerate and validate the Development Readiness Mailbox against that exact head.
 
 Any substantive repair after independent re-review requires another exact-candidate review.
@@ -201,19 +259,19 @@ Keep the same initiative, branch, and PR #45.
 
 The PR conversation remains the active candidate mailbox. Do not mirror remediation chronology into Issue #44.
 
-Update the PR description to the new final substantive head and current validation/mailbox evidence.
+Update the PR description to the new final substantive head and current validation/mailbox evidence after validation succeeds.
 
 Before returning control to Brainstorming, post a new concise `RESULT` Record to PR #45 containing:
 
 - exact final candidate head;
-- concise description of the ledger-ordering and authority-wording repairs;
+- concise description of the ledger-ordering and authority-wording repairs plus the CI-only reproducibility pin;
 - validation/CI status;
 - refreshed readiness-mailbox commit/source binding;
 - preserved safeguards/exclusions;
 - any unresolved gap/deviation; and
 - next control point: focused independent re-review of the new exact candidate.
 
-The prior `REVIEW — REWORK REQUIRED` Record remains historical evidence for the reviewed `264a43bc...` candidate and must not be edited or replaced.
+The prior `REVIEW — REWORK REQUIRED` Record remains historical evidence for the reviewed `264a43bc...` candidate and must not be edited or replaced. The blocked Result Record for `4ecda62b...` remains evidence of the validation-environment gap and must not be edited or replaced.
 
 ## Stop point
 
