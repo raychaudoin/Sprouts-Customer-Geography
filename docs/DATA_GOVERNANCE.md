@@ -16,6 +16,14 @@ Raw downloads, large caches, generated production exports, and confidential over
 
 Deletion of discovered confidential or business records requires authorization. Do not delete, move, sanitize, or recommit protected material merely because it violates policy; isolate access, stop the affected operation, preserve evidence without exposing content, and report the incident.
 
+## Repository-safe evidence surfaces
+
+Treat GitHub Issues, pull requests, comments, checks, and both mailbox functions as public disclosure.
+
+The Development Readiness Mailbox may publish only its versioned, allowlisted, closed-schema readiness values. The active Initiative/PR mailbox may carry only concise repository-safe Launch, Result, and Review chronology. Before a PR exists, the Initiative Issue may be active; once a PR exists, new candidate chronology belongs only in the PR conversation and is not mirrored to the Issue.
+
+Neither mailbox may contain protected paths or revealing filenames, addresses, coordinates, row identities, targets, registry contents, credentials, revealing hashes, or reconstructable protected lineage. Mailbox records are evidence/coordination only; they cannot authorize access, analytical use, disclosure, merge, or acceptance.
+
 ## Synthetic fixtures
 
 Committed fixtures must be small, clearly labeled synthetic or fictional, legally permissible, free of secrets and protected fields, and scoped to a meaningful test. Synthetic fixtures must not be reverse-engineered approximations of live pursuits.

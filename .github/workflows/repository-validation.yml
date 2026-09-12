@@ -19,8 +19,10 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - run: python -m pip install .
+      - run: python -m pip install "pyproj==3.7.2" .
+      - run: python -c "import pyproj; assert pyproj.__version__ == '3.7.2', pyproj.__version__"
       - run: python scripts/check_governance_repository.py
+      - run: python scripts/check_readiness_repository.py
       - run: python scripts/check_pipe01_repository.py
       - run: python scripts/check_pipe02_repository.py
       - run: python scripts/check_pipe03_repository.py
@@ -49,3 +51,4 @@ jobs:
           MODEL13_TEST_TEMP_ROOT: ${{ runner.temp }}
           PBI01_TEST_TEMP_ROOT: ${{ runner.temp }}
           APP01_TEST_TEMP_ROOT: ${{ runner.temp }}
+          READINESS_TEST_TEMP_ROOT: ${{ runner.temp }}
