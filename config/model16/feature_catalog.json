@@ -1,0 +1,772 @@
+{
+  "artifact_id": "MODEL16_TARGET_BLIND_FEATURE_CATALOG_V1",
+  "availability_cutoff": "Verified raw-file HTTP revision date must precede each forecast year; original statistical release labels do not backdate subsequently revised bytes",
+  "baseline": "accepted MODEL-13 method and DATA-03 feature definitions reapplied to temporally admissible public vintages; accepted parameters not reused",
+  "crs_pipeline": "+proj=pipeline +step +proj=unitconvert +xy_in=deg +xy_out=rad +step +proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0 +y_0=0 +ellps=GRS80",
+  "direction_policy": "No sign constraints inferred from targets; hypotheses describe context rather than assert causal customer-fit effects.",
+  "eligibility": "All source observations retained in evidence; common primary modeling support requires an unambiguous baseline containing tract and three finite spatial household measures. Exclusions are fixed before any targets. Other feature missingness is handled within folds.",
+  "features": [
+    {
+      "baseline": true,
+      "family": "household_mass",
+      "feature_id": "log_households_5mi",
+      "source": "ACS_B11001_TIGER",
+      "transform": "log1p(sum households within 5 miles)"
+    },
+    {
+      "baseline": true,
+      "family": "household_mass",
+      "feature_id": "inner_household_share_3mi_of_7mi",
+      "source": "ACS_B11001_TIGER",
+      "transform": "households3mi / households7mi"
+    },
+    {
+      "baseline": true,
+      "family": "household_mass",
+      "feature_id": "log_inner_outer_household_density_gradient",
+      "source": "ACS_B11001_TIGER",
+      "transform": "log1p(households3mi/(pi*9)) - log1p((households7mi-households3mi)/(pi*40))"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "household-weighted tract-profile proxy",
+        "family": "economic_capacity",
+        "kind": "direct",
+        "measure_id": "median_household_income",
+        "transform": "log1p",
+        "weight": "B11001 household estimate"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "median_household_income",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "household-weighted tract-profile proxy",
+        "family": "economic_capacity",
+        "kind": "direct",
+        "measure_id": "per_capita_income",
+        "transform": "log1p",
+        "weight": "B11001 household estimate"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "per_capita_income",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "labor_population_16_plus",
+        "family": "economic_capacity",
+        "kind": "share",
+        "measure_id": "civilian_labor_force_share",
+        "numerators": [
+          "civilian_labor_force"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "civilian_labor_force_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "civilian_labor_force",
+        "family": "economic_capacity",
+        "kind": "share",
+        "measure_id": "employment_rate",
+        "numerators": [
+          "civilian_employed"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "employment_rate",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "education_population_25_plus",
+        "family": "education_socioeconomic_structure",
+        "kind": "share",
+        "measure_id": "bachelors_or_higher_share",
+        "numerators": [
+          "education_bachelors",
+          "education_masters",
+          "education_professional",
+          "education_doctorate"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "bachelors_or_higher_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "occupied_housing_units_total",
+        "family": "housing_neighborhood_economics",
+        "kind": "share",
+        "measure_id": "owner_occupancy_share",
+        "numerators": [
+          "owner_occupied_housing_units"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "owner_occupancy_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "housing_units_total",
+        "family": "housing_neighborhood_economics",
+        "kind": "share",
+        "measure_id": "vacancy_share",
+        "numerators": [
+          "housing_units_vacant"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "vacancy_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "owner-unit-weighted tract-profile proxy",
+        "family": "housing_neighborhood_economics",
+        "kind": "direct",
+        "measure_id": "median_home_value",
+        "transform": "log1p",
+        "weight": "owner_occupied_housing_units"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "median_home_value",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "renter-unit-weighted tract-profile proxy",
+        "family": "housing_neighborhood_economics",
+        "kind": "direct",
+        "measure_id": "median_gross_rent",
+        "transform": "log1p",
+        "weight": "occupied_housing_units_total minus owner_occupied_housing_units"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "median_gross_rent",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "occupied-unit-weighted tract-profile proxy",
+        "family": "household_scale",
+        "kind": "direct",
+        "measure_id": "average_household_size",
+        "transform": "identity",
+        "weight": "occupied_housing_units_total"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "average_household_size",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "vehicle_table_households_total",
+        "family": "transportation_accessibility",
+        "kind": "share",
+        "measure_id": "no_vehicle_household_share",
+        "numerators": [
+          "households_no_vehicle"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "no_vehicle_household_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "commuters_total",
+        "family": "transportation_accessibility",
+        "kind": "share",
+        "measure_id": "drive_alone_commuter_share",
+        "numerators": [
+          "commuters_drive_alone"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "drive_alone_commuter_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "accepted_definition": {
+        "aggregation": "sum numerators and denominator then divide",
+        "denominator": "commuters_total",
+        "family": "transportation_accessibility",
+        "kind": "share",
+        "measure_id": "work_from_home_commuter_share",
+        "numerators": [
+          "commuters_work_from_home"
+        ],
+        "transform": "identity"
+      },
+      "baseline": true,
+      "family": "baseline_demographics",
+      "feature_id": "work_from_home_commuter_share",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "identity"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Population scale distinct from household mass",
+      "denominator_signed_indices": null,
+      "family": "household_mass",
+      "feature_id": "log_population_5mi",
+      "numerator_indices": [
+        1
+      ],
+      "source": "B01003",
+      "transform": "log1p"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Household economic capacity, annual income at least $100,000 in vintage dollars",
+      "denominator_signed_indices": [
+        1
+      ],
+      "family": "household_economics",
+      "feature_id": "high_income_household_share",
+      "numerator_indices": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "source": "B19001",
+      "transform": "share"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Economic constraint, total poverty universe; no age/sex/race breakdown",
+      "denominator_signed_indices": [
+        1
+      ],
+      "family": "household_economics",
+      "feature_id": "poverty_share",
+      "numerator_indices": [
+        2
+      ],
+      "source": "B17001",
+      "transform": "share"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Housing units in structures with two or more units",
+      "denominator_signed_indices": [
+        1
+      ],
+      "family": "housing_urban_form",
+      "feature_id": "multifamily_housing_share",
+      "numerator_indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "source": "B25024",
+      "transform": "share"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Gross rent at least 35 percent of income among computed rent-burden households",
+      "denominator_signed_indices": [
+        1,
+        -11
+      ],
+      "family": "household_economics",
+      "feature_id": "rent_burden_35plus_share",
+      "numerator_indices": [
+        8,
+        9,
+        10
+      ],
+      "source": "B25070",
+      "transform": "share"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Travel time at least 45 minutes among workers not working at home",
+      "denominator_signed_indices": [
+        1
+      ],
+      "family": "commuting",
+      "feature_id": "commute_45plus_share",
+      "numerator_indices": [
+        11,
+        12,
+        13
+      ],
+      "source": "B08303",
+      "transform": "share"
+    },
+    {
+      "baseline": false,
+      "family": "housing_urban_form",
+      "feature_id": "log_population_land_density_5mi",
+      "source": "ACS_B01003_TIGER_ALAND",
+      "transform": "log1p(sum population / summed member land area in square miles)"
+    },
+    {
+      "baseline": false,
+      "family": "growth",
+      "feature_id": "household_growth",
+      "limitation": "successive five-year ACS periods overlap four years; descriptive noisy change, not an independent annual growth estimate",
+      "source": "B11001",
+      "transform": "log1p(sum latest estimate) minus log1p(sum preceding ACS vintage estimate), same latest member tract keys"
+    },
+    {
+      "baseline": false,
+      "family": "growth",
+      "feature_id": "population_growth",
+      "limitation": "successive five-year ACS periods overlap four years; descriptive noisy change, not an independent annual growth estimate",
+      "source": "B01003",
+      "transform": "log1p(sum latest estimate) minus log1p(sum preceding ACS vintage estimate), same latest member tract keys"
+    },
+    {
+      "baseline": false,
+      "family": "growth",
+      "feature_id": "housing_unit_growth",
+      "limitation": "successive five-year ACS periods overlap four years; descriptive noisy change, not an independent annual growth estimate",
+      "source": "B25002",
+      "transform": "log1p(sum latest estimate) minus log1p(sum preceding ACS vintage estimate), same latest member tract keys"
+    },
+    {
+      "aggregation": "same published weights as accepted definition; zero-weight tracts do not contribute; positive valid estimates must cover at least 95 percent of known positive weight",
+      "baseline": false,
+      "distinction": "coverage-qualified tract profile, not a median of all households in the catchment; strict accepted baseline retained separately",
+      "family": "household_economics",
+      "feature_id": "covered_median_household_income",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p weighted tract profile",
+      "uncertainty": "aggregate published MOE only when all contributing MOEs available; otherwise explicitly unknown, estimate may still be used"
+    },
+    {
+      "aggregation": "same published weights as accepted definition; zero-weight tracts do not contribute; positive valid estimates must cover at least 95 percent of known positive weight",
+      "baseline": false,
+      "distinction": "coverage-qualified tract profile, not a median of all households in the catchment; strict accepted baseline retained separately",
+      "family": "household_economics",
+      "feature_id": "covered_per_capita_income",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p weighted tract profile",
+      "uncertainty": "aggregate published MOE only when all contributing MOEs available; otherwise explicitly unknown, estimate may still be used"
+    },
+    {
+      "aggregation": "same published weights as accepted definition; zero-weight tracts do not contribute; positive valid estimates must cover at least 95 percent of known positive weight",
+      "baseline": false,
+      "distinction": "coverage-qualified tract profile, not a median of all households in the catchment; strict accepted baseline retained separately",
+      "family": "household_economics",
+      "feature_id": "covered_median_home_value",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p weighted tract profile",
+      "uncertainty": "aggregate published MOE only when all contributing MOEs available; otherwise explicitly unknown, estimate may still be used"
+    },
+    {
+      "aggregation": "same published weights as accepted definition; zero-weight tracts do not contribute; positive valid estimates must cover at least 95 percent of known positive weight",
+      "baseline": false,
+      "distinction": "coverage-qualified tract profile, not a median of all households in the catchment; strict accepted baseline retained separately",
+      "family": "household_economics",
+      "feature_id": "covered_median_gross_rent",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "log1p weighted tract profile",
+      "uncertainty": "aggregate published MOE only when all contributing MOEs available; otherwise explicitly unknown, estimate may still be used"
+    },
+    {
+      "aggregation": "same published weights as accepted definition; zero-weight tracts do not contribute; positive valid estimates must cover at least 95 percent of known positive weight",
+      "baseline": false,
+      "distinction": "coverage-qualified tract profile, not a median of all households in the catchment; strict accepted baseline retained separately",
+      "family": "household_economics",
+      "feature_id": "covered_average_household_size",
+      "source": "ACS_DATA03_DEFINITIONS",
+      "transform": "weighted tract profile",
+      "uncertainty": "aggregate published MOE only when all contributing MOEs available; otherwise explicitly unknown, estimate may still be used"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Workplace employment mass; 2017 LEHD WAC",
+      "family": "employment",
+      "feature_id": "epa_log_jobs_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(sum TotEmp)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Workplace/resident-worker balance; not unique daytime visitors",
+      "family": "employment",
+      "feature_id": "epa_log_jobs_resident_balance_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(sum TotEmp)-log1p(sum Workers)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Local retail employment mix, not store identity or footfall",
+      "family": "business_context",
+      "feature_id": "epa_retail_job_share_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "sum E5_Ret / sum TotEmp"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Office employment mix",
+      "family": "business_context",
+      "feature_id": "epa_office_job_share_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "sum E5_Off / sum TotEmp"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Road network density; EPA public indicator derived from 2018 HERE",
+      "family": "roads_urban_form",
+      "feature_id": "epa_log_road_density_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(polygon-area-weighted mean D3A)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Pedestrian-oriented intersection density; EPA public HERE-derived indicator",
+      "family": "roads_urban_form",
+      "feature_id": "epa_log_intersection_density_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(polygon-area-weighted mean D3B)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Afternoon peak transit frequency per square mile; incomplete GTFS coverage stays missing",
+      "family": "transit_access",
+      "feature_id": "epa_log_transit_frequency_5mi",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "state-isolated 5-mile historical polygon representative-point membership, containing polygon forced",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(polygon-area-weighted mean D4D)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Time-decayed jobs accessible within 45-minute auto trip; EPA public TravelTime-derived indicator",
+      "family": "travel_access",
+      "feature_id": "epa_log_auto_jobs45_anchor",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "containing historical block group",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(anchor block group D5AR)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Time-decayed jobs accessible by transit; known old-feed coverage limitations",
+      "family": "travel_access",
+      "feature_id": "epa_log_transit_jobs45_anchor",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "block_group_geometry": 2019,
+        "employment_resident_workers": 2017,
+        "road_network": 2018,
+        "transit_and_network_access": 2020
+      },
+      "source": "EPA_SLD2021",
+      "source_release": "SLD v3 ZIP last modified 2021-06-08; metadata/guide identify 2021 public release",
+      "support": "containing historical block group",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(anchor block group D5BR)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "County supermarket/grocery establishment context; not site competition",
+      "family": "county_business",
+      "feature_id": "cbp_log_grocery_establishments_county",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "2024": 2021,
+        "2025": 2022,
+        "2026": 2023
+      },
+      "source": "CBP_LAGGED",
+      "source_release": "2023-04-27 / 2024-06-27 / 2025-06-26 preserved county files",
+      "support": "containing county",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "log1p(county NAICS445110 est)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Retail establishment mix",
+      "family": "county_business",
+      "feature_id": "cbp_retail_establishment_share_county",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "2024": 2021,
+        "2025": 2022,
+        "2026": 2023
+      },
+      "source": "CBP_LAGGED",
+      "source_release": "2023-04-27 / 2024-06-27 / 2025-06-26 preserved county files",
+      "support": "containing county",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "county NAICS44---- est / county all-industry est"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Food-service establishment mix",
+      "family": "county_business",
+      "feature_id": "cbp_food_service_share_county",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "2024": 2021,
+        "2025": 2022,
+        "2026": 2023
+      },
+      "source": "CBP_LAGGED",
+      "source_release": "2023-04-27 / 2024-06-27 / 2025-06-26 preserved county files",
+      "support": "containing county",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "county NAICS722/// est / county all-industry est"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Fitness/recreation-center establishment mix; missing industry row remains missing",
+      "family": "county_business",
+      "feature_id": "cbp_fitness_share_county",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "2024": 2021,
+        "2025": 2022,
+        "2026": 2023
+      },
+      "source": "CBP_LAGGED",
+      "source_release": "2023-04-27 / 2024-06-27 / 2025-06-26 preserved county files",
+      "support": "containing county",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "county NAICS713940 est / county all-industry est"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Population over half a mile from supermarket; historical 2019 store access with 2010 population",
+      "family": "food_access",
+      "feature_id": "fara_lowaccess_population_share_tract",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "population_households": 2010,
+        "store_access": 2019
+      },
+      "source": "USDA_FARA2019",
+      "source_release": "April 2021",
+      "support": "containing 2019 TIGER tract; public data retain 2010 tract identities",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "anchor historical tract lapophalf / Pop2010"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Households without vehicles over half a mile from supermarket",
+      "family": "food_access",
+      "feature_id": "fara_lowaccess_novehicle_household_share_tract",
+      "missingness": "any missing required numerator/denominator/member remains null; nonpositive denominator remains null; no absent-category zero-fill",
+      "reference_vintages": {
+        "population_households": 2010,
+        "store_access": 2019
+      },
+      "source": "USDA_FARA2019",
+      "source_release": "April 2021",
+      "support": "containing 2019 TIGER tract; public data retain 2010 tract identities",
+      "temporal_track": "historical; source release before forecast year",
+      "transform": "anchor historical tract lahunvhalf / OHU2010"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "External commuter inflow captures imported workplace activity; not observed retail visits",
+      "family": "commuting_flows",
+      "feature_id": "lodes_external_origin_job_share_5mi",
+      "missingness": "unknown workplace geography or unmatched OD/WAC job margins fails closed; zero total jobs remains null",
+      "source": "LODES7_2019_MAIN_AUX_OD_WAC",
+      "source_release": "retained LODES7 archive; data reference 2019; source and creation dates must precede 2024",
+      "support": "state-isolated 5-mile 2019 TIGER tract representative points, containing tract forced; origin may be in any state",
+      "transform": "jobs arriving from home tracts outside the 5-mile workplace support / all jobs in the workplace support"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Commute reach indicates workplace draw; coarse straight-line tract proxy, not actual route distance or travel time",
+      "family": "commuting_flows",
+      "feature_id": "lodes_mean_commute_distance_km_5mi",
+      "missingness": "origins outside acquired MI/WI geometry are not zero distance; coverage below0.95 yields null; positive cross-block within-tract trips have unresolved sub-tract distance",
+      "source": "LODES7_2019_MAIN_AUX_OD_WAC",
+      "source_release": "retained LODES7 archive; data reference 2019; 2019 TIGER 2010-era tracts",
+      "support": "same workplace support; MI/WI origin/destination tract points only for distance, national origins retained in coverage denominator",
+      "transform": "job-weighted Euclidean distance in NAD83 Albers between workplace/home tract internal points in kilometers, conditional on at least95percent geocoded jobs"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Residential development activity and future household-supply context",
+      "family": "construction_permits",
+      "feature_id": "bps_log_permitted_units_county",
+      "forecast_year_to_reference_vintage": {
+        "2024": 2021,
+        "2025": 2022,
+        "2026": 2023
+      },
+      "limitation": "authorization to build, not starts/completions; county activity is coarse context; reported-only counts retained as QA",
+      "missingness": "missing county/required total-unit field remains null; zero permitted units is valid but multifamily denominator zero remains null",
+      "source": "CENSUS_BPS_ANNUAL_COUNTY",
+      "source_release": "2021 file dated2022-04-27; 2022/2023 files dated2024-04-25; fixed three-year lag avoids backdating the2022 revision",
+      "support": "containing county; public annual total units including Census estimates for nonresponse",
+      "transform": "log1p(sum total estimated units across1,2,3-4,and5plus-unit structures)"
+    },
+    {
+      "baseline": false,
+      "business_hypothesis": "Mix of forthcoming multifamily versus detached housing supply",
+      "family": "construction_permits",
+      "feature_id": "bps_multifamily_permit_unit_share_county",
+      "forecast_year_to_reference_vintage": {
+        "2024": 2021,
+        "2025": 2022,
+        "2026": 2023
+      },
+      "limitation": "authorization to build, not starts/completions; county activity is coarse context; reported-only counts retained as QA",
+      "missingness": "missing county/required total-unit field remains null; zero permitted units is valid but multifamily denominator zero remains null",
+      "source": "CENSUS_BPS_ANNUAL_COUNTY",
+      "source_release": "2021 file dated2022-04-27; 2022/2023 files dated2024-04-25; fixed three-year lag avoids backdating the2022 revision",
+      "support": "containing county; public annual total units including Census estimates for nonresponse",
+      "transform": "total estimated units in2,3-4,and5plus-unit structures divided by all permitted units"
+    }
+  ],
+  "forecast_year_to_acs_vintage": {
+    "2024": 2022,
+    "2025": 2023,
+    "2026": 2023
+  },
+  "forecast_year_to_tiger_vintage": {
+    "2024": 2023,
+    "2025": 2023,
+    "2026": 2023
+  },
+  "geometry_policy": "Fixed 2023 TIGER geography, with exact MI/WI tract-key equality required against each admitted ACS vintage; no silent geography crosswalk",
+  "licensing": "Official US government public statistical products; source-specific rights, upstream lineage and omissions recorded in PUBLIC_SOURCE_RESEARCH.md and source_research.json.",
+  "missingness": "invalid or missing constituent estimate/MOE stays null; fold-local preprocessing only",
+  "primary_track": "historical",
+  "protected_characteristics": "excluded; total population and economic quantities only; no direct age, sex, race, ethnicity, religion, disability inputs",
+  "radii_m": [
+    4828.032,
+    8046.72,
+    11265.408
+  ],
+  "support": "state-isolated unrounded NAD83 EPSG:4269 to EPSG:5070 tract internal-point radial membership; containing tract forced",
+  "temporal_exclusions": {
+    "ACS2024": "Downloaded table bytes are dated January 29, 2026; pre-2026 bytes were not established, so excluded from primary historical scoring",
+    "TIGER2024": "Downloaded ZIP bytes are dated June 27, 2025; use fixed verified pre-2024 TIGER2023 geometry for every forecast year"
+  }
+}

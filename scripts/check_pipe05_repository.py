@@ -153,7 +153,9 @@ def main() -> int:
     forbidden_fragments = ("Sprouts" + "-Protected", "C:" + "\\Users\\", "m12run-" + "wisconsin", "p5bind-" + "real")
     if any(fragment.lower() in public_text.lower() for fragment in forbidden_fragments):
         raise SystemExit("PIPE-05 protected-local path or run detail entered stageable repository content")
-    if re.search(r"(?i)\bmi[_ -]+seed[_ -]+forecasts\b|\bcity[0-9]+\b", public_text):
+    from sprouts_customer_geography.model16.public_contract import source_name_guard_text
+    source_name_text = "\n".join(source_name_guard_text(repository, path, (repository / path).read_text(encoding="utf-8", errors="ignore")) for path in changed_files)
+    if re.search(r"(?i)\bmi[_ -]+seed[_ -]+forecasts\b|\bcity[0-9]+\b", source_name_text):
         raise SystemExit("PIPE-05 protected source basename or private header alias entered stageable repository content")
     narrative = "\n".join((repository / path).read_text(encoding="utf-8", errors="ignore") for path in changed_files if path.replace("\\", "/").startswith(("config/", "docs/", "governance/")))
     if re.search(r"(?i)[A-Za-z0-9 _.-]+\.xlsx", narrative):
