@@ -1,0 +1,220 @@
+{
+  "artifact_id": "MODEL16_SUPPLEMENTAL_PUBLIC_SOURCE_QA_V1",
+  "public_city_center_fixture_checks": [
+    {
+      "feature_count": 19,
+      "finite_feature_count": 17,
+      "flow_quality": {
+        "anchor_found": true,
+        "distance_job_coverage": 0.978763749863655,
+        "within_tract_distance": "zero tract-point distance; unresolved sub-tract travel",
+        "workplace_tracts_in_support": 154,
+        "zero_workplace_jobs": false
+      },
+      "missing_fields": [
+        "fara_lowaccess_novehicle_household_share_tract",
+        "fara_lowaccess_population_share_tract"
+      ],
+      "state": "WI"
+    },
+    {
+      "feature_count": 19,
+      "finite_feature_count": 18,
+      "flow_quality": {
+        "anchor_found": true,
+        "distance_job_coverage": 0.9905935611111962,
+        "within_tract_distance": "zero tract-point distance; unresolved sub-tract travel",
+        "workplace_tracts_in_support": 107,
+        "zero_workplace_jobs": false
+      },
+      "missing_fields": [
+        "epa_log_transit_frequency_5mi"
+      ],
+      "state": "MI"
+    }
+  ],
+  "source_quality": {
+    "bps": {
+      "2024": {
+        "MI_counties": 83,
+        "WI_counties": 72,
+        "counties_with_estimated_nonresponse": 97,
+        "missing_total_units": 0,
+        "reference_year": 2021,
+        "unallocated_state_balance": "county000 excluded; not allocated to actual counties"
+      },
+      "2025": {
+        "MI_counties": 83,
+        "WI_counties": 72,
+        "counties_with_estimated_nonresponse": 63,
+        "missing_total_units": 0,
+        "reference_year": 2022,
+        "unallocated_state_balance": "county000 excluded; not allocated to actual counties"
+      },
+      "2026": {
+        "MI_counties": 83,
+        "WI_counties": 72,
+        "counties_with_estimated_nonresponse": 82,
+        "missing_total_units": 0,
+        "reference_year": 2023,
+        "unallocated_state_balance": "county000 excluded; not allocated to actual counties"
+      }
+    },
+    "epa": {
+      "MI": {
+        "block_groups": 8205,
+        "current_service_comparison": {
+          "analytical_authority": "original 2021 EPA FileGDB; service used only for current-public-source comparison",
+          "common_block_groups": 8159,
+          "numeric_field_difference_counts": {
+            "Ac_Unpr": 0,
+            "D3A": 0,
+            "D3AAO": 0,
+            "D3B": 0,
+            "D4A": 0,
+            "D4D": 0,
+            "D5AR": 0,
+            "D5BR": 0,
+            "E5_Ent": 0,
+            "E5_Ind": 0,
+            "E5_Off": 0,
+            "E5_Ret": 0,
+            "E5_Svc": 0,
+            "HH": 0,
+            "TotEmp": 0,
+            "Workers": 0
+          },
+          "original_only": 46,
+          "service_only": 0
+        },
+        "geometry_repairs": 0,
+        "geometry_vintage": 2019,
+        "maximum_repair_relative_area_change": 0.0,
+        "original_metadata": {
+          "join_crs": "EPSG:4269",
+          "original_release_sha256": "81cdb3f692e4c282273b0791e1d2d9c0082c6e3f722a714932a985a24eba4fa0",
+          "projection_operation": "Inverse of USA_Contiguous_Albers_Equal_Area_Conic_USGS_version + axis order change (2D)",
+          "source_crs": "PROJCS[\"USA_Contiguous_Albers_Equal_Area_Conic_USGS_version\",GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]],PROJECTION[\"Albers_Conic_Equal_Area\"],PARAMETER[\"latitude_of_center\",23],PARAMETER[\"longitude_of_center\",-96],PARAMETER[\"standard_parallel_1\",29.5],PARAMETER[\"standard_parallel_2\",45.5],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"ESRI\",\"102039\"]]"
+        },
+        "release": "2021"
+      },
+      "WI": {
+        "block_groups": 4489,
+        "current_service_comparison": {
+          "analytical_authority": "original 2021 EPA FileGDB; service used only for current-public-source comparison",
+          "common_block_groups": 4473,
+          "numeric_field_difference_counts": {
+            "Ac_Unpr": 0,
+            "D3A": 0,
+            "D3AAO": 0,
+            "D3B": 0,
+            "D4A": 0,
+            "D4D": 0,
+            "D5AR": 0,
+            "D5BR": 0,
+            "E5_Ent": 0,
+            "E5_Ind": 0,
+            "E5_Off": 0,
+            "E5_Ret": 0,
+            "E5_Svc": 0,
+            "HH": 0,
+            "TotEmp": 0,
+            "Workers": 0
+          },
+          "original_only": 16,
+          "service_only": 0
+        },
+        "geometry_repairs": 0,
+        "geometry_vintage": 2019,
+        "maximum_repair_relative_area_change": 0.0,
+        "original_metadata": {
+          "join_crs": "EPSG:4269",
+          "original_release_sha256": "81cdb3f692e4c282273b0791e1d2d9c0082c6e3f722a714932a985a24eba4fa0",
+          "projection_operation": "Inverse of USA_Contiguous_Albers_Equal_Area_Conic_USGS_version + axis order change (2D)",
+          "source_crs": "PROJCS[\"USA_Contiguous_Albers_Equal_Area_Conic_USGS_version\",GEOGCS[\"NAD83\",DATUM[\"North_American_Datum_1983\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6269\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"EPSG\",\"4269\"]],PROJECTION[\"Albers_Conic_Equal_Area\"],PARAMETER[\"latitude_of_center\",23],PARAMETER[\"longitude_of_center\",-96],PARAMETER[\"standard_parallel_1\",29.5],PARAMETER[\"standard_parallel_2\",45.5],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH],AUTHORITY[\"ESRI\",\"102039\"]]"
+        },
+        "release": "2021"
+      }
+    },
+    "fara": {
+      "MI": {
+        "geometry_repairs": 0,
+        "geometry_tracts": 2813,
+        "geometry_vintage": 2019,
+        "geometry_without_source_rows": 57,
+        "population_vintage": 2010,
+        "release": "2021-04",
+        "source_rows": 2756,
+        "store_vintage": 2019
+      },
+      "WI": {
+        "geometry_repairs": 0,
+        "geometry_tracts": 1409,
+        "geometry_vintage": 2019,
+        "geometry_without_source_rows": 17,
+        "population_vintage": 2010,
+        "release": "2021-04",
+        "source_rows": 1392,
+        "store_vintage": 2019
+      }
+    },
+    "lodes": {
+      "MI": {
+        "archive_data_vintage": "20211018_1647",
+        "aux_block_pairs": 73684,
+        "createdates": [
+          "20211018"
+        ],
+        "field_allowlist": {
+          "od": [
+            "w_geocode",
+            "h_geocode",
+            "S000",
+            "createdate"
+          ],
+          "wac": [
+            "w_geocode",
+            "C000",
+            "createdate"
+          ]
+        },
+        "format_version": "7.5",
+        "jobs": 4337930,
+        "main_block_pairs": 3894952,
+        "od_wac_margin_exact": true,
+        "official_uncompressed_checksums_verified": 3,
+        "reference_year": 2019,
+        "wac_blocks": 67697,
+        "workplace_tracts": 2755
+      },
+      "WI": {
+        "archive_data_vintage": "20211018_1647",
+        "aux_block_pairs": 107866,
+        "createdates": [
+          "20211018"
+        ],
+        "field_allowlist": {
+          "od": [
+            "w_geocode",
+            "h_geocode",
+            "S000",
+            "createdate"
+          ],
+          "wac": [
+            "w_geocode",
+            "C000",
+            "createdate"
+          ]
+        },
+        "format_version": "7.5",
+        "jobs": 2879941,
+        "main_block_pairs": 2527827,
+        "od_wac_margin_exact": true,
+        "official_uncompressed_checksums_verified": 3,
+        "reference_year": 2019,
+        "wac_blocks": 53351,
+        "workplace_tracts": 1394
+      }
+    }
+  }
+}

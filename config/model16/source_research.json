@@ -1,0 +1,768 @@
+{
+  "analytical_product_ids": [
+    "EPA_SLD2021_ORIGINAL_PACKAGE",
+    "CBP2021_COUNTY",
+    "CBP2022_COUNTY",
+    "CBP2023_COUNTY",
+    "USDA_FARA2019_CSV",
+    "TIGER2019_MI_TRACT",
+    "TIGER2019_WI_TRACT",
+    "LODES7_2019_MI_OD_MAIN",
+    "LODES7_2019_MI_OD_AUX",
+    "LODES7_2019_MI_WAC",
+    "LODES7_2019_WI_OD_MAIN",
+    "LODES7_2019_WI_OD_AUX",
+    "LODES7_2019_WI_WAC",
+    "BPS2021_COUNTY",
+    "BPS2022_COUNTY",
+    "BPS2023_COUNTY"
+  ],
+  "artifact_id": "MODEL16_PUBLIC_SUPPLEMENTAL_SOURCE_RESEARCH_V1",
+  "definitions": "src/sprouts_customer_geography/model16/public_context.py:feature_catalog",
+  "jobs": 59,
+  "protected_target_access_by_research": false,
+  "research_and_nonadmission_reasons": "docs/model16/PUBLIC_SOURCE_RESEARCH.md",
+  "retrieved": 54,
+  "schema_version": 1,
+  "scope": "target-blind public source discovery only; retrieval does not imply analytical admission",
+  "service_qa_only": "EPA_SLD2021 state service queries; original 2021 FileGDB is authoritative",
+  "source_records": [
+    {
+      "receipt": {
+        "byte_length": 79727,
+        "http_last_modified": "Sat, 12 Sep 2026 17:36:43 GMT",
+        "resolved_url": "https://www.epa.gov/smartgrowth/smart-location-mapping",
+        "retrieved_at_utc": "2026-09-13T13:34:18.575418+00:00",
+        "sha256": "67c64568db3e5a6d4a799711e4033ac797015069fa843d00b017f3897a0724c9",
+        "url": "https://www.epa.gov/smartgrowth/smart-location-mapping"
+      },
+      "requested_url": "https://www.epa.gov/smartgrowth/smart-location-mapping",
+      "source_id": "EPA_SLD_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 18150,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer?f=pjson",
+        "retrieved_at_utc": "2026-09-13T13:34:18.778719+00:00",
+        "sha256": "8bf7e330b1f0ca147d39fca9bdddaef5450566a0d3d2a672f22ef27fe2b2641c",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer?f=pjson"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer?f=pjson",
+      "source_id": "EPA_SLD_SERVICE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 50547,
+        "http_last_modified": null,
+        "resolved_url": "https://lehd.ces.census.gov/data/",
+        "retrieved_at_utc": "2026-09-13T13:34:18.665584+00:00",
+        "sha256": "734ac63b4ddff2b7ee110e76ffc17b6f4d79e5f42802197fde03879fc5694b13",
+        "url": "https://lehd.ces.census.gov/data/"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/",
+      "source_id": "LODES_DATA_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "error_type": "OSError",
+      "http_code": 404,
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES8/version.txt",
+      "source_id": "LODES8_VERSION",
+      "status": "ACQUISITION_FAILED"
+    },
+    {
+      "receipt": {
+        "byte_length": 42143,
+        "http_last_modified": null,
+        "resolved_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data",
+        "retrieved_at_utc": "2026-09-13T13:34:18.895238+00:00",
+        "sha256": "4777687518c12a25f65897453dcb78fd0780f8d9cdfbba654ee2e262ccc3ec41",
+        "url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data"
+      },
+      "requested_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data",
+      "source_id": "USDA_FARA_DOWNLOAD_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 11545498,
+        "http_last_modified": "Thu, 27 Apr 2023 11:41:32 GMT",
+        "resolved_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2021/cbp21co.zip",
+        "retrieved_at_utc": "2026-09-13T13:34:19.382454+00:00",
+        "sha256": "d1d7c917aab46aed5ae7116068e0574cbcec97a722b136166fefa3ab9a9dc258",
+        "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2021/cbp21co.zip"
+      },
+      "requested_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2021/cbp21co.zip",
+      "source_id": "CBP2021_COUNTY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 13723814,
+        "http_last_modified": "Thu, 27 Jun 2024 11:29:11 GMT",
+        "resolved_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/cbp22co.zip",
+        "retrieved_at_utc": "2026-09-13T13:34:19.923006+00:00",
+        "sha256": "dcea1d9a7060cdb763c841d863163856ba8d5a50dce9056992bdeacd08ff99b4",
+        "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/cbp22co.zip"
+      },
+      "requested_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/cbp22co.zip",
+      "source_id": "CBP2022_COUNTY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 12919520,
+        "http_last_modified": "Thu, 26 Jun 2025 12:00:28 GMT",
+        "resolved_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+        "retrieved_at_utc": "2026-09-13T13:36:17.909124+00:00",
+        "sha256": "e9539e96ceb91608ad44ab1cfc651d7c1ff9b88bddfe7a8ff64134ccde6e9603",
+        "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip"
+      },
+      "requested_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+      "source_id": "CBP2023_COUNTY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 16993,
+        "http_last_modified": "Sat, 12 Sep 2026 17:44:21 GMT",
+        "resolved_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/",
+        "retrieved_at_utc": "2026-09-13T13:36:17.202335+00:00",
+        "sha256": "436ab6bce2154349ac093be3e7d1ca99294e0f4282438792dcc8032a45849a81",
+        "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/"
+      },
+      "requested_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/",
+      "source_id": "CBP2023_DIRECTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "error_type": "OSError",
+      "http_code": 404,
+      "requested_url": "https://www.census.gov/programs-surveys/cbp/news.html",
+      "source_id": "CBP_RELEASE_DOCUMENTATION",
+      "status": "ACQUISITION_FAILED"
+    },
+    {
+      "receipt": {
+        "byte_length": 33254,
+        "http_last_modified": null,
+        "resolved_url": "https://www.fhwa.dot.gov/policyinformation/tables/tmasdata/",
+        "retrieved_at_utc": "2026-09-13T13:34:19.380510+00:00",
+        "sha256": "7322cf3e8c50b898367637d2d79ad0d8b8e58db7597fac3d525759b35ee093c3",
+        "url": "https://www.fhwa.dot.gov/policyinformation/tables/tmasdata/"
+      },
+      "requested_url": "https://www.fhwa.dot.gov/policyinformation/tables/tmasdata/",
+      "source_id": "FHWA_TRAFFIC_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "error_type": "OSError",
+      "http_code": 404,
+      "requested_url": "https://www.michigan.gov/mdot/travel/traffic-data",
+      "source_id": "MI_DOT_TRAFFIC_DOCUMENTATION",
+      "status": "ACQUISITION_FAILED"
+    },
+    {
+      "receipt": {
+        "byte_length": 149562,
+        "http_last_modified": "Sun, 13 Sep 2026 13:34:20 GMT",
+        "resolved_url": "https://wisconsindot.gov/Pages/projects/data-plan/traf-counts/default.aspx",
+        "retrieved_at_utc": "2026-09-13T13:34:19.896268+00:00",
+        "sha256": "48480119d9751a50e769c451c791366e8c50eeed0b8eb965d02e4094bd207519",
+        "url": "https://wisconsindot.gov/Pages/projects/data-plan/traf-counts/default.aspx"
+      },
+      "requested_url": "https://wisconsindot.gov/Pages/projects/data-plan/traf-counts/default.aspx",
+      "source_id": "WI_DOT_TRAFFIC_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 27729,
+        "http_last_modified": null,
+        "resolved_url": "https://www.mrlc.gov/data",
+        "retrieved_at_utc": "2026-09-13T13:34:20.130901+00:00",
+        "sha256": "9d9f90a4b00b14322dc1faeb80f7bbf3ac84dc08e730fe1a2d732f36f5d78848",
+        "url": "https://www.mrlc.gov/data"
+      },
+      "requested_url": "https://www.mrlc.gov/data",
+      "source_id": "NLCD_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 53967,
+        "http_last_modified": "Wed, 17 Jun 2026 19:26:44 GMT",
+        "resolved_url": "https://eogdata.mines.edu/products/vnl/",
+        "retrieved_at_utc": "2026-09-13T13:34:20.258092+00:00",
+        "sha256": "480eca3a3f9b29d7669c3093d423a6540143ac520e30dd1e4e21e6d87e0fabd1",
+        "url": "https://eogdata.mines.edu/products/vnl/"
+      },
+      "requested_url": "https://eogdata.mines.edu/products/vnl/",
+      "source_id": "VIIRS_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 55303,
+        "http_last_modified": "Sun, 13 Sep 2026 12:39:04 GMT",
+        "resolved_url": "https://www.census.gov/construction/bps/index.html",
+        "retrieved_at_utc": "2026-09-13T13:34:20.042641+00:00",
+        "sha256": "19b9fa1b234357ff8212b2b05dc38e7c6b3a112d8aae0153b4ddc3097a803ca8",
+        "url": "https://www.census.gov/construction/bps/index.html"
+      },
+      "requested_url": "https://www.census.gov/construction/bps/index.html",
+      "source_id": "BPS_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "error_type": "OSError",
+      "http_code": 404,
+      "requested_url": "https://docs.overturemaps.org/release/latest/",
+      "source_id": "OVERTURE_RELEASE_DOCUMENTATION",
+      "status": "ACQUISITION_FAILED"
+    },
+    {
+      "receipt": {
+        "byte_length": 41848,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1?f=pjson",
+        "retrieved_at_utc": "2026-09-13T13:36:18.252816+00:00",
+        "sha256": "9aa8f4d98c18a1a91340488c4605270f54377e0a155bddc16ab8df837f105c15",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1?f=pjson"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1?f=pjson",
+      "source_id": "EPA_SLD_LAYER_SCHEMA",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 2327386,
+        "http_last_modified": "Wed, 18 Oct 2023 15:53:28 GMT",
+        "resolved_url": "https://www.epa.gov/system/files/documents/2023-10/epa_sld_3.0_technicaldocumentationuserguide_may2021_0.pdf",
+        "retrieved_at_utc": "2026-09-13T13:36:18.550082+00:00",
+        "sha256": "a849793a5838333e6c3c22e348b98abb2cefada2f81873a8a65cbc60612db461",
+        "url": "https://www.epa.gov/system/files/documents/2023-10/epa_sld_3.0_technicaldocumentationuserguide_may2021_0.pdf"
+      },
+      "requested_url": "https://www.epa.gov/system/files/documents/2023-10/epa_sld_3.0_technicaldocumentationuserguide_may2021_0.pdf",
+      "source_id": "EPA_SLD2021_GUIDE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 553251612,
+        "http_last_modified": "Tue, 08 Jun 2021 19:10:48 GMT",
+        "resolved_url": "https://edg.epa.gov/EPADataCommons/public/OA/SLD/SmartLocationDatabaseV3.zip",
+        "retrieved_at_utc": "2026-09-13T13:44:39.553440+00:00",
+        "sha256": "81cdb3f692e4c282273b0791e1d2d9c0082c6e3f722a714932a985a24eba4fa0",
+        "url": "https://edg.epa.gov/EPADataCommons/public/OA/SLD/SmartLocationDatabaseV3.zip"
+      },
+      "requested_url": "https://edg.epa.gov/EPADataCommons/public/OA/SLD/SmartLocationDatabaseV3.zip",
+      "source_id": "EPA_SLD2021_ORIGINAL_PACKAGE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 9072578,
+        "http_last_modified": null,
+        "resolved_url": "https://www.ers.usda.gov/media/5627/2019-large-retailer-access-map-lram-formerly-known-as-the-food-access-research-atlas-fara-data.zip?v=23010",
+        "retrieved_at_utc": "2026-09-13T13:36:19.172949+00:00",
+        "sha256": "6a56bb6ab1f35874b850257f0d3f3657e335af1d2d12bf6a64b4868e5e54465d",
+        "url": "https://www.ers.usda.gov/media/5627/2019-large-retailer-access-map-lram-formerly-known-as-the-food-access-research-atlas-fara-data.zip?v=23010"
+      },
+      "requested_url": "https://www.ers.usda.gov/media/5627/2019-large-retailer-access-map-lram-formerly-known-as-the-food-access-research-atlas-fara-data.zip?v=23010",
+      "source_id": "USDA_FARA2019_CSV",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 41847,
+        "http_last_modified": null,
+        "resolved_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/update-and-revision-history",
+        "retrieved_at_utc": "2026-09-13T13:36:18.579549+00:00",
+        "sha256": "d4b49943ca5b27d23d6b0a3ad5a1dce9fba753d169cdf25e6ec7895ec2ac24f7",
+        "url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/update-and-revision-history"
+      },
+      "requested_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/update-and-revision-history",
+      "source_id": "USDA_FARA_HISTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 71225,
+        "http_last_modified": null,
+        "resolved_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/documentation",
+        "retrieved_at_utc": "2026-09-13T13:36:18.817956+00:00",
+        "sha256": "08437dc00bceafc9921c58c00b245e7c996a6ecae745d43f3a73c89aa858d57e",
+        "url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/documentation"
+      },
+      "requested_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/documentation",
+      "source_id": "USDA_FARA_DEFINITIONS",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 25673,
+        "http_last_modified": null,
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/",
+        "retrieved_at_utc": "2026-09-13T13:36:18.778852+00:00",
+        "sha256": "bad6f41b5d038cefc8f02d5c79bfbdbe8d93d6ee5d8c76fc3356c4c1f96600d0",
+        "url": "https://lehd.ces.census.gov/data/lodes/"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/",
+      "source_id": "LODES_ARCHIVE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 16993,
+        "http_last_modified": "Sat, 12 Sep 2026 12:34:06 GMT",
+        "resolved_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2021/",
+        "retrieved_at_utc": "2026-09-13T13:36:19.065690+00:00",
+        "sha256": "2484e3cdc2441332f089819e695ed7743bba42294a9bba4798d69a289683d4a3",
+        "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2021/"
+      },
+      "requested_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2021/",
+      "source_id": "CBP2021_DIRECTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 16993,
+        "http_last_modified": "Sun, 13 Sep 2026 02:32:36 GMT",
+        "resolved_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
+        "retrieved_at_utc": "2026-09-13T13:36:19.125330+00:00",
+        "sha256": "7048bcbbc1698a9364d1dcb6f3241bd1ee9da8914182db65851bc1c4a76ba714",
+        "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/"
+      },
+      "requested_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
+      "source_id": "CBP2022_DIRECTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 62960,
+        "http_last_modified": "Sun, 13 Sep 2026 13:36:20 GMT",
+        "resolved_url": "https://www.census.gov/construction/bps/annual.html",
+        "retrieved_at_utc": "2026-09-13T13:36:19.263625+00:00",
+        "sha256": "ea094e5af50162812169dd77be3646a8dd4eabdf7587515c11014b92795a92f1",
+        "url": "https://www.census.gov/construction/bps/annual.html"
+      },
+      "requested_url": "https://www.census.gov/construction/bps/annual.html",
+      "source_id": "BPS_ANNUAL_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 46451,
+        "http_last_modified": "Thu, 03 Sep 2026 16:20:44 GMT",
+        "resolved_url": "https://wiki.openstreetmap.org/wiki/Planet.osm/full",
+        "retrieved_at_utc": "2026-09-13T13:36:19.870814+00:00",
+        "sha256": "422ae8887fe0e704fa00da7b3f76e19396722ebd341bb7094a55f412e7e00c3d",
+        "url": "https://wiki.openstreetmap.org/wiki/Planet.osm/full"
+      },
+      "requested_url": "https://wiki.openstreetmap.org/wiki/Planet.osm/full",
+      "source_id": "OSM_HISTORY_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 30594,
+        "http_last_modified": "Fri, 11 Sep 2026 15:14:16 GMT",
+        "resolved_url": "https://docs.overturemaps.org/getting-data/",
+        "retrieved_at_utc": "2026-09-13T13:36:19.293843+00:00",
+        "sha256": "69207eb28e068c5713c9df6027613664a88afcbe904f33f57f7eaf38d236411d",
+        "url": "https://docs.overturemaps.org/getting-data/"
+      },
+      "requested_url": "https://docs.overturemaps.org/getting-data/",
+      "source_id": "OVERTURE_DOWNLOAD_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "error_type": "OSError",
+      "http_code": 401,
+      "requested_url": "https://eogdata.mines.edu/nighttime_light/annual/v22/",
+      "source_id": "VIIRS_V22_DOWNLOAD_DOCUMENTATION",
+      "status": "ACQUISITION_FAILED"
+    },
+    {
+      "receipt": {
+        "byte_length": 5137948,
+        "http_last_modified": "Fri, 09 Aug 2019 04:14:48 GMT",
+        "resolved_url": "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_26_tract.zip",
+        "retrieved_at_utc": "2026-09-13T13:36:19.648174+00:00",
+        "sha256": "2b73196f2c27bf6fa873c1d2d83ade6897b9a58ecfa834a67911e8d46e98955f",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_26_tract.zip"
+      },
+      "requested_url": "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_26_tract.zip",
+      "source_id": "TIGER2019_MI_TRACT",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 7180701,
+        "http_last_modified": "Fri, 09 Aug 2019 04:21:55 GMT",
+        "resolved_url": "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_55_tract.zip",
+        "retrieved_at_utc": "2026-09-13T13:36:20.471726+00:00",
+        "sha256": "781203981320e17c1f554177fb92b60114f3ef79eb85e2d8816be3bea802f346",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_55_tract.zip"
+      },
+      "requested_url": "https://www2.census.gov/geo/tiger/TIGER2019/TRACT/tl_2019_55_tract.zip",
+      "source_id": "TIGER2019_WI_TRACT",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 36374,
+        "http_last_modified": null,
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/",
+        "retrieved_at_utc": "2026-09-13T13:38:43.562240+00:00",
+        "sha256": "4b464620dc850f33e15020ff5ad95d6e84718b9d5ce736c8df697ef50a4ab83b",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/",
+      "source_id": "LODES7_ARCHIVE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 35746,
+        "http_last_modified": null,
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES8/",
+        "retrieved_at_utc": "2026-09-13T13:38:43.595555+00:00",
+        "sha256": "de3d5d26f1354e1f0d28f76299e95c85f80c3c9ddc80dd561c31fd526edbc5d2",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES8/"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES8/",
+      "source_id": "LODES8_ARCHIVE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 206136,
+        "http_last_modified": "Sun, 24 Oct 2021 20:15:24 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/LODESTechDoc7.5.pdf",
+        "retrieved_at_utc": "2026-09-13T14:03:03.325974+00:00",
+        "sha256": "c5e87ad787d23fa32cfe0dfe5511b5dd1568cd2ba12d68601b257e1fb58994c5",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/LODESTechDoc7.5.pdf"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/LODESTechDoc7.5.pdf",
+      "source_id": "LODES7_GUIDE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 57620,
+        "http_last_modified": "Sun, 13 Sep 2026 14:03:04 GMT",
+        "resolved_url": "https://www.census.gov/construction/bps/historical.html",
+        "retrieved_at_utc": "2026-09-13T14:03:03.508597+00:00",
+        "sha256": "8b17bf1086590cf36fce9b586f15f39ba3c560166346e8ef0de6003b72b748d3",
+        "url": "https://www.census.gov/construction/bps/historical.html"
+      },
+      "requested_url": "https://www.census.gov/construction/bps/historical.html",
+      "source_id": "BPS_HISTORICAL_DOCUMENTATION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 150100,
+        "http_last_modified": "Sat, 12 Sep 2026 13:50:19 GMT",
+        "resolved_url": "https://www2.census.gov/econ/bps/County/",
+        "retrieved_at_utc": "2026-09-13T14:03:03.651607+00:00",
+        "sha256": "c3b0135432ebb93fd665a7dcfc73906b4681cd8578ca4a415c47497b29dc3cb8",
+        "url": "https://www2.census.gov/econ/bps/County/"
+      },
+      "requested_url": "https://www2.census.gov/econ/bps/County/",
+      "source_id": "BPS_COUNTY_DIRECTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 372012,
+        "http_last_modified": "Wed, 27 Apr 2022 21:11:18 GMT",
+        "resolved_url": "https://www2.census.gov/econ/bps/County/co2021a.txt",
+        "retrieved_at_utc": "2026-09-13T14:13:53.397612+00:00",
+        "sha256": "ce2c9aa7b7c036ddbc99d6dc398ddf71e4a0ad0fc2782db883b559ca264f14b6",
+        "url": "https://www2.census.gov/econ/bps/County/co2021a.txt"
+      },
+      "requested_url": "https://www2.census.gov/econ/bps/County/co2021a.txt",
+      "source_id": "BPS2021_COUNTY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 374937,
+        "http_last_modified": "Thu, 25 Apr 2024 14:27:42 GMT",
+        "resolved_url": "https://www2.census.gov/econ/bps/County/co2022a.txt",
+        "retrieved_at_utc": "2026-09-13T14:13:53.397256+00:00",
+        "sha256": "0a88c16861ede81b04f8785e1c626e772510f33f1de9452f7592d86d308e2b5c",
+        "url": "https://www2.census.gov/econ/bps/County/co2022a.txt"
+      },
+      "requested_url": "https://www2.census.gov/econ/bps/County/co2022a.txt",
+      "source_id": "BPS2022_COUNTY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 374707,
+        "http_last_modified": "Thu, 25 Apr 2024 14:23:01 GMT",
+        "resolved_url": "https://www2.census.gov/econ/bps/County/co2023a.txt",
+        "retrieved_at_utc": "2026-09-13T14:13:53.524505+00:00",
+        "sha256": "fab11d759e905ff61838b8dfa41c0f2082e150cad07a20c65ddd620a007aa158",
+        "url": "https://www2.census.gov/econ/bps/County/co2023a.txt"
+      },
+      "requested_url": "https://www2.census.gov/econ/bps/County/co2023a.txt",
+      "source_id": "BPS2023_COUNTY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 190,
+        "http_last_modified": "Thu, 15 Jun 2023 20:32:26 GMT",
+        "resolved_url": "https://www2.census.gov/econ/bps/County/co2022aupdatednotice.txt",
+        "retrieved_at_utc": "2026-09-13T14:13:53.641872+00:00",
+        "sha256": "bc83046236dd0647eb2b4edf7133348de67c0fd81f49b2a3dcd1b38e25df0142",
+        "url": "https://www2.census.gov/econ/bps/County/co2022aupdatednotice.txt"
+      },
+      "requested_url": "https://www2.census.gov/econ/bps/County/co2022aupdatednotice.txt",
+      "source_id": "BPS2022_REVISION_NOTICE",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 68894,
+        "http_last_modified": null,
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/",
+        "retrieved_at_utc": "2026-09-13T14:03:03.874356+00:00",
+        "sha256": "4dea396414f6c6e2f88b4735a5a91342dc2c73bb2d3c8e9ef9c8c326c387b96d",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/",
+      "source_id": "LODES7_MI_OD_DIRECTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 123,
+        "http_last_modified": "Sun, 24 Oct 2021 19:57:49 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/version.txt",
+        "retrieved_at_utc": "2026-09-13T14:13:53.663718+00:00",
+        "sha256": "2e3e6c020d2863aa07a64fb225a46f096e71b41d1dabac7d3936e0e9ac1264d0",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/version.txt"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/version.txt",
+      "source_id": "LODES7_MI_VERSION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 186011,
+        "http_last_modified": "Mon, 25 Oct 2021 00:30:40 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/lodes_mi.sha256sum",
+        "retrieved_at_utc": "2026-09-13T14:13:53.950046+00:00",
+        "sha256": "c7e73ce16a3039d2f9f160bef67b5a9a8ba74cfaf5e6e121ac7a97da61b187a1",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/lodes_mi.sha256sum"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/lodes_mi.sha256sum",
+      "source_id": "LODES7_MI_CHECKSUMS",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 22899954,
+        "http_last_modified": "Sun, 24 Oct 2021 19:57:49 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/mi_od_main_JT00_2019.csv.gz",
+        "retrieved_at_utc": "2026-09-13T14:03:15.116196+00:00",
+        "sha256": "8861c3f602c6abe3dd2642d2dadc3e0b92ef2ee7277f12ee3cf80df2b469263b",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/mi_od_main_JT00_2019.csv.gz"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/mi_od_main_JT00_2019.csv.gz",
+      "source_id": "LODES7_2019_MI_OD_MAIN",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 646086,
+        "http_last_modified": "Sun, 24 Oct 2021 19:57:49 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/mi_od_aux_JT00_2019.csv.gz",
+        "retrieved_at_utc": "2026-09-13T14:03:04.426102+00:00",
+        "sha256": "2e4ce8bfd900ba76d0317821e76efcf78e189a30e836c12806c01d5a1626ab78",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/mi_od_aux_JT00_2019.csv.gz"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/od/mi_od_aux_JT00_2019.csv.gz",
+      "source_id": "LODES7_2019_MI_OD_AUX",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 1593259,
+        "http_last_modified": "Sun, 24 Oct 2021 19:57:50 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/wac/mi_wac_S000_JT00_2019.csv.gz",
+        "retrieved_at_utc": "2026-09-13T14:03:05.540240+00:00",
+        "sha256": "dfafceafa5435e7d2b310c9d975cd4cf1e3d80236091ac619d4c2ed00d6f8a21",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/wac/mi_wac_S000_JT00_2019.csv.gz"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/mi/wac/mi_wac_S000_JT00_2019.csv.gz",
+      "source_id": "LODES7_2019_MI_WAC",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 68894,
+        "http_last_modified": null,
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/",
+        "retrieved_at_utc": "2026-09-13T14:03:05.763841+00:00",
+        "sha256": "fced24ceb8c923ed395d4f367cbdae60604565179e523b70bafd533f58181683",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/",
+      "source_id": "LODES7_WI_OD_DIRECTORY",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 124,
+        "http_last_modified": "Sun, 24 Oct 2021 19:58:12 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/version.txt",
+        "retrieved_at_utc": "2026-09-13T14:13:53.822587+00:00",
+        "sha256": "73e3f9c8c7d1e62bce3c48859a00f246e6743d2235f40cc7c861367f1fd64778",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/version.txt"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/version.txt",
+      "source_id": "LODES7_WI_VERSION",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 186011,
+        "http_last_modified": "Mon, 25 Oct 2021 00:30:41 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/lodes_wi.sha256sum",
+        "retrieved_at_utc": "2026-09-13T14:13:54.014090+00:00",
+        "sha256": "f20e9dad3755e0f4b2410e61d695397564f76a5b4252d616472ba70cd19dca10",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/lodes_wi.sha256sum"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/lodes_wi.sha256sum",
+      "source_id": "LODES7_WI_CHECKSUMS",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 14884731,
+        "http_last_modified": "Sun, 24 Oct 2021 19:58:12 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/wi_od_main_JT00_2019.csv.gz",
+        "retrieved_at_utc": "2026-09-13T14:03:13.280341+00:00",
+        "sha256": "f399246ea0943fb928bcf66522a0c737fbb427031968b386f26a86c1d71cbfee",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/wi_od_main_JT00_2019.csv.gz"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/wi_od_main_JT00_2019.csv.gz",
+      "source_id": "LODES7_2019_WI_OD_MAIN",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 868512,
+        "http_last_modified": "Sun, 24 Oct 2021 19:58:12 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/wi_od_aux_JT00_2019.csv.gz",
+        "retrieved_at_utc": "2026-09-13T14:03:06.542744+00:00",
+        "sha256": "677fc59c8f168289dfc5cde3e161a6d68596806b1096124da1270f8dbdb7414e",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/wi_od_aux_JT00_2019.csv.gz"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/od/wi_od_aux_JT00_2019.csv.gz",
+      "source_id": "LODES7_2019_WI_OD_AUX",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 1227521,
+        "http_last_modified": "Sun, 24 Oct 2021 19:58:13 GMT",
+        "resolved_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/wac/wi_wac_S000_JT00_2019.csv.gz",
+        "retrieved_at_utc": "2026-09-13T14:03:07.389251+00:00",
+        "sha256": "9aea10879d29010a011c2134c3ccc672d4a373f076bfc6f68f8be8db26e2a76e",
+        "url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/wac/wi_wac_S000_JT00_2019.csv.gz"
+      },
+      "requested_url": "https://lehd.ces.census.gov/data/lodes/LODES7/wi/wac/wi_wac_S000_JT00_2019.csv.gz",
+      "source_id": "LODES7_2019_WI_WAC",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 57159,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&returnIdsOnly=true&f=json",
+        "retrieved_at_utc": "2026-09-13T13:38:44.461311+00:00",
+        "sha256": "d9e25856ea3fe7a31ded1cb444b909b46c3b47995371864d5a71f9c3ea6f7e3b",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&returnIdsOnly=true&f=json"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&returnIdsOnly=true&f=json",
+      "source_id": "EPA_SLD2021_26_IDS",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 9414073,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=0&resultRecordCount=5000&f=geojson",
+        "retrieved_at_utc": "2026-09-13T13:38:52.062243+00:00",
+        "sha256": "1b8d3b888fa35df27d0c74a1f237c6c024bc86b4480dbe699620f684dd88b7da",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=0&resultRecordCount=5000&f=geojson"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=0&resultRecordCount=5000&f=geojson",
+      "source_id": "EPA_SLD2021_26_0",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 6006398,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=5000&resultRecordCount=5000&f=geojson",
+        "retrieved_at_utc": "2026-09-13T13:38:59.365187+00:00",
+        "sha256": "df6f00a35b1e9d760644f4fb2342e867eddcd64308c624c26f137798a9a7412b",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=5000&resultRecordCount=5000&f=geojson"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2726%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=5000&resultRecordCount=5000&f=geojson",
+      "source_id": "EPA_SLD2021_26_5000",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 31357,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&returnIdsOnly=true&f=json",
+        "retrieved_at_utc": "2026-09-13T13:38:45.146299+00:00",
+        "sha256": "91629ef1bcb23015b0ed61384e00bf9e1b83a38cb20c6f7b0b43ad6683aeead9",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&returnIdsOnly=true&f=json"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&returnIdsOnly=true&f=json",
+      "source_id": "EPA_SLD2021_55_IDS",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 15139847,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=0&resultRecordCount=5000&f=geojson",
+        "retrieved_at_utc": "2026-09-13T13:38:57.227312+00:00",
+        "sha256": "ef4b42f07b235a1b39fef1a6be7ad95a8d2de79bbf2a548878ee974ccab85459",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=0&resultRecordCount=5000&f=geojson"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=0&resultRecordCount=5000&f=geojson",
+      "source_id": "EPA_SLD2021_55_0",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    },
+    {
+      "receipt": {
+        "byte_length": 42,
+        "http_last_modified": null,
+        "resolved_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=5000&resultRecordCount=5000&f=geojson",
+        "retrieved_at_utc": "2026-09-13T13:38:46.796022+00:00",
+        "sha256": "ed778c73ea51338d6576fb5992b189f2b94d9f3d5e199f46c1af520d6b0b3e6c",
+        "url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=5000&resultRecordCount=5000&f=geojson"
+      },
+      "requested_url": "https://geodata.epa.gov/arcgis/rest/services/OA/SmartLocationDatabase/MapServer/1/query?where=STATEFP%3D%2755%27&outFields=OBJECTID%2CGEOID10%2CGEOID20%2CSTATEFP%2CHH%2CWorkers%2CTotEmp%2CE5_Ret%2CE5_Off%2CE5_Ind%2CE5_Svc%2CE5_Ent%2CAc_Unpr%2CD3A%2CD3AAO%2CD3B%2CD4A%2CD4D%2CD5AR%2CD5BR&returnGeometry=true&outSR=4326&orderByFields=OBJECTID&resultOffset=5000&resultRecordCount=5000&f=geojson",
+      "source_id": "EPA_SLD2021_55_5000",
+      "status": "RETRIEVED_HASH_VERIFIED"
+    }
+  ]
+}

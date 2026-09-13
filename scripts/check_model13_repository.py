@@ -69,6 +69,7 @@ def main() -> int:
     from sprouts_customer_geography.model13.workflow import CONTRACT_ID, OUTPUT_CONTRACT_ID, verify_repository_authority
     from sprouts_customer_geography.pipe01.canonical import content_digest
     from sprouts_customer_geography.pipe01.safeguards import assert_no_protected_tracked_paths
+    from sprouts_customer_geography.model16.public_contract import source_name_guard_text
 
     missing = [path for path in REQUIRED if not (repository / path).is_file()]
     if missing:
@@ -183,7 +184,8 @@ def main() -> int:
     forbidden_fragments = ("Sprouts" + "-Protected", "C:" + "\\Users\\", "m13run-" + "primary", "m13run-" + "verification", "phandle-" + "model13")
     if any(fragment.lower() in public_text.lower() for fragment in forbidden_fragments):
         raise SystemExit("MODEL-13 protected-local path, handle, or run identity entered repository content")
-    if re.search(r"(?i)\bmi[_ -]+seed[_ -]+forecasts\b|\bcity[0-9]+\b", public_text):
+    source_name_text = "\n".join(source_name_guard_text(repository, path, (repository / path).read_text(encoding="utf-8", errors="ignore")) for path in changed_files)
+    if re.search(r"(?i)\bmi[_ -]+seed[_ -]+forecasts\b|\bcity[0-9]+\b", source_name_text):
         raise SystemExit("MODEL-13 protected source basename or private header alias entered repository content")
     narrative = "\n".join((repository / path).read_text(encoding="utf-8", errors="ignore") for path in changed_files if path.replace("\\", "/").startswith(("config/", "docs/", "governance/")))
     if re.search(r"(?i)[A-Za-z0-9 _.-]+\.xlsx", narrative):
