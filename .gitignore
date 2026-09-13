@@ -81,6 +81,8 @@ env/
 __pycache__/
 *.py[cod]
 *.egg-info/
+# setuptools wheel staging created by the CI `pip install .` step
+/build/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
